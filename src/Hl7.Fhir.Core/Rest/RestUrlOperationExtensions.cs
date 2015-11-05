@@ -7,15 +7,10 @@
  */
 
 using Hl7.Fhir.Model;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Rest
 {
-    internal static class RestUrlOperationExtensions
+	internal static class RestUrlOperationExtensions
     {
         public static RestUrl WithMetadata(this RestUrl url)
         {
@@ -29,7 +24,7 @@ namespace Hl7.Fhir.Rest
 
         public static RestUrl Validate(this RestUrl url, string collection, string id = null)
         {
-            if(id != null)
+            if(id == null)
                 return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE);
             else
                 return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE, id);
@@ -58,9 +53,9 @@ namespace Hl7.Fhir.Rest
         public static RestUrl Search(this RestUrl url, string collection=null)
         {
             if (collection != null)
-                return new RestUrl(url).AddPath(collection, RestOperation.SEARCH);
+                return new RestUrl(url).AddPath(collection);
             else
-                return new RestUrl(url).AddPath(RestOperation.SEARCH);
+                return new RestUrl(url);
         }
 
         public static RestUrl Search(this RestUrl url, Query q)

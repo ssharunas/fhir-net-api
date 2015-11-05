@@ -37,6 +37,10 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
+      <HintPath>..\packages\DevDefined.OAuth.0.2\lib\DevDefined.OAuth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net40\Newtonsoft.Json.dll</HintPath>
@@ -192,9 +196,14 @@
     </Compile>
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
+    <Compile Include="Rest\IContext.cs" />
     <Compile Include="Rest\FhirClient.cs" />
+    <Compile Include="Rest\FhirClientWithContext.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
+    <Compile Include="Rest\OAuthContext.cs" />
+    <Compile Include="Rest\OAuthFhirClient.cs" />
+    <Compile Include="Rest\OAuthFhirRequest.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
     <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\FhirResponse.cs" />

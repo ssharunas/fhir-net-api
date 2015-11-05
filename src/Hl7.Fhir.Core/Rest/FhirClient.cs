@@ -6,21 +6,13 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Hl7.Fhir;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
 using System.Net;
-using System.IO;
-using Newtonsoft.Json;
-using Hl7.Fhir.Search;
-using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Rest;
-using System.Threading;
-using Hl7.Fhir.Introspection;
 #if PORTABLE45 || NET45
 using System.Threading.Tasks;
 #endif
@@ -146,14 +138,14 @@ namespace Hl7.Fhir.Rest
             return internalCreate<TResource>(resource, tags, id, refresh);
         }
 
-        private FhirRequest createFhirRequest(Uri location, string method="GET")
-        {
-            var req = new FhirRequest(location, method, BeforeRequest, AfterResponse);
-            
-            if(Timeout != null) req.Timeout = Timeout.Value;
+		protected virtual FhirRequest createFhirRequest(Uri location, string method = "GET")
+		{
+			var req = new FhirRequest(location, method, BeforeRequest, AfterResponse);
 
-            return req;
-        }
+			if (Timeout != null) req.Timeout = Timeout.Value;
+
+			return req;
+		}
 
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
         {
@@ -535,17 +527,19 @@ namespace Hl7.Fhir.Rest
             return fetchBundle(location.Uri);
         }
 
-        /// <summary>
-        /// Fetches a bundle from a FHIR resource endpoint. 
-        /// </summary>
-        /// <param name="location">The url of the endpoint which returns a Bundle</param>
-        /// <returns>The Bundle as received by performing a GET on the endpoint. This operation will throw an exception
-        /// if the operation does not result in a HttpStatus OK.</returns>
-        private Bundle fetchBundle(Uri location)
-        {
-            var req = createFhirRequest(makeAbsolute(location), "GET");
+		/// <summary>
+		/// Fetches a bundle from a FHIR resource endpoint. 
+		/// </summary>
+		/// <param name="location">The url of the endpoint which returns a Bundle</param>
+		/// <returns>The Bundle as received by performing a GET on the endpoint. This operation will throw an exception
+		/// if the operation does not result in a HttpStatus OK.</returns>
+		private Bundle fetchBundle(Uri location)
+		{
+			FhirRequest req = createFhirRequest(makeAbsolute(location), "GET");
+			req.ForBundle = true;
+
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsBundle());
-        }
+		}
 
         /// <summary>
         /// Validates whether the contents of the resource would be acceptable as an update
@@ -989,34 +983,39 @@ namespace Hl7.Fhir.Rest
             return doRequest<T>(request, new HttpStatusCode[] { success }, onSuccess);
         }
 
-        private T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse,T> onSuccess)
-        {
-            request.UseFormatParameter = this.UseFormatParam;
-            var response = request.GetResponse(PreferredFormat);
+		protected virtual T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess)
+		{
+			request.UseFormatParameter = this.UseFormatParam;
+			FhirResponse response = request.GetResponse(PreferredFormat);
 
-            LastResponseDetails = response;
+			return HandleResponse(response, success, onSuccess);
+		}
 
-            if (success.Contains(response.Result))
-                return onSuccess(response);
-            else
-            {
-                // Try to parse the body as an OperationOutcome resource, but it is no
-                // problem if it's something else, or there is no parseable body at all
+		protected T HandleResponse<T>(FhirResponse response, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess)
+		{
+			LastResponseDetails = response;
 
-                OperationOutcome outcome = null;
+			if (success.Contains(response.Result))
+				return onSuccess(response);
+			else
+			{
+				// Try to parse the body as an OperationOutcome resource, but it is no
+				// problem if it's something else, or there is no parseable body at all
 
-                try
-                {
-                    outcome = response.BodyAsEntry<OperationOutcome>().Resource;
-                }
-                catch
-                {
-                    // failed, so the body does not contain an OperationOutcome.
-                    // Put the raw body as a message in the OperationOutcome as a fallback scenario
-                    var body = response.BodyAsString();
-                    if( !String.IsNullOrEmpty(body) )
-                        outcome = OperationOutcome.ForMessage(body);
-                }
+				OperationOutcome outcome = null;
+
+				try
+				{
+					outcome = response.BodyAsEntry<OperationOutcome>().Resource;
+				}
+				catch
+				{
+					// failed, so the body does not contain an OperationOutcome.
+					// Put the raw body as a message in the OperationOutcome as a fallback scenario
+					var body = response.BodyAsString();
+					if (!String.IsNullOrEmpty(body))
+						outcome = OperationOutcome.ForMessage(body);
+				}
 
 				if (outcome != null)
 				{
@@ -1034,8 +1033,8 @@ namespace Hl7.Fhir.Rest
 				{
 					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
 				}
-            }
-        }
+			}
+		}
 
 #if PORTABLE45 || NET45
 #region << Async operations >>
