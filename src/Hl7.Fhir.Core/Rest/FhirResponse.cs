@@ -119,10 +119,9 @@ namespace Hl7.Fhir.Rest
 
             if (result.Resource is T)
                 return (ResourceEntry<T>)result;
-            else
-                throw new FhirOperationException(
-                    String.Format("Received a resource of type {0}, expected a {1} resource",
-                                    result.Resource.GetType().Name, typeof(T).Name));
+            
+			throw new FhirOperationException(string.Format("Received a resource of type {0}, expected a {1} resource",
+                result.Resource.GetType().Name, typeof(T).Name));
         }
 
 
@@ -131,7 +130,12 @@ namespace Hl7.Fhir.Rest
             return createResourceEntry(collection);
         }
 
-        public Bundle BodyAsBundle()
+		public string AsLocation()
+		{
+			return Location;
+		}
+
+		public Bundle BodyAsBundle()
         {
             return parseBody<Bundle>(BodyAsString(), ContentType,
                 (b) => FhirParser.ParseBundleFromXml(b),
@@ -172,7 +176,8 @@ namespace Hl7.Fhir.Rest
                 ResourceIdentity reqId = new ResourceIdentity(location);
 
                 // Set the id to the location, without the version specific part
-                result.Id = reqId.WithoutVersion();
+	            if (!string.IsNullOrEmpty(reqId.Collection) && !string.IsNullOrEmpty(reqId.Id))//Outcome does not have collection nor ID
+		            result.Id = reqId.WithoutVersion();
 
                 // If the content location has version information, set to SelfLink to it
                 if (reqId.VersionId != null)

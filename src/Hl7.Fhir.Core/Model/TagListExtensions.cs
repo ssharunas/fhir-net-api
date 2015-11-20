@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
 
         public static IEnumerable<Tag> FilterByScheme(this IEnumerable<Tag> tags, Uri scheme)
         {
-            if (scheme == null) Error.ArgumentNull("scheme");
+            if (scheme == null) throw Error.ArgumentNull("scheme");
 
             return tags.Where(e => Uri.Equals(e.Scheme, scheme));
         }
@@ -144,14 +144,14 @@ namespace Hl7.Fhir.Model
 
         public static IEnumerable<Tag> Exclude(this IEnumerable<Tag> tags, IEnumerable<Tag> that)
         {
-            if (that == null) Error.ArgumentNull("that");
+            if (that == null) throw Error.ArgumentNull("that");
 
             return tags.Where(t => !that.Contains(t)); 
         }
 
         public static IEnumerable<Tag> Exclude(this IEnumerable<Tag> tags, Tag tag)
         {
-            if (tag == null) Error.ArgumentNull("tag");
+            if (tag == null) throw Error.ArgumentNull("tag");
 
             return tags.Where(t => !Equals(t,tag));
         }

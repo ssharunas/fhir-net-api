@@ -25,18 +25,18 @@ namespace Hl7.Fhir.Rest
 			var location = new RestUrl(Location);
 
 			if (needsFormatParam)
-				location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(acceptFormat.Value));
+				location.AddParam(HttpUtil.RESTPARAM_FORMAT, Rest.ContentType.BuildFormatParam(acceptFormat.Value));
 
 			var request = context.GetRequest();
 			if (request != null)
 			{
-				IDictionary headers = new Dictionary<HttpRequestHeader, string>();
+				IDictionary headers = new Dictionary<string, string>();
 
 				System.Diagnostics.Debug.WriteLine("{0}: {1}", Method, location.Uri.OriginalString);
 				request.ForMethod(Method).ForUri(location.Uri);
 
-				if (acceptFormat != null && !UseFormatParameter)
-					request.WithAcceptHeader(Hl7.Fhir.Rest.ContentType.BuildContentType(acceptFormat.Value, ForBundle));
+				if (acceptFormat != null && acceptFormat.Value != ResourceFormat.Unknown && !UseFormatParameter)
+					request.WithAcceptHeader(Rest.ContentType.BuildContentType(acceptFormat.Value, ForBundle));
 
 				if (Body != null)
 				{
@@ -45,10 +45,10 @@ namespace Hl7.Fhir.Rest
 						.WithRawContent(Body);
 
 					if (ContentLocation != null)
-						headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
+						headers[HttpRequestHeader.ContentLocation.ToString()] = ContentLocation.ToString();
 				}
 
-				if (CategoryHeader != null)
+				if (!string.IsNullOrEmpty(CategoryHeader))
 					headers[HttpUtil.CATEGORY] = CategoryHeader;
 
 				if (headers.Count > 0)

@@ -13,6 +13,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+// ReSharper disable InconsistentNaming
+// ReSharper disable RedundantTypeArgumentsOfMethod
+// ReSharper disable LocalizableElement
 #if PORTABLE45 || NET45
 using System.Threading.Tasks;
 #endif
@@ -22,7 +25,7 @@ namespace Hl7.Fhir.Rest
 {
     public class FhirClient
     {
-        private Uri _endpoint;
+        private readonly Uri _endpoint;
 
         /// <summary>
         /// Creates a new client using a default endpoint
@@ -30,12 +33,12 @@ namespace Hl7.Fhir.Rest
         /// </summary>
         public FhirClient(Uri endpoint)
         {
-            if (endpoint == null) throw new ArgumentNullException("endpoint");
+            if (endpoint == null) throw new ArgumentNullException(nameof(endpoint));
 
             if (!endpoint.OriginalString.EndsWith("/"))
                 endpoint = new Uri(endpoint.OriginalString + "/");
 
-            if (!endpoint.IsAbsoluteUri) throw new ArgumentException("endpoint", "Endpoint must be absolute");
+            if (!endpoint.IsAbsoluteUri) throw new ArgumentException("Endpoint must be absolute", nameof(endpoint));
 
             _endpoint = endpoint;
             PreferredFormat = ResourceFormat.Xml;
@@ -66,7 +69,7 @@ namespace Hl7.Fhir.Rest
             }
         }
 
-        private Uri makeAbsolute(Uri location=null)
+        protected Uri makeAbsolute(Uri location=null)
         {
             // If called without a location, just return the base endpoint
             if (location == null) return Endpoint;
@@ -138,7 +141,7 @@ namespace Hl7.Fhir.Rest
             return internalCreate<TResource>(resource, tags, id, refresh);
         }
 
-		protected virtual FhirRequest createFhirRequest(Uri location, string method = "GET")
+		protected virtual FhirRequest createFhirRequest(Uri location, string method)
 		{
 			var req = new FhirRequest(location, method, BeforeRequest, AfterResponse);
 
@@ -150,7 +153,7 @@ namespace Hl7.Fhir.Rest
         private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
         {
             var collection = typeof(TResource).GetCollectionName();
-            FhirRequest req = null;
+            FhirRequest req;
 
             if (id == null)
             {
@@ -167,7 +170,7 @@ namespace Hl7.Fhir.Rest
 
             req.SetBody(resource, PreferredFormat);
             if(tags != null) req.SetTagsInHeader(tags);
-            FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
+            FhirResponse response = doRequest(req, new [] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
 
             ResourceEntry<TResource> entry = (ResourceEntry<TResource>) ResourceEntry.Create(resource);
             entry.Links.SelfLink = new ResourceIdentity(response.Location);
@@ -184,19 +187,15 @@ namespace Hl7.Fhir.Rest
             return entry;
         }
 
-       
-        /// <summary>
-        /// Refreshes the data and metadata for a given ResourceEntry.
-        /// </summary>
-        /// <param name="entry">The entry to refresh. It's id property will be used to fetch the latest version of the Resource.</param>
-        /// <typeparam name="TResource">The type of resource to refresh</typeparam>
-        /// <returns>A resource entry containing up-to-date data and metadata.</returns>
-        public ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry) where TResource : Resource, new()
-        {
-            return Refresh<TResource>(entry, false);
-        }
 
-        internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
+	    /// <summary>
+	    /// Refreshes the data and metadata for a given ResourceEntry.
+	    /// </summary>
+	    /// <param name="entry">The entry to refresh. It's id property will be used to fetch the latest version of the Resource.</param>
+	    /// <param name="versionSpecific"></param>
+	    /// <typeparam name="TResource">The type of resource to refresh</typeparam>
+	    /// <returns>A resource entry containing up-to-date data and metadata.</returns>
+	    internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
         {
             if (entry == null) throw Error.ArgumentNull("entry");
 
@@ -219,7 +218,7 @@ namespace Hl7.Fhir.Rest
         {
             if (location == null) throw Error.ArgumentNull("location");
 
-            var req = createFhirRequest(makeAbsolute(location));  
+            var req = createFhirRequest(makeAbsolute(location), "GET");  
             
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<TResource>());
         }
@@ -254,7 +253,7 @@ namespace Hl7.Fhir.Rest
 
             var collection = getCollectionFromLocation(location);
 
-            var req = createFhirRequest(makeAbsolute(location));
+            var req = createFhirRequest(makeAbsolute(location), "GET");
             return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry(collection));
         }
 
@@ -317,7 +316,7 @@ namespace Hl7.Fhir.Rest
             if (entry.SelfLink != null) req.ContentLocation = entry.SelfLink;
 
             // This might be an update of a resource that doesn't yet exist, so accept a status Created too
-            FhirResponse response = doRequest(req, new HttpStatusCode[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
+            FhirResponse response = doRequest(req, new [] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
             var updated = new ResourceEntry<TResource>();
 			var location = response.Location ?? response.ContentLocation ?? response.ResponseUri.OriginalString;
 
@@ -344,10 +343,7 @@ namespace Hl7.Fhir.Rest
             // otherwise the most recent data on the server.
             if (refresh)
             {
-                if (updated.SelfLink != null)
-                    updated = Refresh(updated, versionSpecific: true);
-                else
-                    updated = Refresh(updated, versionSpecific: false);
+                updated = Refresh(updated, updated.SelfLink != null);
             }
 
             return updated;
@@ -370,8 +366,8 @@ namespace Hl7.Fhir.Rest
         public ResourceEntry<TResource> Update<TResource>(Uri location, TResource data, bool refresh = false)
             where TResource : Resource, new()
         {
-            if(location == null) Error.ArgumentNull("location");
-            if(data == null) Error.ArgumentNull("data");
+            if(location == null) throw Error.ArgumentNull("location");
+            if(data == null) throw Error.ArgumentNull("data");
 
             ResourceEntry<TResource> entry = new ResourceEntry<TResource>(makeAbsolute(location), DateTimeOffset.Now, data);
 
@@ -395,8 +391,8 @@ namespace Hl7.Fhir.Rest
         public ResourceEntry<TResource> Update<TResource>(string location, TResource data, bool refresh = false)
             where TResource : Resource, new()
         {
-            if (location == null) Error.ArgumentNull("location");
-            if (data == null) Error.ArgumentNull("data");
+            if (location == null) throw Error.ArgumentNull("location");
+            if (data == null) throw Error.ArgumentNull("data");
 
             return Update<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), data, refresh);
 
@@ -510,7 +506,7 @@ namespace Hl7.Fhir.Rest
 
         private Bundle internalHistory(string collection = null, string id = null, DateTimeOffset? since = null, int? pageSize = null)
         {
-            RestUrl location = null;
+            RestUrl location;
 
             if(collection == null)
                 location = new RestUrl(Endpoint).ServerHistory();
@@ -572,7 +568,7 @@ namespace Hl7.Fhir.Rest
         /// failures occur.</returns>
         public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Tag> tags = null) where TResource : Resource, new()
         {
-            if (resource == null) throw new ArgumentNullException("resource");
+            if (resource == null) throw new ArgumentNullException(nameof(resource));
 
             var collection = typeof(TResource).GetCollectionName();
             var url = new RestUrl(_endpoint).Validate(collection);
@@ -626,7 +622,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search<TResource>(string[] criteria = null, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        public Bundle Search<TResource>(IList<string> criteria = null, IList<string> includes = null, int? pageSize = null) where TResource : Resource, new()
         {
             return Search(typeof(TResource).GetCollectionName(), criteria, includes, pageSize);
         }
@@ -642,7 +638,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle Search(string resource, string[] criteria = null, string[] includes = null, int? pageSize = null)
+        public Bundle Search(string resource, IList<string> criteria = null, IList<string> includes = null, int? pageSize = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
 
@@ -659,7 +655,7 @@ namespace Hl7.Fhir.Rest
         /// <returns>A Bundle with all resources found by the search, or an empty Bundle if none were found.</returns>
         /// <remarks>All parameters are optional, leaving all parameters empty will return an unfiltered list 
         /// of all resources of the given Resource type</remarks>
-        public Bundle WholeSystemSearch(string[] criteria = null, string[] includes = null, int? pageSize = null)
+        public Bundle WholeSystemSearch(IList<string> criteria = null, IList<string> includes = null, int? pageSize = null)
         {
             return Search(toQuery(null, criteria, includes, pageSize));
         }
@@ -676,7 +672,7 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Bundle SearchById<TResource>(string id, string[] includes = null, int? pageSize = null) where TResource : Resource, new()
+        public Bundle SearchById<TResource>(string id, IList<string> includes = null, int? pageSize = null) where TResource : Resource, new()
         {
             if (id == null) throw Error.ArgumentNull("id");
 
@@ -695,16 +691,16 @@ namespace Hl7.Fhir.Rest
         /// <remarks>This operation is similar to Read, but additionally,
         /// it is possible to specify include parameters to include resources in the bundle that the
         /// returned resource refers to.</remarks>
-        public Bundle SearchById(string resource, string id, string[] includes = null, int? pageSize = null)
+        public Bundle SearchById(string resource, string id, IList<string> includes = null, int? pageSize = null)
         {
             if (resource == null) throw Error.ArgumentNull("resource");
             if (id == null) throw Error.ArgumentNull("id");
 
             string criterium = Query.SEARCH_PARAM_ID + "=" + id;
-            return Search(toQuery(resource, new string[] { criterium }, includes, pageSize));
+            return Search(toQuery(resource, new [] { criterium }, includes, pageSize));
         }
 
-        private Query toQuery(string collection = null, string[] criteria = null, string[] includes = null, int? pageSize = null)
+        private Query toQuery(string collection = null, IList<string> criteria = null, IList<string> includes = null, int? pageSize = null)
         {
             Query q = new Query
             {
@@ -766,7 +762,7 @@ namespace Hl7.Fhir.Rest
         /// if an error occurred.</returns>
         public Bundle Transaction(Bundle bundle)
         {
-            if (bundle == null) throw new ArgumentNullException("bundle");
+            if (bundle == null) throw new ArgumentNullException(nameof(bundle));
 
             var req = createFhirRequest(Endpoint, "POST");
             req.SetBody(bundle, PreferredFormat);
@@ -884,7 +880,7 @@ namespace Hl7.Fhir.Rest
 
         private IEnumerable<Tag> internalGetTags(string collection, string id, string version)
         {
-            RestUrl location = new RestUrl(this.Endpoint);
+            RestUrl location = new RestUrl(Endpoint);
 
             if(collection == null)
                 location = location.ServerTags();
@@ -946,7 +942,7 @@ namespace Hl7.Fhir.Rest
             var req = createFhirRequest(rl.Uri, "POST");
             req.SetBody(new TagList(tags), PreferredFormat);
 
-            doRequest(req, new HttpStatusCode[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
+            doRequest(req, new [] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => true);
         }
 
 
@@ -954,12 +950,12 @@ namespace Hl7.Fhir.Rest
 
         public event AfterResponseEventHandler OnAfterResponse;
 
-        /// <summary>
-        /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
-        /// </summary>
-        /// <param name="request">The request as it is about to be sent to the server</param>
-        /// <param name="body">Body of the request for POST, PUT, etc</param>
-        protected virtual void BeforeRequest(FhirRequest request, HttpWebRequest rawRequest) 
+	    /// <summary>
+	    /// Inspect or modify the HttpWebRequest just before the FhirClient issues a call to the server
+	    /// </summary>
+	    /// <param name="request">The request as it is about to be sent to the server</param>
+	    /// <param name="rawRequest"></param>
+	    protected virtual void BeforeRequest(FhirRequest request, HttpWebRequest rawRequest) 
         {
             // Default implementation: call event
             if (OnBeforeRequest != null) OnBeforeRequest(this,new BeforeRequestEventArgs(request,rawRequest));
@@ -973,20 +969,21 @@ namespace Hl7.Fhir.Rest
         protected virtual void AfterResponse(FhirResponse fhirResponse,WebResponse webResponse )
         {
             // Default implementation: call event
-            if (OnAfterResponse != null) OnAfterResponse(this,new AfterResponseEventArgs(fhirResponse,webResponse));
+            if (OnAfterResponse != null)
+				OnAfterResponse(this,new AfterResponseEventArgs(fhirResponse,webResponse));
         }
 
 
 
-        private T doRequest<T>(FhirRequest request, HttpStatusCode success, Func<FhirResponse,T> onSuccess)
+        protected T doRequest<T>(FhirRequest request, HttpStatusCode success, Func<FhirResponse,T> onSuccess, ResourceFormat? format = null)
         {
-            return doRequest<T>(request, new HttpStatusCode[] { success }, onSuccess);
+            return doRequest<T>(request, new [] { success }, onSuccess, format);
         }
 
-		protected virtual T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess)
+		protected virtual T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess, ResourceFormat? format = null)
 		{
-			request.UseFormatParameter = this.UseFormatParam;
-			FhirResponse response = request.GetResponse(PreferredFormat);
+			request.UseFormatParameter = UseFormatParam;
+			FhirResponse response = request.GetResponse(format ?? PreferredFormat);
 
 			return HandleResponse(response, success, onSuccess);
 		}
@@ -1938,8 +1935,8 @@ namespace Hl7.Fhir.Rest
     {
         public BeforeRequestEventArgs(FhirRequest request, HttpWebRequest rawRequest)
         {
-            this.Request = request;
-            this.RawRequest = rawRequest;
+            Request = request;
+            RawRequest = rawRequest;
         }
 
         public FhirRequest Request { get; internal set; }
@@ -1958,8 +1955,8 @@ namespace Hl7.Fhir.Rest
     {
         public AfterResponseEventArgs(FhirResponse fhirResponse, WebResponse webResponse)
         {
-            this.Response = fhirResponse;
-            this.RawResponse = webResponse;
+            Response = fhirResponse;
+            RawResponse = webResponse;
         }
 
         public FhirResponse Response { get; internal set; }

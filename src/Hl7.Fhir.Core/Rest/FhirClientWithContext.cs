@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Rest
 			internal set
 			{
 				if (value == null)
-					throw new ArgumentNullException("value", "Context must not be null!");
+					throw new ArgumentNullException(nameof(value), "Context must not be null!");
 
 				_context = value;
 			}
@@ -31,6 +31,11 @@ namespace Hl7.Fhir.Rest
 		{
 		}
 
+		public ResourceEntry<TResource> Get<TResource>(ulong id) where TResource : Resource, new()
+		{
+			return Read<TResource>(typeof(TResource).Name + "/" + id);
+		}
+
 		public Bundle Search<TResource>(string criteria = null) where TResource : Resource, new()
 		{
 			string[] search = null;
@@ -40,7 +45,51 @@ namespace Hl7.Fhir.Rest
 			return Search(typeof(TResource).GetCollectionName(), search);
 		}
 
-		protected override FhirRequest createFhirRequest(Uri location, string method = "GET")
+		public ResourceEntry<Binary> Pdf(Uri location)
+		{
+			location = makeAbsolute(location);
+			var req = createFhirRequest(location, "GET");
+
+			return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsEntry<Binary>(), ResourceFormat.Pdf);
+		}
+
+		public ResourceEntry<Binary> Pdf(string location)
+		{
+			return Pdf(new Uri(location, UriKind.Relative));
+		}
+
+		public ResourceEntry<Binary> Pdf(ulong id)
+		{
+			return Pdf("Documents/" + id);
+		}
+
+		public void ConfirmSigned(ulong id)
+		{
+			ConfirmSigned("Documents/" + id + "/confirm");
+		}
+
+		public void ConfirmSigned(string location)
+		{
+			ConfirmSigned(new Uri(location, UriKind.Relative));
+		}
+
+		public void ConfirmSigned(Uri location)
+		{
+			location = makeAbsolute(location);
+			var req = createFhirRequest(location, "POST");
+
+			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, ResourceFormat.Unknown);
+		}
+
+		public string GetSignUrl(ulong id)
+		{
+			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}/sign", id), UriKind.Relative));
+			var req = createFhirRequest(location, "GET");
+
+			return doRequest(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => resp.AsLocation());
+		}
+
+		protected override FhirRequest createFhirRequest(Uri location, string method)
 		{
 			var req = new OAuthFhirRequest(location, method, BeforeRequest, AfterResponse);
 
@@ -49,16 +98,16 @@ namespace Hl7.Fhir.Rest
 			return req;
 		}
 
-		protected override T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess)
+		protected override T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess, ResourceFormat? format = null)
 		{
-			request.UseFormatParameter = this.UseFormatParam;
+			request.UseFormatParameter = UseFormatParam;
 
 			OAuthFhirRequest oAuthRequest = request as OAuthFhirRequest;
 
 			if (oAuthRequest == null)
 				throw new ArgumentException("FhirClientWithContext can only work with OAuthFhirRequest's");
 
-			FhirResponse response = oAuthRequest.GetResponse(PreferredFormat, Context);
+			FhirResponse response = oAuthRequest.GetResponse(format ?? PreferredFormat, Context);
 
 			return HandleResponse(response, success, onSuccess);
 		}

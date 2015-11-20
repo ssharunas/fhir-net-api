@@ -8,14 +8,10 @@
 
 using Hl7.Fhir.Model;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class ResourceIdentityExtensions
+	public static class ResourceIdentityExtensions
     {
         // todo: dit is losgetrokken uit ResourceLocation. Maar nog niet af.
 

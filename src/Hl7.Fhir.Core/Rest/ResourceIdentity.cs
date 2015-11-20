@@ -70,9 +70,9 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         public static ResourceIdentity Build(Uri endpoint, string collection, string id, string vid=null)
         {
-            if (collection == null) Error.ArgumentNull("collection");
-            if (id == null) Error.ArgumentNull("id");
-            if (!endpoint.IsAbsoluteUri) Error.Argument("endpoint", "endpoint must be an absolute path");
+            if (collection == null) throw Error.ArgumentNull("collection");
+            if (id == null) throw Error.ArgumentNull("id");
+            if (!endpoint.IsAbsoluteUri) throw Error.Argument("endpoint", "endpoint must be an absolute path");
             
             if(vid != null)
                 return new ResourceIdentity(construct(endpoint, collection, id, RestOperation.HISTORY, vid));
@@ -91,9 +91,9 @@ namespace Hl7.Fhir.Rest
 
         public static ResourceIdentity Build(string collection, string id, string vid=null)
         {
-            if (collection == null) Error.ArgumentNull("collection");
-            if (id == null) Error.ArgumentNull("id");
-            if (vid == null) Error.ArgumentNull("vid");
+            if (collection == null) throw Error.ArgumentNull("collection");
+            if (id == null) throw Error.ArgumentNull("id");
+            if (vid == null) throw Error.ArgumentNull("vid");
 
             string url = vid != null ?
                 string.Format("{0}/{1}/{2}/{3}", collection, id, RestOperation.HISTORY, vid) :
