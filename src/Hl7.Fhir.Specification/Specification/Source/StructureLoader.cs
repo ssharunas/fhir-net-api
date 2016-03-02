@@ -26,16 +26,16 @@ namespace Hl7.Fhir.Specification.Source
         public IArtifactSource ArtifactSource { get; private set; }
 
 
-        /// <summary>
-        /// Locate a structure within a profile given by an uri
-        /// </summary>
-        /// <param name="extensionUri">An Uri pointing to a profile or a structure within a profile</param>
-        /// <param name="type">Resource or Datatype that the structure is constraining</param>
-        /// <returns>The structure as indicated by the uri or null if it was not found</returns>
-        /// <remarks>This function accepts an uri that has only the profile's address, or a uri that has both the 
-        /// address and an achor indicating the name of the structure to locate (e.g. http://someplace.org/fhir/Profiles/myprofile#somestructure).
-        /// </remarks>
-        public Profile.ProfileStructureComponent LocateStructure(Uri structureUri, Code type = null)
+		/// <summary>
+		/// Locate a structure within a profile given by an uri
+		/// </summary>
+		/// <param name="structureUri">An Uri pointing to a profile or a structure within a profile</param>
+		/// <param name="type">Resource or Datatype that the structure is constraining</param>
+		/// <returns>The structure as indicated by the uri or null if it was not found</returns>
+		/// <remarks>This function accepts an uri that has only the profile's address, or a uri that has both the 
+		/// address and an achor indicating the name of the structure to locate (e.g. http://someplace.org/fhir/Profiles/myprofile#somestructure).
+		/// </remarks>
+		public Profile.ProfileStructureComponent LocateStructure(Uri structureUri, Code type = null)
         {
             if (structureUri == null) throw Error.ArgumentNull("structureUri");
             if (!structureUri.IsAbsoluteUri) throw Error.Argument("Reference to structure must be an absolute url");
@@ -58,15 +58,15 @@ namespace Hl7.Fhir.Specification.Source
 
 
 
-        /// <summary>
-        /// Locate an extension within a profile given by an uri
-        /// </summary>
-        /// <param name="structureUri">An Uri pointing to an extension within a profile</param>
-        /// <returns>The extension as indicated by the uri or null if it was not found</returns>
-        /// <remarks>This function only accepts uri's that have the profile's address an achor indicating 
-        /// the name of the extension to locate (e.g. http://someplace.org/fhir/Profiles/myprofile#someextension).
-        /// </remarks>
-        public Profile.ProfileExtensionDefnComponent LocateExtension(Uri extensionUri)
+		/// <summary>
+		/// Locate an extension within a profile given by an uri
+		/// </summary>
+		/// <param name="extensionUri">An Uri pointing to an extension within a profile</param>
+		/// <returns>The extension as indicated by the uri or null if it was not found</returns>
+		/// <remarks>This function only accepts uri's that have the profile's address an achor indicating 
+		/// the name of the extension to locate (e.g. http://someplace.org/fhir/Profiles/myprofile#someextension).
+		/// </remarks>
+		public Profile.ProfileExtensionDefnComponent LocateExtension(Uri extensionUri)
         {
             if (extensionUri == null) throw Error.ArgumentNull("extensionUri");
             if (!extensionUri.IsAbsoluteUri) throw Error.Argument("Reference to structure must be an absolute url");

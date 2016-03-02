@@ -985,10 +985,10 @@ namespace Hl7.Fhir.Rest
 			request.UseFormatParameter = UseFormatParam;
 			FhirResponse response = request.GetResponse(format ?? PreferredFormat);
 
-			return HandleResponse(response, success, onSuccess);
+			return HandleResponse(response, request, success, onSuccess);
 		}
 
-		protected T HandleResponse<T>(FhirResponse response, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess)
+		protected T HandleResponse<T>(FhirResponse response, FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess)
 		{
 			LastResponseDetails = response;
 
@@ -1024,11 +1024,19 @@ namespace Hl7.Fhir.Rest
 					}
 					System.Diagnostics.Debug.WriteLine("------------------------------------------------------");
 
-					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome);
+					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result, outcome)
+					{
+						RequestBody = request?.BodyAsString(),
+						ResponseBody = response.BodyAsString()
+					};
 				}
 				else
 				{
-					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result);
+					throw new FhirOperationException("Operation failed with status code " + LastResponseDetails.Result)
+					{
+						RequestBody = request?.BodyAsString(),
+						ResponseBody = response.BodyAsString()
+					};
 				}
 			}
 		}

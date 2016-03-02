@@ -321,14 +321,12 @@ namespace Hl7.Fhir.Specification.Navigation
         }
 
 
-        /// <summary>
-        /// Inserts the element passed in as a child of the element the navigator is currently on. 
-        /// The navigator will move to the inserted element.
-        /// </summary>
-        /// <param name="sibling"></param>
-        /// <returns></returns>
-        /// <remarks>You can only insert a child for an element does not have children yet.</remarks>
-        public override bool InsertFirstChild(Profile.ElementComponent child)
+		/// <summary>
+		/// Inserts the element passed in as a child of the element the navigator is currently on. 
+		/// The navigator will move to the inserted element.
+		/// </summary>
+		/// <remarks>You can only insert a child for an element does not have children yet.</remarks>
+		public override bool InsertFirstChild(Profile.ElementComponent child)
         {
             if(Count == 0)
             {

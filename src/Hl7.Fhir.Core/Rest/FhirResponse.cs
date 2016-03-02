@@ -10,15 +10,13 @@ using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public class FhirResponse
+	public class FhirResponse
     {
         public HttpStatusCode Result { get; set; }
         public string ContentType { get; set; }
@@ -121,7 +119,10 @@ namespace Hl7.Fhir.Rest
                 return (ResourceEntry<T>)result;
             
 			throw new FhirOperationException(string.Format("Received a resource of type {0}, expected a {1} resource",
-                result.Resource.GetType().Name, typeof(T).Name));
+                result.Resource.GetType().Name, typeof(T).Name))
+			{
+				ResponseBody = BodyAsString()
+			};
         }
 
 

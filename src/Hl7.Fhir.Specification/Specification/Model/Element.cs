@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.Model;
-/*
+﻿/*
 * Copyright (c) 2014, Furore (info@furore.com) and contributors
 * See the file CONTRIBUTORS for details.
 *
@@ -8,17 +7,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Hl7.Fhir.Specification.Model
 {
 
-    public enum Representation { Element, Attribute };
+	public enum Representation { Element, Attribute };
 
     public class Element
     {
-        internal int ID;
+        //internal int ID;
         public string Name;
         public Path Path { get; set; }
         public Segment TailSegment

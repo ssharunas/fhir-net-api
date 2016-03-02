@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Rest
 
 			FhirResponse response = oAuthRequest.GetResponse(format ?? PreferredFormat, Context);
 
-			return HandleResponse(response, success, onSuccess);
+			return HandleResponse(response, request, success, onSuccess);
 		}
 	}
 }
