@@ -77,6 +77,7 @@ namespace Hl7.Fhir.Rest
 		{
 			location = makeAbsolute(location);
 			var req = createFhirRequest(location, "POST");
+			req.SetBody("☺", ResourceFormat.Octet);
 
 			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, ResourceFormat.Unknown);
 		}

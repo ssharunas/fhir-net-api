@@ -89,6 +89,11 @@ namespace Hl7.Fhir.Rest
 			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
 		}
 
+		public void SetBody(string body, ResourceFormat format)
+		{
+			Body = System.Text.Encoding.UTF8.GetBytes(body);
+			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+		}
 
 		public string BodyAsString()
 		{

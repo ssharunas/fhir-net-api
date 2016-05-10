@@ -22,6 +22,7 @@ namespace Hl7.Fhir.Rest
 		Json = 2,
 		Unknown = 3,
 		Pdf = 4,
+		Octet = 5
 	}
 
 	public static class ContentType
@@ -51,6 +52,7 @@ namespace Hl7.Fhir.Rest
 		public static readonly string[] PDF_CONTENT_HEADERS = {PDF_CONTENT_HEADER};
 
 		public const string ATOM_CONTENT_HEADER = "application/atom+xml";
+		public const string OCTET_CONTENT_HEADER = "application/octet-stream";
 
 		public const string FORMAT_PARAM_XML = "xml";
 		public const string FORMAT_PARAM_JSON = "json";
@@ -114,6 +116,8 @@ namespace Hl7.Fhir.Rest
 				contentType = XML_CONTENT_HEADER;
 			else if (format == ResourceFormat.Pdf)
 				contentType = PDF_CONTENT_HEADER;
+			else if (format == ResourceFormat.Octet)
+				contentType = OCTET_CONTENT_HEADER;
 			else
 				throw new ArgumentException("Cannot determine content type for data format " + format);
 
