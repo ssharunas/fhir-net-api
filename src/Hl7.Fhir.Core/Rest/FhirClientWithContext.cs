@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using System;
+using System.Collections.Generic;
 using System.Net;
 
 namespace Hl7.Fhir.Rest
@@ -73,6 +74,17 @@ namespace Hl7.Fhir.Rest
 			ConfirmSigned(new Uri(location, UriKind.Relative));
 		}
 
+		public void ConfirmSignedTransaction(ulong id)
+		{
+			Uri location = makeAbsolute(new Uri("Documents/confirm", UriKind.Relative));
+			location = new Uri(location.ToString() + "?transaction=" + id);
+
+			var req = createFhirRequest(location, "POST");
+			req.SetBody("☺", ResourceFormat.Octet);
+
+			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, ResourceFormat.Unknown);
+		}
+
 		public void ConfirmSigned(Uri location)
 		{
 			location = makeAbsolute(location);
@@ -88,6 +100,20 @@ namespace Hl7.Fhir.Rest
 			var req = createFhirRequest(location, "GET");
 
 			return doRequest(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => resp.AsLocation());
+		}
+
+		public string GetSignUrl(IList<ulong> id, string returnURL)
+		{
+			if (id != null)
+			{
+				Uri location = makeAbsolute(new Uri(string.Format("Documents/sign"), UriKind.Relative));
+				location = new Uri(location.ToString() + "?id=" + string.Join(",", id) + "&returnUrl=" + (returnURL ?? "https://google.lt"));
+
+				var req = createFhirRequest(location, "GET");
+				return doRequest(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => resp.AsLocation());
+			}
+
+			return null;
 		}
 
 		protected override FhirRequest createFhirRequest(Uri location, string method)
