@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Rest
 			ConfirmSigned(new Uri(location, UriKind.Relative));
 		}
 
-		public void ConfirmSignedTransaction(ulong id)
+		public IList<string> ConfirmSignedTransaction(ulong id)
 		{
 			Uri location = makeAbsolute(new Uri("Documents/confirm", UriKind.Relative));
 			location = new Uri(location.ToString() + "?transaction=" + id);
@@ -82,7 +82,14 @@ namespace Hl7.Fhir.Rest
 			var req = createFhirRequest(location, "POST");
 			req.SetBody("☺", ResourceFormat.Octet);
 
-			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, ResourceFormat.Unknown);
+			return doRequest<IList<string>>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp =>
+			{
+				string body = resp.BodyAsString();
+				if (!string.IsNullOrEmpty(body))
+					return body.Trim('[', ']').Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+				return null;
+			}, ResourceFormat.Unknown);
 		}
 
 		public void ConfirmSigned(Uri location)
