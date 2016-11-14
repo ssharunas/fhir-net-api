@@ -64,14 +64,14 @@ namespace Hl7.Fhir.Rest
 			return Pdf("Documents/" + id);
 		}
 
-		public void ConfirmSigned(ulong id)
+		public void ConfirmSigned(ulong id, byte[] pdf = null)
 		{
-			ConfirmSigned("Documents/" + id + "/confirm");
+			ConfirmSigned("Documents/" + id + "/confirm", pdf);
 		}
 
-		public void ConfirmSigned(string location)
+		public void ConfirmSigned(string location, byte[] pdf = null)
 		{
-			ConfirmSigned(new Uri(location, UriKind.Relative));
+			ConfirmSigned(new Uri(location, UriKind.Relative), pdf);
 		}
 
 		public IList<string> ConfirmSignedTransaction(ulong id)
@@ -92,13 +92,23 @@ namespace Hl7.Fhir.Rest
 			}, ResourceFormat.Unknown);
 		}
 
-		public void ConfirmSigned(Uri location)
+		public void ConfirmSigned(Uri location, byte[] pdf = null)
 		{
 			location = makeAbsolute(location);
 			var req = createFhirRequest(location, "POST");
-			req.SetBody("☺", ResourceFormat.Octet);
 
-			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, ResourceFormat.Unknown);
+			ResourceFormat format = ResourceFormat.Octet;
+			if (pdf?.Length > 0)
+			{
+				format = ResourceFormat.Pdf;
+				Binary file = new Binary();
+				file.ContentType = "application/pdf";
+				file.Content = pdf;
+				req.SetBody(file, format);
+			}
+			else req.SetBody("☺", format);
+
+			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, format);
 		}
 
 		public string GetSignUrl(ulong id)
