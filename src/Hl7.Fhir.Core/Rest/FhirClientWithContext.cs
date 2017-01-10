@@ -111,9 +111,9 @@ namespace Hl7.Fhir.Rest
 			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, format);
 		}
 
-		public string GetSignUrl(ulong id)
+		public string GetSignUrl(ulong id, string returnURL)
 		{
-			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}/sign", id), UriKind.Relative));
+			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}/sign?returnUrl=" + (returnURL ?? "https://google.lt"), id), UriKind.Relative));
 			var req = createFhirRequest(location, "GET");
 
 			return doRequest(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => resp.AsLocation());
