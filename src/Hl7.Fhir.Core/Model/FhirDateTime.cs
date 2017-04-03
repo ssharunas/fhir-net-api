@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
 		}
 
 
-		public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ss";
+		public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ssK";
 		public const string FMT_YEAR = "{0:D4}";
 		public const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
 		public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
