@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Reflection;
+using System.Collections;
 
 namespace Hl7.Fhir.Rest
 {
@@ -121,6 +123,13 @@ namespace Hl7.Fhir.Rest
 			return doRequest(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => resp.AsLocation());
 		}
 
+		public Bundle GetDocument(ulong id)
+		{
+			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}", id), UriKind.Relative));
+			var req = createFhirRequest(location, "GET");
+			return doRequest(req, new[] { HttpStatusCode.OK }, resp => resp.BodyAsBundle(), ResourceFormat.Xml);
+		}
+
 		public string GetSignUrl(IList<ulong> id, string returnURL)
 		{
 			if (id != null)
@@ -156,6 +165,160 @@ namespace Hl7.Fhir.Rest
 			FhirResponse response = oAuthRequest.GetResponse(format ?? PreferredFormat, Context);
 
 			return HandleResponse(response, request, success, onSuccess);
+		}
+
+		public Composition GetDocument(long id)
+		{
+			Bundle bundle = SearchById("Composition", id.ToString(), new[] { "Composition.section.*" }, 100);
+
+			Composition result = null;
+			if (bundle?.TotalResults > 0)
+			{
+				IList<Resource> visited = new List<Resource>();
+
+				for (int i = 0; i < bundle.Entries.Count; i++)
+				{
+					ResourceEntry entry = bundle.Entries[i] as ResourceEntry;
+					if (entry != null)
+					{
+						if (result == null && entry.Resource is Composition)
+							result = entry.Resource as Composition;
+
+						CheckProperties(entry.Resource, bundle, visited);
+					}
+				}
+			}
+
+			return result;
+		}
+
+		private void CheckProperties(object root, Bundle bundle, IList<Resource> visited)
+		{
+			if (root != null && !root.GetType().Namespace.StartsWith("System") && !(root is Patient) && !(root is Organization) && !(root is Practitioner))
+			{
+				if (root is Resource)
+				{
+					if (visited.Contains(root as Resource)) return;
+					else visited.Add(root as Resource);
+				}
+
+				Type type = root.GetType();
+				IList<PropertyInfo> properties = type.GetProperties();
+
+				if (properties?.Count > 0)
+				{
+					foreach (PropertyInfo property in properties)
+					{
+						object value = property.GetValue(root, null);
+
+						if (value != null)
+						{
+							if (value is ResourceReference)
+							{
+								ResourceReference reference = value as ResourceReference;
+								if (reference.ReferenceResource == null)
+								{
+									reference.ReferenceResource = GetResource(reference, bundle.Entries);
+									CheckProperties(reference.ReferenceResource, bundle, visited);
+								}
+							}
+							else if (value is IList<ResourceReference>)
+							{
+								IList<ResourceReference> list = value as IList<ResourceReference>;
+								foreach (var listItem in list)
+								{
+									if (listItem.ReferenceResource == null)
+									{
+										listItem.ReferenceResource = GetResource(listItem, bundle.Entries);
+										CheckProperties(listItem.ReferenceResource, bundle, visited);
+									}
+								}
+							}
+							else if (typeof(IEnumerable).IsAssignableFrom(property.PropertyType) && property.PropertyType != typeof(string))
+							{
+								IEnumerable list = value as IEnumerable;
+								foreach (var listItem in list)
+								{
+									CheckProperties(listItem, bundle, visited);
+								}
+							}
+							else
+							{
+								CheckProperties(value, bundle, visited);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		private Resource GetResource(ResourceReference value, IList<BundleEntry> entries)
+		{
+			Resource result = null;
+
+			if (value != null)
+			{
+				foreach (var item in entries)
+				{
+					string id = value.Reference;
+					string itemID = item.GetEntryID();
+
+					if (!id.Contains("history") || !itemID.Contains("history"))
+					{
+						id = string.Format("{0}/{1}", id.Split('/'));
+						itemID = string.Format("{0}/{1}", itemID.Split('/'));
+					}
+
+					if (itemID == id)
+					{
+						result = (item as ResourceEntry)?.Resource;
+						result.Id = item.GetEntryID();
+						break;
+					}
+				}
+
+				if (result == null)
+				{
+					try
+					{
+						ResourceEntry entry = Read(value.Reference);
+
+						if (entry != null)
+						{
+							entries.Add(entry);
+							result = entry.Resource;
+							result.Id = entry.GetEntryID();
+						}
+					}
+					catch
+					{
+						try
+						{
+							string[] parts = value.Reference.Trim('/').Split('/');
+
+							Bundle found = SearchById(parts[0], parts[1]);
+							if (found?.TotalResults > 0)
+							{
+								foreach (var item in found.Entries)
+								{
+									ResourceEntry entry = item as ResourceEntry;
+									if (entry != null)
+									{
+										entries.Add(entry);
+										result = entry.Resource;
+										result.Id = entry.GetEntryID();
+									}
+								}
+							}
+						}
+						catch
+						{
+						}
+					}
+				}
+			}
+
+			return result;
 		}
 	}
 }
