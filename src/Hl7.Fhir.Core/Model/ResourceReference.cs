@@ -39,6 +39,15 @@ namespace Hl7.Fhir.Model
 {
     public partial class ResourceReference
     {
+		public ResourceReference()
+		{
+		}
+
+		public ResourceReference(Resource resource)
+		{
+			ReferenceResource = resource;
+		}
+
         [NotMapped]
         public Uri Url
         {

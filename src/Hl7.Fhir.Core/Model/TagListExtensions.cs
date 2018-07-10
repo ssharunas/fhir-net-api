@@ -60,23 +60,6 @@ namespace Hl7.Fhir.Model
             return Uri.UnescapeDataString(textTag.Term.Substring(TAG_TERM_TEXT.Length));
         }
 
-		public static string GetEntryID(this BundleEntry entry)
-		{
-			if (entry != null)
-			{
-				var id = entry.SelfLink as ResourceIdentity;
-				if (id != null && id.OperationPath != null)
-					return id.OperationPath.ToString();
-
-				if (entry.SelfLink != null)
-					return entry.SelfLink.ToString();
-
-				if (entry.Id != null)
-					return entry.Id.ToString();
-			}
-			return null;
-		}
-
 		public static void SetBundleType(this Bundle bundle, BundleType type)
         {
             List<Tag> result = new List<Tag>(bundle.Tags.Exclude(new Tag[] { MESSAGE_TAG, DOCUMENT_TAG }));

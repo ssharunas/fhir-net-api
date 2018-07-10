@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -40,77 +38,100 @@ using System.Runtime.Serialization;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Typed element containing the primitive dateTime
-    /// </summary>
-    [FhirType("dateTime")]
-    [DataContract]
-    public partial class FhirDateTime : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        // Must conform to the pattern "-?([1-9][0-9]{3}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01])(T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?)?)?)?"
-        public const string PATTERN = @"-?([1-9][0-9]{3}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01])(T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?)?)?)?";
-        
-        public FhirDateTime(string value)
-        {
-            Value = value; 
-        }
-        
-        public FhirDateTime(): this((string)null) {}
-        
-        /// <summary>
-        /// Primitive value of the element
-        /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
-        [DateTimePattern]
-        [DataMember]
-        public string Value
-        {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
-        }
-        private string _Value;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as FhirDateTime;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Value != null) dest.Value = Value;
-                return dest;
-            }
-            else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new FhirDateTime());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as FhirDateTime;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as FhirDateTime;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// Typed element containing the primitive dateTime
+	/// </summary>
+	[FhirType("dateTime")]
+	[DataContract]
+	public partial class FhirDateTime : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		// Must conform to the pattern "-?([1-9][0-9]{3}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01])(T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?)?)?)?"
+		public const string PATTERN = @"-?([1-9][0-9]{3}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01])(T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?)?)?)?";
+
+		public FhirDateTime(string value)
+		{
+			Value = value;
+		}
+
+		public FhirDateTime() : this((string)null) { }
+
+		/// <summary>
+		/// Primitive value of the element
+		/// </summary>
+		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
+		[DateTimePattern]
+		[DataMember]
+		public string Value
+		{
+			get { return _Value; }
+			set { _Value = value; OnPropertyChanged("Value"); }
+		}
+		private string _Value;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as FhirDateTime;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Value != null) dest.Value = Value;
+				return dest;
+			}
+			else
+				throw new ArgumentException("Can only copy to an object of the same type", "other");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new FhirDateTime());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as FhirDateTime;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (Value != otherT.Value) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as FhirDateTime;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (Value != otherT.Value) return false;
+
+			return true;
+		}
+
+		public static implicit operator DateTime(FhirDateTime value)
+		{
+			DateTime result = DateTime.MinValue;
+
+			if (value != null && !string.IsNullOrEmpty(value.Value))
+				DateTime.TryParse(value.Value, out result);
+
+			return result;
+		}
+
+		public static implicit operator FhirDateTime(DateTime? value)
+		{
+			return (value ?? DateTime.MinValue);
+		}
+
+		public static implicit operator FhirDateTime(DateTime value)
+		{
+			FhirDateTime result = null;
+
+			if (value != DateTime.MinValue && value != DateTime.MaxValue)
+				result = new FhirDateTime(value.ToString("yyyy-MM-ddTHH:mm:ss"));
+
+			return result;
+		}
+	}
 }

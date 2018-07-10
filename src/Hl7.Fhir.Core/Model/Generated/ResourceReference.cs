@@ -86,12 +86,22 @@ namespace Hl7.Fhir.Model
 			set
 			{
 				if (value != null && !string.IsNullOrEmpty(value.Id))
+				{
 					Reference = value.Id;
+					value.PropertyChanged += Value_PropertyChanged;
+				}
 
 				_ReferenceResource = value;
 				OnPropertyChanged("ReferenceResource");
 			}
 		}
+
+		private void Value_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			if (e.PropertyName == "Id" && !string.IsNullOrEmpty((sender as Resource).Id))
+				Reference = (sender as Resource).Id;
+		}
+
 		private Hl7.Fhir.Model.Resource _ReferenceResource;
 
 

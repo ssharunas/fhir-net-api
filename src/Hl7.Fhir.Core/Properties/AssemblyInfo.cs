@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.11.5.*")]
 
 #if DEBUG
-[assembly:InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
+//[assembly:InternalsVisibleTo("Hl7.Fhir.Core.Tests")]
 #endif
 
 #if RELEASE

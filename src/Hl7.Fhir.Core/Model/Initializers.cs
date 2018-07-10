@@ -82,6 +82,16 @@ namespace Hl7.Fhir.Model
             
             this.Text = text;
         }
+
+		public CodeableConcept(string system, string code, string text = null, string display = null)
+		{
+			this.Coding = new List<Coding>
+			{
+				 new Coding(system, code,display)
+			};
+
+			this.Text = text;
+		}
     }
 
     public partial class Coding
@@ -95,7 +105,14 @@ namespace Hl7.Fhir.Model
             this.System = system;
             this.Code = code;
         }
-    }
+
+		public Coding(string system, string code, string display)
+		{
+			this.System = system;
+			this.Code = code;
+			this.Display = display;
+		}
+	}
 
     public partial class Identifier
     {

@@ -35,7 +35,7 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>SoftDent.snk</AssemblyOriginatorKeyFile>
@@ -73,11 +73,14 @@
     <Compile Include="Model\BundleEntry.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\Code.cs" />
+    <Compile Include="Model\CodeableConceptExtensions.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />
+    <Compile Include="Model\ElementExtension.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
+    <Compile Include="Model\FhirIdentifier.cs" />
     <Compile Include="Model\FhirString.cs" />
     <Compile Include="Model\FhirDateTime.cs" />
     <Compile Include="Model\FhirBoolean.cs" />

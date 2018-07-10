@@ -74,6 +74,15 @@ namespace Hl7.Fhir.Model
         [DataContract]
         public partial class ListEntryComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
         {
+			public ListEntryComponent()
+			{
+			}
+
+			public ListEntryComponent(Resource resource)
+			{
+				Item = new ResourceReference(resource);
+			}
+
             /// <summary>
             /// Workflow information about this item
             /// </summary>

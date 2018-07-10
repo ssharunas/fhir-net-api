@@ -182,7 +182,10 @@ namespace Hl7.Fhir.Rest
 					if (entry != null)
 					{
 						if (result == null && entry.Resource is Composition)
+						{
 							result = entry.Resource as Composition;
+							result.ID = entry.GetEntryID();
+						}
 
 						CheckProperties(entry.Resource, bundle, visited);
 					}
