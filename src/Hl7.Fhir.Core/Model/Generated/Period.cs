@@ -47,6 +47,19 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
     {
+		public Period()
+		{
+		}
+
+		public Period(DateTime? start, DateTime? end)
+		{
+			if (start != null && start != DateTime.MinValue && start != DateTime.MaxValue)
+				StartElement = start;
+
+			if (end != null && end != DateTime.MinValue && end != DateTime.MaxValue)
+				EndElement = end;
+		}
+
         /// <summary>
         /// Starting time with inclusive boundary
         /// </summary>

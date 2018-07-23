@@ -34,6 +34,32 @@ namespace Hl7.Fhir.Rest
 		{
 		}
 
+		protected override FhirRequest createFhirRequest(Uri location, string method)
+		{
+			var req = new OAuthFhirRequest(location, method, BeforeRequest, AfterResponse);
+
+			if (Timeout != null) req.Timeout = Timeout.Value;
+
+			return req;
+		}
+
+		protected override T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess, ResourceFormat? format = null)
+		{
+			request.UseFormatParameter = UseFormatParam;
+
+			OAuthFhirRequest oAuthRequest = request as OAuthFhirRequest;
+
+			if (oAuthRequest == null)
+				throw new ArgumentException("FhirClientWithContext can only work with OAuthFhirRequest's");
+
+			FhirResponse response = oAuthRequest.GetResponse(format ?? PreferredFormat, Context);
+
+			return HandleResponse(response, request, success, onSuccess);
+		}
+
+		/// <summary>
+		/// Get Resource by ID
+		/// </summary>
 		public ResourceEntry<TResource> Get<TResource>(ulong id) where TResource : Resource, new()
 		{
 			return Read<TResource>(typeof(TResource).Name + "/" + id);
@@ -66,34 +92,31 @@ namespace Hl7.Fhir.Rest
 			return Pdf("Documents/" + id);
 		}
 
+		/// <summary>
+		/// Confirm document signing. Use only if using not RC component.
+		/// </summary>
+		/// <param name="id">Composition ID</param>
+		/// <param name="pdf">Signed PDF data</param>
 		public void ConfirmSigned(ulong id, byte[] pdf = null)
 		{
 			ConfirmSigned("Documents/" + id + "/confirm", pdf);
 		}
 
+		/// <summary>
+		/// Confirm document signing. Use only if using not RC component.
+		/// </summary>
+		/// <param name="id">Confirmation Url</param>
+		/// <param name="pdf">Signed PDF data</param>
 		public void ConfirmSigned(string location, byte[] pdf = null)
 		{
 			ConfirmSigned(new Uri(location, UriKind.Relative), pdf);
 		}
 
-		public IList<string> ConfirmSignedTransaction(ulong id)
-		{
-			Uri location = makeAbsolute(new Uri("Documents/confirm", UriKind.Relative));
-			location = new Uri(location.ToString() + "?transaction=" + id);
-
-			var req = createFhirRequest(location, "POST");
-			req.SetBody("☺", ResourceFormat.Octet);
-
-			return doRequest<IList<string>>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp =>
-			{
-				string body = resp.BodyAsString();
-				if (!string.IsNullOrEmpty(body))
-					return body.Trim('[', ']').Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-
-				return null;
-			}, ResourceFormat.Unknown);
-		}
-
+		/// <summary>
+		/// Confirm document signing. Use only if using not RC component.
+		/// </summary>
+		/// <param name="location">Confirmation Url</param>
+		/// <param name="pdf">Signed PDF data</param>
 		public void ConfirmSigned(Uri location, byte[] pdf = null)
 		{
 			location = makeAbsolute(location);
@@ -113,6 +136,33 @@ namespace Hl7.Fhir.Rest
 			doRequest<Binary>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => null, format);
 		}
 
+		/// <summary>
+		/// Confirm all documents in transaction.
+		/// </summary>
+		/// <param name="id">Transaction ID</param
+		public IList<string> ConfirmSignedTransaction(ulong id)
+		{
+			Uri location = makeAbsolute(new Uri("Documents/confirm", UriKind.Relative));
+			location = new Uri(location.ToString() + "?transaction=" + id);
+
+			var req = createFhirRequest(location, "POST");
+			req.SetBody("☺", ResourceFormat.Octet);
+
+			return doRequest<IList<string>>(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp =>
+			{
+				string body = resp.BodyAsString();
+				if (!string.IsNullOrEmpty(body))
+					return body.Trim('[', ']').Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+				return null;
+			}, ResourceFormat.Unknown);
+		}
+
+		/// <summary>
+		/// Returns Sign URL for RC component
+		/// </summary>
+		/// <param name="id">Composition ID</param>
+		/// <param name="returnURL">Where to redirect after signing</param>
 		public string GetSignUrl(ulong id, string returnURL)
 		{
 			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}/sign", id), UriKind.Relative));
@@ -123,13 +173,11 @@ namespace Hl7.Fhir.Rest
 			return doRequest(req, new[] { HttpStatusCode.OK, HttpStatusCode.NoContent }, resp => resp.AsLocation());
 		}
 
-		public Bundle GetDocument(ulong id)
-		{
-			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}", id), UriKind.Relative));
-			var req = createFhirRequest(location, "GET");
-			return doRequest(req, new[] { HttpStatusCode.OK }, resp => resp.BodyAsBundle(), ResourceFormat.Xml);
-		}
-
+		/// <summary>
+		/// Returns Sign URL for bundle for RC component
+		/// </summary>
+		/// <param name="id">Compositions IDs</param>
+		/// <param name="returnURL">Where to redirect after signing</param>
 		public string GetSignUrl(IList<ulong> id, string returnURL)
 		{
 			if (id != null)
@@ -144,29 +192,22 @@ namespace Hl7.Fhir.Rest
 			return null;
 		}
 
-		protected override FhirRequest createFhirRequest(Uri location, string method)
+		/// <summary>
+		/// Get Document. DOES NOT WORK AS OF 2018-07-23.
+		/// But it should work
+		/// </summary>
+		/// <param name="id">Composition ID</param>
+		public Bundle GetDocument(ulong id)
 		{
-			var req = new OAuthFhirRequest(location, method, BeforeRequest, AfterResponse);
-
-			if (Timeout != null) req.Timeout = Timeout.Value;
-
-			return req;
+			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}", id), UriKind.Relative));
+			var req = createFhirRequest(location, "GET");
+			return doRequest(req, new[] { HttpStatusCode.OK }, resp => resp.BodyAsBundle(), ResourceFormat.Xml);
 		}
 
-		protected override T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess, ResourceFormat? format = null)
-		{
-			request.UseFormatParameter = UseFormatParam;
-
-			OAuthFhirRequest oAuthRequest = request as OAuthFhirRequest;
-
-			if (oAuthRequest == null)
-				throw new ArgumentException("FhirClientWithContext can only work with OAuthFhirRequest's");
-
-			FhirResponse response = oAuthRequest.GetResponse(format ?? PreferredFormat, Context);
-
-			return HandleResponse(response, request, success, onSuccess);
-		}
-
+		/// <summary>
+		/// Get full composition with references. Not all resources are returned.
+		/// </summary>
+		/// <param name="id">Composition ESPBI ID</param>
 		public Composition GetDocument(long id)
 		{
 			Bundle bundle = SearchById("Composition", id.ToString(), new[] { "Composition.section.*" }, 100);
