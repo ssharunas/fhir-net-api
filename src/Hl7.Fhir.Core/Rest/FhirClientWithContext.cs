@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Rest
 		/// But it should work
 		/// </summary>
 		/// <param name="id">Composition ID</param>
-		public Bundle GetDocument(ulong id)
+		public Bundle GetDocumentBundle(ulong id)
 		{
 			Uri location = makeAbsolute(new Uri(string.Format("Documents/{0}", id), UriKind.Relative));
 			var req = createFhirRequest(location, "GET");
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Rest
 		{
 			Resource result = null;
 
-			if (value != null)
+			if (value != null && value.Reference?.Contains("#") == false)
 			{
 				foreach (var item in entries)
 				{
