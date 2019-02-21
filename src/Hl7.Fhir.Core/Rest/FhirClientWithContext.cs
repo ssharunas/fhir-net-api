@@ -92,6 +92,18 @@ namespace Hl7.Fhir.Rest
 			return Pdf("Documents/" + id);
 		}
 
+		public string SearchRaw(string resource, IList<string> criteria)
+		{
+			var query = toQuery(resource, criteria, null, null);
+
+			RestUrl url = new RestUrl(Endpoint);
+			url = url.Search(query);
+
+			FhirRequest req = createFhirRequest(makeAbsolute(url.Uri), "GET");
+
+			return doRequest(req, HttpStatusCode.OK, resp => resp.BodyAsString(), ResourceFormat.Unknown);
+		}
+
 		/// <summary>
 		/// Confirm document signing. Use only if using not RC component.
 		/// </summary>
@@ -307,7 +319,7 @@ namespace Hl7.Fhir.Rest
 					string id = value.Reference;
 					string itemID = item.GetEntryID();
 
-					if (!id.Contains("history") || !itemID.Contains("history"))
+					if (!id.Contains("history") || !itemID.Contains("history") || id.Contains("Composition"))
 					{
 						id = string.Format("{0}/{1}", id.Split('/'));
 						itemID = string.Format("{0}/{1}", itemID.Split('/'));

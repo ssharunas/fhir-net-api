@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Rest
             return Search(toQuery(resource, new [] { criterium }, includes, pageSize));
         }
 
-        private Query toQuery(string collection = null, IList<string> criteria = null, IList<string> includes = null, int? pageSize = null)
+        protected Query toQuery(string collection = null, IList<string> criteria = null, IList<string> includes = null, int? pageSize = null)
         {
             Query q = new Query
             {

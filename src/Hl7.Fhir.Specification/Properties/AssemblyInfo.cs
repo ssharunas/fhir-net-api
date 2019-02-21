@@ -30,7 +30,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyVersion("0.11.5.*")]
 
 #if DEBUG
-[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Tests")]
+[assembly: InternalsVisibleTo("Hl7.Fhir.Specification.Tests, PublicKey=0024000004800000940000000602000000240000525341310004000001000100b71254d32b9529b2a334aa7c5e661cbb6a570fa264b48de5e3ab44ecf99a58708ec111ff6c478ee36148f0b2273f7a3d118d76e834aa552c105a04f237a0fbb7815bac0a467a456247d3738a1c6eb4e3567d8af829e670854c31ee030e3d7a4cb5ab6a50685c05dd259e6e75c64d0285310411947428b6bf02a6c44f66d456b9")]
 #endif
 
 #if RELEASE

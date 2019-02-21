@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Rest
 			{
 				IDictionary headers = new Dictionary<string, string>();
 
-				System.Diagnostics.Debug.WriteLine("{0}: {1}", Method, location.Uri.OriginalString);
+				//System.Diagnostics.Debug.WriteLine("{0}: {1}", Method, location.Uri.OriginalString);
 				request.ForMethod(Method).ForUri(location.Uri);
 
 				if (acceptFormat != null && acceptFormat.Value != ResourceFormat.Unknown && !UseFormatParameter)
