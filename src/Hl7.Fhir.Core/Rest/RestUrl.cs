@@ -71,7 +71,16 @@ namespace Hl7.Fhir.Rest
 		/// return in a new RestUrl "http://hl7.org/svc/fhir/Patient"</example>
 		public RestUrl AddPath(params string[] components)
 		{
-			string _components = string.Join("/", components).Trim('/');
+			return AddPath(true, components);
+		}
+
+		public RestUrl AddPath(bool isTrim, params string[] components)
+		{
+			string _components = string.Join("/", components);
+
+			if (isTrim)
+				_components = _components.Trim('/');
+
 			_builder.Path = delimit(_builder.Path) + _components;
 			return this;
 		}
