@@ -1,15 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core", "Hl7.Fhir.Core\Hl7.Fhir.Core.csproj", "{92CC9186-0A21-4E06-B11F-907584FBFD81}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Core.Tests", "Hl7.Fhir.Core.Tests\Hl7.Fhir.Core.Tests.csproj", "{D6CE2817-0931-4D56-B989-AAC5319B78CE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification", "Hl7.Fhir.Specification\Hl7.Fhir.Specification.csproj", "{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hl7.Fhir.Specification.Tests", "Hl7.Fhir.Specification.Tests\Hl7.Fhir.Specification.Tests.csproj", "{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,17 +21,12 @@ Global
 		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.DebugNet40|Any CPU.Build.0 = DebugNet40|Any CPU
 		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.ReleaseNet40|Any CPU.ActiveCfg = ReleaseNet40|Any CPU
 		{D6CE2817-0931-4D56-B989-AAC5319B78CE}.ReleaseNet40|Any CPU.Build.0 = ReleaseNet40|Any CPU
-		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.DebugNet40|Any CPU.ActiveCfg = DebugNet40|Any CPU
-		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.DebugNet40|Any CPU.Build.0 = DebugNet40|Any CPU
-		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.ReleaseNet40|Any CPU.ActiveCfg = ReleaseNet40|Any CPU
-		{34A3B072-5ABC-4F7C-B7E8-0AB67C58CC61}.ReleaseNet40|Any CPU.Build.0 = ReleaseNet40|Any CPU
-		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.DebugNet40|Any CPU.ActiveCfg = DebugNet40|Any CPU
-		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.DebugNet40|Any CPU.Build.0 = DebugNet40|Any CPU
-		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.ReleaseNet40|Any CPU.ActiveCfg = ReleaseNet40|Any CPU
-		{6FED47F1-F7EF-42E8-9FF8-FC1439F04DF2}.ReleaseNet40|Any CPU.Build.0 = ReleaseNet40|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8175760D-07CD-4CC9-95D5-09E15E21CB85}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		StartupItem = src\Hl7.Fhir.Api.csproj

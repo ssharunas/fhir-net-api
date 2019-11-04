@@ -44,18 +44,5 @@ namespace Hl7.Fhir.Model
         {
             return value.Length <= 1024 * 1024;    // Note that strings SHALL NOT exceed 1MB in size
         }
-
-		public static implicit operator string(FhirString value)
-		{
-			return value?.Value;
-		}
-
-		public static implicit operator FhirString(string value)
-		{
-			if (!string.IsNullOrEmpty(value))
-				return new FhirString(value);
-
-			return null;
-		}
-	}
+    }
 }

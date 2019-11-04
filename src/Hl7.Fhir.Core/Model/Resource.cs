@@ -29,6 +29,7 @@
 
 
 
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
@@ -38,78 +39,78 @@ using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    // Resource is not a subclass of Composite, since it
-    // cannot be used in places where you can use composites.
-    [InvokeIValidatableObject]
-    public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject, 
-                IDeepCopyable, IDeepComparable
-    {
-        public abstract IDeepCopyable DeepCopy();
+	// Resource is not a subclass of Composite, since it
+	// cannot be used in places where you can use composites.
+	[InvokeIValidatableObject]
+	public abstract partial class Resource : IExtendable, Hl7.Fhir.Validation.IValidatableObject,
+				IDeepCopyable, IDeepComparable
+	{
+		public abstract IDeepCopyable DeepCopy();
 
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            // TODO: Contained resources share the same internal id resolution space as the parent
-            // resource -> verify id uniqueness
-            var result = new List<ValidationResult>();
+		public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			// TODO: Contained resources share the same internal id resolution space as the parent
+			// resource -> verify id uniqueness
+			var result = new List<ValidationResult>();
 
-            // Validate specific invariants for contained items. The content of the contained
-            // items is validated by the "normal" validation triggered by the FhirElement attribute
-            if (Contained != null)
-            {
-                foreach (var contained in Contained)
-                {
-                    if (contained.Contained != null && contained.Contained.Any())
-                        result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Contained resources cannot contain nested contained resources"));
+			// Validate specific invariants for contained items. The content of the contained
+			// items is validated by the "normal" validation triggered by the FhirElement attribute
+			if (Contained != null)
+			{
+				foreach (var contained in Contained)
+				{
+					if (contained.Contained != null && contained.Contained.Any())
+						result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Contained resources cannot contain nested contained resources"));
 
-                    if (contained.Text != null)
-                        result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Contained resources should not contain narrative"));
-                }
-            }
+					if (contained.Text != null)
+						result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Contained resources should not contain narrative"));
+				}
+			}
 
-            return result;
-        }
+			return result;
+		}
 
 
-        /// <summary>
-        /// Finds a Resource amongst this Resource's contained resources
-        /// </summary>
-        /// <param name="containedReference">A ResourceReference containing an anchored resource id.</param>
-        /// <returns>The found resource, or null if no matching contained resource was found. Will throw an exception if there's more than
-        /// one matching contained resource</returns>
-        public Resource FindContainedResource(ResourceReference containedReference)
-        {
-            return FindContainedResource(containedReference.Reference);
-        }
+		/// <summary>
+		/// Finds a Resource amongst this Resource's contained resources
+		/// </summary>
+		/// <param name="containedReference">A ResourceReference containing an anchored resource id.</param>
+		/// <returns>The found resource, or null if no matching contained resource was found. Will throw an exception if there's more than
+		/// one matching contained resource</returns>
+		public Resource FindContainedResource(ResourceReference containedReference)
+		{
+			return FindContainedResource(containedReference.Reference);
+		}
 
-        /// <summary>
-        /// Finds a Resource amongst this Resource's contained resources
-        /// </summary>
-        /// <param name="containedReference">A Uri containing an anchored resource id.</param>
-        /// <returns>The found resource, or null if no matching contained resource was found. Will throw an exception if there's more than
-        /// one matching contained resource</returns>
-        public Resource FindContainedResource(Uri containedReference)
-        {
-            return FindContainedResource(containedReference.ToString());
-        }
+		/// <summary>
+		/// Finds a Resource amongst this Resource's contained resources
+		/// </summary>
+		/// <param name="containedReference">A Uri containing an anchored resource id.</param>
+		/// <returns>The found resource, or null if no matching contained resource was found. Will throw an exception if there's more than
+		/// one matching contained resource</returns>
+		public Resource FindContainedResource(Uri containedReference)
+		{
+			return FindContainedResource(containedReference.ToString());
+		}
 
-        /// <summary>
-        /// Finds a Resource amongst this Resource's contained resources
-        /// </summary>
-        /// <param name="containedReference">A string containing an anchored resource id.</param>
-        /// <returns>The found resource, or null if no matching contained resource was found. Will throw an exception if there's more than
-        /// one matching contained resource</returns>
-        public Resource FindContainedResource(string containedReference)
-        {
-            if(containedReference == null) throw new ArgumentNullException("containedReference");
-            if(!containedReference.StartsWith("#")) throw new ArgumentException("Reference is not a local anchored reference", "containedReference");
-            
-            var rref = containedReference.Substring(1);
+		/// <summary>
+		/// Finds a Resource amongst this Resource's contained resources
+		/// </summary>
+		/// <param name="containedReference">A string containing an anchored resource id.</param>
+		/// <returns>The found resource, or null if no matching contained resource was found. Will throw an exception if there's more than
+		/// one matching contained resource</returns>
+		public Resource FindContainedResource(string containedReference)
+		{
+			if (containedReference == null) throw Error.ArgumentNull("containedReference");
+			if (!containedReference.StartsWith("#")) throw Error.Argument("containedReference", "Reference is not a local anchored reference");
 
-            if(Contained == null) return null;
+			var rref = containedReference.Substring(1);
 
-            return Contained.SingleOrDefault(r => r.Id != null && r.Id == rref);
-        }
-    }
+			if (Contained == null) return null;
+
+			return Contained.SingleOrDefault(r => r.Id != null && r.Id == rref);
+		}
+	}
 }
 
 

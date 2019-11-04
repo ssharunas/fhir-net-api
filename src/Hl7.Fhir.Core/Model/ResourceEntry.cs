@@ -37,6 +37,7 @@ using System.IO;
 using System.Reflection;
 using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Model
 {
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public static ResourceEntry Create(Resource resource)
         {
-            if (resource == null) throw new ArgumentNullException("resource");
+            if (resource == null) throw Error.ArgumentNull("resource");
  
             var result = ResourceEntry.Create(resource.GetType());
             result.Resource = resource;
@@ -114,7 +115,7 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public static ResourceEntry Create(Type type)
         {
-            if (type == null) throw new ArgumentNullException("type");
+            if (type == null) throw Error.ArgumentNull("type");
 #if !PORTABLE45
             var isResource = typeof(Resource).IsAssignableFrom(type);
 #else

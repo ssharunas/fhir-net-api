@@ -15,14 +15,9 @@ namespace Hl7.Fhir.Rest
 	{
 		public OperationOutcome Outcome { get; set; }
 
-		public string RequestBody { get; set; }
-
-		public string ResponseBody { get; set; }
-
 		public FhirOperationException(string message) : base(message)
 		{
 		}
-
 
 		public FhirOperationException(string message, Exception inner) : base(message, inner)
 		{
@@ -40,8 +35,8 @@ namespace Hl7.Fhir.Rest
 			Outcome = outcome;
 		}
 
+		public string RequestBody { get; set; }
+
+		public string ResponseBody { get; set; }
 	}
-
-
-
 }

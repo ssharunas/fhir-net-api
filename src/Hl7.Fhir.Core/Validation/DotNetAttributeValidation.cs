@@ -19,7 +19,7 @@ namespace Hl7.Fhir.Validation
     {
         public static void Validate(object value, bool recurse = false)
         {
-            if (value == null) throw new ArgumentNullException("value");
+            if (value == null) throw Error.ArgumentNull("value");
         //    assertSupportedInstanceType(value);
 
             Validator.ValidateObject(value, ValidationContextFactory.Create(value, null, recurse), true);
@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
 
         public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false)
         {
-            if (value == null) throw new ArgumentNullException("value");
+            if (value == null) throw Error.ArgumentNull("value");
           // assertSupportedInstanceType(value);
 
             var results = validationResults ?? new List<ValidationResult>();

@@ -11,8 +11,12 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
 using System.Net;
+using System.Text;
+using System.Reflection;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace Hl7.Fhir.Rest
 {
@@ -35,8 +39,8 @@ namespace Hl7.Fhir.Rest
 			_afterRequest = afterRequest;
 		}
 
-		protected Action<FhirRequest, HttpWebRequest> _beforeRequest;
-		protected Action<FhirResponse, WebResponse> _afterRequest;
+		private Action<FhirRequest, HttpWebRequest> _beforeRequest;
+		private Action<FhirResponse, WebResponse> _afterRequest;
 
 		public string Method { get; private set; }
 		public Uri Location { get; private set; }
@@ -46,6 +50,12 @@ namespace Hl7.Fhir.Rest
 		public string CategoryHeader { get; private set; }
 		public Uri ContentLocation { get; set; }
 		public bool ForBundle { get; set; }
+
+		public void SetBody(string body, ResourceFormat format)
+		{
+			Body = System.Text.Encoding.UTF8.GetBytes(body);
+			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+		}
 
 		public void SetBody(Resource resource, ResourceFormat format)
 		{
@@ -89,11 +99,6 @@ namespace Hl7.Fhir.Rest
 			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
 		}
 
-		public void SetBody(string body, ResourceFormat format)
-		{
-			Body = System.Text.Encoding.UTF8.GetBytes(body);
-			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
-		}
 
 		public string BodyAsString()
 		{
@@ -109,7 +114,7 @@ namespace Hl7.Fhir.Rest
 			CategoryHeader = HttpUtil.BuildCategoryHeader(tags);
 		}
 
-		public virtual FhirResponse GetResponse(ResourceFormat? acceptFormat)
+		public FhirResponse GetResponse(ResourceFormat? acceptFormat)
 		{
 			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
 

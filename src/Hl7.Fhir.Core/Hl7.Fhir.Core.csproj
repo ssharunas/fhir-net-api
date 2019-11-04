@@ -9,10 +9,11 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Hl7.Fhir</RootNamespace>
     <AssemblyName>Hl7.Fhir.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet40|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,7 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Core.xml</DocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
@@ -41,23 +43,14 @@
     <AssemblyOriginatorKeyFile>SoftDent.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DevDefined.OAuth, Version=1.0.0.0, Culture=neutral, PublicKeyToken=a3261f5b4697e67d, processorArchitecture=MSIL">
-      <HintPath>..\packages\DevDefined.OAuth.0.2\lib\DevDefined.OAuth.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net40\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Introspection\ChoiceType.cs" />
@@ -73,14 +66,11 @@
     <Compile Include="Model\BundleEntry.cs" />
     <Compile Include="Model\BundleExtensions.cs" />
     <Compile Include="Model\Code.cs" />
-    <Compile Include="Model\CodeableConceptExtensions.cs" />
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />
-    <Compile Include="Model\ElementExtension.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
-    <Compile Include="Model\FhirIdentifier.cs" />
     <Compile Include="Model\FhirString.cs" />
     <Compile Include="Model\FhirDateTime.cs" />
     <Compile Include="Model\FhirBoolean.cs" />
@@ -203,14 +193,9 @@
     </Compile>
     <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
-    <Compile Include="Rest\IContext.cs" />
     <Compile Include="Rest\FhirClient.cs" />
-    <Compile Include="Rest\FhirClientWithContext.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
     <Compile Include="Rest\HttpUtil.cs" />
-    <Compile Include="Rest\OAuthContext.cs" />
-    <Compile Include="Rest\OAuthFhirClient.cs" />
-    <Compile Include="Rest\OAuthFhirRequest.cs" />
     <Compile Include="Rest\ResourceIdentity.cs" />
     <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\FhirResponse.cs" />
@@ -300,7 +285,6 @@
     <Compile Include="Validation\ValidationContextFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -311,6 +295,9 @@
     <EmbeddedResource Include="Validation\xhtml\xml.xsd">
       <SubType>Designer</SubType>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
     <None Include="SoftDent.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

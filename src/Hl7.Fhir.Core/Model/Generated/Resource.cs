@@ -43,18 +43,10 @@ namespace Hl7.Fhir.Model
     [DataContract]
     public abstract partial class Resource : System.ComponentModel.INotifyPropertyChanged
     {
-		[NotMapped]
-		[IgnoreDataMember]
-		public FhirIdentifier ID
-		{
-			get { return Id; }
-			set { Id = value; }
-		}
-
-		/// <summary>
-		/// Additional Content defined by implementations
-		/// </summary>
-		[FhirElement("extension", Order=10)]
+        /// <summary>
+        /// Additional Content defined by implementations
+        /// </summary>
+        [FhirElement("extension", Order=10)]
         [Cardinality(Min=0,Max=-1)]
         [DataMember]
         public List<Hl7.Fhir.Model.Extension> Extension

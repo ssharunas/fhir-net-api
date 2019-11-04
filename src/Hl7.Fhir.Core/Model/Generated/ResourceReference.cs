@@ -77,38 +77,11 @@ namespace Hl7.Fhir.Model
                 OnPropertyChanged("Reference");
             }
         }
-
-		[NotMapped]
-		[IgnoreDataMemberAttribute]
-		public Resource ReferenceResource
-		{
-			get { return _ReferenceResource; }
-			set
-			{
-				if (value != null && !string.IsNullOrEmpty(value.Id))
-				{
-					Reference = value.Id;
-					value.PropertyChanged += Value_PropertyChanged;
-				}
-
-				_ReferenceResource = value;
-				OnPropertyChanged("ReferenceResource");
-			}
-		}
-
-		private void Value_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-		{
-			if (e.PropertyName == "Id" && !string.IsNullOrEmpty((sender as Resource).Id))
-				Reference = (sender as Resource).Id;
-		}
-
-		private Hl7.Fhir.Model.Resource _ReferenceResource;
-
-
-		/// <summary>
-		/// Text alternative for the resource
-		/// </summary>
-		[FhirElement("display", InSummary=true, Order=50)]
+        
+        /// <summary>
+        /// Text alternative for the resource
+        /// </summary>
+        [FhirElement("display", InSummary=true, Order=50)]
         [DataMember]
         public Hl7.Fhir.Model.FhirString DisplayElement
         {

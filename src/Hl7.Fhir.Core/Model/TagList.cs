@@ -83,8 +83,8 @@ namespace Hl7.Fhir.Model
 
         public Tag(string term, Uri scheme, string label=null)
         {
-            if (term == null) throw new ArgumentNullException("term");
-            if (scheme == null) throw new ArgumentNullException("scheme");
+            if (term == null) throw Error.ArgumentNull("term");
+            if (scheme == null) throw Error.ArgumentNull("scheme");
 
             this.Term = term;
             this.Scheme = scheme;

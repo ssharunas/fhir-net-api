@@ -35,70 +35,53 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-	public partial class FhirDateTime
-	{
-		public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
-		{
-		}
+    public partial class FhirDateTime
+    {
+        public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
+        {
+        }
 
-		public FhirDateTime(DateTime dt) : this(new DateTimeOffset(dt))
-		{
-		}
+        public FhirDateTime(DateTime dt) : this( new DateTimeOffset(dt) )
+        {
+        }
 
-		public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
-			: this(new DateTime(year, month, day, hr, min, sec, DateTimeKind.Local))
-		{
-		}
+        public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
+            : this(new DateTime(year,month,day,hr,min,sec,DateTimeKind.Local))
+        {
+        }
 
-		public FhirDateTime(int year, int month, int day)
-			: this(String.Format(FMT_YEARMONTHDAY, year, month, day))
-		{
-		}
+        public FhirDateTime(int year, int month, int day)
+            : this(String.Format(FMT_YEARMONTHDAY, year, month, day))
+        {
+        }
 
-		public FhirDateTime(int year, int month)
-			: this(String.Format(FMT_YEARMONTH, year, month))
-		{
-		}
+        public FhirDateTime(int year, int month)
+            : this( String.Format(FMT_YEARMONTH,year,month) )
+        {
+        }
 
-		public FhirDateTime(int year)
-			: this(String.Format(FMT_YEAR, year))
-		{
-		}
+        public FhirDateTime(int year)
+            : this(String.Format(FMT_YEAR, year))
+        {
+        }
 
+        
+        public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ssK";
+        public const string FMT_YEAR = "{0:D4}";
+        public const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
+        public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
 
-		public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ssK";
-		public const string FMT_YEAR = "{0:D4}";
-		public const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
-		public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
+        public static FhirDateTime Now()
+        {
+            return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
+        }
 
-		public static FhirDateTime Now()
-		{
-			return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
-		}
+        public static bool IsValidValue(string value)
+        {
+            return Regex.IsMatch(value, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);
 
-		public static string ToString(DateTime value, bool dateOnly = false)
-		{
-			if (value != DateTime.MinValue)
-				return value.ToString(dateOnly ? "yyyy-MM-dd" : FMT_FULL);
+            //TODO: Additional checks not implementable by the regex
+        }
 
-			return null;
-		}
-		
-		public static DateTime ToDate(string value)
-		{
-			DateTime result = DateTime.MinValue;
-			if (!string.IsNullOrEmpty(value))
-				DateTime.TryParse(value, out result);
-
-			return result;
-		}
-
-		public static bool IsValidValue(string value)
-		{
-			return Regex.IsMatch(value, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);
-
-			//TODO: Additional checks not implementable by the regex
-		}
-
-	}
+    }
 }
