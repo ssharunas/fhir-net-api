@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception e)
             {
-                throw Error.Format("Cannot parse json: " + e.Message, null);
+                throw Error.Format("Cannot parse json: " + e.Message);
             }
         }
 
@@ -58,10 +58,10 @@ namespace Hl7.Fhir.Serialization
                     if(val.Type == JTokenType.String) return TokenType.String;
                     if (val.Type == JTokenType.Null) return TokenType.Null;
 
-                    throw Error.Format("Encountered a json primitive of type {0} while only string, boolean and number are allowed", this, val.Type);
+                    throw Error.Format($"Encountered a json primitive of type {val.Type} while only string, boolean and number are allowed", this);
                 }
 
-                throw Error.Format("Json reader encountered a token of type {0}, which is not supported in the Fhir json serialization", this, _current.GetType().Name);
+                throw Error.Format($"Json reader encountered a token of type {_current.GetType().Name}, which is not supported in the Fhir json serialization", this);
             }
         }
 
@@ -95,8 +95,7 @@ namespace Hl7.Fhir.Serialization
                 throw Error.Format("resourceType should be a primitive string json value", this);
             }
 
-            throw Error.Format("Cannot determine type of resource to create from json input data: no member {0} was found", this, 
-                            JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME);
+            throw Error.Format($"Cannot determine type of resource to create from json input data: no member {JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME} was found", this);
         }
 
         //When enumerating properties for a complex object, make sure not to let resourceType get through

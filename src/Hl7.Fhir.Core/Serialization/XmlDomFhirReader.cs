@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (XmlException xec)
             {
-                throw Error.Format("Cannot parse xml: " + xec.Message, null);
+                throw Error.Format("Cannot parse xml: " + xec.Message);
             }
 
             setRoot(doc);
@@ -92,7 +92,7 @@ namespace Hl7.Fhir.Serialization
                     if (attr.Name.NamespaceName == "")
                         result.Add(Tuple.Create(attr.Name.LocalName, (IFhirReader)new XmlDomFhirReader(attr)));
                     else
-                        throw Error.Format("Encountered unsupported attribute {0}", this, attr.Name);
+                        throw Error.Format($"Encountered unsupported attribute {attr.Name}", this);
                 }
                 
                 foreach(var node in rootElem.Nodes())
@@ -116,14 +116,14 @@ namespace Hl7.Fhir.Serialization
                                 (IFhirReader)new XmlDomFhirReader(buildDivXText(elem))));
 
                         else
-                            throw Error.Format("Encountered element '{0}' from unsupported namespace '{1}'", this, elem.Name.LocalName, elem.Name.NamespaceName);
+                            throw Error.Format($"Encountered element '{elem.Name.LocalName}' from unsupported namespace '{elem.Name.NamespaceName}'", this);
                     }
                     else if(node is XComment)
                     {
                         // nothing
                     }
                     else
-                        throw Error.Format("Encountered unexpected element member of type {0}", this, node.GetType().Name);
+                        throw Error.Format($"Encountered unexpected element member of type {node.GetType().Name}", this);
                 }
 
                 return result;
@@ -141,9 +141,8 @@ namespace Hl7.Fhir.Serialization
 
         public IEnumerable<IFhirReader> GetArrayElements()
         {
-            // Xml does not support arrays like Json. This method won't be called if CurrentToken is never set to Array
-            throw new NotImplementedException();
-        }
+            throw Error.NotSupported("Xml does not support arrays like Json. This method won't be called if CurrentToken is never set to Array");
+		}
 
         public object GetPrimitiveValue()
         {
@@ -170,7 +169,7 @@ namespace Hl7.Fhir.Serialization
                 if (_current is XText)
                     return TokenType.String;
                 else
-                    throw Error.Format("Parser cannot handle xml objects of type {0}", this, _current.GetType().Name);
+                    throw Error.Format($"Parser cannot handle xml objects of type {_current.GetType().Name}", this);
             }
         }
 

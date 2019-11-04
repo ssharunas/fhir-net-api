@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Serialization
 
         internal object Deserialize(Type nativeType)
         {
-            if (nativeType == null) throw Error.ArgumentNull("nativeType");
+            if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
                  
             if (_current.IsPrimitive())
             {
@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
                     if (enumMapping.ContainsLiteral(enumLiteral))
                         return enumMapping.ParseLiteral((string)primitiveValue);
                     else
-                        throw Error.Format("Literal {0} is not a valid value for enumeration {1}", _current, enumLiteral, enumMapping.Name);
+                        throw Error.Format($"Literal {enumLiteral} is not a valid value for enumeration {enumMapping.Name}", _current);
                 }
                 else
                     throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);

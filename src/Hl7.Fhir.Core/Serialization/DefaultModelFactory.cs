@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
      
         public bool CanCreate(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
             // Can create any type, as long as a public default constructor is present
             var canCreate = ReflectionHelper.HasDefaultPublicConstructor(type) ||
@@ -37,7 +37,7 @@ namespace Hl7.Fhir.Serialization
 
         public object Create(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
            // var typeToCreate = findTypeSubstitution(type);
             var typeToCreate = type;

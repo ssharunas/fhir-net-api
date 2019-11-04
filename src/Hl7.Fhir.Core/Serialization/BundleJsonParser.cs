@@ -53,12 +53,12 @@ namespace Hl7.Fhir.Serialization
                 feed = JObject.Load(reader);
 
                 if( feed.Value<string>(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME) != "Bundle")
-                    throw Error.Format("Input data is not an json FHIR bundle", null);
+                    throw Error.Format("Input data is not an json FHIR bundle");
 
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while parsing feed: " + exc.Message, null);
+                throw Error.Format("Exception while parsing feed: " + exc.Message);
             }
 
             Bundle result;
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while parsing json feed attributes: " + exc.Message, null);                
+                throw Error.Format("Exception while parsing json feed attributes: " + exc.Message);
             }
 
             var entries = feed[BundleXmlParser.XATOM_ENTRY];
@@ -94,16 +94,16 @@ namespace Hl7.Fhir.Serialization
             {
                 if (!(entries is JArray))
                 {
-                    throw Error.Format("The json feed contains a single entry, instead of an array", null);
+                    throw Error.Format("The json feed contains a single entry, instead of an array");
                 }
 
-                result.Entries = loadEntries((JArray)entries, result);
+                result.Entries = loadEntries((JArray)entries);
             }
 
             return result;
         }
 
-        private static IList<BundleEntry> loadEntries(JArray entries, Bundle parent)
+        private static IList<BundleEntry> loadEntries(JArray entries)
         {
             var result = new List<BundleEntry>();
 
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while parsing json for entry: " + exc.Message, null);
+                throw Error.Format("Exception while parsing json for entry: " + exc.Message);
             }
 
             return loadEntry(entry);
@@ -154,7 +154,7 @@ namespace Hl7.Fhir.Serialization
                     var content = entry[BundleXmlParser.XATOM_CONTENT];
 
                     var id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
-                    if (id == null) throw Error.Format("BundleEntry found without an id", null);
+                    if (id == null) throw Error.Format("BundleEntry found without an id");
 
                     if (content != null)
                     {
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Serialization
                         if (parsed != null)
                             result = ResourceEntry.Create(parsed);
                         else
-                            throw Error.Format("BundleEntry {0} has a content element without content", null, id);
+                            throw Error.Format($"BundleEntry {id} has a content element without content");
                     }
                     else
                     {
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while reading entry: " + exc.Message, null);
+                throw Error.Format("Exception while reading entry: " + exc.Message);
             }
 
             return result;

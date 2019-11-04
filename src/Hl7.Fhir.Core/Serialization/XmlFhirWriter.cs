@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization
 
         public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
         {
-            if (value == null) throw Error.ArgumentNull("value", "There's no support for null values in Xml Fhir serialization");
+            if (value == null) throw Error.ArgumentNull(nameof(value), "There's no support for null values in Xml Fhir serialization");
 
             if (xmlFormatHint == XmlSerializationHint.None) xmlFormatHint = XmlSerializationHint.Attribute;
 
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization
                 xw.WriteRaw(xe.ToString());
             }
             else
-                throw new ArgumentException("Unsupported xmlFormatHint " + xmlFormatHint);
+                throw Error.Argument(nameof(xmlFormatHint), "Unsupported xmlFormatHint " + xmlFormatHint);
         }
 
         public void WriteStartArray()

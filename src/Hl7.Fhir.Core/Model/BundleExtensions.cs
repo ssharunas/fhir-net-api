@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Model
 			if (!id.IsAbsoluteUri)
 			{
 				if (bundle.Links.Base == null)
-					throw Error.Argument("reference", "Reference is a relative uri, so it needs a fhir-base link to be able to find entries by id or selflink");
+					throw Error.Argument(nameof(reference), "Reference is a relative uri, so it needs a fhir-base link to be able to find entries by id or selflink");
 
 				id = new Uri(bundle.Links.Base, id);
 			}
@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
 		/// <returns>A list of BundleEntries with the given id, or an empty list if none were found.</returns>
 		public static IEnumerable<BundleEntry> ById(this IEnumerable<BundleEntry> entries, Uri id)
 		{
-			if (!id.IsAbsoluteUri) throw Error.Argument("id", "Id must be an absolute uri");
+			if (!id.IsAbsoluteUri) throw Error.Argument(nameof(id), "Id must be an absolute uri");
 
 			return entries.Where(be => Uri.Equals(be.Id, id));
 		}
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Model
 		/// <returns>A list of typed ResourceEntries with the given id, or an empty list if none were found.</returns>
 		public static IEnumerable<ResourceEntry<T>> ById<T>(this IEnumerable<ResourceEntry<T>> res, Uri id) where T : Resource, new()
 		{
-			if (!id.IsAbsoluteUri) throw Error.Argument("id", "Id must be an absolute uri");
+			if (!id.IsAbsoluteUri) throw Error.Argument(nameof(id), "Id must be an absolute uri");
 
 			return res.Where(re => Uri.Equals(re.Id, id));
 		}
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
 		/// <returns>A list of BundleEntries with the given self-link id, or an empty list if none were found.</returns>
 		public static BundleEntry BySelfLink(this IEnumerable<BundleEntry> entries, Uri self)
 		{
-			if (!self.IsAbsoluteUri) throw Error.Argument("self", "Must be an absolute uri");
+			if (!self.IsAbsoluteUri) throw Error.Argument(nameof(self), "Must be an absolute uri");
 
 			return entries.FirstOrDefault(be => Uri.Equals(be.SelfLink, self));
 		}
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
 		/// the empty list if none were found.</returns>
 		public static ResourceEntry<T> BySelfLink<T>(this IEnumerable<ResourceEntry<T>> res, Uri self) where T : Resource, new()
 		{
-			if (!self.IsAbsoluteUri) throw Error.Argument("id", "Must be an absolute uri");
+			if (!self.IsAbsoluteUri) throw Error.Argument(nameof(self), "Must be an absolute uri");
 
 			return res.FirstOrDefault(re => Uri.Equals(re.SelfLink, self));
 		}

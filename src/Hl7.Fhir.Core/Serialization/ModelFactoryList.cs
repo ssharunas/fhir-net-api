@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
     {
         public static IModelClassFactory FindFactory(this IEnumerable<IModelClassFactory> list, Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
             return list.First(fac => fac.CanCreate(type));
         }
@@ -29,8 +29,8 @@ namespace Hl7.Fhir.Serialization
         public static object InvokeFactory(this IEnumerable<IModelClassFactory> list, Type type)
         {
             var chosenFactory = list != null ? list.FindFactory(type) : null;
-            if (type == null) throw Error.ArgumentNull("type");
-            if (chosenFactory == null) throw Error.InvalidOperation("No ModelClassFactory registered to handle type '{0}'", type.Name);
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (chosenFactory == null) throw Error.InvalidOperation($"No ModelClassFactory registered to handle type '{type.Name}'");
 
             object result = chosenFactory.Create(type);
             if (result == null) throw Error.InvalidOperation("Factory failed to create object");

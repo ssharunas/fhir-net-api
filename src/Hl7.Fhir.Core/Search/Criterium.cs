@@ -37,25 +37,25 @@ namespace Hl7.Fhir.Search
 
         public static Criterium Parse(string key, string value)
         {
-            if (String.IsNullOrEmpty(key)) throw Error.ArgumentNull("key");
-            if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull("value");
+            if (String.IsNullOrEmpty(key)) throw Error.ArgumentNull(nameof(key));
+            if (String.IsNullOrEmpty(value)) throw Error.ArgumentNull(nameof(value));
 
             // Split chained parts (if any) into name + modifier tuples
             var chainPath = key.Split(new char[] { Query.SEARCH_CHAINSEPARATOR }, StringSplitOptions.RemoveEmptyEntries)
                         .Select(s => pathToKeyModifTuple(s));
 
-            if (chainPath.Count() == 0) throw Error.Argument("key", "Supplied an empty search parameter name or chain");
+            if (chainPath.Count() == 0) throw Error.Argument(nameof(key), "Supplied an empty search parameter name or chain");
 
             return fromPathTuples(chainPath, value);
         }
 
         public static Criterium Parse(string text)
         {
-            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull("text");
+            if (String.IsNullOrEmpty(text)) throw Error.ArgumentNull(nameof(text));
 
             var keyVal = text.SplitLeft('=');
 
-            if(keyVal.Item2 == null) throw Error.Argument("text", "Value must contain an '=' to separate key and value");
+            if(keyVal.Item2 == null) throw Error.Argument(nameof(text), "Value must contain an '=' to separate key and value");
 
             return Parse(keyVal.Item1, keyVal.Item2);
         }
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Search
                 else if (value == MISSINGFALSE)
                     type = Operator.NOTNULL;
                 else
-                    throw Error.Argument("value", "For the :missing modifier, only values 'true' and 'false' are allowed");
+                    throw Error.Argument(nameof(value), "For the :missing modifier, only values 'true' and 'false' are allowed");
 
                 operand = null;
             }
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Search
                 type = compVal.Item1;
                 value = compVal.Item2;
 
-                if (value == null) throw new FormatException("Value is empty");
+                if (value == null) throw Error.Format("Value is empty");
 
                 // Parse the value. If there's > 1, we are using the IN operator, unless
                 // the input already specifies another comparison, which would be illegal
@@ -146,7 +146,7 @@ namespace Hl7.Fhir.Search
                 if (values.Choices.Length > 1)
                 {
                     if (type != Operator.EQ)
-                        throw new InvalidOperationException("Multiple values cannot be used in combination with a comparison operator");
+                        throw Error.InvalidOperation("Multiple values cannot be used in combination with a comparison operator");
                     type = Operator.IN;
                     operand = values;
                 }
@@ -174,8 +174,8 @@ namespace Hl7.Fhir.Search
             if (Type == Operator.ISNULL) return "true";
             if (Type == Operator.NOTNULL) return "false";
 
-            if(Operand == null) throw new InvalidOperationException("Criterium does not have an operand");
-            if(!(Operand is ValueExpression)) throw new FormatException("Expected a ValueExpression as operand");
+            if(Operand == null) throw Error.InvalidOperation("Criterium does not have an operand");
+            if(!(Operand is ValueExpression)) Error.Format("Expected a ValueExpression as operand");
 
             string value = Operand.ToString();
 
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Search
                 case Operator.LT: return "<" + value;
                 case Operator.LTE: return "<=" + value;
                 default:
-                    throw Error.NotImplemented("Operator of type '{0}' is not supported", Type.ToString());
+                    throw Error.NotImplemented($"Operator of type '{Type}' is not supported");
             }
         }
 

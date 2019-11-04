@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -30,9 +31,9 @@ namespace Hl7.Fhir.Validation
 
                 result.SetValidateRecursively(recurse);
             }
-            catch (InvalidOperationException)
+            catch (InvalidOperationException ex)
             {
-                throw new NotSupportedException("Validation is not supported on this platform");
+                throw Error.NotSupported("Validation is not supported on this platform", ex);
             }
             return result;
         }

@@ -27,14 +27,14 @@ namespace Hl7.Fhir.Search
 
         public CompositeValue(ValueExpression[] components)
         {
-            if (components == null) throw Error.ArgumentNull("components");
+            if (components == null) throw Error.ArgumentNull(nameof(components));
 
             Components = components;
         }
 
         public CompositeValue(IEnumerable<ValueExpression> components)
         {
-            if (components == null) throw Error.ArgumentNull("components");
+            if (components == null) throw Error.ArgumentNull(nameof(components));
 
             Components = components.ToArray();
         }
@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Search
 
         public static CompositeValue Parse(string text)
         {
-            if (text == null) throw Error.ArgumentNull("text");
+            if (text == null) throw Error.ArgumentNull(nameof(text));
 
             var values = text.SplitNotEscaped(TUPLESEPARATOR);
 

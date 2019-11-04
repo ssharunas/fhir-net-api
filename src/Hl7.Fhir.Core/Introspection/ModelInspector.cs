@@ -35,7 +35,7 @@ namespace Hl7.Fhir.Introspection
 
         public void Import(Assembly assembly)
         {
-            if (assembly == null) throw Error.ArgumentNull("assembly");
+            if (assembly == null) throw Error.ArgumentNull(nameof(assembly));
 
 #if PORTABLE45
 			if (assembly.GetCustomAttribute<NotMappedAttribute>() != null) return;
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Introspection
             EnumMapping mapping = null;
 
             if (!EnumMapping.IsMappableEnum(type))
-                throw Error.Argument("type", "Type {0} is not a mappable enumeration", type.Name);
+                throw Error.Argument(nameof(type), $"Type {type.Name} is not a mappable enumeration");
 
             lock (lockObject)
             {
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Introspection
                 mapping = EnumMapping.Create(type);
                 _enumMappingsByType[type] = mapping;
 
-                Message.Info("Created Enum mapping for newly encountered type {0}", type.Name);
+                Message.Info($"Created Enum mapping for newly encountered type {type.Name}");
             }
 
             return mapping;
@@ -106,7 +106,7 @@ namespace Hl7.Fhir.Introspection
             ClassMapping mapping = null;
 
             if(!ClassMapping.IsMappableType(type))
-                throw Error.Argument("type", "Type {0} is not a mappable Fhir datatype or resource", type.Name);
+                throw Error.Argument(nameof(type), $"Type {type.Name} is not a mappable Fhir datatype or resource");
 
             lock (lockObject)
             {
@@ -143,8 +143,8 @@ namespace Hl7.Fhir.Introspection
 
         public EnumMapping FindEnumMappingByType(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
-            if (!type.IsEnum()) throw Error.Argument("type", "Type {0} is not an enumeration", type.Name);
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (!type.IsEnum()) throw Error.Argument(nameof(type), $"Type {type.Name} is not an enumeration");
 
             EnumMapping entry = null;
 

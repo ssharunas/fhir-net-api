@@ -26,8 +26,8 @@ namespace Hl7.Fhir.Serialization
 
         public static object Convert(object value, Type to)
         {
-            if(to == null) throw Error.ArgumentNull("to");
-            if(value == null) throw Error.ArgumentNull("value");
+            if(to == null) throw Error.ArgumentNull(nameof(to));
+            if(value == null) throw Error.ArgumentNull(nameof(value));
 
             // No conversion necessary...
             if (value.GetType() == to) return value;
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Serialization
                 if (attr != null) return attr.Literal;
             }
 
-            throw Error.NotSupported("Cannot convert {0} value '{1}' to string", value.GetType().Name, value);
+            throw Error.NotSupported($"Cannot convert {value.GetType().Name} value '{value}' to string");
         }
         
         private static object convertXmlStringToPrimitive(Type to, string value)
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Serialization
             if(typeof(System.Uri).IsAssignableFrom(to))
                 return new Uri(value, UriKind.RelativeOrAbsolute);
 
-            throw Error.NotSupported("Cannot convert string value '{0}' to a {1}", value, to.Name);
+            throw Error.NotSupported($"Cannot convert string value '{value}' to a {to.Name}");
         }
 
         public static T ConvertTo<T>(this object value)

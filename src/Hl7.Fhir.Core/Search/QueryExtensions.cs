@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Search
 
         //public static Query Where(this Query qry, IEnumerable<Criterium> criteria)
         //{
-        //    if (criteria == null) throw Error.ArgumentNull("criteria");
+        //    if (criteria == null) throw Error.ArgumentNull(nameof(criteria));
 
         //    foreach (var criterium in criteria)
         //    {
@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Search
 
         //public static Query Where(this Query qry, params Criterium[] criteria)
         //{
-        //    if (criteria == null) throw Error.ArgumentNull("criteria");
+        //    if (criteria == null) throw Error.ArgumentNull(nameof(criteria));
 
         //    qry.Where((IEnumerable<Criterium>)criteria);
 
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Search
 
         public static Query Custom(this Query qry, string customQueryName)
         {
-            if (customQueryName == null) throw Error.ArgumentNull("customQueryName");
+            if (customQueryName == null) throw Error.ArgumentNull(nameof(customQueryName));
 
             qry.QueryName = customQueryName;
             return qry;
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Search
 
         public static Query OrderBy(this Query qry, string paramName, SortOrder order = SortOrder.Ascending)
         {
-            if (paramName == null) throw Error.ArgumentNull("paramName");
+            if (paramName == null) throw Error.ArgumentNull(nameof(paramName));
 
             var sort = qry.Sort ?? new List<Tuple<string, SortOrder>>();
             sort.Add(Tuple.Create(paramName, order));

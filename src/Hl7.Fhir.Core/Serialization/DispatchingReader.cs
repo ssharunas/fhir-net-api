@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization
 
         public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {
-            if (prop == null) throw Error.ArgumentNull("prop");
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
             // ArrayMode avoid the dispatcher making nested calls into the RepeatingElementReader again
             // when reading array elements. FHIR does not support nested arrays, and this avoids an endlessly
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Serialization
             var typeName = mappedProperty.GetChoiceSuffixFromName(memberName);
 
             if (String.IsNullOrEmpty(typeName))
-                throw Error.Format("Encountered polymorph member {0}, but is does not specify the type used", _current, memberName);
+                throw Error.Format($"Encountered polymorph member {memberName}, but is does not specify the type used", _current);
 
             // Exception: valueResource actually means the element is of type ResourceReference
             if (typeName == "Resource") typeName = "ResourceReference";
@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Serialization
             result = _inspector.FindClassMappingForFhirDataType(typeName);
 
             if (result == null)
-                throw Error.Format("Encountered polymorph member {0}, which uses unknown datatype {1}", _current, memberName, typeName);
+                throw Error.Format($"Encountered polymorph member {memberName}, which uses unknown datatype {typeName}", _current);
 
             return result;
         }

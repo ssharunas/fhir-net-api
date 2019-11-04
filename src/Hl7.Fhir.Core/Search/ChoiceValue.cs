@@ -27,14 +27,14 @@ namespace Hl7.Fhir.Search
 
         public ChoiceValue(ValueExpression[] choices)
         {
-            if (choices == null) throw Error.ArgumentNull("choices");
+            if (choices == null) throw Error.ArgumentNull(nameof(choices));
 
             Choices = choices;
         }
 
         public ChoiceValue(IEnumerable<ValueExpression> choices)
         {
-            if (choices == null) throw Error.ArgumentNull("choices");
+            if (choices == null) throw Error.ArgumentNull(nameof(choices));
 
             Choices = choices.ToArray();
         }
@@ -47,7 +47,7 @@ namespace Hl7.Fhir.Search
 
         public static ChoiceValue Parse(string text)
         {
-            if (text == null) throw Error.ArgumentNull("text");
+            if (text == null) throw Error.ArgumentNull(nameof(text));
 
             var values = text.SplitNotEscaped(VALUESEPARATOR);
 

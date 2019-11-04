@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Serialization
     {
         public static void WriteTo(Bundle bundle, XmlWriter writer, bool summary = false)
         {
-            if (bundle == null) throw new ArgumentException("Bundle cannot be null");
+            if (bundle == null) Error.Argument(nameof(bundle), "Bundle cannot be null");
 
             var root = new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_FEED);
 
@@ -57,7 +57,7 @@ namespace Hl7.Fhir.Serialization
 
         public static void WriteTo(BundleEntry entry, XmlWriter writer, bool summary = false)
         {
-            if (entry == null) throw new ArgumentException("Entry cannot be null");
+            if (entry == null) Error.Argument(nameof(entry), "Entry cannot be null");
 
             var result = createEntry(entry,summary);
 

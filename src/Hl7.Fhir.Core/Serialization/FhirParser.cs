@@ -49,7 +49,7 @@ namespace Hl7.Fhir.Serialization
             if (result is T)
                 return (T)result;
             else
-                throw Error.Format("Parsed data is not of given type {0}", reader, typeof(T).Name);
+                throw Error.Format($"Parsed data is not of given type {typeof(T).Name}", reader);
         }
 
 

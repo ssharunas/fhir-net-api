@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Rest
     {
         public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
         {
-            if (bundle == null) throw Error.ArgumentNull("bundle");
+            if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
             // Clone old bundle, without the entries (so, just the header)
             var oldEntries = bundle.Entries;
@@ -55,7 +55,7 @@ namespace Hl7.Fhir.Rest
                 else if (entry is DeletedEntry)
                     result.Entries.Add(entry);
                 else
-                    throw Error.NotSupported("Cannot refresh an entry of type {0}", messageArgs: entry.GetType().Name);
+                    throw Error.NotSupported($"Cannot refresh an entry of type {entry.GetType().Name}");
             }
 
             return result;

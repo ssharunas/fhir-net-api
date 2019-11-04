@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Serialization
     {
         public static void WriteTo(Bundle bundle, JsonWriter writer, bool summary = false)
         {
-            if (bundle == null) throw new ArgumentException("Bundle cannot be null");
+            if (bundle == null) throw Error.Argument(nameof(bundle), "Bundle cannot be null");
 
             JObject result = new JObject();
 
@@ -58,7 +58,7 @@ namespace Hl7.Fhir.Serialization
 
         public static void WriteTo(BundleEntry entry, JsonWriter writer, bool summary = false)
         {
-            if (entry == null) throw new ArgumentException("Entry cannot be null");
+            if (entry == null) Error.Argument(nameof(entry), "Entry cannot be null");
 
             var result = createEntry(entry, summary);
 

@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Validation
             if (value == null) return ValidationResult.Success;
 
             if (value.GetType() != typeof(DateTimeOffset))
-                throw new ArgumentException("IdPatternAttribute can only be applied to DateTimeOffset properties");
+                throw Error.Argument(nameof(value), "IdPatternAttribute can only be applied to DateTimeOffset properties");
 
             if (Instant.IsValidValue(value as string))
                 return ValidationResult.Success;

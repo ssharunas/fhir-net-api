@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Validation
             if (value == null) return ValidationResult.Success;
 
             if (value.GetType() != typeof(string))
-                throw new ArgumentException("DatePatternAttribute can only be applied to string properties");
+				throw Error.Argument(nameof(value), "DatePatternAttribute can only be applied to string properties");
 
             if (Date.IsValidValue(value as string))
                 return ValidationResult.Success;

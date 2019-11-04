@@ -33,9 +33,9 @@ namespace Hl7.Fhir.Serialization
 
         public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
         {
-            if (prop == null) throw Error.ArgumentNull("prop");
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
-            if (existing != null && !(existing is IList) ) throw Error.Argument("existing", "Can only read repeating elements into a type implementing IList");
+            if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
 
             IList result = existing as IList;
 

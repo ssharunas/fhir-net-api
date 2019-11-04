@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Rest
                 if (!String.IsNullOrEmpty(tag.Term))
                 {
                     if (tag.Term.Contains(",") || tag.Term.Contains(";"))
-                        throw new ArgumentException("Found tag containing ',' or ';' - this will produce an inparsable Category header");
+                        throw Error.Argument(nameof(tags), "Found tag containing ',' or ';' - this will produce an inparsable Category header");
                     sb.Append(tag.Term);
                 }
 
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Rest
         /// only the key was specified as a query parameter.</returns>
         internal static Tuple<string, string> SplitParam(string param)
         {
-            if (param == null) throw Error.ArgumentNull("param");
+            if (param == null) throw Error.ArgumentNull(nameof(param));
 
             string[] pair = param.Split('=');
 
@@ -132,7 +132,7 @@ namespace Hl7.Fhir.Rest
 
         public static IEnumerable<Tuple<string, string>> SplitParams(string query)
         {
-            if (query == null) throw Error.ArgumentNull("query");
+            if (query == null) throw Error.ArgumentNull(nameof(query));
 
             var result = new List<Tuple<string, string>>();
 
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Rest
         /// <returns></returns>
         internal static string MakeParam(string key, string value = null)
         {
-            if (key == null) throw Error.ArgumentNull("key");
+            if (key == null) throw Error.ArgumentNull(nameof(key));
 
             var result = Uri.EscapeDataString(key);
 
@@ -174,8 +174,8 @@ namespace Hl7.Fhir.Rest
 
         internal static string JoinParam(Tuple<string, string> kv)
         {
-            if (kv == null) throw Error.ArgumentNull("kv");
-            if (kv.Item1 == null) throw Error.Argument("Key in tuple may not be null", "kv");
+            if (kv == null) throw Error.ArgumentNull(nameof(kv));
+            if (kv.Item1 == null) throw Error.Argument(nameof(kv), "Key in tuple may not be null");
 
             return MakeParam(kv.Item1, kv.Item2);
         }

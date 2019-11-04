@@ -13,6 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 
 namespace Hl7.Fhir.Validation
 {
@@ -24,7 +25,7 @@ namespace Hl7.Fhir.Validation
             if (value == null) return ValidationResult.Success;
 
             if (value.GetType() != typeof(string))
-                throw new ArgumentException("UriPatternAttribute can only be applied to .NET Uri properties");
+                throw Error.Argument(nameof(value), "UriPatternAttribute can only be applied to .NET Uri properties");
 
             if (!FhirUri.IsValidValue(value as string))
                 return DotNetAttributeValidation.BuildResult(validationContext, "Uri uses an urn:oid or urn:uuid scheme, but the syntax {0} is incorrect", value as string);

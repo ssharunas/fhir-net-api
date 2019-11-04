@@ -52,12 +52,12 @@ namespace Hl7.Fhir.Search
 
         public static TokenValue Parse(string text)
         {
-            if (text == null) throw Error.ArgumentNull("text");
+            if (text == null) throw Error.ArgumentNull(nameof(text));
 
             string[] pair = text.SplitNotEscaped('|');
 
             if (pair.Length > 2)
-                throw Error.Argument("text", "Token cannot have more than two parts separated by '|'");
+                throw Error.Argument(nameof(text), "Token cannot have more than two parts separated by '|'");
 
             bool hasNamespace = pair.Length == 2;
 
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Search
             if (hasNamespace)
             {
                 if(pair[1] == String.Empty)
-                    throw new FormatException("Token query parameters should at least specify a value after the '|'");
+                    throw Error.Format("Token query parameters should at least specify a value after the '|'");
 
                 string pair1 = StringValue.UnescapeString(pair[1]);
 

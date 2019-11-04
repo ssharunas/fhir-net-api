@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Support;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -179,7 +180,7 @@ namespace Hl7.Fhir.Model
                     return dest;
                 }
                 else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
             }
             
             public override IDeepCopyable DeepCopy()
@@ -284,7 +285,7 @@ namespace Hl7.Fhir.Model
                     return dest;
                 }
                 else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
             }
             
             public override IDeepCopyable DeepCopy()
@@ -393,7 +394,7 @@ namespace Hl7.Fhir.Model
                     return dest;
                 }
                 else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
             }
             
             public override IDeepCopyable DeepCopy()
@@ -543,7 +544,7 @@ namespace Hl7.Fhir.Model
                     return dest;
                 }
                 else
-                	throw new ArgumentException("Can only copy to an object of the same type", "other");
+                	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
             }
             
             public override IDeepCopyable DeepCopy()
@@ -739,7 +740,7 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
         }
         
         public override IDeepCopyable DeepCopy()

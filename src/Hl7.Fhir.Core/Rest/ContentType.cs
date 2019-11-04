@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Support;
 using System;
 using System.Linq;
 using System.Text;
@@ -49,7 +50,7 @@ namespace Hl7.Fhir.Rest
 
 		public const string PDF_CONTENT_HEADER = "application/pdf";
 
-		public static readonly string[] PDF_CONTENT_HEADERS = {PDF_CONTENT_HEADER};
+		public static readonly string[] PDF_CONTENT_HEADERS = { PDF_CONTENT_HEADER };
 
 		public const string ATOM_CONTENT_HEADER = "application/atom+xml";
 		public const string OCTET_CONTENT_HEADER = "application/octet-stream";
@@ -74,8 +75,8 @@ namespace Hl7.Fhir.Rest
 				return ResourceFormat.Json;
 			if (f == FORMAT_PARAM_XML || XML_CONTENT_HEADERS.Contains(f))
 				return ResourceFormat.Xml;
-			
-			if(f == FORMAT_PARAM_PDF || XML_CONTENT_HEADERS.Contains(f))
+
+			if (f == FORMAT_PARAM_PDF || XML_CONTENT_HEADERS.Contains(f))
 				return ResourceFormat.Pdf;
 
 			return ResourceFormat.Unknown;
@@ -99,7 +100,7 @@ namespace Hl7.Fhir.Rest
 
 			if (XML_CONTENT_HEADERS.Contains(f))
 				return ResourceFormat.Xml;
-			
+
 			return ResourceFormat.Unknown;
 		}
 
@@ -119,7 +120,7 @@ namespace Hl7.Fhir.Rest
 			else if (format == ResourceFormat.Octet)
 				contentType = OCTET_CONTENT_HEADER;
 			else
-				throw new ArgumentException("Cannot determine content type for data format " + format);
+				throw Error.Argument(nameof(format), "Cannot determine content type for data format " + format);
 
 			return contentType + ";charset=" + Encoding.UTF8.WebName;
 		}
@@ -133,7 +134,7 @@ namespace Hl7.Fhir.Rest
 			if (format == ResourceFormat.Pdf)
 				return FORMAT_PARAM_PDF;
 
-			throw new ArgumentException("Cannot determine content type for data format " + format);
+			throw Error.Argument(nameof(format), "Cannot determine content type for data format " + format);
 		}
 
 		/// <summary>

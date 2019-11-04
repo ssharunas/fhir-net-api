@@ -48,7 +48,7 @@ namespace Hl7.Fhir.Introspection
         
         internal static PropertyMapping Create(PropertyInfo prop, out IEnumerable<Type> referredTypes)        
         {
-            if (prop == null) throw Error.ArgumentNull("prop");
+            if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
             var foundTypes = new List<Type>();
 
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Introspection
             var isValueElement = valueElementAttr != null && valueElementAttr.IsPrimitiveValue;
 
             if(isValueElement && !isAllowedNativeTypeForDataTypeValue(prop.PropertyType))
-                throw Error.Argument("prop", "Property {0} is marked for use as a primitive element value, but its .NET type ({1}) is not supported by the serializer.", buildQualifiedPropName(prop), prop.PropertyType.Name);
+                throw Error.Argument(nameof(prop), $"Property {buildQualifiedPropName(prop)} is marked for use as a primitive element value, but its .NET type ({prop.PropertyType.Name}) is not supported by the serializer.");
 
             return isValueElement;
         }
@@ -159,20 +159,19 @@ namespace Hl7.Fhir.Introspection
 
         public bool MatchesSuffixedName(string suffixedName)
         {
-            if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
+            if (suffixedName == null) throw Error.ArgumentNull(nameof(suffixedName));
 
             return Choice == ChoiceType.DatatypeChoice && suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
         }
 
         public string GetChoiceSuffixFromName(string suffixedName)
         {
-            if (suffixedName == null) throw Error.ArgumentNull("suffixedName");
+            if (suffixedName == null) throw Error.ArgumentNull((suffixedName));
 
             if (MatchesSuffixedName(suffixedName))
                 return suffixedName.Remove(0, Name.Length);
             else
-                throw Error.Argument("suffixedName", "The given suffixed name {0} does not match this property's name {1}",
-                                            suffixedName, Name);
+                throw Error.Argument(nameof(suffixedName), $"The given suffixed name {suffixedName} does not match this property's name {Name}");
         }
      
         //public Type GetChoiceType(string choiceSuffix)

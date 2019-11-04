@@ -78,7 +78,7 @@ namespace Hl7.Fhir.Introspection
 
         public PropertyMapping FindMappedElementByName(string name)
         {
-            if (name == null) throw Error.ArgumentNull("name");
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
             var normalizedName = name.ToUpperInvariant();
 
@@ -110,14 +110,14 @@ namespace Hl7.Fhir.Introspection
                 result.IsResource = IsFhirResource(type);
 
                 if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
-                    throw Error.Argument("type", "Type {0} is not a resource, so its FhirType attribute may not specify a profile", type.Name);
+                    throw Error.Argument(nameof(type), $"Type {type.Name} is not a resource, so its FhirType attribute may not specify a profile");
 
                 inspectProperties(result);
 
                 return result;
             }
             else
-                throw Error.Argument("type", "Type {0} is not marked as a Fhir Resource or datatype using [FhirType]", type.Name);
+                throw Error.Argument(nameof(type), $"Type {type.Name} is not marked as a Fhir Resource or datatype using [FhirType]");
         }
 
 
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Introspection
                 var propKey = propMapping.Name.ToUpperInvariant();
                 
                 if (me._propMappings.ContainsKey(propKey))
-                    throw Error.InvalidOperation("Class has multiple properties that are named '{0}'. The property name must be unique", propKey);
+                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique");
 
                 me._propMappings.Add(propKey, propMapping);
 
@@ -151,11 +151,11 @@ namespace Hl7.Fhir.Introspection
         //private static void checkMutualExclusiveAttributes(Type type)
         //{
         //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
+        //        throw Error.Argument ("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
         //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
+        //        throw Error.Argument ("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
         //    if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
+        //        throw Error.Argument ("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
         //}
 
 
@@ -218,10 +218,10 @@ namespace Hl7.Fhir.Introspection
 
 #if PORTABLE45
 			if (type.GetTypeInfo().IsAbstract)
-				throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
+				throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
 #else
 			if (type.IsAbstract)
-                throw Error.Argument("type", "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
+                throw Error.Argument(nameof(type), $"Type {type.Name} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype");
 #endif
 
             // Open generic type definitions can never appear as roots of objects

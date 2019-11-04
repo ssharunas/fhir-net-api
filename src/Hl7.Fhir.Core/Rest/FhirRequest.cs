@@ -27,9 +27,9 @@ namespace Hl7.Fhir.Rest
 		public FhirRequest(Uri location, string method = "GET",
 			 Action<FhirRequest, HttpWebRequest> beforeRequest = null, Action<FhirResponse, WebResponse> afterRequest = null)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
-			if (method == null) throw Error.ArgumentNull("method");
-			if (!location.IsAbsoluteUri) throw Error.Argument("location", "Must be absolute uri");
+			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (method == null) throw Error.ArgumentNull(nameof(method));
+			if (!location.IsAbsoluteUri) throw Error.Argument(nameof(location), "Must be absolute uri");
 
 			Location = location;
 			Method = method;
@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Rest
 
 		public void SetBody(Resource resource, ResourceFormat format)
 		{
-			if (resource == null) throw Error.ArgumentNull("resource");
+			if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
 			if (resource is Binary)
 			{
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Rest
 
 		public void SetBody(Bundle bundle, ResourceFormat format)
 		{
-			if (bundle == null) throw Error.ArgumentNull("bundle");
+			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
 			Body = format == ResourceFormat.Xml ?
 				FhirSerializer.SerializeBundleToXmlBytes(bundle, summary: false) :
@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Rest
 
 		public void SetBody(TagList tagList, ResourceFormat format)
 		{
-			if (tagList == null) throw Error.ArgumentNull("tagList");
+			if (tagList == null) throw Error.ArgumentNull(nameof(tagList));
 
 			Body = format == ResourceFormat.Xml ?
 				FhirSerializer.SerializeTagListToXmlBytes(tagList) :
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Rest
 
 		public void SetTagsInHeader(IEnumerable<Tag> tags)
 		{
-			if (tags == null) throw Error.ArgumentNull("tags");
+			if (tags == null) throw Error.ArgumentNull(nameof(tags));
 
 			CategoryHeader = HttpUtil.BuildCategoryHeader(tags);
 		}

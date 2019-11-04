@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Support
 
         public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
         {
-            if(t == null) throw Error.ArgumentNull("t");
+            if(t == null) throw Error.ArgumentNull(nameof(t));
 
 #if PORTABLE45
 			return t.GetTypeInfo().DeclaredProperties.Union(t.GetTypeInfo().BaseType.GetTypeInfo().DeclaredProperties); //(BindingFlags.Instance | BindingFlags.Public);
@@ -50,8 +50,8 @@ namespace Hl7.Fhir.Support
 
         public static PropertyInfo FindPublicProperty(Type t, string name)
         {
-            if(t == null) throw Error.ArgumentNull("t");
-            if (name == null) throw Error.ArgumentNull("name");
+            if(t == null) throw Error.ArgumentNull(nameof(t));
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
 #if PORTABLE45
             return t.GetRuntimeProperty(name);
@@ -62,8 +62,8 @@ namespace Hl7.Fhir.Support
 
         internal static MethodInfo FindPublicStaticMethod(Type t, string name, params Type[] arguments)
         {
-            if (t == null) throw Error.ArgumentNull("t");
-            if (name == null) throw Error.ArgumentNull("name");
+            if (t == null) throw Error.ArgumentNull(nameof(t));
+            if (name == null) throw Error.ArgumentNull(nameof(name));
 
 #if PORTABLE45
             return t.GetRuntimeMethod(name,arguments);
@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Support
 
         internal static bool HasDefaultPublicConstructor(Type t)
         {
-            if (t == null) throw Error.ArgumentNull("t");
+            if (t == null) throw Error.ArgumentNull(nameof(t));
 
 #if PORTABLE45
 			if (t.GetTypeInfo().IsValueType)
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Support
 
         public static bool IsNullableType(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
 #if PORTABLE45
 			return (type.GetTypeInfo().IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Support
 
         public static Type GetNullableArgument(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
             if (IsNullableType(type))
             {
@@ -122,7 +122,7 @@ namespace Hl7.Fhir.Support
 #endif
 			}
             else
-                throw Error.Argument("type", "Type {0} is not a Nullable<T>", type.Name);
+                throw Error.Argument(nameof(type), $"Type {type.Name} is not a Nullable<T>");
         }
 
         public static bool IsTypedCollection(Type type)
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Support
         /// <returns>The type of the typed collection's items.</returns>
         public static Type GetCollectionItemType(Type type)
         {
-            if (type == null) throw Error.ArgumentNull("type");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
 
             Type genericListType;
 
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Support
 			{
 				//EK: If I look at ImplementsGenericDefinition, I don't think this can actually occur.
 				//if (genericListType.IsGenericTypeDefinition)
-				//throw Error.Argument("type", "Type {0} is not a collection.", type.Name);
+				//throw Error.Argument(nameof(type), "Type {0} is not a collection.", type.Name);
 
 #if PORTABLE45
 				return genericListType.GetTypeInfo().GenericTypeArguments[0];
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Support
 			}
 			else
 			{
-				throw Error.Argument("type", "Type {0} is not a collection.", type.Name);
+				throw Error.Argument(nameof(type), $"Type {type.Name} is not a collection.");
 			}
         }
 
@@ -206,15 +206,15 @@ namespace Hl7.Fhir.Support
 
         public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
         {
-            if (type == null) throw Error.ArgumentNull("type");
-            if (genericInterfaceDefinition == null) throw Error.ArgumentNull("genericInterfaceDefinition");
+            if (type == null) throw Error.ArgumentNull(nameof(type));
+            if (genericInterfaceDefinition == null) throw Error.ArgumentNull(nameof(genericInterfaceDefinition));
 
 #if PORTABLE45
 			if (!genericInterfaceDefinition.GetTypeInfo().IsInterface || !genericInterfaceDefinition.GetTypeInfo().IsGenericTypeDefinition)
-				throw Error.Argument("genericInterfaceDefinition", "'{0}' is not a generic interface definition.", genericInterfaceDefinition.Name);
+				throw Error.Argument(nameof(genericInterfaceDefinition), "'{0}' is not a generic interface definition.", genericInterfaceDefinition.Name);
 #else
 			if (!genericInterfaceDefinition.IsInterface || !genericInterfaceDefinition.IsGenericTypeDefinition)
-               throw Error.Argument("genericInterfaceDefinition", "'{0}' is not a generic interface definition.",genericInterfaceDefinition.Name);
+               throw Error.Argument(nameof(genericInterfaceDefinition), $"'{genericInterfaceDefinition.Name}' is not a generic interface definition.");
 #endif
 
 #if PORTABLE45
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Support
 
         internal static IEnumerable<FieldInfo> FindEnumFields(Type t)
         {
-            if (t == null) throw Error.ArgumentNull("t");
+            if (t == null) throw Error.ArgumentNull(nameof(t));
 
 #if PORTABLE45
 			return t.GetTypeInfo().DeclaredFields.Where(a => a.IsPublic && a.IsStatic);
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Support
 
         internal static bool IsArray(object value)
         {
-            if (value == null) throw Error.ArgumentNull("value");
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             return value.GetType().IsArray;
         }

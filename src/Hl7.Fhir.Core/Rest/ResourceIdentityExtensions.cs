@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 
 namespace Hl7.Fhir.Rest
@@ -27,8 +28,7 @@ namespace Hl7.Fhir.Rest
             if (typeof(Resource).IsAssignableFrom(type))
                 return ModelInfo.GetResourceNameForType(type);
             else
-                throw new ArgumentException(String.Format(
-                    "Cannot determine collection name, type {0} is not a resource type", type.Name));
+                throw Error.Argument($"Cannot determine collection name, type {type.Name} is not a resource type");
         }
     }
 }

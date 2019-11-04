@@ -4,6 +4,7 @@ using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Validation;
 using System.Linq;
 using System.Runtime.Serialization;
+using Hl7.Fhir.Support;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -54,10 +55,10 @@ namespace Hl7.Fhir.Model
 		public Period(DateTime? start, DateTime? end)
 		{
 			if (start != null && start != DateTime.MinValue && start != DateTime.MaxValue)
-				StartElement = start;
+				StartElement = new FhirDateTime(start.Value);
 
 			if (end != null && end != DateTime.MinValue && end != DateTime.MaxValue)
-				EndElement = end;
+				EndElement = new FhirDateTime(end.Value);
 		}
 
         /// <summary>
@@ -134,7 +135,7 @@ namespace Hl7.Fhir.Model
                 return dest;
             }
             else
-            	throw new ArgumentException("Can only copy to an object of the same type", "other");
+            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
         }
         
         public override IDeepCopyable DeepCopy()

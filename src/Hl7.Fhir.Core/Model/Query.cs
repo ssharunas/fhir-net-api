@@ -269,8 +269,8 @@ namespace Hl7.Fhir.Model
         /// <returns>this (Query), so you can chain AddParameter calls</returns>
         public Query AddParameter(string key, string value)
         {
-            if (key == null) throw Error.ArgumentNull("key");
-            if (value == null) throw Error.ArgumentNull("value");
+            if (key == null) throw Error.ArgumentNull(nameof(key));
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             if (Parameter == null) Parameter = new List<Extension>();
 
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
         /// of modifiers attached to it.</para><para>No exception is thrown when the parameters were not found and nothing was removed.</para></remarks>
         public void RemoveParameter(string key)
         {
-            if (key == null) throw Error.ArgumentNull("key");
+            if (key == null) throw Error.ArgumentNull(nameof(key));
 
             if (Parameter == null) return;
             Parameter.RemoveAll(ParamsExtensions.MatchParam(key));
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
         /// given modifier, otherwise any parameter with the given name will be matched.</remarks>
         public string GetSingleValue(string key)
         {
-            if (key == null) throw Error.ArgumentNull("key");
+            if (key == null) throw Error.ArgumentNull(nameof(key));
             if (Parameter == null) return null;
 
             var extension = Parameter.SingleWithName(key);
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
         /// given modifier, otherwise any parameter with the given name will be matched.</remarks>
         public IEnumerable<string> GetValues(string key)
         {
-            if (key == null) throw Error.ArgumentNull("key");
+            if (key == null) throw Error.ArgumentNull(nameof(key));
             if (Parameter == null) return null;
 
             var extension = Parameter.WithName(key);
@@ -341,8 +341,8 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public static Extension BuildParamExtension(string key, string value)
         {
-            if (key == null) throw Error.ArgumentNull("key");
-            if (value == null) throw Error.ArgumentNull("value");
+            if (key == null) throw Error.ArgumentNull(nameof(key));
+            if (value == null) throw Error.ArgumentNull(nameof(value));
 
             return new Extension(BuildParamUri(key), new FhirString(value));
         }
@@ -362,7 +362,7 @@ namespace Hl7.Fhir.Model
         /// <returns></returns>
         public static string BuildParamUri(string paramKey)
         {
-            if (paramKey == null) throw Error.ArgumentNull("paramName");
+            if (paramKey == null) throw Error.ArgumentNull(nameof(paramKey));
 
             return XmlNs.FHIR_URL_SEARCHPARAM + "#" + paramKey;
         }
@@ -377,8 +377,8 @@ namespace Hl7.Fhir.Model
         /// <returns>The name of the parameter, possibly including a modifier</returns>
         public static string ExtractParamKey(Extension paramExt)
         {
-            if (paramExt == null) throw Error.ArgumentNull("paramExt");
-            if (paramExt.Url == null) throw new ArgumentException("Extension.url cannot be null", "paramExt");
+            if (paramExt == null) throw Error.ArgumentNull(nameof(paramExt));
+            if (paramExt.Url == null) throw Error.Argument(nameof(paramExt), "Extension.url cannot be null");
 
             var uriString = paramExt.Url.ToString();
 

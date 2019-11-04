@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Serialization
                     if (resourceType == "feed" || resourceType == "Bundle")
                         throw Error.Format("Encountered a feed instead of a resource", _reader);
                     else
-                        throw Error.Format("Encountered unknown resource type {0}", _reader, resourceType);
+                        throw Error.Format($"Encountered unknown resource type {resourceType}", _reader);
                 }
 
                 if (existing == null)
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (mappedType.NativeType != existing.GetType())
-                        throw Error.Argument("existing", "Existing instance is of type {0}, but data indicates resource is a {1}", existing.GetType().Name, resourceType);
+                        throw Error.Argument(nameof(existing), $"Existing instance is of type {existing.GetType().Name}, but data indicates resource is a {resourceType}");
                 }
                
                 // Delegate the actual work to the ComplexTypeReader, since

@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,7 +20,7 @@ namespace Hl7.Fhir.Validation
     {
         public static void Validate(object value, bool recurse = false)
         {
-            if (value == null) throw Error.ArgumentNull("value");
+            if (value == null) throw Error.ArgumentNull(nameof(value));
         //    assertSupportedInstanceType(value);
 
             Validator.ValidateObject(value, ValidationContextFactory.Create(value, null, recurse), true);
@@ -27,7 +28,7 @@ namespace Hl7.Fhir.Validation
 
         public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false)
         {
-            if (value == null) throw Error.ArgumentNull("value");
+            if (value == null) throw Error.ArgumentNull(nameof(value));
           // assertSupportedInstanceType(value);
 
             var results = validationResults ?? new List<ValidationResult>();
@@ -43,7 +44,7 @@ namespace Hl7.Fhir.Validation
                 return;
 
             else
-                throw new ArgumentException("Validation works on the basic FHIR types, not on '" + value.GetType().Name + "'");
+                throw Error.Argument(nameof(value), "Validation works on the basic FHIR types, not on '" + value.GetType().Name + "'");
         }
 
 

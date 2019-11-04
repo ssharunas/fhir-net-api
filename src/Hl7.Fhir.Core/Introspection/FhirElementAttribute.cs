@@ -28,6 +28,7 @@
 
 */
 
+using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections;
@@ -72,7 +73,7 @@ namespace Hl7.Fhir.Introspection
         // ValidationContext
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if(validationContext == null) throw Error.ArgumentNull("validationContext");
+            if(validationContext == null) throw Error.ArgumentNull(nameof(validationContext));
 
             if (value == null) return ValidationResult.Success;
 

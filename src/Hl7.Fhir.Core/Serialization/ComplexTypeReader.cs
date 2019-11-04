@@ -33,12 +33,12 @@ namespace Hl7.Fhir.Serialization
 
         internal object Deserialize(ClassMapping mapping, object existing=null)
         {
-            if (mapping == null) throw Error.ArgumentNull("mapping");
+            if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
 
             if (existing != null)
             {
                 if (mapping.NativeType != existing.GetType())
-                    throw Error.Argument("existing", "Existing instance is of type {0}, but type parameter indicates data type is a {1}", existing.GetType().Name, mapping.NativeType.Name);
+                    throw Error.Argument(nameof(existing), $"Existing instance is of type {existing.GetType().Name}, but type parameter indicates data type is a {mapping.NativeType.Name}");
             }
             else
             {
@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Serialization
                 else
                 {
                     if (SerializationConfig.AcceptUnknownMembers == false)
-                        throw Error.Format("Encountered unknown member '{0}' while deserializing", _current, memberName);
+                        throw Error.Format($"Encountered unknown member '{memberName}' while deserializing", _current);
                     else
                         Message.Info("Skipping unknown member " + memberName);
                 }

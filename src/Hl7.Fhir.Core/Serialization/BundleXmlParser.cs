@@ -62,11 +62,11 @@ namespace Hl7.Fhir.Serialization
                 var internalReader = XmlReader.Create(reader, settings);
                 feed = XDocument.Load(internalReader, LoadOptions.SetLineInfo).Root;
                 if (feed.Name != XmlNs.XATOM + "feed")
-                    throw Error.Format("Input data is not an Atom feed", null);
+                    throw Error.Format("Input data is not an Atom feed");
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while loading feed: " + exc.Message, null);
+                throw Error.Format("Exception while loading feed: " + exc.Message);
             }
 
             Bundle result;
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while parsing xml feed attributes: " + exc.Message, null);
+                throw Error.Format("Exception while parsing xml feed attributes: " + exc.Message);
             }
 
             result.Entries = loadEntries(feed.Elements().Where(elem =>
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Serialization
             }
             catch (Exception exc)
             {
-                throw Error.Format("Exception while loading entry: " + exc.Message, null);
+                throw Error.Format("Exception while loading entry: " + exc.Message);
             }
 
             return loadEntry(entry);
