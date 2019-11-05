@@ -23,11 +23,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.Tests.Search
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableSearchParamTests
-#else
 	public class SearchParamTests
-#endif
     {
         [TestMethod]
         public void ParseCriterium()

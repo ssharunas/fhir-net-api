@@ -53,9 +53,9 @@ namespace Hl7.Fhir.Rest
 		public static RestUrl Search(this RestUrl url, string collection = null)
 		{
 			if (collection != null)
-				return new RestUrl(url).AddPath(false, collection + "/");
+				return new RestUrl(url).AddPath(false, collection , RestOperation.SEARCH);
 			else
-				return new RestUrl(url);
+				return new RestUrl(url).AddPath(RestOperation.SEARCH);
 		}
 
 		public static RestUrl Search(this RestUrl url, Query q)

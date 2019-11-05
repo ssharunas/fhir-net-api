@@ -16,11 +16,7 @@ using System.Collections.Generic;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableSerializationTests
-#else
 	public class SerializationTests
-#endif
     {
         [TestMethod]
         public void AvoidBOMUse()

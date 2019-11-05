@@ -191,11 +191,7 @@ namespace Hl7.Fhir.Introspection
             if(ReflectionHelper.IsClosedGenericType(type))
             {
                 name += "<";
-#if PORTABLE45
-				name += String.Join(",", type.GenericTypeArguments.Select(arg => arg.FullName));
-#else
-                name += String.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
-#endif
+                name += string.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
 				name += ">";
 			}
 
@@ -216,13 +212,8 @@ namespace Hl7.Fhir.Introspection
 
             if(!hasAttribute) return false;
 
-#if PORTABLE45
-			if (type.GetTypeInfo().IsAbstract)
-				throw Error.Argument(nameof(type), "Type {0} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype", type.Name);
-#else
 			if (type.IsAbstract)
                 throw Error.Argument(nameof(type), $"Type {type.Name} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype");
-#endif
 
             // Open generic type definitions can never appear as roots of objects
             // to parse. In instances, they will either have been used in closed type definitions

@@ -15,11 +15,7 @@ using Hl7.Fhir.Model;
 namespace Hl7.Fhir.Tests.Rest
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableTestRestUrl
-#else
 	public class TestRestUrl
-#endif
     {
         [TestMethod]
         public void CreateFromEndPoint()

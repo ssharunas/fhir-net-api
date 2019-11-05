@@ -46,41 +46,6 @@ namespace Hl7.Fhir.Rest
             return requestStream;
         }
 
-#if PORTABLE45 || NET45
-        internal static async Task WriteBodyAsync(this HttpWebRequest request, byte[] data)
-        {
-            Stream outs = await getRequestStreamAsync(request);
-            await outs.WriteAsync(data, 0, (int)data.Length);
-            outs.Flush();
-			outs.Dispose();
-        }
-	
-		private static Task<Stream> getRequestStreamAsync(HttpWebRequest request)
-		{
-			return request.GetRequestStreamAsync();
-		}
-
-        internal static Task<WebResponse> GetResponseAsync(this WebRequest request, TimeSpan timeout)
-        {
-            return Task.Factory.StartNew<WebResponse>(() =>
-            {
-                var t = Task.Factory.FromAsync<WebResponse>(
-                    request.BeginGetResponse,
-                    request.EndGetResponse,
-                    null);
-
-                if (!t.Wait(timeout)) throw new TimeoutException();
-
-                return t.Result;
-            });
-        }
-
-		//public static Task<WebResponse> GetResponseAsync(this HttpWebRequest req)
-		//{
-		//	return req.GetResponseAsync();
-		//}
-#endif
-
 		public static WebResponse EndGetResponseNoEx(this WebRequest req, IAsyncResult ar)
         {
             try
@@ -123,9 +88,7 @@ namespace Hl7.Fhir.Rest
 
             if (!async.IsCompleted)
             {
-#if !PORTABLE45
                 ThreadPool.RegisterWaitForSingleObject(async.AsyncWaitHandle, new WaitOrTimerCallback(TimeoutCallback), req, req.Timeout, true);
-#endif
 
                 //async.AsyncWaitHandle.WaitOne();
                 // Not having thread affinity seems to work better with ManualResetEvent

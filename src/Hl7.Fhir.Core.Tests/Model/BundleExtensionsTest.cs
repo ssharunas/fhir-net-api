@@ -17,11 +17,7 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableBundleExtensionsTest
-#else
 	public class BundleExtensionsTest
-#endif
     {
         [TestMethod]
         public void ResourceListFiltering()

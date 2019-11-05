@@ -25,11 +25,7 @@ namespace Hl7.Fhir.Tests.Rest
 {
 	[TestClass]
 	[Ignore]
-#if PORTABLE45
-	public class PortableFhirClientTests
-#else
 	public class FhirClientTests
-#endif
 	{
 		Uri testEndpoint = new Uri("http://spark.furore.com/fhir");
 		// Uri testEndpoint = new Uri("http://localhost.fiddler:1396/fhir");
@@ -192,22 +188,6 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
 		}
 
-#if PORTABLE45
-		[TestMethod, TestCategory("FhirClient")]
-		public void ReadRelativeAsync()
-		{
-			FhirClient client = new FhirClient(testEndpoint);
-
-			var loc = client.ReadAsync<Location>(new Uri("Location/1", UriKind.Relative)).Result;
-			Assert.IsNotNull(loc);
-			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
-
-			var ri = ResourceIdentity.Build(testEndpoint, "Location", "1");
-			loc = client.ReadAsync<Location>(ri).Result;
-			Assert.IsNotNull(loc);
-			Assert.AreEqual("Den Burg", loc.Resource.Address.City);
-		}
-#endif
 		[TestMethod, TestCategory("FhirClient")]
 		public void Search()
 		{
@@ -244,45 +224,6 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.IsNotNull(result);
 			Assert.IsTrue(result.Entries.Count > 0);
 		}
-
-#if PORTABLE45
-        [TestMethod, TestCategory("FhirClient")]
-        public void SearchAsync()
-        {
-            FhirClient client = new FhirClient(testEndpoint);
-            Bundle result;
-
-            result = client.SearchAsync<DiagnosticReport>().Result;
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entries.Count() > 10, "Test should use testdata with more than 10 reports");
-
-            result = client.SearchAsync<DiagnosticReport>(pageSize: 10).Result;
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entries.Count <= 10);
-
-            var withSubject = 
-                result.Entries.ByResourceType<DiagnosticReport>().FirstOrDefault(dr => dr.Resource.Subject != null);
-            Assert.IsNotNull(withSubject, "Test should use testdata with a report with a subject");
-
-            ResourceIdentity ri = new ResourceIdentity(withSubject.Id);
-
-            result = client.SearchByIdAsync<DiagnosticReport>(ri.Id, 
-                        includes: new string[] { "DiagnosticReport.subject" }).Result;
-            Assert.IsNotNull(result);
-
-            Assert.AreEqual(2, result.Entries.Count);  // should have subject too
-
-            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-                        typeof(DiagnosticReport).GetCollectionName()));
-            Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-                        typeof(Patient).GetCollectionName()));
-
-            result = client.SearchAsync<Patient>(new string[] { "name=Everywoman", "name=Eve" }).Result;
-
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.Entries.Count > 0);
-        }
-#endif
 
 		[TestMethod, TestCategory("FhirClient")]
 		public void Paging()
@@ -379,68 +320,6 @@ namespace Hl7.Fhir.Tests.Rest
 				Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.Gone);
 			}
 		}
-
-#if PORTABLE45
-		/// <summary>
-		/// This test is also used as a "setup" test for the History test.
-		/// If you change the number of operations in here, this will make the History test fail.
-		/// </summary>
-		[TestMethod, TestCategory("FhirClient")]
-		public void CreateEditDeleteAsync()
-		{
-			var furore = new Organization
-			{
-				Name = "Furore",
-				Identifier = new List<Identifier> { new Identifier("http://hl7.org/test/1", "3141") },
-				Telecom = new List<Contact> { new Contact { System = Contact.ContactSystem.Phone, Value = "+31-20-3467171" } }
-			};
-
-			FhirClient client = new FhirClient(testEndpoint);
-			var tags = new List<Tag> { new Tag("http://nu.nl/testname", Tag.FHIRTAGSCHEME_GENERAL, "TestCreateEditDelete") };
-
-			var fe = client.CreateAsync<Organization>(furore, tags: tags, refresh: true).Result;
-
-			Assert.IsNotNull(furore);
-			Assert.IsNotNull(fe);
-			Assert.IsNotNull(fe.Id);
-			Assert.IsNotNull(fe.SelfLink);
-			Assert.AreNotEqual(fe.Id, fe.SelfLink);
-			Assert.IsNotNull(fe.Tags);
-			Assert.AreEqual(1, fe.Tags.Count(), "Tag count on new organization record don't match");
-			Assert.AreEqual(fe.Tags.First(), tags[0]);
-			createdTestOrganizationUrl = fe.Id;
-
-			fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/2", "3141592"));
-			var fe2 = client.UpdateAsync(fe, refresh: true).Result;
-
-			Assert.IsNotNull(fe2);
-			Assert.AreEqual(fe.Id, fe2.Id);
-			Assert.AreNotEqual(fe.SelfLink, fe2.SelfLink);
-			Assert.AreEqual(2, fe2.Resource.Identifier.Count);
-
-			Assert.IsNotNull(fe2.Tags);
-			Assert.AreEqual(1, fe2.Tags.Count(), "Tag count on updated organization record don't match");
-			Assert.AreEqual(fe2.Tags.First(), tags[0]);
-
-			fe.Resource.Identifier.Add(new Identifier("http://hl7.org/test/3", "3141592"));
-			var fe3 = client.UpdateAsync(fe2.Id, fe.Resource, refresh: true).Result;
-			Assert.IsNotNull(fe3);
-			Assert.AreEqual(3, fe3.Resource.Identifier.Count);
-
-			client.DeleteAsync(fe3).Wait();
-
-			try
-			{
-				// Get most recent version
-				fe = client.ReadAsync<Organization>(new ResourceIdentity(fe.Id)).Result;
-				Assert.Fail();
-			}
-			catch
-			{
-				Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.Gone);
-			}
-		}
-#endif
 
 		[TestMethod, TestCategory("FhirClient"), Ignore]
 		public void History()

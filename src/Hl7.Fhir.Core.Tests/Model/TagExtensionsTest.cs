@@ -17,11 +17,7 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableTagExtensionsTest
-#else
 	public class TagExtensionsTest
-#endif
     {
         [TestMethod]
         public void TextTagHandling()

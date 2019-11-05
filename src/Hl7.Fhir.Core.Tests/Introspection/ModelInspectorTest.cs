@@ -15,11 +15,7 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Tests.Introspection
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableModelInspectorTest
-#else
 	public class ModelInspectorTest
-#endif
     {
         [TestMethod]
         public void TestResourceNameResolving()

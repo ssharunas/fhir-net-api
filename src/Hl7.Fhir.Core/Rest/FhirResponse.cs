@@ -62,11 +62,7 @@ namespace Hl7.Fhir.Rest
 		{
 			if (!String.IsNullOrEmpty(response.ContentType))
 			{
-#if PORTABLE45 && !NET45
-				return System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).MediaType;
-#else
 				return new System.Net.Mime.ContentType(response.ContentType).MediaType;
-#endif
 			}
 			else
 				return null;
@@ -78,11 +74,7 @@ namespace Hl7.Fhir.Rest
 
 			if (!String.IsNullOrEmpty(response.ContentType))
 			{
-#if PORTABLE45 && !NET45
-				var charset = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(response.ContentType).CharSet;
-#else
 				var charset = new System.Net.Mime.ContentType(response.ContentType).CharSet;
-#endif
 
 				if (!String.IsNullOrEmpty(charset))
 					result = Encoding.GetEncoding(charset);

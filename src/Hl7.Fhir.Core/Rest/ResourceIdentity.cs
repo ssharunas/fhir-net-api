@@ -11,9 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if !PORTABLE45 || NET45
 using System.Runtime.Serialization;
-#endif
 
 namespace Hl7.Fhir.Rest
 {
@@ -22,9 +20,7 @@ namespace Hl7.Fhir.Rest
 	/// It is not designed to be able to handle all URLs for bundles, such as searching, or history retrieval.
 	/// (If this class is used with the resource history, then the results will not be as expected)
 	/// </summary>
-#if !PORTABLE45 || NET45
 	[SerializableAttribute]
-#endif
 	public class ResourceIdentity : Uri
 	{
 		/// <summary>
@@ -45,7 +41,6 @@ namespace Hl7.Fhir.Rest
 		internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
 
 		#region << Serialization Implementation >>
-#if !PORTABLE45 || NET45
 		// The default serialization is all that is required as this class does
 		// not contain any of it's own properties that are not contained in the actual Uri
 		protected ResourceIdentity(SerializationInfo info, StreamingContext context)
@@ -57,7 +52,6 @@ namespace Hl7.Fhir.Rest
 		{
 			base.GetObjectData(info, context);
 		}
-#endif
 		#endregion
 
 		/// <summary>

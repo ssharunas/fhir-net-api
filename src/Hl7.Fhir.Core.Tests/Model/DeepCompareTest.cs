@@ -20,11 +20,7 @@ using System.Xml;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDeepCompareTest
-#else
     public class DeepCompareTest
-#endif
     {
         [TestMethod]
         public void CheckCompareDeepCopied()

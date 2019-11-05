@@ -19,11 +19,7 @@ using System.Threading.Tasks;
 namespace Hl7.Fhir.Tests.Search
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableQueryExtensionTests
-#else
 	public class QueryExtensionTests
-#endif
     {
         [TestMethod]
         public void ManageSearchResult()

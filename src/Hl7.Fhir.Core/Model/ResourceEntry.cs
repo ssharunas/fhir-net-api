@@ -116,11 +116,8 @@ namespace Hl7.Fhir.Model
         public static ResourceEntry Create(Type type)
         {
             if (type == null) throw Error.ArgumentNull(nameof(type));
-#if !PORTABLE45
-            var isResource = typeof(Resource).IsAssignableFrom(type);
-#else
             var isResource = typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
-#endif
+
             if (!isResource) throw Error.Argument(nameof(type), "Must be a subtype of Resource");
 
             Type typedREType = typeof(ResourceEntry<>).MakeGenericType(type);

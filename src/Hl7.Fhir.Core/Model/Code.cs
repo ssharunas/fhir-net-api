@@ -63,13 +63,9 @@ namespace Hl7.Fhir.Model
 
         public Code(T? value)
         {
-#if PORTABLE45
-			if (!typeof(T).GetTypeInfo().IsEnum) 
-                throw new ArgumentException("T must be an enumerated type");
-#else
             if (!typeof(T).IsEnum) 
                 throw Error.Argument(nameof(T), "T must be an enumerated type");
-#endif
+
             Value = value;
         }
 

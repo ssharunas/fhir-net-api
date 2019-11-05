@@ -14,11 +14,7 @@ using System.IO;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableResourceParsingTests
-#else
 	public class ResourceParsingTests
-#endif
     {
         [TestMethod]
         //public void AcceptXsiStuffOnRoot()

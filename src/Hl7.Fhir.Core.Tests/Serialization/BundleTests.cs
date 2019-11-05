@@ -23,11 +23,7 @@ using Hl7.Fhir.Serialization;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableBundleTests
-#else
 	public class BundleTests
-#endif
     {
 		private const string TempFileLocation = "c:\\temp\\";
 

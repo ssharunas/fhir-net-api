@@ -24,11 +24,7 @@ using SharpCompress.Archive;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableRoundtripTest
-#else
 	public class RoundtripTest
-#endif
     {    
         [TestMethod]
         public void FullRoundtripOfAllExamples()

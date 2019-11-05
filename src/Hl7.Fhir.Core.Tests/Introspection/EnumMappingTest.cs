@@ -14,11 +14,7 @@ using Hl7.Fhir.Introspection;
 namespace Hl7.Fhir.Tests.Introspection
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableEnumMappingTest
-#else
 	public class EnumMappingTest
-#endif
     {
         [TestMethod]
         public void TestCreation()

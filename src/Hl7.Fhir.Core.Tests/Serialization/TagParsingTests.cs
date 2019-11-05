@@ -21,11 +21,7 @@ using System.IO;
 namespace Hl7.Fhir.Tests.Serialization
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableTagParsingTests
-#else
 	public class TagParsingTests
-#endif
     {
         [TestMethod]
         public void TestUseFhirParserToTagList()

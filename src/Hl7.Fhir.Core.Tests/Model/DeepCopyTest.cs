@@ -20,11 +20,7 @@ using System.Xml;
 namespace Hl7.Fhir.Tests.Model
 {
     [TestClass]
-#if PORTABLE45
-	public class PortableDeepCopyTest
-#else
     public class DeepCopyTest
-#endif
     {
         [TestMethod]
         public void CheckCopyAllFields()
