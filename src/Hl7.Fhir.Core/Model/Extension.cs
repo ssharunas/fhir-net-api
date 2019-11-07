@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Validation;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.Serialization;
-
 /*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
@@ -31,22 +24,18 @@ using System.Runtime.Serialization;
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Extension
-    {
-        public Extension()
-        {
-        }
+	public partial class Extension
+	{
+		public Extension() { }
 
-        public Extension(string url, Element value)
-        {
-            this.Url = url;
-            this.Value = value;
-        }
-    }       
+		public Extension(string url, Element value)
+		{
+			Url = url;
+			Value = value;
+		}
+	}
 }

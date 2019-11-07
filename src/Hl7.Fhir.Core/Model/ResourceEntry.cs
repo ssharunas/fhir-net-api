@@ -24,137 +24,123 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
+using Hl7.Fhir.Support;
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
-using System.Reflection;
-using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Support;
+using System.Reflection;
 
 namespace Hl7.Fhir.Model
 {
-    [InvokeIValidatableObject]
-    public class ResourceEntry<T> : ResourceEntry, Hl7.Fhir.Validation.IValidatableObject where T : Resource, new()
-    {
-        public ResourceEntry(Uri id, string title, DateTimeOffset lastUpdated, T resource) : this()
-        {
-            Id = id;
-            Title = title;
-            LastUpdated = lastUpdated;
-            Resource = resource;
-        }
+	[InvokeIValidatableObject]
+	public class ResourceEntry<T> : ResourceEntry, Validation.IValidatableObject where T : Resource, new()
+	{
+		public ResourceEntry(Uri id, string title, DateTimeOffset lastUpdated, T resource) : this()
+		{
+			Id = id;
+			Title = title;
+			LastUpdated = lastUpdated;
+			Resource = resource;
+		}
 
-        public ResourceEntry(Uri id, DateTimeOffset lastUpdated, T resource)
-            : this(id, String.Format("{0} resource with id {1}", typeof(T).Name, id), lastUpdated, resource)
-        {
-        }
-
-
-        public ResourceEntry() : base()
-        {
-        }
-
-        public new T Resource
-        { 
-            get { return (T)((ResourceEntry)this).Resource; }
-            set { ((ResourceEntry)this).Resource = value; }
-        }
-
-        public static ResourceEntry<T> Create(T resource)
-        {
-            var result = new ResourceEntry<T>();
-
-            result.Resource = resource;
-
-            return result;
-        }
-    }
-
-    [InvokeIValidatableObject]
-    public abstract class ResourceEntry : BundleEntry, Hl7.Fhir.Validation.IValidatableObject
-    {
-        public Resource Resource { get; set; }
-
-        [Required(AllowEmptyStrings=false)]
-        public string Title { get; set; }
-
-        [Required]
-        public DateTimeOffset? LastUpdated { get; set; }
-        public DateTimeOffset? Published { get; set; }
-        public string AuthorName { get; set; }
-        public string AuthorUri { get; set; }
+		public ResourceEntry(Uri id, DateTimeOffset lastUpdated, T resource)
+			: this(id, $"{typeof(T).Name} resource with id {id}", lastUpdated, resource)
+		{
+		}
 
 
-        /// <summary>
-        /// Creates an instance of a typed ResourceEntry&lt;T&gt;, based on the actual type of the passed resource parameter
-        /// </summary>
-        /// <param name="resource"></param>
-        /// <returns></returns>
-        public static ResourceEntry Create(Resource resource)
-        {
-            if (resource == null) throw Error.ArgumentNull(nameof(resource));
- 
-            var result = ResourceEntry.Create(resource.GetType());
-            result.Resource = resource;
+		public ResourceEntry() : base()
+		{
+		}
 
-            return result;
-        }
+		public new T Resource
+		{
+			get { return (T)((ResourceEntry)this).Resource; }
+			set { ((ResourceEntry)this).Resource = value; }
+		}
 
-        /// <summary>
-        /// Creates an instance of a typed ResourceEntry&lt;T&gt;, based on the actual type of the passed resource parameter
-        /// </summary>
-        /// <param name="type">The type of entry (T in ResourceEntry&lt;T&gt;) to create</param>
-        /// <returns></returns>
-        public static ResourceEntry Create(Type type)
-        {
-            if (type == null) throw Error.ArgumentNull(nameof(type));
-            var isResource = typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+		public static ResourceEntry<T> Create(T resource)
+		{
+			return new ResourceEntry<T>() { Resource = resource };
+		}
+	}
 
-            if (!isResource) throw Error.Argument(nameof(type), "Must be a subtype of Resource");
+	[InvokeIValidatableObject]
+	public abstract class ResourceEntry : BundleEntry, Validation.IValidatableObject
+	{
+		public Resource Resource { get; set; }
 
-            Type typedREType = typeof(ResourceEntry<>).MakeGenericType(type);
-            var result = (ResourceEntry)Activator.CreateInstance(typedREType);
+		[Required(AllowEmptyStrings = false)]
+		public string Title { get; set; }
 
-            return result;
-        }
+		[Required]
+		public DateTimeOffset? LastUpdated { get; set; }
+		public DateTimeOffset? Published { get; set; }
+		public string AuthorName { get; set; }
+		public string AuthorUri { get; set; }
 
-        /// <summary>
-        /// Read-only. Returns the summary text from a Resource.
-        /// </summary>
-        public override string Summary
-        {
-            get
-            {
-                if (Resource is Binary)
-                    return string.Format("<div xmlns='http://www.w3.org/1999/xhtml'>" +
-                        "Binary content (mediatype {0})</div>", ((Binary)Resource).ContentType);
-                else if (Resource != null && Resource.Text != null)
-                    return Resource.Text.Div;
-                else
-                    return null;
-            }
-        }
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-            result.AddRange(base.Validate(validationContext));
+		/// <summary>
+		/// Creates an instance of a typed ResourceEntry&lt;T&gt;, based on the actual type of the passed resource parameter
+		/// </summary>
+		/// <param name="resource"></param>
+		/// <returns></returns>
+		public static ResourceEntry Create(Resource resource)
+		{
+			if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-            //if (Resource == null)
-            //    result.Add(new ValidationResult("Entry must contain Resource data, Content may not be null"));
-            if (Resource != null && validationContext.ValidateRecursively())
-                DotNetAttributeValidation.TryValidate(this.Resource, result, validationContext.ValidateRecursively());
+			var result = Create(resource.GetType());
+			result.Resource = resource;
 
-            return result;
-        }
+			return result;
+		}
 
-    }
+		/// <summary>
+		/// Creates an instance of a typed ResourceEntry&lt;T&gt;, based on the actual type of the passed resource parameter
+		/// </summary>
+		/// <param name="type">The type of entry (T in ResourceEntry&lt;T&gt;) to create</param>
+		/// <returns></returns>
+		public static ResourceEntry Create(Type type)
+		{
+			if (type == null) throw Error.ArgumentNull(nameof(type));
+			var isResource = typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
+
+			if (!isResource) throw Error.Argument(nameof(type), "Must be a subtype of Resource");
+
+			Type typedREType = typeof(ResourceEntry<>).MakeGenericType(type);
+			var result = (ResourceEntry)Activator.CreateInstance(typedREType);
+
+			return result;
+		}
+
+		/// <summary>
+		/// Read-only. Returns the summary text from a Resource.
+		/// </summary>
+		public override string Summary
+		{
+			get
+			{
+				if (Resource is Binary binary)
+					return $"<div xmlns='http://www.w3.org/1999/xhtml'>Binary content (mediatype {binary.ContentType})</div>";
+
+				return Resource?.Text?.Div;
+			}
+		}
+
+		public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var result = new List<ValidationResult>(base.Validate(validationContext));
+
+			//if (Resource == null)
+			//    result.Add(new ValidationResult("Entry must contain Resource data, Content may not be null"));
+			if (Resource != null && validationContext.ValidateRecursively())
+				DotNetAttributeValidation.TryValidate(Resource, result, validationContext.ValidateRecursively());
+
+			return result;
+		}
+
+	}
 }

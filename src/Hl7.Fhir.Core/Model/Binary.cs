@@ -1,10 +1,3 @@
-using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Validation;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Runtime.Serialization;
-
 /*
   Copyright (c) 2011-2012, HL7, Inc
   All rights reserved.
@@ -31,29 +24,30 @@ using System.Runtime.Serialization;
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
+
+using Hl7.Fhir.Validation;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Resource for capturing binary data
-    /// </summary>
-    public partial class Binary : Hl7.Fhir.Model.Resource, Hl7.Fhir.Validation.IValidatableObject
-    {
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-            result.AddRange(base.Validate(validationContext));
+	/// <summary>
+	/// Resource for capturing binary data
+	/// </summary>
+	public partial class Binary : Resource, Validation.IValidatableObject
+	{
+		public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var result = new List<ValidationResult>(base.Validate(validationContext));
 
-            if (Content == null)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext,"Entry must contain (possibly 0-length) data in Content element"));
+			if (Content == null)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry must contain (possibly 0-length) data in Content element"));
 
-            if (ContentType == null)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry must contain a ContentType"));
+			if (ContentType == null)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry must contain a ContentType"));
 
-            return result;
-        }
-    }       
+			return result;
+		}
+	}
 }

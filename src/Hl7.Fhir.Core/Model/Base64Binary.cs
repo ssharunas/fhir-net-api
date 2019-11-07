@@ -28,30 +28,22 @@
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml;
-using Hl7.Fhir.Model;
-
-
 namespace Hl7.Fhir.Model
 {
-    public partial class Base64Binary
-    {
-        public static bool IsValidValue(string value)
-        {
-            try
-            {
-                System.Convert.FromBase64String(value);
-            }
-            catch
-            {
-                return false;
-            }
+	public partial class Base64Binary
+	{
+		public static bool IsValidValue(string value)
+		{
+			try
+			{
+				System.Convert.FromBase64String(value);
+			}
+			catch
+			{
+				return false;
+			}
 
-            return true;
-        }
-    }
+			return true;
+		}
+	}
 }

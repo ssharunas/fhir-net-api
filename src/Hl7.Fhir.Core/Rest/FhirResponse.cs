@@ -18,148 +18,103 @@ namespace Hl7.Fhir.Rest
 {
 	public class FhirResponse
 	{
-		public HttpStatusCode Result { get; set; }
-		public string ContentType { get; set; }
-		public Encoding CharacterEncoding { get; set; }
+		private string _headers;
 
-		public string ContentLocation { get; set; }
-		public string Location { get; set; }
-		public string LastModified { get; set; }
-		public string Category { get; set; }
+		public HttpStatusCode Result { get; }
+		public string ContentType { get; }
+		public Encoding CharacterEncoding { get; }
 
-		public Uri ResponseUri { get; set; }
+		public string ContentLocation { get; }
+		public string Location { get; }
+		public string LastModified { get; }
+		public string Category { get; }
 
-		public byte[] Body { get; set; }
+		public Uri ResponseUri { get; }
+
+		public byte[] Body { get; }
 
 		// Can't hold onto this as it gets disposed pretty quick.
 		//public HttpWebResponse Response { get; set; }
 
-		public static FhirResponse FromHttpWebResponse(HttpWebResponse response)
+		internal FhirResponse(HttpWebResponse response)
 		{
+			System.Net.Mime.ContentType contentType = null;
+			if (!string.IsNullOrEmpty(response.ContentType))
+				contentType = new System.Net.Mime.ContentType(response.ContentType);
 
-			return new FhirResponse
-			{
-				ResponseUri = response.ResponseUri,
-				Result = response.StatusCode,
-				ContentType = getContentType(response),
-				CharacterEncoding = getContentEncoding(response),
-				ContentLocation = response.Headers[HttpUtil.CONTENTLOCATION],
-				Location = response.Headers[HttpUtil.LOCATION],
-				LastModified = response.Headers[HttpUtil.LASTMODIFIED],
-				Category = response.Headers[HttpUtil.CATEGORY],
-				Body = readBody(response),
-				// Response = response
-			};
+			ResponseUri = response.ResponseUri;
+			Result = response.StatusCode;
+			ContentType = contentType?.MediaType;
+			ContentLocation = response.Headers[HttpUtil.CONTENTLOCATION];
+			LastModified = response.Headers[HttpUtil.LASTMODIFIED];
+			Location = response.Headers[HttpUtil.LOCATION];
+			Category = response.Headers[HttpUtil.CATEGORY];
+
+			_headers = ExtractHeaders(response);
+			CharacterEncoding = GetContentEncoding(contentType?.CharSet);
+			Body = ReadAllFromStream(response.GetResponseStream(), response.ContentLength); //Read response body
 		}
 
-		private static byte[] readBody(HttpWebResponse response)
+		/// <summary>
+		/// Encodes property 'Body' to utf-8.
+		/// </summary>
+		public string GetBodyAsString()
 		{
-			return HttpUtil.ReadAllFromStream(response.GetResponseStream(),
-				(int)response.ContentLength);
-		}
-
-		private static string getContentType(HttpWebResponse response)
-		{
-			if (!String.IsNullOrEmpty(response.ContentType))
+			if (Body != null)
 			{
-				return new System.Net.Mime.ContentType(response.ContentType).MediaType;
+				// If no encoding is specified, default to utf8
+				return (CharacterEncoding ?? Encoding.UTF8).GetString(Body);
 			}
-			else
-				return null;
+
+			return null;
 		}
 
-		private static Encoding getContentEncoding(HttpWebResponse response)
+		/// <summary>
+		/// Parses body as Tag list.
+		/// </summary>
+		public TagList GetBodyAsTagList()
 		{
-			Encoding result = null;
-
-			if (!String.IsNullOrEmpty(response.ContentType))
-			{
-				var charset = new System.Net.Mime.ContentType(response.ContentType).CharSet;
-
-				if (!String.IsNullOrEmpty(charset))
-					result = Encoding.GetEncoding(charset);
-			}
-			return result;
+			return GetParsedBody(FhirParser.ParseTagListFromXml, FhirParser.ParseTagListFromJson);
 		}
 
-
-		public string BodyAsString()
+		/// <summary>
+		/// Returns parsed body.
+		/// </summary>
+		public ResourceEntry<T> GetBodyAsEntry<T>(FhirRequest request) where T : Resource, new()
 		{
-			if (Body == null) return null;
-
-			Encoding enc = CharacterEncoding;
-
-			// If no encoding is specified, default to utf8
-			if (enc == null) enc = Encoding.UTF8;
-
-			return (new StreamReader(new MemoryStream(Body), enc, true)).ReadToEnd();
-		}
-
-
-		public TagList BodyAsTagList()
-		{
-			return parseBody(BodyAsString(), ContentType,
-						(b) => FhirParser.ParseTagListFromXml(b),
-						(b) => FhirParser.ParseTagListFromJson(b));
-		}
-
-		public ResourceEntry<T> BodyAsEntry<T>() where T : Resource, new()
-		{
-			var result = BodyAsEntry(typeof(T).GetCollectionName());
+			var result = GetBodyAsEntry(ModelInfo.GetCollectionName<T>());
 
 			if (result.Resource is T)
 				return (ResourceEntry<T>)result;
 
-			throw new FhirOperationException(String.Format("Received a resource of type {0}, expected a {1} resource",
-				result.Resource.GetType().Name, typeof(T).Name))
-			{
-				ResponseBody = BodyAsString()
-			};
+			throw new FhirOperationException($"Received a resource of type {result.Resource.GetType().Name}, expected a {typeof(T).Name} resource", request, this);
 		}
 
-
-		public ResourceEntry BodyAsEntry(string collection)
-		{
-			return createResourceEntry(collection);
-		}
-
-		public Bundle BodyAsBundle()
-		{
-			return parseBody<Bundle>(BodyAsString(), ContentType,
-				(b) => FhirParser.ParseBundleFromXml(b),
-				(b) => FhirParser.ParseBundleFromJson(b));
-		}
-
-
-		private static Binary makeBinary(byte[] data, string contentType)
-		{
-			var binary = new Binary();
-
-			binary.Content = data;
-			binary.ContentType = contentType;
-
-			return binary;
-		}
-
-
-		private ResourceEntry createResourceEntry(string resourceType)
+		/// <summary>
+		/// Returns parsed body.
+		/// </summary>
+		public ResourceEntry GetBodyAsEntry(string collection)
 		{
 			Resource resource = null;
 
-			if (resourceType == "Binary")
-				resource = makeBinary(Body, ContentType);
+			if (collection == nameof(Binary))
+			{
+				resource = new Binary
+				{
+					Content = Body,
+					ContentType = ContentType
+				};
+			}
 			else
 			{
-				resource = parseBody<Resource>(BodyAsString(), ContentType,
-					b => FhirParser.ParseResourceFromXml(b),
-					b => FhirParser.ParseResourceFromJson(b));
+				resource = GetParsedBody(FhirParser.ParseResourceFromXml, FhirParser.ParseResourceFromJson);
 			}
 
 			ResourceEntry result = ResourceEntry.Create(resource);
 
 			var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
 
-			if (!String.IsNullOrEmpty(location))
+			if (!string.IsNullOrEmpty(location))
 			{
 				ResourceIdentity reqId = new ResourceIdentity(location);
 
@@ -172,10 +127,10 @@ namespace Hl7.Fhir.Rest
 					result.SelfLink = reqId;
 			}
 
-			if (!String.IsNullOrEmpty(LastModified))
+			if (!string.IsNullOrEmpty(LastModified))
 				result.LastUpdated = DateTimeOffset.Parse(LastModified);
 
-			if (!String.IsNullOrEmpty(Category))
+			if (!string.IsNullOrEmpty(Category))
 				result.Tags = HttpUtil.ParseCategoryHeader(Category);
 
 			result.Title = "A " + resource.GetType().Name + " resource";
@@ -183,27 +138,70 @@ namespace Hl7.Fhir.Rest
 			return result;
 		}
 
-		private static T parseBody<T>(string body, string contentType,
-		  Func<string, T> xmlParser, Func<string, T> jsonParser) where T : class
+		/// <summary>
+		/// Returns parsed Bundle body.
+		/// </summary>
+		public Bundle GetBodyAsBundle()
 		{
-			T result = null;
+			return GetParsedBody(FhirParser.ParseBundleFromXml, FhirParser.ParseBundleFromJson);
+		}
 
-			ResourceFormat format = Hl7.Fhir.Rest.ContentType.GetResourceFormatFromContentType(contentType);
+		/// <summary>
+		/// Returns HTTP response headers.
+		/// </summary>
+		/// <returns></returns>
+		public string GetHeadersAsString()
+		{
+			return _headers;
+		}
+
+		private T GetParsedBody<T>(Func<string, T> xmlParser, Func<string, T> jsonParser) where T : class
+		{
+			ResourceFormat format = Rest.ContentType.GetResourceFormatFromContentType(ContentType);
 
 			switch (format)
 			{
 				case ResourceFormat.Json:
-					result = jsonParser(body);
-					break;
+					return jsonParser(GetBodyAsString());
 				case ResourceFormat.Xml:
-					result = xmlParser(body);
-					break;
-				default:
-					throw Error.Format("Cannot decode body: unrecognized content type " + contentType, null);
+					return xmlParser(GetBodyAsString());
 			}
 
-			return result;
+			throw Error.Format("Cannot decode body: unrecognized content type " + ContentType);
 		}
 
+		private Encoding GetContentEncoding(string charSet)
+		{
+			if (!string.IsNullOrEmpty(charSet))
+				return Encoding.GetEncoding(charSet);
+
+			return null;
+		}
+
+		private string ExtractHeaders(HttpWebResponse response)
+		{
+			StringBuilder result = new StringBuilder();
+
+			if (response != null)
+			{
+				result.AppendLine($"HTTP/{response.ProtocolVersion} {(int)response.StatusCode} {response.StatusDescription}");
+				foreach (var header in response.Headers.AllKeys)
+				{
+					result.AppendLine($"{header}: {response.Headers[header]}");
+				}
+			}
+
+			return result.ToString();
+		}
+
+		private byte[] ReadAllFromStream(Stream stream, long contentLength)
+		{
+			if (contentLength == 0)
+				return null;
+
+			var memory = new MemoryStream(Math.Max(0, (int)contentLength));
+			stream.CopyTo(memory);
+			return memory.ToArray();
+		}
 	}
 }

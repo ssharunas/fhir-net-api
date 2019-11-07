@@ -29,42 +29,32 @@
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Instant
-    {
-        public static Instant FromLocalDateTime(int year, int month, int day,
-                            int hour, int min, int sec, int milis = 0)
-        {
-            return new Instant( new DateTimeOffset(year, month, day, hour, min, sec,
-                            DateTimeOffset.Now.Offset) );
-        }
+	public partial class Instant
+	{
+		public static Instant FromLocalDateTime(int year, int month, int day, int hour, int min, int sec)
+		{
+			return new Instant(new DateTimeOffset(year, month, day, hour, min, sec, DateTimeOffset.Now.Offset));
+		}
 
 
-        public static Instant FromDateTimeUtc(int year, int month, int day,
-                                            int hour, int min, int sec, int milis=0)
-        {
-            return new Instant(new DateTimeOffset(year, month, day, hour, min, sec,
-                                   TimeSpan.Zero));
-        }
+		public static Instant FromDateTimeUtc(int year, int month, int day, int hour, int min, int sec)
+		{
+			return new Instant(new DateTimeOffset(year, month, day, hour, min, sec, TimeSpan.Zero));
+		}
 
+		public static Instant Now()
+		{
+			return new Instant(DateTimeOffset.Now);
+		}
 
-        public static Instant Now()
-        {
-            return new Instant(DateTimeOffset.Now);
-        }
+		public static bool IsValidValue(string value)
+		{
+			//TODO: Implement useful validation functionality
+			return true;
+		}
 
-        public static bool IsValidValue(string value)
-        {
-            //TODO: Implement useful validation functionality
-            return true;
-        }
-
-    }
+	}
 }

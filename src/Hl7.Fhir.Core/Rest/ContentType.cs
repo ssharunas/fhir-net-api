@@ -7,7 +7,6 @@
  */
 
 using Hl7.Fhir.Support;
-using System;
 using System.Linq;
 using System.Text;
 
@@ -26,7 +25,7 @@ namespace Hl7.Fhir.Rest
 		Octet = 5
 	}
 
-	public static class ContentType
+	internal static class ContentType
 	{
 		public const string JSON_CONTENT_HEADER = "application/json+fhir";  // The formal FHIR mime type (still to be registered).
 		public static readonly string[] JSON_CONTENT_HEADERS =
@@ -174,6 +173,4 @@ namespace Hl7.Fhir.Rest
 		}
 
 	}
-
-
 }

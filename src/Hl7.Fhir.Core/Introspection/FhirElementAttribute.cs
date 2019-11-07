@@ -24,8 +24,6 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using Hl7.Fhir.Support;
@@ -35,76 +33,71 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public sealed class FhirElementAttribute : ValidationAttribute
-    {
-        readonly string name;
+	[AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+	internal sealed class FhirElementAttribute : ValidationAttribute
+	{
+		public FhirElementAttribute(string name)
+		{
+			Name = name;
+			XmlSerialization = XmlSerializationHint.None;
+			Choice = ChoiceType.None;
+		}
 
-        public FhirElementAttribute(string name)
-        {
-            this.name = name;
-            this.XmlSerialization = XmlSerializationHint.None;
-            this.Choice = ChoiceType.None;
-        }
+		public ChoiceType Choice { get; set; }
 
-        public ChoiceType Choice { get; set; }
+		public string Name { get; }
 
-        public string Name
-        {
-            get { return name; }
-        }
+		public bool IsPrimitiveValue { get; set; }
 
-        public bool IsPrimitiveValue { get; set; }
+		public XmlSerializationHint XmlSerialization { get; set; }
 
-        public XmlSerializationHint XmlSerialization { get; set; }
+		public int Order { get; set; }
 
-        public int Order { get; set; }
+		public bool InSummary { get; set; }
 
-        public bool InSummary { get; set; }
+		// This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
+		// FhirElement while validating. This allows us to extend validation into each FhirElement,
+		// while normally, the .NET validation will only validate one level, but will not recurse
+		// into each element. This is controllable by the SetValidateRecursively extension of the
+		// ValidationContext
+		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+		{
+			if (validationContext == null)
+				throw Error.ArgumentNull(nameof(validationContext));
 
-        // This attribute is a subclass of ValidationAttribute so that IsValid() is called on every 
-        // FhirElement while validating. This allows us to extend validation into each FhirElement,
-        // while normally, the .NET validation will only validate one level, but will not recurse
-        // into each element. This is controllable by the SetValidateRecursively extension of the
-        // ValidationContext
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            if(validationContext == null) throw Error.ArgumentNull(nameof(validationContext));
+			if (value == null)
+				return ValidationResult.Success;
 
-            if (value == null) return ValidationResult.Success;
+			// If we should not validate 'value's elements, return immediately
+			if (!validationContext.ValidateRecursively())
+				return ValidationResult.Success;
 
-            // If we should not validate 'value's elements, return immediately
-            if (!validationContext.ValidateRecursively()) return ValidationResult.Success;
+			var result = new List<ValidationResult>();
 
-            IEnumerable list = value as IEnumerable;
-            var result = new List<ValidationResult>();
+			// If value is an enumerated type, validate all elements of the list
+			if (value is IEnumerable list)
+			{
+				foreach (var element in list)
+				{
+					if (element != null)
+						validateElement(element, validationContext, result);
+				}
+			}
+			else
+			{
+				validateElement(value, validationContext, result);
+			}
 
-            // If value is an enumerated type, validate all elements of the list
-            if (list != null)
-            {
-                foreach (var element in list)
-                {
-                    if (element != null)
-                    {
-                        validateElement(element, validationContext, result);
-                    }
-                }
-            }
-            else
-            {
-                validateElement(value, validationContext, result);
-            }
+			//Potencialus bugas - gražina pirmą elementą, nors nevalidus gali būti antras, o pirmas validus
+			return result.FirstOrDefault();
+		}
 
-            return result.FirstOrDefault();                
-        }
-
-        private static void validateElement(object value, ValidationContext validationContext, List<ValidationResult> result)
-        {
-            DotNetAttributeValidation.TryValidate(value, result, validationContext.ValidateRecursively());
-        }
-    }
+		private static void validateElement(object value, ValidationContext validationContext, List<ValidationResult> result)
+		{
+			DotNetAttributeValidation.TryValidate(value, result, validationContext.ValidateRecursively());
+		}
+	}
 }

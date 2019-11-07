@@ -8,86 +8,78 @@
 
 using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
-using Newtonsoft.Json.Linq;
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 
 
 namespace Hl7.Fhir.Serialization
 {
-    public class RepeatingElementReader
-    {
-        private IFhirReader _current;
-        private ModelInspector _inspector;
+	internal class RepeatingElementReader
+	{
+		private IFhirReader _current;
 
-        public RepeatingElementReader(IFhirReader reader)
-        {
-            _current = reader;
-            _inspector = SerializationConfig.Inspector;
-        }
+		public RepeatingElementReader(IFhirReader reader)
+		{
+			_current = reader;
+		}
 
-        public object Deserialize(PropertyMapping prop, string memberName, object existing=null)
-        {
-            if (prop == null) throw Error.ArgumentNull(nameof(prop));
+		public object Deserialize(PropertyMapping prop, string memberName, object existing = null)
+		{
+			if (prop == null) throw Error.ArgumentNull(nameof(prop));
 
-            if (existing != null && !(existing is IList) ) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
+			if (existing != null && !(existing is IList)) throw Error.Argument(nameof(existing), "Can only read repeating elements into a type implementing IList");
 
-            IList result = existing as IList;
+			IList result = existing as IList;
 
-            bool overwriteMode;
-            IEnumerable<IFhirReader> elements;
+			bool overwriteMode;
+			IEnumerable<IFhirReader> elements;
 
-            if(_current.CurrentToken == TokenType.Array)        // Json has members that are arrays, if we encounter multiple, update the old values of the array
-            {
-                overwriteMode = result != null && result.Count > 0;
-                elements = _current.GetArrayElements();
-            }
-            else if(_current.CurrentToken == TokenType.Object)  // Xml has repeating members, so this results in an "array" of just 1 member
-            {
-                //TODO: This makes   member : {x} in Json valid too,
-                //even if json should have member : [{x}]
-                overwriteMode = false;
-                elements = new List<IFhirReader>() { _current };
-            }
-            else
-                throw Error.Format("Expecting to be either at a repeating complex element or an array when parsing a repeating member.", _current);
+			if (_current.CurrentToken == TokenType.Array)        // Json has members that are arrays, if we encounter multiple, update the old values of the array
+			{
+				overwriteMode = result != null && result.Count > 0;
+				elements = _current.GetArrayElements();
+			}
+			else if (_current.CurrentToken == TokenType.Object)  // Xml has repeating members, so this results in an "array" of just 1 member
+			{
+				//TODO: This makes   member : {x} in Json valid too,
+				//even if json should have member : [{x}]
+				overwriteMode = false;
+				elements = new List<IFhirReader>() { _current };
+			}
+			else
+				throw Error.Format("Expecting to be either at a repeating complex element or an array when parsing a repeating member.", _current);
 
-            if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
+			if (result == null) result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
-            var position = 0;
-            foreach(var element in elements)
-            {
-                var reader = new DispatchingReader(element, arrayMode: true);
+			var position = 0;
+			foreach (var element in elements)
+			{
+				var reader = new DispatchingReader(element, arrayMode: true);
 
-                if(overwriteMode)
-                {
-                    if (position >= result.Count)
-                        throw Error.Format("The value and extension array are not well-aligned", _current);
+				if (overwriteMode)
+				{
+					if (position >= result.Count)
+						throw Error.Format("The value and extension array are not well-aligned", _current);
 
-                    // Arrays may contain null values as placeholders
-                    if(element.CurrentToken != TokenType.Null)
-                        result[position] = reader.Deserialize(prop, memberName, existing: result[position]);
-                }
-                else
-                {                   
-                    object item = null;
-                    if (element.CurrentToken != TokenType.Null)
-                        item = reader.Deserialize(prop, memberName);
-                    else
-                        item = null;  // Arrays may contain null values as placeholders
-                    
-                    result.Add(item);
-                }
+					// Arrays may contain null values as placeholders
+					if (element.CurrentToken != TokenType.Null)
+						result[position] = reader.Deserialize(prop, memberName, existing: result[position]);
+				}
+				else
+				{
+					object item = null;
+					if (element.CurrentToken != TokenType.Null)
+						item = reader.Deserialize(prop, memberName);
+					else
+						item = null;  // Arrays may contain null values as placeholders
 
-                position++;
-            }
+					result.Add(item);
+				}
 
-            return result;
-        }
-    }
+				position++;
+			}
+
+			return result;
+		}
+	}
 }

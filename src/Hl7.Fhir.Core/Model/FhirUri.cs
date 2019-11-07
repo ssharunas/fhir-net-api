@@ -24,53 +24,44 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
-
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class FhirUri
-    {
-        public FhirUri(Uri uri)
-        {
-            Value = uri.OriginalString;
-        }
+	public partial class FhirUri
+	{
+		public FhirUri(Uri uri)
+		{
+			Value = uri.OriginalString;
+		}
 
+		public static bool IsValidValue(string value)
+		{
+			Uri uri;
 
-        public static bool IsValidValue(string value)
-        {
-            Uri uri = null;
+			try
+			{
+				uri = new Uri(value, UriKind.RelativeOrAbsolute);
+			}
+			catch
+			{
+				return false;
+			}
 
-            try
-            {
-                uri = new Uri((string)value, UriKind.RelativeOrAbsolute);
-            }
-            catch
-            {
-                return false;
-            }
+			if (uri.IsAbsoluteUri)
+			{
+				var uris = uri.ToString();
 
-            if (uri.IsAbsoluteUri)
-            {
-                var uris = uri.ToString();
+				if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
+					return false;
+				else if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
+					return false;
+			}
 
-                if (uris.StartsWith("urn:oid:") && !Oid.IsValidValue(uris))
-                    return false;
-                else if (uris.StartsWith("urn:uuid:") && !Uuid.IsValidValue(uris))
-                    return false;
-            }
+			return true;
+		}
 
-            return true;
-        }
-
-    }
+	}
 }

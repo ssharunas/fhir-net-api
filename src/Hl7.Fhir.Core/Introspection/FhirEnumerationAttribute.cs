@@ -24,31 +24,21 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    [AttributeUsage(AttributeTargets.Enum, Inherited = false, AllowMultiple = false)]
-    public sealed class FhirEnumerationAttribute : Attribute
-    {
-        readonly string bindingName;
+	[AttributeUsage(AttributeTargets.Enum, Inherited = false, AllowMultiple = false)]
+	internal sealed class FhirEnumerationAttribute : Attribute
+	{
+		// This is a positional argument
+		public FhirEnumerationAttribute(string bindingName)
+		{
+			BindingName = bindingName;
+		}
 
-        // This is a positional argument
-        public FhirEnumerationAttribute(string bindingName)
-        {
-            this.bindingName = bindingName;
-        }
-
-        public string BindingName
-        {
-            get { return bindingName; }
-        }
-    }
+		public string BindingName { get; }
+	}
 }

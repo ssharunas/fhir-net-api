@@ -25,6 +25,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.Core.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -184,14 +185,12 @@
     <Compile Include="Model\TagList.cs" />
     <Compile Include="Model\UriLinkList.cs" />
     <Compile Include="Model\Uuid.cs" />
-    <Compile Include="Model\ValueSet.cs" />
     <Compile Include="Model\XHtml.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Rest\BundleExtensions.cs" />
     <Compile Include="Rest\ContentType.cs" />
     <Compile Include="Rest\FhirClient.cs" />
     <Compile Include="Rest\FhirOperationException.cs" />
@@ -199,19 +198,9 @@
     <Compile Include="Rest\ResourceIdentity.cs" />
     <Compile Include="Rest\FhirRequest.cs" />
     <Compile Include="Rest\FhirResponse.cs" />
-    <Compile Include="Rest\WebRequestExtensions.cs" />
     <Compile Include="Introspection\ClassMapping.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Search\Criterium.cs" />
-    <Compile Include="Search\CompositeValue.cs" />
-    <Compile Include="Search\ChoiceValue.cs" />
-    <Compile Include="Search\CriteriumBuilder.cs" />
-    <Compile Include="Search\Expression.cs" />
-    <Compile Include="Search\QueryExtensions.cs" />
-    <Compile Include="Search\ReferenceValue.cs" />
-    <Compile Include="Search\QuantityValue.cs" />
-    <Compile Include="Search\UntypedValue.cs" />
     <Compile Include="Serialization\BundleJsonParser.cs" />
     <Compile Include="Serialization\BundleJsonSerializer.cs" />
     <Compile Include="Serialization\BundleXmlParser.cs" />
@@ -259,12 +248,7 @@
     </Compile>
     <Compile Include="Serialization\SerializationConfig.cs" />
     <Compile Include="Serialization\SerializationUtil.cs" />
-    <Compile Include="Rest\ResourceIdentityExtensions.cs" />
     <Compile Include="Rest\RestOperation.cs" />
-    <Compile Include="Search\DateValue.cs" />
-    <Compile Include="Search\NumberValue.cs" />
-    <Compile Include="Search\StringValue.cs" />
-    <Compile Include="Search\TokenValue.cs" />
     <Compile Include="Model\TagListExtensions.cs" />
     <Compile Include="Support\StringExtensions.cs" />
     <Compile Include="Validation\AllowedTypesAttribute.cs" />
@@ -300,6 +284,7 @@
     <None Include="packages.config" />
     <None Include="SoftDent.snk" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

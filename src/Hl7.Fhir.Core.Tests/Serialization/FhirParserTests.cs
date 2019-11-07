@@ -12,13 +12,10 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Hl7.Fhir.Search;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
-    [TestClass]
+	[TestClass]
     public class FhirParserTests
     {
         [TestMethod]
@@ -58,18 +55,18 @@ namespace Hl7.Fhir.Tests.Serialization
             Assert.AreEqual("Teun", Query.ExtractParamValue(paramTeun));
         }
 
-        private IEnumerable<Tuple<String, String>> parseParams(string uriParams)
+        private IEnumerable<Tuple<string, string>> parseParams(string uriParams)
         {
             var splitParams = new Char[] { '&' };
             var splitParts = new Char[] { '=' };
-            var result = new List<Tuple<String, String>>();
+            var result = new List<Tuple<string, string>>();
             foreach (var s in uriParams.Split(splitParams))
             {
                 var parts = s.Split(splitParts);
-                Tuple<String, String> param = null;
+                Tuple<string, string> param = null;
                 if (parts.Count() >= 1)
                 {
-                    param = Tuple.Create<String, String>(parts[0], parts.Count() > 1 ? parts[1] : null);
+                    param = Tuple.Create<string, string>(parts[0], parts.Count() > 1 ? parts[1] : null);
                     result.Add(param);
                 }
             }

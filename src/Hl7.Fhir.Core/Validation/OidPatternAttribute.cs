@@ -9,29 +9,25 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Validation
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class OidPatternAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            if (value == null) return ValidationResult.Success;
+	[AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+	public class OidPatternAttribute : ValidationAttribute
+	{
+		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+		{
+			if (value != null)
+			{
+				if (value.GetType() != typeof(string))
+					throw Error.Argument(nameof(value), "OidPatternAttribute can only be applied to string properties");
 
-            if (value.GetType() != typeof(string))
-                throw Error.Argument(nameof(value), "OidPatternAttribute can only be applied to string properties");
+				if (!Oid.IsValidValue(value as string))
+					return DotNetAttributeValidation.BuildResult(validationContext, $"{value} is not a correctly formatted Oid");
+			}
 
-            if (Oid.IsValidValue(value as string))
-                return ValidationResult.Success;
-            else
-                return DotNetAttributeValidation.BuildResult(validationContext, "{0} is not a correctly formatted Oid", (string)value);
-        }
-
-    }
+			return ValidationResult.Success;
+		}
+	}
 }

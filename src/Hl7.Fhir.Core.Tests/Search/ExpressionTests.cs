@@ -268,16 +268,16 @@ namespace Hl7.Fhir.Tests.Search
             CollectionAssert.AreEquivalent(res, new string[] { "part1", "part2" });
 
             res = "part1$".SplitNotEscaped('$');
-            CollectionAssert.AreEquivalent(res, new string[] { "part1", String.Empty });
+            CollectionAssert.AreEquivalent(res, new string[] { "part1", string.Empty });
 
             res = "$part2".SplitNotEscaped('$');
-            CollectionAssert.AreEquivalent(res, new string[] { String.Empty, "part2" });
+            CollectionAssert.AreEquivalent(res, new string[] { string.Empty, "part2" });
 
             res = "$".SplitNotEscaped('$');
-            CollectionAssert.AreEquivalent(res, new string[] { String.Empty, String.Empty });
+            CollectionAssert.AreEquivalent(res, new string[] { string.Empty, string.Empty });
 
             res = "a$$c".SplitNotEscaped('$');
-            CollectionAssert.AreEquivalent(res, new string[] { "a", String.Empty, "c" });
+            CollectionAssert.AreEquivalent(res, new string[] { "a", string.Empty, "c" });
 
             res = @"p\@rt1$p\@rt2".SplitNotEscaped('$');
             CollectionAssert.AreEquivalent(res, new string[] { @"p\@rt1", @"p\@rt2" });
@@ -285,8 +285,8 @@ namespace Hl7.Fhir.Tests.Search
             res = @"mes\$age1$mes\$age2".SplitNotEscaped('$');
             CollectionAssert.AreEquivalent(res, new string[] { @"mes\$age1", @"mes\$age2" });
 
-            res = String.Empty.SplitNotEscaped('$');
-            CollectionAssert.AreEquivalent(res, new string[] { String.Empty });
+            res = string.Empty.SplitNotEscaped('$');
+            CollectionAssert.AreEquivalent(res, new string[] { string.Empty });
         }
 
 

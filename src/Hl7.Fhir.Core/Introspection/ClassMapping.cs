@@ -11,222 +11,175 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    public class ClassMapping
-    {
-        private const string RESOURCENAME_SUFFIX = "Resource";
+	internal class ClassMapping
+	{
+		/// <summary>
+		/// Name of the FHIR datatype/resource this class represents
+		/// </summary>
+		public string Name { get; private set; }
 
-        /// <summary>
-        /// Name of the FHIR datatype/resource this class represents
-        /// </summary>
-        public string Name { get; private set; }
+		/// <summary>
+		/// Profile scope within this Name and mapping are applicable
+		/// </summary>
+		public string Profile { get; private set; }
 
-        /// <summary>
-        /// Profile scope within this Name and mapping are applicable
-        /// </summary>
-        public string Profile { get; private set; }
+		/// <summary>
+		/// The .NET class that implements the FHIR datatype/resource
+		/// </summary>
+		public Type NativeType { get; private set; }
 
-        /// <summary>
-        /// The .NET class that implements the FHIR datatype/resource
-        /// </summary>
-        public Type NativeType { get; private set; }
+		/// <summary>
+		/// Is True when this class represents a Resource datatype and False if it 
+		/// represents a normal complex or primitive Fhir Datatype
+		/// </summary>
+		public bool IsResource { get; private set; }
 
-        /// <summary>
-        /// Is True when this class represents a Resource datatype and False if it 
-        /// represents a normal complex or primitive Fhir Datatype
-        /// </summary>
-        public bool IsResource { get; private set; }
+		/// <summary>
+		/// PropertyMappings indexed by uppercase name for access speed
+		/// </summary>
+		private Dictionary<string, PropertyMapping> _propMappings = new Dictionary<string, PropertyMapping>();
 
-        /// <summary>
-        /// PropertyMappings indexed by uppercase name for access speed
-        /// </summary>
-        private Dictionary<string, PropertyMapping> _propMappings = new Dictionary<string, PropertyMapping>();
+		/// <summary>
+		/// Collection of PropertyMappings that capture information about this classes
+		/// properties
+		/// </summary>
+		public ICollection<PropertyMapping> PropertyMappings { get; private set; }
 
-        /// <summary>
-        /// PropertyMappings in the order as the appear in the reflected class, which is the order
-        /// in which they must be serialized.
-        /// </summary>
-        private ICollection<PropertyMapping> _orderedMappings;
+		/// <summary>
+		/// Holds a reference to a property that represents a primitive FHIR value. This
+		/// property will also be present in the PropertyMappings collection. If this class has 
+		/// no such property, it is null. 
+		/// </summary>
+		public PropertyMapping PrimitiveValueProperty { get; private set; }
 
-        /// <summary>
-        /// Collection of PropertyMappings that capture information about this classes
-        /// properties
-        /// </summary>
-        public ICollection<PropertyMapping> PropertyMappings
-        {
-            get
-            {
-                return _orderedMappings; 
-            }
-        }
+		public bool HasPrimitiveValueMember => PrimitiveValueProperty != null;
 
-        /// <summary>
-        /// Holds a reference to a property that represents a primitive FHIR value. This
-        /// property will also be present in the PropertyMappings collection. If this class has 
-        /// no such property, it is null. 
-        /// </summary>
-        public PropertyMapping PrimitiveValueProperty { get; private set; }
+		public PropertyMapping FindMappedElementByName(string name)
+		{
+			if (name == null) throw Error.ArgumentNull(nameof(name));
 
-        public bool HasPrimitiveValueMember
-        { 
-            get { return PrimitiveValueProperty != null; } 
-        }
+			var normalizedName = name.ToUpperInvariant();
 
-        public PropertyMapping FindMappedElementByName(string name)
-        {
-            if (name == null) throw Error.ArgumentNull(nameof(name));
+			// Direct success
+			if (_propMappings.TryGetValue(normalizedName, out PropertyMapping prop))
+				return prop;
 
-            var normalizedName = name.ToUpperInvariant();
+			// Not found, maybe a polymorphic name
+			// TODO: specify possible polymorhpic variations using attributes
+			// to speedup look up & aid validation
+			return PropertyMappings.SingleOrDefault(p => p.MatchesSuffixedName(name));
+		}
 
-            PropertyMapping prop = null;
+		public static ClassMapping Create(Type type)
+		{
+			// checkMutualExclusiveAttributes(type);
 
-            bool success = _propMappings.TryGetValue(normalizedName, out prop);
+			var result = new ClassMapping();
+			result.NativeType = type;
 
-            // Direct success
-            if (success) return prop;
-            
-            // Not found, maybe a polymorphic name
-            // TODO: specify possible polymorhpic variations using attributes
-            // to speedup look up & aid validation
-            return PropertyMappings.SingleOrDefault(p => p.MatchesSuffixedName(name));            
-        }
+			if (IsMappableType(type))
+			{
+				result.Name = collectTypeName(type);
+				result.Profile = getProfile(type);
+				result.IsResource = IsFhirResource(type);
 
+				if (!result.IsResource && !string.IsNullOrEmpty(result.Profile))
+					throw Error.Argument(nameof(type), $"Type {type.Name} is not a resource, so its FhirType attribute may not specify a profile");
 
-        public static ClassMapping Create(Type type)
-        {
-           // checkMutualExclusiveAttributes(type);
+				inspectProperties(result);
 
-            var result = new ClassMapping();
-            result.NativeType = type;
+				return result;
+			}
+			else
+				throw Error.Argument(nameof(type), $"Type {type.Name} is not marked as a Fhir Resource or datatype using [FhirType]");
+		}
 
-            if (IsMappableType(type))
-            {
-                result.Name = collectTypeName(type);
-                result.Profile = getProfile(type);
-                result.IsResource = IsFhirResource(type);
+		/// <summary>
+		/// Enumerate this class' properties using reflection, create PropertyMappings
+		/// for them and add them to the PropertyMappings.
+		/// </summary>
+		private static void inspectProperties(ClassMapping me)
+		{
+			foreach (var property in ReflectionHelper.FindPublicProperties(me.NativeType))
+			{
+				// Skip properties that are marked as NotMapped
+				if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
 
-                if (!result.IsResource && !String.IsNullOrEmpty(result.Profile))
-                    throw Error.Argument(nameof(type), $"Type {type.Name} is not a resource, so its FhirType attribute may not specify a profile");
+				var propMapping = PropertyMapping.Create(property);
+				var propKey = propMapping.Name.ToUpperInvariant();
 
-                inspectProperties(result);
+				if (me._propMappings.ContainsKey(propKey))
+					throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique");
 
-                return result;
-            }
-            else
-                throw Error.Argument(nameof(type), $"Type {type.Name} is not marked as a Fhir Resource or datatype using [FhirType]");
-        }
+				me._propMappings.Add(propKey, propMapping);
 
+				// Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
+				if (propMapping.RepresentsValueElement)
+					me.PrimitiveValueProperty = propMapping;
+			}
 
-        /// <summary>
-        /// Enumerate this class' properties using reflection, create PropertyMappings
-        /// for them and add them to the PropertyMappings.
-        /// </summary>
-        private static void inspectProperties(ClassMapping me)
-        {
-            foreach (var property in ReflectionHelper.FindPublicProperties(me.NativeType))
-            {
-                // Skip properties that are marked as NotMapped
-                if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
+			me.PropertyMappings = me._propMappings.Values.OrderBy(prop => prop.Order).ToList();
+		}
 
-                var propMapping = PropertyMapping.Create(property);      
-                var propKey = propMapping.Name.ToUpperInvariant();
-                
-                if (me._propMappings.ContainsKey(propKey))
-                    throw Error.InvalidOperation($"Class has multiple properties that are named '{propKey}'. The property name must be unique");
+		private static string getProfile(Type type)
+		{
+			var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
 
-                me._propMappings.Add(propKey, propMapping);
+			return attr != null ? attr.Profile : null;
+		}
 
-                // Keep a pointer to this property if this is a primitive value element ("Value" in primitive types)
-                if (propMapping.RepresentsValueElement)
-                    me.PrimitiveValueProperty = propMapping;
-            }
+		private static string collectTypeName(Type type)
+		{
+			var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+			string name;
 
-            me._orderedMappings = me._propMappings.Values.OrderBy(prop => prop.Order).ToList();
-        }
+			if (attr != null && attr.Name != null)
+				name = attr.Name;
+			else
+				name = type.Name;
 
-        //private static void checkMutualExclusiveAttributes(Type type)
-        //{
-        //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirComplexType(type))
-        //        throw Error.Argument ("type", "Type {0} cannot be both a Resource and a Complex datatype", type);
-        //    if (ClassMapping.IsFhirResource(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument ("type", "Type {0} cannot be both a Resource and a Primitive datatype", type);
-        //    if (ClassMapping.IsFhirComplexType(type) && ClassMapping.IsFhirPrimitive(type))
-        //        throw Error.Argument ("type", "Type {0} cannot be both a Complex and a Primitive datatype", type);
-        //}
-
-
-        //private static object invokeEnumParser(string input, Type enumType)
-        //{
-        //    object result = null;
-        //    bool success = EnumHelper.TryParseEnum(input, enumType, out result);
-
-        //    if (!success)
-        //        throw Error.InvalidOperation("Parsing of enum failed");
-
-        //    return result;
-        //}
-
-
-        private static string getProfile(Type type)
-        {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-         
-            return attr != null ? attr.Profile : null;
-        }
-
-        private static string collectTypeName(Type type)
-        {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-            string name;
-
-            if (attr != null && attr.Name != null)
-                name =  attr.Name;
-            else
-                name = type.Name;
-            
-            if(ReflectionHelper.IsClosedGenericType(type))
-            {
-                name += "<";
-                name += string.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
+			if (ReflectionHelper.IsClosedGenericType(type))
+			{
+				name += "<";
+				name += string.Join(",", type.GetGenericArguments().Select(arg => arg.FullName));
 				name += ">";
 			}
 
-            return name;
-        }
+			return name;
+		}
 
-        public static bool IsFhirResource(Type type)
-        {
-            var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+		public static bool IsFhirResource(Type type)
+		{
+			var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
 
-            return typeof(Resource).IsAssignableFrom(type)
-                    || (attr != null && attr.IsResource);
-        }
+			return typeof(Resource).IsAssignableFrom(type)
+					|| (attr != null && attr.IsResource);
+		}
 
-        public static bool IsMappableType(Type type)
-        {
-            var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute),false);
+		public static bool IsMappableType(Type type)
+		{
+			var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute), false);
 
-            if(!hasAttribute) return false;
+			if (!hasAttribute) return false;
 
 			if (type.IsAbstract)
-                throw Error.Argument(nameof(type), $"Type {type.Name} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype");
+				throw Error.Argument(nameof(type), $"Type {type.Name} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype");
 
-            // Open generic type definitions can never appear as roots of objects
-            // to parse. In instances, they will either have been used in closed type definitions
-            // or as the closed type of a property. However, the FhirType attribute propagates to
-            // these closed definitions, so we will allow having this attribute on an open generic,
-            // it's not going to be directly mappable however.
-            if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
-            {
-                Message.Info("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
-                return false;
-            }
+			// Open generic type definitions can never appear as roots of objects
+			// to parse. In instances, they will either have been used in closed type definitions
+			// or as the closed type of a property. However, the FhirType attribute propagates to
+			// these closed definitions, so we will allow having this attribute on an open generic,
+			// it's not going to be directly mappable however.
+			if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+			{
+				Message.Debug("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
+				return false;
+			}
 
-            return true;
-        }
-    }
+			return true;
+		}
+	}
 }

@@ -24,41 +24,30 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using Hl7.Fhir.Validation;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
-    public sealed class FhirTypeAttribute : InvokeIValidatableObjectAttribute
-    {
-        readonly string name;
+	[AttributeUsage(AttributeTargets.Class, Inherited = true, AllowMultiple = false)]
+	internal sealed class FhirTypeAttribute : InvokeIValidatableObjectAttribute
+	{
+		public FhirTypeAttribute()
+		{
+			// No arg constructor - use defaults
+		}
 
-        public FhirTypeAttribute()
-        {
-            // No arg constructor - use defaults
-        }
+		public FhirTypeAttribute(string name)
+		{
+			Name = name;
+		}
 
-        public FhirTypeAttribute(string name)
-        {
-            this.name = name;
-        }
+		public string Name { get; }
 
-        public string Name
-        {
-            get { return name; }
-        }
+		public string Profile { get; set; }
 
-        public string Profile { get; set; }
-
-        public bool IsResource { get; set; }
-    }
+		public bool IsResource { get; set; }
+	}
 }

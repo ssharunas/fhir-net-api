@@ -24,23 +24,18 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    [AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
-    public sealed class NotMappedAttribute : Attribute
-    {
-        public NotMappedAttribute()
-        {
-            // This attribute is just a marker, no functionality or data
-        }
-    } 
+	[AttributeUsage(AttributeTargets.All, Inherited = false, AllowMultiple = false)]
+	internal sealed class NotMappedAttribute : Attribute
+	{
+		public NotMappedAttribute()
+		{
+			// This attribute is just a marker, no functionality or data
+		}
+	}
 }

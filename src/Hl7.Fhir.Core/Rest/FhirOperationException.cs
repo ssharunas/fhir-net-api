@@ -13,30 +13,34 @@ namespace Hl7.Fhir.Rest
 {
 	public class FhirOperationException : Exception
 	{
-		public OperationOutcome Outcome { get; set; }
+		public FhirOperationException(string message) : base(message) { }
 
-		public FhirOperationException(string message) : base(message)
+		public FhirOperationException(string message, FhirRequest request, FhirResponse response) : base(message)
 		{
+			Request = request;
+			Response = response;
+
+			try
+			{
+				// Try to parse the body as an OperationOutcome resource, but it is no
+				// problem if it's something else, or there is no parseable body at all
+
+				Outcome = response.GetBodyAsEntry<OperationOutcome>(null).Resource;
+			}
+			catch
+			{
+				// failed, so the body does not contain an OperationOutcome.
+				// Put the raw body as a message in the OperationOutcome as a fallback scenario
+				var body = response.GetBodyAsString();
+				if (!string.IsNullOrEmpty(body))
+					Outcome = OperationOutcome.ForMessage(body);
+			}
 		}
 
-		public FhirOperationException(string message, Exception inner) : base(message, inner)
-		{
-		}
+		public OperationOutcome Outcome { get; }
 
-		public FhirOperationException(string message, OperationOutcome outcome, Exception inner)
-			: base(message, inner)
-		{
-			Outcome = outcome;
-		}
+		public FhirRequest Request { get; }
 
-		public FhirOperationException(string message, OperationOutcome outcome)
-			: base(message)
-		{
-			Outcome = outcome;
-		}
-
-		public string RequestBody { get; set; }
-
-		public string ResponseBody { get; set; }
+		public FhirResponse Response { get; }
 	}
 }

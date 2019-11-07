@@ -28,21 +28,16 @@
 
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
 namespace Hl7.Fhir.Introspection
 {
-    /// <summary>
-    /// Xml Serialization used for primitive values
-    /// </summary>
-    public enum XmlSerializationHint
-    {
-        None,
-        Attribute, 
-        TextNode,
-        XhtmlElement
-    }
+	/// <summary>
+	/// Xml Serialization used for primitive values
+	/// </summary>
+	internal enum XmlSerializationHint
+	{
+		None,
+		Attribute,
+		TextNode,
+		XhtmlElement
+	}
 }

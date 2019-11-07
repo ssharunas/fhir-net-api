@@ -11,61 +11,55 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Net;
 using System.Text;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.IO;
 
 namespace Hl7.Fhir.Rest
 {
 	public class FhirRequest
 	{
-		public bool UseFormatParameter { get; set; }
+		private Action<FhirRequest, HttpWebRequest> _beforeRequest;
+		private Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> _afterRequest;
+		private HttpWebRequest _request;
 
-		public FhirRequest(Uri location, string method = "GET",
-			 Action<FhirRequest, HttpWebRequest> beforeRequest = null, Action<FhirResponse, WebResponse> afterRequest = null)
+		public FhirRequest(Uri location, string method, Action<FhirRequest, HttpWebRequest> beforeRequest, Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> afterRequest)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
 			if (method == null) throw Error.ArgumentNull(nameof(method));
+			if (location == null) throw Error.ArgumentNull(nameof(location));
 			if (!location.IsAbsoluteUri) throw Error.Argument(nameof(location), "Must be absolute uri");
 
-			Location = location;
 			Method = method;
-			Timeout = 100000;       // Default timeout is 100 seconds
+			Location = location;
 
 			_beforeRequest = beforeRequest;
 			_afterRequest = afterRequest;
 		}
 
-		private Action<FhirRequest, HttpWebRequest> _beforeRequest;
-		private Action<FhirResponse, WebResponse> _afterRequest;
-
-		public string Method { get; private set; }
-		public Uri Location { get; private set; }
-		public int Timeout { get; set; }
+		public Uri Location { get; }
+		public Uri ContentLocation { get; internal set; }
+		public string Method { get; }
+		public int Timeout { get; set; } = 100000; // Default timeout is 100 seconds
 		public byte[] Body { get; private set; }
 		public string ContentType { get; private set; }
 		public string CategoryHeader { get; private set; }
-		public Uri ContentLocation { get; set; }
-		public bool ForBundle { get; set; }
+		public bool IsForBundle { get; internal set; }
+		public bool IsUseFormatParameter { get; internal set; }
 
-		public void SetBody(string body, ResourceFormat format)
+		internal void SetBody(string body, ResourceFormat format)
 		{
-			Body = System.Text.Encoding.UTF8.GetBytes(body);
-			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+			Body = Encoding.UTF8.GetBytes(body);
+			ContentType = Rest.ContentType.BuildContentType(format, forBundle: false);
 		}
 
-		public void SetBody(Resource resource, ResourceFormat format)
+		internal void SetBody(Resource resource, ResourceFormat format)
 		{
 			if (resource == null) throw Error.ArgumentNull(nameof(resource));
 
-			if (resource is Binary)
+			if (resource is Binary binary)
 			{
-				var bin = (Binary)resource;
-				Body = bin.Content;
-				ContentType = bin.ContentType;
+				Body = binary.Content;
+				ContentType = binary.ContentType;
 			}
 			else
 			{
@@ -73,11 +67,11 @@ namespace Hl7.Fhir.Rest
 					FhirSerializer.SerializeResourceToXmlBytes(resource, summary: false) :
 					FhirSerializer.SerializeResourceToJsonBytes(resource, summary: false);
 
-				ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+				ContentType = Rest.ContentType.BuildContentType(format, forBundle: false);
 			}
 		}
 
-		public void SetBody(Bundle bundle, ResourceFormat format)
+		internal void SetBody(Bundle bundle, ResourceFormat format)
 		{
 			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
@@ -88,7 +82,7 @@ namespace Hl7.Fhir.Rest
 			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: true);
 		}
 
-		public void SetBody(TagList tagList, ResourceFormat format)
+		internal void SetBody(TagList tagList, ResourceFormat format)
 		{
 			if (tagList == null) throw Error.ArgumentNull(nameof(tagList));
 
@@ -96,90 +90,98 @@ namespace Hl7.Fhir.Rest
 				FhirSerializer.SerializeTagListToXmlBytes(tagList) :
 				FhirSerializer.SerializeTagListToJsonBytes(tagList);
 
-			ContentType = Hl7.Fhir.Rest.ContentType.BuildContentType(format, forBundle: false);
+			ContentType = Rest.ContentType.BuildContentType(format, forBundle: false);
 		}
 
-
-		public string BodyAsString()
-		{
-			if (Body == null) return null;
-
-			return (new StreamReader(new MemoryStream(Body), System.Text.Encoding.UTF8, true)).ReadToEnd();
-		}
-
-		public void SetTagsInHeader(IEnumerable<Tag> tags)
+		internal void SetTagsInHeader(IEnumerable<Tag> tags)
 		{
 			if (tags == null) throw Error.ArgumentNull(nameof(tags));
 
 			CategoryHeader = HttpUtil.BuildCategoryHeader(tags);
 		}
 
-		public FhirResponse GetResponse(ResourceFormat? acceptFormat)
+		/// <summary>
+		/// Encodes property 'Body' to utf-8.
+		/// </summary>
+		public string GetBodyAsString()
 		{
-			bool needsFormatParam = UseFormatParameter && acceptFormat.HasValue;
+			return Body == null ? null : Encoding.UTF8.GetString(Body);
+		}
+
+		/// <summary>
+		/// Returns HTTP request and headers.
+		/// </summary>
+		/// <returns></returns>
+		public string GetHeadersAsString()
+		{
+			StringBuilder result = new StringBuilder();
+			result.AppendLine($"{_request.Method} {_request.RequestUri} HTTP/{_request.ProtocolVersion}");
+
+			foreach (var header in _request.Headers.AllKeys)
+			{
+				result.AppendLine($"{header}: {_request.Headers[header]}");
+			}
+
+			return result.ToString();
+		}
+
+		internal FhirResponse GetResponse(ResourceFormat? acceptFormat)
+		{
+			if (_request != null)
+				throw new FhirOperationException("Reuse of FhirRequest! One request - one use, reusing is forbidden!");
 
 			var location = new RestUrl(Location);
 
-			if (needsFormatParam)
-				location.AddParam(HttpUtil.RESTPARAM_FORMAT, Hl7.Fhir.Rest.ContentType.BuildFormatParam(acceptFormat.Value));
+			if (IsUseFormatParameter && acceptFormat.HasValue)
+				location.AddParam(HttpUtil.RESTPARAM_FORMAT, Rest.ContentType.BuildFormatParam(acceptFormat.Value));
 
-			System.Diagnostics.Debug.WriteLine("{0}: {1}", Method, location.Uri.OriginalString);
+			_request = (HttpWebRequest)WebRequest.Create(location.Uri);
+			_request.Timeout = Timeout;
+			_request.Method = Method;
+			_request.UserAgent = ".NET FhirClient for FHIR " + ModelInfo.Version;
 
-			var request = createRequest(location.Uri, Method);
+			if (acceptFormat != null && !IsUseFormatParameter)
+				_request.Accept = Rest.ContentType.BuildContentType(acceptFormat.Value, IsForBundle);
 
-			if (acceptFormat != null && !UseFormatParameter)
-				request.Accept = Hl7.Fhir.Rest.ContentType.BuildContentType(acceptFormat.Value, ForBundle);
+			if (CategoryHeader != null)
+				_request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
 
 			if (Body != null)
 			{
-				request.WriteBody(Body);
-				request.ContentType = ContentType;
-				if (ContentLocation != null) request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
+				_request.ContentType = ContentType;
+
+				if (ContentLocation != null)
+					_request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
+
+				Stream stream = _request.GetRequestStream();
+				stream.Write(Body, 0, Body.Length);
+				stream.Flush();
 			}
 
-			if (CategoryHeader != null) request.Headers[HttpUtil.CATEGORY] = CategoryHeader;
-
-			FhirResponse fhirResponse = null;
-
-			request.Timeout = Timeout;
-
-			if (_beforeRequest != null) _beforeRequest(this, request);
+			_beforeRequest?.Invoke(this, _request);
 
 			// Make sure the HttpResponse gets disposed!
-			using (HttpWebResponse webResponse = (HttpWebResponse)request.GetResponseNoEx())
+			using (HttpWebResponse webResponse = GetResponseNoEx(_request))
 			{
-				fhirResponse = FhirResponse.FromHttpWebResponse(webResponse);
-				if (_afterRequest != null) _afterRequest(fhirResponse, webResponse);
+				var fhirResponse = new FhirResponse(webResponse);
+				_afterRequest?.Invoke(fhirResponse, this, webResponse, _request);
+				return fhirResponse;
 			}
-
-			return fhirResponse;
 		}
 
-		private HttpWebRequest createRequest(Uri location, string method)
+		private HttpWebResponse GetResponseNoEx(WebRequest req)
 		{
-			var request = (HttpWebRequest)HttpWebRequest.Create(location);
-			var agent = ".NET FhirClient for FHIR " + Model.ModelInfo.Version;
-			request.Method = method;
-
 			try
 			{
-				System.Reflection.PropertyInfo prop = request.GetType().GetProperty("UserAgent");
-
-				if (prop != null) prop.SetValue(request, agent, null);
+				return (HttpWebResponse)req.GetResponse();
 			}
-			catch (Exception)
+			catch (WebException ex)
 			{
-				// platform does not support UserAgent property...too bad
-				try
-				{
-					request.Headers[HttpRequestHeader.UserAgent] = agent;
-				}
-				catch (ArgumentException)
-				{
-				}
-			}
+				if (ex.Response is HttpWebResponse resp)
+					return resp;
 
-			return request;
+				throw;
+			}
 		}
 	}
 }

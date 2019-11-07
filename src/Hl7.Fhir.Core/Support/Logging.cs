@@ -13,11 +13,16 @@ namespace Hl7.Fhir.Support
 {
 	internal static class Message
 	{
-		internal static void Info(string format, params object[] args)
+		internal static void Debug(string format, params object[] args)
 		{
 #if DEBUG
-			Debug.WriteLine(format, args);
+			System.Diagnostics.Debug.WriteLine(format, args);
 #endif
+		}
+
+		internal static void Warn(string message)
+		{
+			System.Diagnostics.Debug.WriteLine("WARNING: " + message);
 		}
 	}
 

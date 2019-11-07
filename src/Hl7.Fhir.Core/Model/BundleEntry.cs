@@ -28,61 +28,55 @@
 
 */
 
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
-
-using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Model
 {
-    [InvokeIValidatableObject]
-    public abstract class BundleEntry : Hl7.Fhir.Validation.IValidatableObject
-    {
-        public BundleEntry()
-        {
-            Links = new UriLinkList();
-            Tags = new List<Tag>();
-        }
+	[InvokeIValidatableObject]
+	public abstract class BundleEntry : Validation.IValidatableObject
+	{
+		public BundleEntry()
+		{
+			Links = new UriLinkList();
+			Tags = new List<Tag>();
+		}
 
-        [Required]
-        public Uri Id { get; set; }
-        public UriLinkList Links { get; set; }
-        public ICollection<Tag> Tags { get; set; }
+		[Required]
+		public Uri Id { get; set; }
+		public UriLinkList Links { get; set; }
+		public ICollection<Tag> Tags { get; set; }
 
-        public Uri SelfLink
-        {
-            get { return Links.SelfLink; }
-            set { Links.SelfLink = value; }
-        }
+		public Uri SelfLink
+		{
+			get { return Links.SelfLink; }
+			set { Links.SelfLink = value; }
+		}
 
-        /// <summary>
-        /// Read-only property getting a summary from a Resource or a descriptive text in other cases.
-        /// </summary>
-        public abstract string Summary { get; }
+		/// <summary>
+		/// Read-only property getting a summary from a Resource or a descriptive text in other cases.
+		/// </summary>
+		public abstract string Summary { get; }
 
+		public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var result = new List<ValidationResult>();
 
-        public virtual IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
+			if (Id != null && !Id.IsAbsoluteUri)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
 
-            if (Id != null && !Id.IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry id must be an absolute URI"));
+			if (Bundle.UriHasValue(SelfLink) && !SelfLink.IsAbsoluteUri)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
 
-            if (Bundle.UriHasValue(SelfLink) && !SelfLink.IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Entry selflink must be an absolute URI"));
+			if (Links.FirstLink != null || Links.LastLink != null || Links.PreviousLink != null || Links.NextLink != null)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Paging links can only be used on feeds, not entries"));
 
-            if (Links.FirstLink != null || Links.LastLink != null || Links.PreviousLink != null || Links.NextLink != null)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Paging links can only be used on feeds, not entries"));
+			if (Tags != null && validationContext.ValidateRecursively())
+				DotNetAttributeValidation.TryValidate(Tags, result, true);
 
-            if (Tags != null && validationContext.ValidateRecursively())
-                DotNetAttributeValidation.TryValidate(Tags,result,true);
-
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 }

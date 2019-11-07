@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -40,10 +35,10 @@ using System.Runtime.Serialization;
 //
 namespace Hl7.Fhir.Model
 {
-    [FhirType("Count")]
-    public partial class Count : Quantity
-    {
-        // TODO: Add code to enforce these constraints:
-        // * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
-    }
+	[FhirType("Count")]
+	public partial class Count : Quantity
+	{
+		// TODO: Add code to enforce these constraints:
+		// * There SHALL be a code with a value of "1" if there is a value and it SHALL be an expression of length.  If system is present, it SHALL be UCUM.  If present, the value SHALL a whole number.
+	}
 }

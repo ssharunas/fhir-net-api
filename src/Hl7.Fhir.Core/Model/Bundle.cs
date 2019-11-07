@@ -24,107 +24,101 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
-
-using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
-{    
-    [InvokeIValidatableObject]
-    public class Bundle : Hl7.Fhir.Validation.IValidatableObject
-    {
-        [Required(AllowEmptyStrings=false)]
-        public string Title { get; set; }
+{
+	[InvokeIValidatableObject]
+	public class Bundle : Hl7.Fhir.Validation.IValidatableObject
+	{
+		[Required(AllowEmptyStrings = false)]
+		public string Title { get; set; }
 
-        [Required]
-        public DateTimeOffset? LastUpdated { get; set; }
+		[Required]
+		public DateTimeOffset? LastUpdated { get; set; }
 
-        [Required(AllowEmptyStrings=false)]
-        public Uri Id { get; set; }
-        public UriLinkList Links { get; set; }
-        public IList<Tag> Tags { get; set; }
+		[Required(AllowEmptyStrings = false)]
+		public Uri Id { get; set; }
+		public UriLinkList Links { get; set; }
+		public IList<Tag> Tags { get; set; }
 
-        public string AuthorName { get; set; }
-        public string AuthorUri { get; set; }
+		public string AuthorName { get; set; }
+		public string AuthorUri { get; set; }
 
-        public int? TotalResults { get; set; }
+		public int? TotalResults { get; set; }
 
-        public IList<BundleEntry> Entries { get; set; }
+		public IList<BundleEntry> Entries { get; set; }
 
-        public Bundle()
-        {
-            Entries = new List<BundleEntry>();
-            Links = new UriLinkList();
-            Tags = new List<Tag>();
-        }
+		public Bundle()
+		{
+			Entries = new List<BundleEntry>();
+			Links = new UriLinkList();
+			Tags = new List<Tag>();
+		}
 
-        public Bundle(Uri id, string title, DateTimeOffset lastUpdated) : this()
-        {
-            Id = id;
-            Title = title;
-            LastUpdated = lastUpdated;
-        }
+		public Bundle(Uri id, string title, DateTimeOffset lastUpdated) : this()
+		{
+			Id = id;
+			Title = title;
+			LastUpdated = lastUpdated;
+		}
 
-        public Bundle(string title, DateTimeOffset lastUpdated)
-            : this()
-        {
-            Id = new Uri("urn:uuid:" + Guid.NewGuid());
-            Title = title;
-            LastUpdated = lastUpdated;
-        }
+		public Bundle(string title, DateTimeOffset lastUpdated)
+			: this()
+		{
+			Id = new Uri("urn:uuid:" + Guid.NewGuid());
+			Title = title;
+			LastUpdated = lastUpdated;
+		}
 
-        public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
+		public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var result = new List<ValidationResult>();
 
-            //if (String.IsNullOrWhiteSpace(Title))
-            //    result.Add(new ValidationResult("Feed must contain a title", FhirValidator.SingleMemberName("Title"));
+			//if (string.IsNullOrWhiteSpace(Title))
+			//    result.Add(new ValidationResult("Feed must contain a title", FhirValidator.SingleMemberName("Title"));
 
-            //if (!UriHasValue(Id))
-            //    result.Add(new ValidationResult("Feed must have an id"));
-            //else
-            //    if (!Id.IsAbsoluteUri)
-            //        result.Add(new ValidationResult("Feed id must be an absolute URI"));
+			//if (!UriHasValue(Id))
+			//    result.Add(new ValidationResult("Feed must have an id"));
+			//else
+			//    if (!Id.IsAbsoluteUri)
+			//        result.Add(new ValidationResult("Feed id must be an absolute URI"));
 
-            if (Id != null && !Id.IsAbsoluteUri)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Feed id must be an absolute URI"));
+			if (Id != null && !Id.IsAbsoluteUri)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Feed id must be an absolute URI"));
 
-            //if (LastUpdated == null)
-            //    result.Add(new ValidationResult("Feed must have a updated date"));
+			//if (LastUpdated == null)
+			//    result.Add(new ValidationResult("Feed must have a updated date"));
 
-            if (Links.SearchLink != null)
-                result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Links with rel='search' can only be used on feed entries"));
+			if (Links.SearchLink != null)
+				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Links with rel='search' can only be used on feed entries"));
 
-            bool feedHasAuthor = !String.IsNullOrEmpty(this.AuthorName);
+			bool feedHasAuthor = !string.IsNullOrEmpty(this.AuthorName);
 
-            if (Entries != null && validationContext.ValidateRecursively())
-            {
-                foreach (var entry in Entries.Where(e => e != null))
-                {
-                    if (!feedHasAuthor && entry is ResourceEntry && String.IsNullOrEmpty(((ResourceEntry)entry).AuthorName))
-                        result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Bundle's author and Entry author cannot both be empty"));
+			if (Entries != null && validationContext.ValidateRecursively())
+			{
+				foreach (var entry in Entries.Where(e => e != null))
+				{
+					if (!feedHasAuthor && entry is ResourceEntry && string.IsNullOrEmpty(((ResourceEntry)entry).AuthorName))
+						result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Bundle's author and Entry author cannot both be empty"));
 
-                    DotNetAttributeValidation.TryValidate(entry, result, validationContext.ValidateRecursively());
-                }
-            }
+					DotNetAttributeValidation.TryValidate(entry, result, validationContext.ValidateRecursively());
+				}
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        internal static bool UriHasValue(Uri u)
-        {
-            return u != null && !String.IsNullOrEmpty(u.ToString());
-        }
+		internal static bool UriHasValue(Uri u)
+		{
+			return !string.IsNullOrEmpty(u?.ToString());
+		}
 
-    }  
+	}
 }

@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Tests
                     JToken rMember;
 
                     if (!ro.TryGetValue(lMember.Key, out rMember))
-                        throw new AssertFailedException(String.Format("Expected member {0} not found in actual at " + left.Path, lMember.Key));
+                        throw new AssertFailedException(string.Format("Expected member {0} not found in actual at " + left.Path, lMember.Key));
 
                     areSame(lMember.Value, rMember);
                 }
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Tests
             else
             {
                if(!JToken.DeepEquals(left, right))
-                   throw new AssertFailedException(String.Format("Values not the same at " + left.Path));
+                   throw new AssertFailedException(string.Format("Values not the same at " + left.Path));
             }
         }
 

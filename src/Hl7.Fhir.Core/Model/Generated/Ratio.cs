@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,81 +37,81 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// A ratio of two Quantity values - a numerator and a denominator
-    /// </summary>
-    [FhirType("Ratio")]
-    [DataContract]
-    public partial class Ratio : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Numerator value
-        /// </summary>
-        [FhirElement("numerator", InSummary=true, Order=40)]
-        [DataMember]
-        public Hl7.Fhir.Model.Quantity Numerator
-        {
-            get { return _Numerator; }
-            set { _Numerator = value; OnPropertyChanged("Numerator"); }
-        }
-        private Hl7.Fhir.Model.Quantity _Numerator;
-        
-        /// <summary>
-        /// Denominator value
-        /// </summary>
-        [FhirElement("denominator", InSummary=true, Order=50)]
-        [DataMember]
-        public Hl7.Fhir.Model.Quantity Denominator
-        {
-            get { return _Denominator; }
-            set { _Denominator = value; OnPropertyChanged("Denominator"); }
-        }
-        private Hl7.Fhir.Model.Quantity _Denominator;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Ratio;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Numerator != null) dest.Numerator = (Hl7.Fhir.Model.Quantity)Numerator.DeepCopy();
-                if(Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Ratio());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Ratio;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Numerator, otherT.Numerator)) return false;
-            if( !DeepComparable.Matches(Denominator, otherT.Denominator)) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Ratio;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Numerator, otherT.Numerator)) return false;
-            if( !DeepComparable.IsExactly(Denominator, otherT.Denominator)) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// A ratio of two Quantity values - a numerator and a denominator
+	/// </summary>
+	[FhirType("Ratio")]
+	[DataContract]
+	public partial class Ratio : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// Numerator value
+		/// </summary>
+		[FhirElement("numerator", InSummary = true, Order = 40)]
+		[DataMember]
+		public Hl7.Fhir.Model.Quantity Numerator
+		{
+			get { return _Numerator; }
+			set { _Numerator = value; OnPropertyChanged("Numerator"); }
+		}
+		private Hl7.Fhir.Model.Quantity _Numerator;
+
+		/// <summary>
+		/// Denominator value
+		/// </summary>
+		[FhirElement("denominator", InSummary = true, Order = 50)]
+		[DataMember]
+		public Hl7.Fhir.Model.Quantity Denominator
+		{
+			get { return _Denominator; }
+			set { _Denominator = value; OnPropertyChanged("Denominator"); }
+		}
+		private Hl7.Fhir.Model.Quantity _Denominator;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Ratio;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Numerator != null) dest.Numerator = (Hl7.Fhir.Model.Quantity)Numerator.DeepCopy();
+				if (Denominator != null) dest.Denominator = (Hl7.Fhir.Model.Quantity)Denominator.DeepCopy();
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Ratio());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Ratio;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(Numerator, otherT.Numerator)) return false;
+			if (!DeepComparable.Matches(Denominator, otherT.Denominator)) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Ratio;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(Numerator, otherT.Numerator)) return false;
+			if (!DeepComparable.IsExactly(Denominator, otherT.Denominator)) return false;
+
+			return true;
+		}
+
+	}
+
 }

@@ -7,75 +7,63 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
-using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class PrimitiveValueReader
-    {
-        private IFhirReader _current;
-        private ModelInspector _inspector;
+	internal class PrimitiveValueReader
+	{
+		private IFhirReader _current;
+		private ModelInspector _inspector;
 
-        public PrimitiveValueReader(IFhirReader data)
-        {
-            _current = data;
-            _inspector = SerializationConfig.Inspector;
-        }
+		public PrimitiveValueReader(IFhirReader data)
+		{
+			_current = data;
+			_inspector = SerializationConfig.Inspector;
+		}
 
+		internal object Deserialize(Type nativeType)
+		{
+			if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
 
-        internal object Deserialize(Type nativeType)
-        {
-            if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
-                 
-            if (_current.IsPrimitive())
-            {
-                return read(nativeType);
-            }
-            else
-                throw Error.Format("Trying to read a value, but reader is not at the start of a primitive", _current);
-        }
+			if (_current.IsPrimitive())
+				return read(nativeType);
+
+			throw Error.Format("Trying to read a value, but reader is not at the start of a primitive", _current);
+		}
 
 
-        private object read(Type nativeType)
-        {
-            object primitiveValue = _current.GetPrimitiveValue();
-            
-            if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
-            {
-                var enumMapping = _inspector.FindEnumMappingByType(nativeType);
+		private object read(Type nativeType)
+		{
+			object primitiveValue = _current.GetPrimitiveValue();
 
-                if (enumMapping != null)
-                {
-                    var enumLiteral = (string)primitiveValue;
-                    if (enumMapping.ContainsLiteral(enumLiteral))
-                        return enumMapping.ParseLiteral((string)primitiveValue);
-                    else
-                        throw Error.Format($"Literal {enumLiteral} is not a valid value for enumeration {enumMapping.Name}", _current);
-                }
-                else
-                    throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
-            }
+			if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
+			{
+				var enumMapping = _inspector.FindEnumMappingByType(nativeType);
 
-            try
-            {
-                return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
-            }
-            catch (NotSupportedException exc)
-            {
-                // thrown when an unsupported conversion was required
-                throw Error.Format(exc.Message, _current);
-            }
-        }
-    }
+				if (enumMapping != null)
+				{
+					var enumLiteral = (string)primitiveValue;
+					if (enumMapping.ContainsLiteral(enumLiteral))
+						return enumMapping.ParseLiteral((string)primitiveValue);
+
+					throw Error.Format($"Literal {enumLiteral} is not a valid value for enumeration {enumMapping.Name}", _current);
+				}
+
+				throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
+			}
+
+			try
+			{
+				return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
+			}
+			catch (NotSupportedException exc)
+			{
+				// thrown when an unsupported conversion was required
+				throw Error.Format(exc.Message, _current);
+			}
+		}
+	}
 
 }

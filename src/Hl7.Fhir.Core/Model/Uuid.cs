@@ -24,25 +24,17 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Uuid
-    {
-        public static bool IsValidValue(string value)
-        {
-            return Regex.IsMatch(value, "^" + Uuid.PATTERN + "$", RegexOptions.Singleline);
-        }
-    }
+	public partial class Uuid
+	{
+		public static bool IsValidValue(string value)
+		{
+			return Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+		}
+	}
 }

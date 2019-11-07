@@ -28,110 +28,98 @@
 
 */
 
+using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
-
-using Hl7.Fhir.Introspection;
 using System.ComponentModel.DataAnnotations;
-using Hl7.Fhir.Validation;
-using Hl7.Fhir.Support;
+using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    [FhirType(IsResource=true)]
-    public class TagList
-    {
-        public TagList()
-        {
-            Category = new List<Tag>();
-        }
+	[FhirType(IsResource = true)]
+	public class TagList
+	{
+		public TagList() : this(null) { }
 
-        public TagList(IEnumerable<Tag> tags)
-        {
-            this.Category = new List<Tag>(tags);
-        }
+		public TagList(IEnumerable<Tag> tags)
+		{
+			Category = tags == null ? new List<Tag>() : new List<Tag>(tags);
+		}
 
-        [FhirElement("category")]
-        public List<Tag> Category { get; set; }
-    }
+		[FhirElement("category")]
+		public List<Tag> Category { get; set; }
+	}
 
 
-    [FhirType]
-    public class Tag
-    {
-       
-        public static readonly Uri FHIRTAGSCHEME_GENERAL = new Uri(XmlNs.FHIRTAG, UriKind.Absolute);
-        public static readonly Uri FHIRTAGSCHEME_PROFILE = new Uri(XmlNs.TAG_PROFILE, UriKind.Absolute);
-        public static readonly Uri FHIRTAGSCHEME_SECURITY = new Uri(XmlNs.TAG_SECURITY, UriKind.Absolute);
+	[FhirType]
+	public class Tag
+	{
+		public static readonly Uri FHIRTAGSCHEME_GENERAL = new Uri(XmlNs.FHIRTAG, UriKind.Absolute);
+		public static readonly Uri FHIRTAGSCHEME_PROFILE = new Uri(XmlNs.TAG_PROFILE, UriKind.Absolute);
+		public static readonly Uri FHIRTAGSCHEME_SECURITY = new Uri(XmlNs.TAG_SECURITY, UriKind.Absolute);
 
-        [Required]
-        public string Term { get; private set; }
-        [Required]
-        public Uri Scheme { get; private set; }
-        public string Label { get; private set; }
+		[Required]
+		public string Term { get; private set; }
+		[Required]
+		public Uri Scheme { get; private set; }
+		public string Label { get; private set; }
 
+		public Tag()
+		{
+			// FhirParsers needs this constructor to be public
+		}
 
-        public Tag()
-        {
-            // FhirParsers needs this constructor to be public
-        }
+		public Tag(string term, Uri scheme, string label = null)
+		{
+			if (term == null) throw Error.ArgumentNull(nameof(term));
+			if (scheme == null) throw Error.ArgumentNull(nameof(scheme));
 
+			this.Term = term;
+			this.Scheme = scheme;
+			this.Label = label;
+		}
 
-        public Tag(string term, Uri scheme, string label=null)
-        {
-            if (term == null) throw Error.ArgumentNull(nameof(term));
-            if (scheme == null) throw Error.ArgumentNull(nameof(scheme));
+		public Tag(string term, string scheme, string label = null)
+			: this(term, scheme == null ? null : new Uri(scheme, UriKind.RelativeOrAbsolute), label)
+		{
+		}
 
-            this.Term = term;
-            this.Scheme = scheme;
-            this.Label = label;
-        }
+		public override bool Equals(object obj)
+		{
+			// Check for null values and compare run-time types.
+			if (obj == null || GetType() != obj.GetType())
+				return false;
 
-        public Tag(string term, string scheme, string label = null)
-            : this(term, scheme==null ? null : new Uri(scheme,UriKind.RelativeOrAbsolute), label)
-        {
-        }
+			var t = (Tag)obj;
+			return string.Equals(this.Term, t.Term) && Uri.Equals(this.Scheme, t.Scheme);
+		}
 
-     
-        public override bool Equals(object obj)
-        {
-            // Check for null values and compare run-time types.
-            if (obj == null || GetType() != obj.GetType())
-                return false;
+		public override int GetHashCode()
+		{
+			int hash = 0;
 
-            var t = (Tag)obj;
-            return String.Equals(this.Term, t.Term) && Uri.Equals(this.Scheme, t.Scheme);
-        }
+			if (Term != null) hash ^= Term.GetHashCode();
+			if (Scheme != null) hash ^= Scheme.GetHashCode();
 
-        public override int GetHashCode()
-        {
-            int hash = 0;
+			return hash;
+		}
 
-            if (Term != null) hash ^=  Term.GetHashCode();
-            if (Scheme != null) hash ^= Scheme.GetHashCode();
+		public override string ToString()
+		{
+			StringBuilder result = new StringBuilder();
 
-            return hash;
-        }
+			result.Append(Term);
 
-        public override string ToString()
-        {
-            StringBuilder result = new StringBuilder();
+			if (Scheme != null)
+				result.AppendFormat("@{0}", Scheme);
 
-            result.Append(this.Term);
+			if (Label != null)
+				result.AppendFormat(" ({0})", Label);
 
-            if(this.Scheme != null)
-                result.AppendFormat("@{0}", this.Scheme);
+			return result.ToString();
+		}
 
-            if(this.Label != null)
-                result.AppendFormat(" ({0})", this.Label);
-
-            return result.ToString();
-        }
-
-    }
+	}
 }
 

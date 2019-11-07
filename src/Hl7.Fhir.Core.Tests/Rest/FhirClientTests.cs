@@ -6,20 +6,14 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Text;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Xml;
-using System.Net;
-using System.IO;
+using Hl7.Fhir.Model;
 using Hl7.Fhir.Rest;
 using Hl7.Fhir.Serialization;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Search;
-using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
 
 namespace Hl7.Fhir.Tests.Rest
 {
@@ -42,7 +36,9 @@ namespace Hl7.Fhir.Tests.Rest
 		[TestMethod, TestCategory("FhirClient")]
 		public void FetchConformance()
 		{
+			FhirResponse lastResponse = null;
 			FhirClient client = new FhirClient(testEndpoint);
+			client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => { lastResponse = e.Response; };
 
 			var entry = client.Conformance();
 			var c = entry.Resource;
@@ -50,24 +46,25 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.IsNotNull(c);
 			// Assert.AreEqual("Spark.Service", c.Software.Name); // This is only for ewout's server
 			Assert.AreEqual(Conformance.RestfulConformanceMode.Server, c.Rest[0].Mode.Value);
-			Assert.AreEqual(HttpStatusCode.OK, client.LastResponseDetails.Result);
+			Assert.AreEqual(HttpStatusCode.OK, lastResponse.Result);
 
 			// Does't currently work on Grahame's server
-			Assert.AreEqual(ContentType.XML_CONTENT_HEADER, client.LastResponseDetails.ContentType.ToLower());
+			Assert.AreEqual(ContentType.XML_CONTENT_HEADER, lastResponse.ContentType.ToLower());
 		}
-
 
 		[TestMethod, TestCategory("FhirClient")]
 		public void ReadWithFormat()
 		{
+			FhirResponse lastResponse = null;
 			FhirClient client = new FhirClient(testEndpoint);
+			client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => { lastResponse = e.Response; };
 
-			client.UseFormatParam = true;
+			client.IsUseFormatParam = true;
 			client.PreferredFormat = ResourceFormat.Json;
 
 			var loc = client.Read("Patient/1");
 
-			Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(client.LastResponseDetails.ContentType));
+			Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(lastResponse.ContentType));
 		}
 
 
@@ -86,7 +83,7 @@ namespace Hl7.Fhir.Tests.Rest
 				Body = request.Body;
 			}
 
-			protected override void AfterResponse(FhirResponse fhirResponse, WebResponse webResponse)
+			protected override void AfterResponse(FhirResponse fhirResponse, FhirRequest request, WebResponse webResponse, HttpWebRequest rawRequest)
 			{
 				HitAfterRequest = true;
 			}
@@ -140,7 +137,9 @@ namespace Hl7.Fhir.Tests.Rest
 		[TestMethod, TestCategory("FhirClient")]
 		public void Read()
 		{
+			FhirResponse lastResponse = null;
 			FhirClient client = new FhirClient(testEndpoint);
+			client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => { lastResponse = e.Response; };
 
 			var loc = client.Read<Location>("Location/1");
 			Assert.IsNotNull(loc);
@@ -158,7 +157,7 @@ namespace Hl7.Fhir.Tests.Rest
 			}
 			catch (FhirOperationException)
 			{
-				Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.NotFound);
+				Assert.IsTrue(lastResponse.Result == HttpStatusCode.NotFound);
 			}
 
 			var loc2 = client.Read<Location>(ResourceIdentity.Build("Location", "1", version));
@@ -215,9 +214,9 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual(2, result.Entries.Count);  // should have subject too
 
 			Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-						typeof(DiagnosticReport).GetCollectionName()));
+						ModelInfo.GetCollectionName<DiagnosticReport>()));
 			Assert.IsNotNull(result.Entries.Single(entry => new ResourceIdentity(entry.Id).Collection ==
-						typeof(Patient).GetCollectionName()));
+						ModelInfo.GetCollectionName<Patient>()));
 
 			result = client.Search<Patient>(new string[] { "name=Everywoman", "name=Eve" });
 
@@ -275,7 +274,10 @@ namespace Hl7.Fhir.Tests.Rest
 				Telecom = new List<Contact> { new Contact { System = Contact.ContactSystem.Phone, Value = "+31-20-3467171" } }
 			};
 
+			FhirResponse lastResponse = null;
 			FhirClient client = new FhirClient(testEndpoint);
+			client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => { lastResponse = e.Response; };
+
 			var tags = new List<Tag> { new Tag("http://nu.nl/testname", Tag.FHIRTAGSCHEME_GENERAL, "TestCreateEditDelete") };
 
 			var fe = client.Create<Organization>(furore, tags: tags, refresh: true);
@@ -317,7 +319,7 @@ namespace Hl7.Fhir.Tests.Rest
 			}
 			catch
 			{
-				Assert.IsTrue(client.LastResponseDetails.Result == HttpStatusCode.Gone);
+				Assert.IsTrue(lastResponse.Result == HttpStatusCode.Gone);
 			}
 		}
 

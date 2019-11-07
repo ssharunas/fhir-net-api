@@ -24,106 +24,52 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class HumanName
-    {
-        public static HumanName ForFamily(string family)
-        {
-            var result = new HumanName();
-
-            result.Family = new string[] { family };
-
-            return result;
-        }
-
-        public HumanName WithGiven(string given)
-        {
-            if (this.GivenElement == null) this.GivenElement = new List<FhirString>();
-            this.GivenElement.Add(new FhirString(given));
-
-            return this;
-        }
-
-        public HumanName AndFamily(string family)
-        {
-            if(this.FamilyElement == null) this.FamilyElement = new List<FhirString>();
-            this.FamilyElement.Add(new FhirString(family));
-
-            return this;
-        }
-
-        public List<HumanName> AsList()
-        {
-            return new List<HumanName>() { this };
-        }
-    }
-
-
-    public partial class CodeableConcept
-    {
-        public CodeableConcept()
-        {
-        }
-
-        public CodeableConcept(string system, string code, string text = null)
-        {
-            this.Coding = new List<Coding>() {
-                new Coding(system,code) };
-            
-            this.Text = text;
-        }
-
-		public CodeableConcept(string system, string code, string text = null, string display = null)
+	public partial class HumanName
+	{
+		public List<HumanName> AsList()
 		{
-			this.Coding = new List<Coding>
-			{
-				 new Coding(system, code,display)
-			};
-
-			this.Text = text;
-		}
-    }
-
-    public partial class Coding
-    {
-        public Coding()
-        {
-        }
-
-        public Coding(string system, string code)
-        {
-            this.System = system;
-            this.Code = code;
-        }
-
-		public Coding(string system, string code, string display)
-		{
-			this.System = system;
-			this.Code = code;
-			this.Display = display;
+			return new List<HumanName>() { this };
 		}
 	}
 
-    public partial class Identifier
-    {
-        public Identifier()
-        {
-        }
 
-        public Identifier(string system, string value)
-        {
-            this.System = system;
-            this.Value = value;
-        }        
-    }
+	public partial class CodeableConcept
+	{
+		public CodeableConcept() { }
+
+		public CodeableConcept(string system, string code, string text = null, string display = null)
+		{
+			Coding = new List<Coding> { new Coding(system, code, display) };
+			Text = text;
+		}
+	}
+
+	public partial class Coding
+	{
+		public Coding() { }
+
+		public Coding(string system, string code, string display = null)
+		{
+			System = system;
+			Code = code;
+			Display = display;
+		}
+	}
+
+	public partial class Identifier
+	{
+		public Identifier() { }
+
+		public Identifier(string system, string value)
+		{
+			System = system;
+			Value = value;
+		}
+	}
 }

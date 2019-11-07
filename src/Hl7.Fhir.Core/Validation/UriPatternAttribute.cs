@@ -6,31 +6,28 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Validation
 {
-    [AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
-    public class UriPatternAttribute : ValidationAttribute
-    {
-        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {
-            if (value == null) return ValidationResult.Success;
+	[AttributeUsage(AttributeTargets.Property, Inherited = false, AllowMultiple = false)]
+	public class UriPatternAttribute : ValidationAttribute
+	{
+		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+		{
+			if (value != null)
+			{
+				if (value.GetType() != typeof(string))
+					throw Error.Argument(nameof(value), "UriPatternAttribute can only be applied to .NET Uri properties");
 
-            if (value.GetType() != typeof(string))
-                throw Error.Argument(nameof(value), "UriPatternAttribute can only be applied to .NET Uri properties");
+				if (!FhirUri.IsValidValue(value as string))
+					return DotNetAttributeValidation.BuildResult(validationContext, $"Uri uses an urn:oid or urn:uuid scheme, but the syntax {value} is incorrect");
+			}
 
-            if (!FhirUri.IsValidValue(value as string))
-                return DotNetAttributeValidation.BuildResult(validationContext, "Uri uses an urn:oid or urn:uuid scheme, but the syntax {0} is incorrect", value as string);
-            else
-                return ValidationResult.Success;
-        }
-    }
+			return ValidationResult.Success;
+		}
+	}
 }

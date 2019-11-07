@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,73 +37,73 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Typed element containing the primitive integer
-    /// </summary>
-    [FhirType("integer")]
-    [DataContract]
-    public partial class Integer : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        public Integer(int? value)
-        {
-            Value = value; 
-        }
-        
-        public Integer(): this((int?)null) {}
-        
-        /// <summary>
-        /// Primitive value of the element
-        /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
-        [DataMember]
-        public int? Value
-        {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
-        }
-        private int? _Value;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Integer;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Value != null) dest.Value = Value;
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Integer());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Integer;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Integer;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// Typed element containing the primitive integer
+	/// </summary>
+	[FhirType("integer")]
+	[DataContract]
+	public partial class Integer : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		public Integer(int? value)
+		{
+			Value = value;
+		}
+
+		public Integer() : this((int?)null) { }
+
+		/// <summary>
+		/// Primitive value of the element
+		/// </summary>
+		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
+		[DataMember]
+		public int? Value
+		{
+			get { return _Value; }
+			set { _Value = value; OnPropertyChanged("Value"); }
+		}
+		private int? _Value;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Integer;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Value != null) dest.Value = Value;
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Integer());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Integer;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (Value != otherT.Value) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Integer;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (Value != otherT.Value) return false;
+
+			return true;
+		}
+
+	}
+
 }

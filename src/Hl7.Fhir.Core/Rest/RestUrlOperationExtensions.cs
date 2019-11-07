@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Rest
 		public static RestUrl Search(this RestUrl url, string collection = null)
 		{
 			if (collection != null)
-				return new RestUrl(url).AddPath(false, collection , RestOperation.SEARCH);
+				return new RestUrl(url).AddPath(false, collection, RestOperation.SEARCH);
 			else
 				return new RestUrl(url).AddPath(RestOperation.SEARCH);
 		}

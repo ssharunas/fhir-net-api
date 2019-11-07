@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Validation;
+using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,101 +39,101 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Concept - reference to a terminology or just  text
-    /// </summary>
-    [FhirType("CodeableConcept")]
-    [DataContract]
-    public partial class CodeableConcept : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Code defined by a terminology system
-        /// </summary>
-        [FhirElement("coding", InSummary=true, Order=40)]
-        [Cardinality(Min=0,Max=-1)]
-        [DataMember]
-        public List<Hl7.Fhir.Model.Coding> Coding
-        {
-            get { return _Coding; }
-            set { _Coding = value; OnPropertyChanged("Coding"); }
-        }
-        private List<Hl7.Fhir.Model.Coding> _Coding;
-        
-        /// <summary>
-        /// Plain text representation of the concept
-        /// </summary>
-        [FhirElement("text", InSummary=true, Order=50)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString TextElement
-        {
-            get { return _TextElement; }
-            set { _TextElement = value; OnPropertyChanged("TextElement"); }
-        }
-        private Hl7.Fhir.Model.FhirString _TextElement;
-        
-        /// <summary>
-        /// Plain text representation of the concept
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Text
-        {
-            get { return TextElement != null ? TextElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  TextElement = null; 
-                else
-                  TextElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Text");
-            }
-        }
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as CodeableConcept;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Coding != null) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopy());
-                if(TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new CodeableConcept());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as CodeableConcept;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Coding, otherT.Coding)) return false;
-            if( !DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as CodeableConcept;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Coding, otherT.Coding)) return false;
-            if( !DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// Concept - reference to a terminology or just  text
+	/// </summary>
+	[FhirType("CodeableConcept")]
+	[DataContract]
+	public partial class CodeableConcept : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// Code defined by a terminology system
+		/// </summary>
+		[FhirElement("coding", InSummary = true, Order = 40)]
+		[Cardinality(Min = 0, Max = -1)]
+		[DataMember]
+		public List<Hl7.Fhir.Model.Coding> Coding
+		{
+			get { return _Coding; }
+			set { _Coding = value; OnPropertyChanged("Coding"); }
+		}
+		private List<Hl7.Fhir.Model.Coding> _Coding;
+
+		/// <summary>
+		/// Plain text representation of the concept
+		/// </summary>
+		[FhirElement("text", InSummary = true, Order = 50)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirString TextElement
+		{
+			get { return _TextElement; }
+			set { _TextElement = value; OnPropertyChanged("TextElement"); }
+		}
+		private Hl7.Fhir.Model.FhirString _TextElement;
+
+		/// <summary>
+		/// Plain text representation of the concept
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string Text
+		{
+			get { return TextElement != null ? TextElement.Value : null; }
+			set
+			{
+				if (value == null)
+					TextElement = null;
+				else
+					TextElement = new Hl7.Fhir.Model.FhirString(value);
+				OnPropertyChanged("Text");
+			}
+		}
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as CodeableConcept;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Coding != null) dest.Coding = new List<Hl7.Fhir.Model.Coding>(Coding.DeepCopy());
+				if (TextElement != null) dest.TextElement = (Hl7.Fhir.Model.FhirString)TextElement.DeepCopy();
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new CodeableConcept());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as CodeableConcept;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(Coding, otherT.Coding)) return false;
+			if (!DeepComparable.Matches(TextElement, otherT.TextElement)) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as CodeableConcept;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(Coding, otherT.Coding)) return false;
+			if (!DeepComparable.IsExactly(TextElement, otherT.TextElement)) return false;
+
+			return true;
+		}
+
+	}
+
 }

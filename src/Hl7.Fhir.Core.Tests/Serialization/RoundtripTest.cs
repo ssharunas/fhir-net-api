@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Tests.Serialization
             using (var reader = new StreamReader(filename))
             {
                 reader.Read(buffer, 0, buffer.Length);
-                var data = new String(buffer);
+                var data = new string(buffer);
 
                 if (data.Contains("<feed")) return true;
                 if (data.Contains("resourceType") && data.Contains("Bundle")) return true;

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,119 +37,119 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// A reference from one resource to another
-    /// </summary>
-    [FhirType("ResourceReference")]
-    [DataContract]
-    public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Relative, internal or absolute URL reference
-        /// </summary>
-        [FhirElement("reference", InSummary=true, Order=40)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString ReferenceElement
-        {
-            get { return _ReferenceElement; }
-            set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
-        }
-        private Hl7.Fhir.Model.FhirString _ReferenceElement;
-        
-        /// <summary>
-        /// Relative, internal or absolute URL reference
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Reference
-        {
-            get { return ReferenceElement != null ? ReferenceElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ReferenceElement = null; 
-                else
-                  ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Reference");
-            }
-        }
-        
-        /// <summary>
-        /// Text alternative for the resource
-        /// </summary>
-        [FhirElement("display", InSummary=true, Order=50)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString DisplayElement
-        {
-            get { return _DisplayElement; }
-            set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
-        }
-        private Hl7.Fhir.Model.FhirString _DisplayElement;
-        
-        /// <summary>
-        /// Text alternative for the resource
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Display
-        {
-            get { return DisplayElement != null ? DisplayElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  DisplayElement = null; 
-                else
-                  DisplayElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Display");
-            }
-        }
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as ResourceReference;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopy();
-                if(DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new ResourceReference());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as ResourceReference;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
-            if( !DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as ResourceReference;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
-            if( !DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// A reference from one resource to another
+	/// </summary>
+	[FhirType("ResourceReference")]
+	[DataContract]
+	public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// Relative, internal or absolute URL reference
+		/// </summary>
+		[FhirElement("reference", InSummary = true, Order = 40)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirString ReferenceElement
+		{
+			get { return _ReferenceElement; }
+			set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
+		}
+		private Hl7.Fhir.Model.FhirString _ReferenceElement;
+
+		/// <summary>
+		/// Relative, internal or absolute URL reference
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string Reference
+		{
+			get { return ReferenceElement != null ? ReferenceElement.Value : null; }
+			set
+			{
+				if (value == null)
+					ReferenceElement = null;
+				else
+					ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
+				OnPropertyChanged("Reference");
+			}
+		}
+
+		/// <summary>
+		/// Text alternative for the resource
+		/// </summary>
+		[FhirElement("display", InSummary = true, Order = 50)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirString DisplayElement
+		{
+			get { return _DisplayElement; }
+			set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
+		}
+		private Hl7.Fhir.Model.FhirString _DisplayElement;
+
+		/// <summary>
+		/// Text alternative for the resource
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string Display
+		{
+			get { return DisplayElement != null ? DisplayElement.Value : null; }
+			set
+			{
+				if (value == null)
+					DisplayElement = null;
+				else
+					DisplayElement = new Hl7.Fhir.Model.FhirString(value);
+				OnPropertyChanged("Display");
+			}
+		}
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as ResourceReference;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (ReferenceElement != null) dest.ReferenceElement = (Hl7.Fhir.Model.FhirString)ReferenceElement.DeepCopy();
+				if (DisplayElement != null) dest.DisplayElement = (Hl7.Fhir.Model.FhirString)DisplayElement.DeepCopy();
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new ResourceReference());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as ResourceReference;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
+			if (!DeepComparable.Matches(DisplayElement, otherT.DisplayElement)) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as ResourceReference;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;
+			if (!DeepComparable.IsExactly(DisplayElement, otherT.DisplayElement)) return false;
+
+			return true;
+		}
+
+	}
+
 }

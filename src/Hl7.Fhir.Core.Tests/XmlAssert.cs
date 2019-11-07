@@ -33,34 +33,34 @@ namespace Hl7.Fhir.Tests
         private static void areSame(string context, XElement expected, XElement actual)
         {
             if (expected.Name.ToString() != actual.Name.ToString())
-                throw new AssertFailedException(String.Format("Expected element '{0}', actual '{1}' at '{2}'",
+                throw new AssertFailedException(string.Format("Expected element '{0}', actual '{1}' at '{2}'",
                     expected.Name.ToString(), actual.Name.ToString(), context));
 
             if (expected.Attributes().Count() != actual.Attributes().Count())
                 throw new AssertFailedException(
-                    String.Format("Number of attributes are not the same in element '{0}'",context));
+                    string.Format("Number of attributes are not the same in element '{0}'",context));
 
             foreach (XAttribute attr in expected.Attributes())
             {
                 if (actual.Attribute(attr.Name) == null)
                     throw new AssertFailedException(
-                        String.Format("Expected attribute '{0}' not found in element '{1}'", attr.Name.ToString(),
+                        string.Format("Expected attribute '{0}' not found in element '{1}'", attr.Name.ToString(),
                                         context));
 
                 if (actual.Attribute(attr.Name).Value != attr.Value)
                     throw new AssertFailedException(
-                        String.Format("Attributes '{0}' are not the same at {1}. Expected: '{2}', actual '{3}'",
+                        string.Format("Attributes '{0}' are not the same at {1}. Expected: '{2}', actual '{3}'",
                             attr.Name.ToString(), context, attr.Value, actual.Value));
             }
 
             if (expected.Elements().Count() != actual.Elements().Count())
                     throw new AssertFailedException(
-                        String.Format("Number of child elements are not the same at '{0}'", context));
+                        string.Format("Number of child elements are not the same at '{0}'", context));
 
             //int elemNr = 0;
 
             //var result = expected.Elements().Zip(actual.Elements(), (ex,ac)=> { areSame(context + "." + ex.Name.LocalName +
-            //        String.Format("[{0}]",elemNr++), ex,ac); return true; } );
+            //        string.Format("[{0}]",elemNr++), ex,ac); return true; } );
 
             var expectedList = expected.Elements().ToArray();
             var actualList = expected.Elements().ToArray();
@@ -70,7 +70,7 @@ namespace Hl7.Fhir.Tests
                 var ex = expectedList[elemNr];
                 var ac = actualList[elemNr];
 
-                areSame(context + "." + ex.Name.LocalName + String.Format("[{0}]", elemNr), ex, ac);
+                areSame(context + "." + ex.Name.LocalName + string.Format("[{0}]", elemNr), ex, ac);
             }
         }
 

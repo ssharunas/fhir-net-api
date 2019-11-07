@@ -6,36 +6,18 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Support;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Validation
 {
-    // This class creates ValidationContext objects, since due to bugs and platform
-    // differences, creating this context is, unfortunately, version dependent.
-    // See http://stackoverflow.com/questions/12762071/why-in-portable-library-classes-i-cant-instantiate-a-validationcontext-and-how
-    public static class ValidationContextFactory
-    {
-        public static ValidationContext Create(object instance, IDictionary<object,object> items, bool recurse = false)
-        {
-            ValidationContext result = null;
-
-            try
-            {
-                result = (ValidationContext)Activator.CreateInstance(typeof(ValidationContext),
-                    new object[] { instance, null, items });
-
-                result.SetValidateRecursively(recurse);
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw Error.NotSupported("Validation is not supported on this platform", ex);
-            }
-            return result;
-        }
-    }
+	public static class ValidationContextFactory
+	{
+		public static ValidationContext Create(object instance, IDictionary<object, object> items, bool recurse = false)
+		{
+			var result = new ValidationContext(instance, null, items);
+			result.SetValidateRecursively(recurse);
+			return result;
+		}
+	}
 }

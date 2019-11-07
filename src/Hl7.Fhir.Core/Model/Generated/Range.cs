@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,81 +37,81 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Set of values bounded by low and high
-    /// </summary>
-    [FhirType("Range")]
-    [DataContract]
-    public partial class Range : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Low limit
-        /// </summary>
-        [FhirElement("low", InSummary=true, Order=40)]
-        [DataMember]
-        public Hl7.Fhir.Model.Quantity Low
-        {
-            get { return _Low; }
-            set { _Low = value; OnPropertyChanged("Low"); }
-        }
-        private Hl7.Fhir.Model.Quantity _Low;
-        
-        /// <summary>
-        /// High limit
-        /// </summary>
-        [FhirElement("high", InSummary=true, Order=50)]
-        [DataMember]
-        public Hl7.Fhir.Model.Quantity High
-        {
-            get { return _High; }
-            set { _High = value; OnPropertyChanged("High"); }
-        }
-        private Hl7.Fhir.Model.Quantity _High;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Range;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
-                if(High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Range());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Range;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(Low, otherT.Low)) return false;
-            if( !DeepComparable.Matches(High, otherT.High)) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Range;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(Low, otherT.Low)) return false;
-            if( !DeepComparable.IsExactly(High, otherT.High)) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// Set of values bounded by low and high
+	/// </summary>
+	[FhirType("Range")]
+	[DataContract]
+	public partial class Range : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// Low limit
+		/// </summary>
+		[FhirElement("low", InSummary = true, Order = 40)]
+		[DataMember]
+		public Hl7.Fhir.Model.Quantity Low
+		{
+			get { return _Low; }
+			set { _Low = value; OnPropertyChanged("Low"); }
+		}
+		private Hl7.Fhir.Model.Quantity _Low;
+
+		/// <summary>
+		/// High limit
+		/// </summary>
+		[FhirElement("high", InSummary = true, Order = 50)]
+		[DataMember]
+		public Hl7.Fhir.Model.Quantity High
+		{
+			get { return _High; }
+			set { _High = value; OnPropertyChanged("High"); }
+		}
+		private Hl7.Fhir.Model.Quantity _High;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Range;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Low != null) dest.Low = (Hl7.Fhir.Model.Quantity)Low.DeepCopy();
+				if (High != null) dest.High = (Hl7.Fhir.Model.Quantity)High.DeepCopy();
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Range());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Range;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(Low, otherT.Low)) return false;
+			if (!DeepComparable.Matches(High, otherT.High)) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Range;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(Low, otherT.Low)) return false;
+			if (!DeepComparable.IsExactly(High, otherT.High)) return false;
+
+			return true;
+		}
+
+	}
+
 }

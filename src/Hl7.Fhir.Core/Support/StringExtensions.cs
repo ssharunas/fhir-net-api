@@ -14,64 +14,67 @@ using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Support
 {
-    internal static class StringExtensions
-    {
-        internal static string[] SplitNotInQuotes(this string value, char separator)
-        {
-            var parts = Regex.Split(value, separator + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")
-                                .Select(s => s.Trim());
-                               
-            return parts.ToArray<string>();
-        }
+	internal static class StringExtensions
+	{
+		internal static IEnumerable<string> SplitNotInQuotes(this string value, char separator, StringSplitOptions options = StringSplitOptions.None)
+		{
+			var parts = Regex.Split(value, separator + "(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)")
+								.Select(s => s.Trim());
 
-        internal static string[] SplitNotEscaped(this string value, char separator)
-        {
-            String word = String.Empty;
-            List<String> result = new List<string>();
-            bool seenEscape = false;
+			if (options == StringSplitOptions.RemoveEmptyEntries)
+				parts = parts.Where(s => !string.IsNullOrEmpty(s));
 
-            for (int i = 0; i < value.Length; i++)
-            {
-                if (value[i] == '\\')
-                {
-                    seenEscape = true;
-                    continue;
-                }
-               
-                if (value[i] == separator && !seenEscape)
-                {
-                    result.Add(word);
-                    word = String.Empty;
-                    continue;
-                }
+			return parts;
+		}
 
-                if (seenEscape)
-                {
-                    word += '\\';
-                    seenEscape = false;
-                }
+		internal static string[] SplitNotEscaped(this string value, char separator)
+		{
+			string word = string.Empty;
+			List<string> result = new List<string>();
+			bool seenEscape = false;
 
-                word += value[i];
-            }
+			for (int i = 0; i < value.Length; i++)
+			{
+				if (value[i] == '\\')
+				{
+					seenEscape = true;
+					continue;
+				}
 
-            result.Add(word);
+				if (value[i] == separator && !seenEscape)
+				{
+					result.Add(word);
+					word = string.Empty;
+					continue;
+				}
 
-            return result.ToArray<string>();
-        }
+				if (seenEscape)
+				{
+					word += '\\';
+					seenEscape = false;
+				}
 
-        internal static Tuple<string,string> SplitLeft(this string text, char separator)
-        {
-            var pos = text.IndexOf(separator);
+				word += value[i];
+			}
 
-            if (pos == -1)
-                return Tuple.Create(text, (string)null);     // Nothing to split
-            else
-            {
-                var key = text.Substring(0, pos);
-                var value = text.Substring(pos + 1);
+			result.Add(word);
 
-                return Tuple.Create(key, value);
-            }
-        }
-    }
+			return result.ToArray<string>();
+		}
+
+		internal static Tuple<string, string> SplitLeft(this string text, char separator)
+		{
+			var pos = text.IndexOf(separator);
+
+			if (pos == -1)
+				return Tuple.Create(text, (string)null);     // Nothing to split
+			else
+			{
+				var key = text.Substring(0, pos);
+				var value = text.Substring(pos + 1);
+
+				return Tuple.Create(key, value);
+			}
+		}
+	}
 }

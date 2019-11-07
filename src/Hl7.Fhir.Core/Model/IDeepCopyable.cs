@@ -24,27 +24,24 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
 */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public interface IDeepCopyable
-    {
-        IDeepCopyable DeepCopy();
-        IDeepCopyable CopyTo(IDeepCopyable other);
-    }
+	public interface IDeepCopyable
+	{
+		IDeepCopyable DeepCopy();
+		IDeepCopyable CopyTo(IDeepCopyable other);
+	}
 
-    public static class ListCopyExtensions
-    {
-        public static IEnumerable<T> DeepCopy<T>(this IEnumerable<T> source) where T : IDeepCopyable 
-        {
-            return source.Select(item => item != null ? (T)item.DeepCopy() : default(T));
-        }
-    }
+	public static class ListCopyExtensions
+	{
+		public static IEnumerable<T> DeepCopy<T>(this IEnumerable<T> source) where T : IDeepCopyable
+		{
+			return source.Select(item => item != null ? (T)item.DeepCopy() : default(T));
+		}
+	}
 }

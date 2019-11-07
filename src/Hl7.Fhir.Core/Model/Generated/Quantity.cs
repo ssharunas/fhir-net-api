@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,249 +37,249 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// A measured or measurable amount
-    /// </summary>
-    [FhirType("Quantity")]
-    [DataContract]
-    public partial class Quantity : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// How the Quantity should be understood and represented
-        /// </summary>
-        [FhirEnumeration("QuantityCompararator")]
-        public enum QuantityCompararator
-        {
-            /// <summary>
-            /// The actual value is less than the given value.
-            /// </summary>
-            [EnumLiteral("<")]
-            LessThan,
-            /// <summary>
-            /// The actual value is less than or equal to the given value.
-            /// </summary>
-            [EnumLiteral("<=")]
-            LessOrEqual,
-            /// <summary>
-            /// The actual value is greater than or equal to the given value.
-            /// </summary>
-            [EnumLiteral(">=")]
-            GreaterOrEqual,
-            /// <summary>
-            /// The actual value is greater than the given value.
-            /// </summary>
-            [EnumLiteral(">")]
-            GreaterThan,
-        }
-        
-        /// <summary>
-        /// Numerical value (with implicit precision)
-        /// </summary>
-        [FhirElement("value", InSummary=true, Order=40)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDecimal ValueElement
-        {
-            get { return _ValueElement; }
-            set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-        }
-        private Hl7.Fhir.Model.FhirDecimal _ValueElement;
-        
-        /// <summary>
-        /// Numerical value (with implicit precision)
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public decimal? Value
-        {
-            get { return ValueElement != null ? ValueElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ValueElement = null; 
-                else
-                  ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
-                OnPropertyChanged("Value");
-            }
-        }
-        
-        /// <summary>
-        /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
-        /// </summary>
-        [FhirElement("comparator", InSummary=true, Order=50)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> ComparatorElement
-        {
-            get { return _ComparatorElement; }
-            set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
-        }
-        private Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> _ComparatorElement;
-        
-        /// <summary>
-        /// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Quantity.QuantityCompararator? Comparator
-        {
-            get { return ComparatorElement != null ? ComparatorElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  ComparatorElement = null; 
-                else
-                  ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>(value);
-                OnPropertyChanged("Comparator");
-            }
-        }
-        
-        /// <summary>
-        /// Unit representation
-        /// </summary>
-        [FhirElement("units", InSummary=true, Order=60)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirString UnitsElement
-        {
-            get { return _UnitsElement; }
-            set { _UnitsElement = value; OnPropertyChanged("UnitsElement"); }
-        }
-        private Hl7.Fhir.Model.FhirString _UnitsElement;
-        
-        /// <summary>
-        /// Unit representation
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Units
-        {
-            get { return UnitsElement != null ? UnitsElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  UnitsElement = null; 
-                else
-                  UnitsElement = new Hl7.Fhir.Model.FhirString(value);
-                OnPropertyChanged("Units");
-            }
-        }
-        
-        /// <summary>
-        /// System that defines coded unit form
-        /// </summary>
-        [FhirElement("system", InSummary=true, Order=70)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirUri SystemElement
-        {
-            get { return _SystemElement; }
-            set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
-        }
-        private Hl7.Fhir.Model.FhirUri _SystemElement;
-        
-        /// <summary>
-        /// System that defines coded unit form
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string System
-        {
-            get { return SystemElement != null ? SystemElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  SystemElement = null; 
-                else
-                  SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-                OnPropertyChanged("System");
-            }
-        }
-        
-        /// <summary>
-        /// Coded form of the unit
-        /// </summary>
-        [FhirElement("code", InSummary=true, Order=80)]
-        [DataMember]
-        public Hl7.Fhir.Model.Code CodeElement
-        {
-            get { return _CodeElement; }
-            set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
-        }
-        private Hl7.Fhir.Model.Code _CodeElement;
-        
-        /// <summary>
-        /// Coded form of the unit
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Code
-        {
-            get { return CodeElement != null ? CodeElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  CodeElement = null; 
-                else
-                  CodeElement = new Hl7.Fhir.Model.Code(value);
-                OnPropertyChanged("Code");
-            }
-        }
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Quantity;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
-                if(ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>)ComparatorElement.DeepCopy();
-                if(UnitsElement != null) dest.UnitsElement = (Hl7.Fhir.Model.FhirString)UnitsElement.DeepCopy();
-                if(SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
-                if(CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Quantity());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Quantity;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
-            if( !DeepComparable.Matches(ComparatorElement, otherT.ComparatorElement)) return false;
-            if( !DeepComparable.Matches(UnitsElement, otherT.UnitsElement)) return false;
-            if( !DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
-            if( !DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Quantity;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
-            if( !DeepComparable.IsExactly(ComparatorElement, otherT.ComparatorElement)) return false;
-            if( !DeepComparable.IsExactly(UnitsElement, otherT.UnitsElement)) return false;
-            if( !DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
-            if( !DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// A measured or measurable amount
+	/// </summary>
+	[FhirType("Quantity")]
+	[DataContract]
+	public partial class Quantity : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// How the Quantity should be understood and represented
+		/// </summary>
+		[FhirEnumeration("QuantityCompararator")]
+		public enum QuantityCompararator
+		{
+			/// <summary>
+			/// The actual value is less than the given value.
+			/// </summary>
+			[EnumLiteral("<")]
+			LessThan,
+			/// <summary>
+			/// The actual value is less than or equal to the given value.
+			/// </summary>
+			[EnumLiteral("<=")]
+			LessOrEqual,
+			/// <summary>
+			/// The actual value is greater than or equal to the given value.
+			/// </summary>
+			[EnumLiteral(">=")]
+			GreaterOrEqual,
+			/// <summary>
+			/// The actual value is greater than the given value.
+			/// </summary>
+			[EnumLiteral(">")]
+			GreaterThan,
+		}
+
+		/// <summary>
+		/// Numerical value (with implicit precision)
+		/// </summary>
+		[FhirElement("value", InSummary = true, Order = 40)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirDecimal ValueElement
+		{
+			get { return _ValueElement; }
+			set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
+		}
+		private Hl7.Fhir.Model.FhirDecimal _ValueElement;
+
+		/// <summary>
+		/// Numerical value (with implicit precision)
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public decimal? Value
+		{
+			get { return ValueElement != null ? ValueElement.Value : null; }
+			set
+			{
+				if (value == null)
+					ValueElement = null;
+				else
+					ValueElement = new Hl7.Fhir.Model.FhirDecimal(value);
+				OnPropertyChanged("Value");
+			}
+		}
+
+		/// <summary>
+		/// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
+		/// </summary>
+		[FhirElement("comparator", InSummary = true, Order = 50)]
+		[DataMember]
+		public Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> ComparatorElement
+		{
+			get { return _ComparatorElement; }
+			set { _ComparatorElement = value; OnPropertyChanged("ComparatorElement"); }
+		}
+		private Code<Hl7.Fhir.Model.Quantity.QuantityCompararator> _ComparatorElement;
+
+		/// <summary>
+		/// &lt; | &lt;= | &gt;= | &gt; - how to understand the value
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public Hl7.Fhir.Model.Quantity.QuantityCompararator? Comparator
+		{
+			get { return ComparatorElement != null ? ComparatorElement.Value : null; }
+			set
+			{
+				if (value == null)
+					ComparatorElement = null;
+				else
+					ComparatorElement = new Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>(value);
+				OnPropertyChanged("Comparator");
+			}
+		}
+
+		/// <summary>
+		/// Unit representation
+		/// </summary>
+		[FhirElement("units", InSummary = true, Order = 60)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirString UnitsElement
+		{
+			get { return _UnitsElement; }
+			set { _UnitsElement = value; OnPropertyChanged("UnitsElement"); }
+		}
+		private Hl7.Fhir.Model.FhirString _UnitsElement;
+
+		/// <summary>
+		/// Unit representation
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string Units
+		{
+			get { return UnitsElement != null ? UnitsElement.Value : null; }
+			set
+			{
+				if (value == null)
+					UnitsElement = null;
+				else
+					UnitsElement = new Hl7.Fhir.Model.FhirString(value);
+				OnPropertyChanged("Units");
+			}
+		}
+
+		/// <summary>
+		/// System that defines coded unit form
+		/// </summary>
+		[FhirElement("system", InSummary = true, Order = 70)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirUri SystemElement
+		{
+			get { return _SystemElement; }
+			set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
+		}
+		private Hl7.Fhir.Model.FhirUri _SystemElement;
+
+		/// <summary>
+		/// System that defines coded unit form
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string System
+		{
+			get { return SystemElement != null ? SystemElement.Value : null; }
+			set
+			{
+				if (value == null)
+					SystemElement = null;
+				else
+					SystemElement = new Hl7.Fhir.Model.FhirUri(value);
+				OnPropertyChanged("System");
+			}
+		}
+
+		/// <summary>
+		/// Coded form of the unit
+		/// </summary>
+		[FhirElement("code", InSummary = true, Order = 80)]
+		[DataMember]
+		public Hl7.Fhir.Model.Code CodeElement
+		{
+			get { return _CodeElement; }
+			set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
+		}
+		private Hl7.Fhir.Model.Code _CodeElement;
+
+		/// <summary>
+		/// Coded form of the unit
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string Code
+		{
+			get { return CodeElement != null ? CodeElement.Value : null; }
+			set
+			{
+				if (value == null)
+					CodeElement = null;
+				else
+					CodeElement = new Hl7.Fhir.Model.Code(value);
+				OnPropertyChanged("Code");
+			}
+		}
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Quantity;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (ValueElement != null) dest.ValueElement = (Hl7.Fhir.Model.FhirDecimal)ValueElement.DeepCopy();
+				if (ComparatorElement != null) dest.ComparatorElement = (Code<Hl7.Fhir.Model.Quantity.QuantityCompararator>)ComparatorElement.DeepCopy();
+				if (UnitsElement != null) dest.UnitsElement = (Hl7.Fhir.Model.FhirString)UnitsElement.DeepCopy();
+				if (SystemElement != null) dest.SystemElement = (Hl7.Fhir.Model.FhirUri)SystemElement.DeepCopy();
+				if (CodeElement != null) dest.CodeElement = (Hl7.Fhir.Model.Code)CodeElement.DeepCopy();
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Quantity());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Quantity;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(ValueElement, otherT.ValueElement)) return false;
+			if (!DeepComparable.Matches(ComparatorElement, otherT.ComparatorElement)) return false;
+			if (!DeepComparable.Matches(UnitsElement, otherT.UnitsElement)) return false;
+			if (!DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
+			if (!DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Quantity;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(ValueElement, otherT.ValueElement)) return false;
+			if (!DeepComparable.IsExactly(ComparatorElement, otherT.ComparatorElement)) return false;
+			if (!DeepComparable.IsExactly(UnitsElement, otherT.UnitsElement)) return false;
+			if (!DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;
+			if (!DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
+
+			return true;
+		}
+
+	}
+
 }

@@ -24,64 +24,59 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
-
-
 
 using System;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class FhirDateTime
-    {
-        public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
-        {
-        }
+	public partial class FhirDateTime
+	{
+		public FhirDateTime(DateTimeOffset dt) : this(dt.ToString(FMT_FULL))
+		{
+		}
 
-        public FhirDateTime(DateTime dt) : this( new DateTimeOffset(dt) )
-        {
-        }
+		public FhirDateTime(DateTime dt) : this(new DateTimeOffset(dt))
+		{
+		}
 
-        public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
-            : this(new DateTime(year,month,day,hr,min,sec,DateTimeKind.Local))
-        {
-        }
+		public FhirDateTime(int year, int month, int day, int hr, int min, int sec = 0)
+			: this(new DateTime(year, month, day, hr, min, sec, DateTimeKind.Local))
+		{
+		}
 
-        public FhirDateTime(int year, int month, int day)
-            : this(String.Format(FMT_YEARMONTHDAY, year, month, day))
-        {
-        }
+		public FhirDateTime(int year, int month, int day)
+			: this(string.Format(FMT_YEARMONTHDAY, year, month, day))
+		{
+		}
 
-        public FhirDateTime(int year, int month)
-            : this( String.Format(FMT_YEARMONTH,year,month) )
-        {
-        }
+		public FhirDateTime(int year, int month)
+			: this(string.Format(FMT_YEARMONTH, year, month))
+		{
+		}
 
-        public FhirDateTime(int year)
-            : this(String.Format(FMT_YEAR, year))
-        {
-        }
+		public FhirDateTime(int year)
+			: this(string.Format(FMT_YEAR, year))
+		{
+		}
 
-        
-        public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ssK";
-        public const string FMT_YEAR = "{0:D4}";
-        public const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
-        public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
+		public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ssK";
+		public const string FMT_YEAR = "{0:D4}";
+		public const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
+		public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
 
-        public static FhirDateTime Now()
-        {
-            return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
-        }
+		public static FhirDateTime Now()
+		{
+			return new FhirDateTime(DateTimeOffset.Now.ToString(FMT_FULL));
+		}
 
-        public static bool IsValidValue(string value)
-        {
-            return Regex.IsMatch(value, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);
+		public static bool IsValidValue(string value)
+		{
+			return Regex.IsMatch(value, "^" + FhirDateTime.PATTERN + "$", RegexOptions.Singleline);
 
-            //TODO: Additional checks not implementable by the regex
-        }
+			//TODO: Additional checks not implementable by the regex
+		}
 
-    }
+	}
 }

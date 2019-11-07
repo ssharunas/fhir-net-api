@@ -24,70 +24,70 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
 */
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public interface IDeepComparable
-    {
-        bool IsExactly(IDeepComparable other);
-        bool Matches(IDeepComparable pattern);
-    }
+	public interface IDeepComparable
+	{
+		bool IsExactly(IDeepComparable other);
+		bool Matches(IDeepComparable pattern);
+	}
 
-    public static class DeepComparable
-    {
-        public static bool IsExactly(IDeepComparable a, IDeepComparable b)
-        {
-            if (a == null && b == null) return true;
+	public static class DeepComparable
+	{
+		public static bool IsExactly(IDeepComparable a, IDeepComparable b)
+		{
+			if (a == null && b == null)
+				return true;
 
-            if (a != null && b != null)
-            {
-                return a.IsExactly(b);
-            }
-            else
-                return false;
-        }
+			if (a != null && b != null)
+				return a.IsExactly(b);
 
-        public static bool Matches(IDeepComparable a, IDeepComparable pattern)
-        {
-            if (pattern == null) return true;
+			return false;
+		}
 
-            if (a != null && pattern != null)
-            {
-                return a.Matches(pattern);
-            }
-            else
-                return false;
-        }
+		public static bool Matches(IDeepComparable a, IDeepComparable pattern)
+		{
+			if (pattern == null)
+				return true;
 
-        public static bool IsExactly<T>(this IEnumerable<T> source, IEnumerable<T> other) 
-                where T : IDeepComparable 
-        {
-            if (source == null && other == null) return true;
-            if (source != null && other != null)
-            {
-                if (source.Count() != other.Count()) return false;
+			if (a != null && pattern != null)
+				return a.Matches(pattern);
 
-                return source.Zip(other, (a, b) => IsExactly(a, b)).All(r => r == true);
-            }
-            else
-                return false;
-        }
+			return false;
+		}
 
-        public static bool Matches<T>(this IEnumerable<T> source, IEnumerable<T> pattern)
-                    where T : IDeepComparable
-        {
-            if (pattern == null) return true;
-            if (source != null && pattern != null)
-                return pattern.All(src => source.Any(patt => Matches(src, patt)));
-            else
-                return false;
-        }
-    }
+		public static bool IsExactly<T>(this IEnumerable<T> source, IEnumerable<T> other)
+				where T : IDeepComparable
+		{
+			if (source == null && other == null)
+				return true;
+
+			if (source != null && other != null)
+			{
+				if (source.Count() != other.Count())
+					return false;
+
+				return source.Zip(other, (a, b) => IsExactly(a, b)).All(r => r == true);
+			}
+
+			return false;
+		}
+
+		public static bool Matches<T>(this IEnumerable<T> source, IEnumerable<T> pattern)
+					where T : IDeepComparable
+		{
+			if (pattern == null)
+				return true;
+
+			if (source != null && pattern != null)
+				return pattern.All(src => source.Any(patt => Matches(src, patt)));
+
+			return false;
+		}
+	}
 }

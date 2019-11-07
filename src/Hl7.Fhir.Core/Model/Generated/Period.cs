@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using System;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,13 +38,13 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Time range defined by start and end date/time
-    /// </summary>
-    [FhirType("Period")]
-    [DataContract]
-    public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
+	/// <summary>
+	/// Time range defined by start and end date/time
+	/// </summary>
+	[FhirType("Period")]
+	[DataContract]
+	public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
 		public Period()
 		{
 		}
@@ -61,112 +58,112 @@ namespace Hl7.Fhir.Model
 				EndElement = new FhirDateTime(end.Value);
 		}
 
-        /// <summary>
-        /// Starting time with inclusive boundary
-        /// </summary>
-        [FhirElement("start", InSummary=true, Order=40)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime StartElement
-        {
-            get { return _StartElement; }
-            set { _StartElement = value; OnPropertyChanged("StartElement"); }
-        }
-        private Hl7.Fhir.Model.FhirDateTime _StartElement;
-        
-        /// <summary>
-        /// Starting time with inclusive boundary
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string Start
-        {
-            get { return StartElement != null ? StartElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  StartElement = null; 
-                else
-                  StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("Start");
-            }
-        }
-        
-        /// <summary>
-        /// End time with inclusive boundary, if not ongoing
-        /// </summary>
-        [FhirElement("end", InSummary=true, Order=50)]
-        [DataMember]
-        public Hl7.Fhir.Model.FhirDateTime EndElement
-        {
-            get { return _EndElement; }
-            set { _EndElement = value; OnPropertyChanged("EndElement"); }
-        }
-        private Hl7.Fhir.Model.FhirDateTime _EndElement;
-        
-        /// <summary>
-        /// End time with inclusive boundary, if not ongoing
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public string End
-        {
-            get { return EndElement != null ? EndElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  EndElement = null; 
-                else
-                  EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
-                OnPropertyChanged("End");
-            }
-        }
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Period;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(StartElement != null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)StartElement.DeepCopy();
-                if(EndElement != null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)EndElement.DeepCopy();
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Period());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Period;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
-            if( !DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Period;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
-            if( !DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
-            
-            return true;
-        }
-        
-    }
-    
+		/// <summary>
+		/// Starting time with inclusive boundary
+		/// </summary>
+		[FhirElement("start", InSummary = true, Order = 40)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirDateTime StartElement
+		{
+			get { return _StartElement; }
+			set { _StartElement = value; OnPropertyChanged("StartElement"); }
+		}
+		private Hl7.Fhir.Model.FhirDateTime _StartElement;
+
+		/// <summary>
+		/// Starting time with inclusive boundary
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string Start
+		{
+			get { return StartElement != null ? StartElement.Value : null; }
+			set
+			{
+				if (value == null)
+					StartElement = null;
+				else
+					StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
+				OnPropertyChanged("Start");
+			}
+		}
+
+		/// <summary>
+		/// End time with inclusive boundary, if not ongoing
+		/// </summary>
+		[FhirElement("end", InSummary = true, Order = 50)]
+		[DataMember]
+		public Hl7.Fhir.Model.FhirDateTime EndElement
+		{
+			get { return _EndElement; }
+			set { _EndElement = value; OnPropertyChanged("EndElement"); }
+		}
+		private Hl7.Fhir.Model.FhirDateTime _EndElement;
+
+		/// <summary>
+		/// End time with inclusive boundary, if not ongoing
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public string End
+		{
+			get { return EndElement != null ? EndElement.Value : null; }
+			set
+			{
+				if (value == null)
+					EndElement = null;
+				else
+					EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
+				OnPropertyChanged("End");
+			}
+		}
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Period;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (StartElement != null) dest.StartElement = (Hl7.Fhir.Model.FhirDateTime)StartElement.DeepCopy();
+				if (EndElement != null) dest.EndElement = (Hl7.Fhir.Model.FhirDateTime)EndElement.DeepCopy();
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Period());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Period;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
+			if (!DeepComparable.Matches(EndElement, otherT.EndElement)) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Period;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;
+			if (!DeepComparable.IsExactly(EndElement, otherT.EndElement)) return false;
+
+			return true;
+		}
+
+	}
+
 }

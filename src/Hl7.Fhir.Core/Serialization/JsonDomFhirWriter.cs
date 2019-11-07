@@ -6,180 +6,170 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Support;
-using Newtonsoft.Json.Linq;
 using Hl7.Fhir.Introspection;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
+using System.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-    internal class JsonDomFhirWriter : IFhirWriter
-    {
-        private JsonWriter jw;
-        private JToken _current = null;
- 
-        public JsonDomFhirWriter(JsonWriter jwriter)
-        {
-            jw = jwriter;
-        }
+	internal class JsonDomFhirWriter : IFhirWriter
+	{
+		private JsonWriter jw;
+		private JToken _current = null;
 
-        internal JsonDomFhirWriter()
-        {
-        }
+		internal JsonDomFhirWriter() { }
 
-        private string _rootType;
-        
-        public void WriteStartRootObject(string name, bool contained)
-        {
-            _rootType = name;
-        }
+		public JsonDomFhirWriter(JsonWriter jwriter)
+		{
+			jw = jwriter;
+		}
 
+		private string _rootType;
 
-        public void WriteEndRootObject(bool contained)
-        {
-        }
+		public void WriteStartRootObject(string name, bool contained)
+		{
+			_rootType = name;
+		}
 
-        public void WriteStartProperty(string name)
-        {
-            var prop = new JProperty(name, null);
-            ((JObject)_current).Add(prop);
-            _current = prop;
-        }
+		public void WriteEndRootObject(bool contained)
+		{
+		}
 
-        public void WriteEndProperty()
-        {
-            var prop = (JProperty)_current;
+		public void WriteStartProperty(string name)
+		{
+			var prop = new JProperty(name, null);
+			((JObject)_current).Add(prop);
+			_current = prop;
+		}
 
-            var parent = _current.Parent;
+		public void WriteEndProperty()
+		{
+			var prop = (JProperty)_current;
 
-            if (prop.Value.Type == JTokenType.Null)
-                _current.Remove();
+			var parent = _current.Parent;
 
-            _current = parent;
-        }
+			if (prop.Value.Type == JTokenType.Null)
+				_current.Remove();
 
+			_current = parent;
+		}
 
-        internal JObject Result;
+		internal JObject Result;
 
-        public void WriteStartComplexContent()
-        {
-            if (_current == null)
-                _current = new JObject();
-            else
-            {
-                JObject obj = new JObject();
+		public void WriteStartComplexContent()
+		{
+			if (_current == null)
+				_current = new JObject();
+			else
+			{
+				JObject obj = new JObject();
 
-                if (_current is JProperty)
-                    ((JProperty)_current).Value = obj;
-                else if (_current is JArray)
-                    ((JArray)_current).Add(obj);
+				if (_current is JProperty)
+					((JProperty)_current).Value = obj;
+				else if (_current is JArray)
+					((JArray)_current).Add(obj);
 
-                _current = obj;
-            }
+				_current = obj;
+			}
 
-            // When this is the first complex scope when writing a resource,
-            // emit a type member
-            if(_rootType != null)
-            {
-                ((JObject)_current).Add(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, _rootType));
-                _rootType = null;
-            }
-        }
+			// When this is the first complex scope when writing a resource,
+			// emit a type member
+			if (_rootType != null)
+			{
+				((JObject)_current).Add(new JProperty(JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME, _rootType));
+				_rootType = null;
+			}
+		}
 
-        public void WriteEndComplexContent()
-        {
-            var parent = _current.Parent;
+		public void WriteEndComplexContent()
+		{
+			var parent = _current.Parent;
 
-            var obj = (JObject)_current;
+			var obj = (JObject)_current;
 
-            foreach(var child in obj.Children())
-                if(child is JProperty && ((JProperty)child).Value.Type == JTokenType.Null)
-                    child.Remove();
+			foreach (var child in obj.Children())
+				if (child is JProperty && ((JProperty)child).Value.Type == JTokenType.Null)
+					child.Remove();
 
-            if (obj.Count == 0)
-            {
-                if (parent is JArray)
-                    obj.Replace(null);
-                else if (parent is JProperty)
-                    ((JProperty)parent).Value = null;
-            }
-            if (parent == null)
-            {
-                Result = (JObject)_current;
-                if(jw != null) _current.WriteTo(jw);
-            }
+			if (obj.Count == 0)
+			{
+				if (parent is JArray)
+					obj.Replace(null);
+				else if (parent is JProperty)
+					((JProperty)parent).Value = null;
+			}
+			if (parent == null)
+			{
+				Result = (JObject)_current;
+				if (jw != null) _current.WriteTo(jw);
+			}
 
-            _current = parent;
-        }
+			_current = parent;
+		}
 
-      
-        public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
-        {
-            JValue val;
+		public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
+		{
+			JValue val;
 
-            if (value == null)
-                val = null;
-            else if (value is bool)
-                val = new JValue(value);
-            else if (value is Int32 || value is Int16)
-                val = new JValue(value);
-            else if (value is decimal)
-                val = new JValue(value);
-            else
-                val = new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
+			if (value == null)
+				val = null;
+			else if (value is bool)
+				val = new JValue(value);
+			else if (value is Int32 || value is Int16)
+				val = new JValue(value);
+			else if (value is decimal)
+				val = new JValue(value);
+			else
+				val = new JValue(PrimitiveTypeConverter.ConvertTo<string>(value));
 
-            if (_current is JArray)
-                ((JArray)_current).Add(val);
-            else if (_current is JProperty)
-                ((JProperty)_current).Value = val;
-        }
+			if (_current is JArray)
+				((JArray)_current).Add(val);
+			else if (_current is JProperty)
+				((JProperty)_current).Value = val;
+		}
 
+		public void WriteStartArray()
+		{
+			var arr = new JArray();
 
-        public void WriteStartArray()
-        {
-            var arr = new JArray();
+			((JProperty)_current).Value = arr;
 
-            ((JProperty)_current).Value = arr;
+			_current = arr;
+		}
 
-            _current = arr;
-        }
+		public void WriteEndArray()
+		{
+			var arr = (JArray)_current;
 
-        public void WriteEndArray()
-        {
-            var arr = (JArray)_current;
+			var parent = _current.Parent;
 
-            var parent = _current.Parent;
+			if (arr.Count == 0 ||
+				arr.All(arrelem => arrelem.Type == JTokenType.Null))
+			{
+				if (parent is JArray)
+					arr.Replace(null);
+				else if (parent is JProperty)
+					((JProperty)parent).Value = null;
+			}
+			_current = parent;
+		}
 
-            if (arr.Count == 0 ||
-                arr.All(arrelem => arrelem.Type == JTokenType.Null))
-            {
-                if (parent is JArray)
-                    arr.Replace(null);
-                else if (parent is JProperty)
-                    ((JProperty)parent).Value = null;
-            }
-            _current = parent;
-        }
+		public bool HasValueElementSupport
+		{
+			get { return true; }
+		}
 
-        public bool HasValueElementSupport
-        {
-            get { return true; }
-        }
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        private void Dispose(bool disposing)
-        {
-            if (disposing && jw != null) ((IDisposable)jw).Dispose();
-        }
-    }
+		private void Dispose(bool disposing)
+		{
+			if (disposing && jw != null) ((IDisposable)jw).Dispose();
+		}
+	}
 }

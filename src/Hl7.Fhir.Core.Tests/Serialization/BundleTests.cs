@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Tests.Serialization
 
         private string cleanupXml(string xml)
         {
-            xml = xml.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", "");
+            xml = xml.Replace("<?xml version=\"1.0\" encoding=\"utf-16\"?>", string.Empty);
             xml = xml.Replace("entry xmlns=\"http://www.w3.org/2005/Atom\"", "entry");
             return xml;
         }

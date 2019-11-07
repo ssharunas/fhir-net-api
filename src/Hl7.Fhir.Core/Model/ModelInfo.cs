@@ -24,85 +24,87 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class ModelInfo
-    {
-        public class SearchParamDefinition
-        {
-            public string Resource { get; set; }
-            public string Name { get; set; }
-            public string Description { get; set; }
-            public Conformance.SearchParamType Type { get; set; }
+	public partial class ModelInfo
+	{
+		public class SearchParamDefinition
+		{
+			public string Resource { get; set; }
+			public string Name { get; set; }
+			public string Description { get; set; }
+			public Conformance.SearchParamType Type { get; set; }
 
-            /// <summary>
-            /// If this search parameter is a Composite, this array contains 
-            /// the list of search parameters the param is a combination of
-            /// </summary>
-            public string[] CompositeParams { get; set; }
+			/// <summary>
+			/// If this search parameter is a Composite, this array contains 
+			/// the list of search parameters the param is a combination of
+			/// </summary>
+			public string[] CompositeParams { get; set; }
 
-            /// <summary>
-            /// One or more paths into the Resource instance that the search parameter 
-            /// uses 
-            /// </summary>
-            public string[] Path { get; set; }
-        }
-
-
-        public static Type GetTypeForFhirType(string name)
-        {
-            if (!FhirTypeToCsType.ContainsKey(name))
-                return null;
-            else
-                return FhirTypeToCsType[name];
-        }
+			/// <summary>
+			/// One or more paths into the Resource instance that the search parameter 
+			/// uses 
+			/// </summary>
+			public string[] Path { get; set; }
+		}
 
 
-        public static string GetFhirTypeForType(Type type)
-        {
-            if (!FhirCsTypeToString.ContainsKey(type))
-                return null;
-            else
-                return FhirCsTypeToString[type];
-        }
+		public static Type GetTypeForFhirType(string name)
+		{
+			if (!FhirTypeToCsType.ContainsKey(name))
+				return null;
+			else
+				return FhirTypeToCsType[name];
+		}
 
+		public static string GetFhirTypeForType(Type type)
+		{
+			if (!FhirCsTypeToString.ContainsKey(type))
+				return null;
+			else
+				return FhirCsTypeToString[type];
+		}
 
-        public static bool IsKnownResource(string name)
-        {
-            return SupportedResources.Contains(name);
-        }
+		public static bool IsKnownResource(string name)
+		{
+			if (string.IsNullOrEmpty(name))
+				return false;
 
-        public static bool IsKnownResource(Type type)
-        {
-            var name = GetFhirTypeForType(type);
+			return SupportedResources.Contains(name);
+		}
 
-            return name != null && IsKnownResource(name);
-        }
+		public static bool IsKnownResource(Type type)
+		{
+			var name = GetFhirTypeForType(type);
 
-        public static Type GetTypeForResourceName(string name)
-        {
-            if (!IsKnownResource(name)) return null;
+			return name != null && IsKnownResource(name);
+		}
 
-            return GetTypeForFhirType(name);
-        }
+		public static Type GetTypeForResourceName(string name)
+		{
+			if (!IsKnownResource(name)) return null;
 
-        public static string GetResourceNameForType(Type type)
-        {
-            var name = GetFhirTypeForType(type);
+			return GetTypeForFhirType(name);
+		}
 
-            if (name != null && IsKnownResource(name))
-                return name;
-            else
-                return null;
-        }
-    }
+		public static string GetResourceNameForType(Type type)
+		{
+			var name = GetFhirTypeForType(type);
+
+			if (name != null && IsKnownResource(name))
+				return name;
+			else
+				return null;
+		}
+
+		public static string GetCollectionName<T>() where T : Resource
+		{
+			return GetResourceNameForType(typeof(T));
+		}
+
+	}
 }

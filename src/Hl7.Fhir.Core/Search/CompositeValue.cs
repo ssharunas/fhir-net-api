@@ -6,53 +6,36 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Validation;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 
 namespace Hl7.Fhir.Search
 {
-    public class CompositeValue : ValueExpression
-    {
-        private const char TUPLESEPARATOR = '$';
+	internal class CompositeValue : ValueExpression
+	{
+		private const char TUPLESEPARATOR = '$';
 
-        public ValueExpression[] Components { get; private set; }
+		public ValueExpression[] Components { get; private set; }
 
-        public CompositeValue(ValueExpression[] components)
-        {
-            if (components == null) throw Error.ArgumentNull(nameof(components));
+		public CompositeValue(ValueExpression[] components)
+		{
+			if (components == null) throw Error.ArgumentNull(nameof(components));
 
-            Components = components;
-        }
+			Components = components;
+		}
 
-        public CompositeValue(IEnumerable<ValueExpression> components)
-        {
-            if (components == null) throw Error.ArgumentNull(nameof(components));
+		public override string ToString()
+		{
+			return string.Join(TUPLESEPARATOR.ToString(), Components.Select(v => v.ToString()));
+		}
 
-            Components = components.ToArray();
-        }
+		public static CompositeValue Parse(string text)
+		{
+			if (text == null) throw Error.ArgumentNull(nameof(text));
 
-        public override string ToString()
-        {
-            var values = Components.Select(v => v.ToString());
-            return String.Join(TUPLESEPARATOR.ToString(),values);
-        }
+			var values = text.SplitNotEscaped(TUPLESEPARATOR);
 
-
-        public static CompositeValue Parse(string text)
-        {
-            if (text == null) throw Error.ArgumentNull(nameof(text));
-
-            var values = text.SplitNotEscaped(TUPLESEPARATOR);
-
-            return new CompositeValue(values.Select(v => new UntypedValue(v)));
-        }
-    }
+			return new CompositeValue(values.Select(v => new UntypedValue(v)).ToArray());
+		}
+	}
 }

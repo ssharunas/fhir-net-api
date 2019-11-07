@@ -10,7 +10,6 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Rest
@@ -20,9 +19,16 @@ namespace Hl7.Fhir.Rest
 	/// It is not designed to be able to handle all URLs for bundles, such as searching, or history retrieval.
 	/// (If this class is used with the resource history, then the results will not be as expected)
 	/// </summary>
-	[SerializableAttribute]
-	public class ResourceIdentity : Uri
+	[Serializable]
+	internal class ResourceIdentity : Uri
 	{
+		private List<string> _components;
+		private Uri _endpoint;
+		private string _collection;
+		private string _id;
+		private string _versionId;
+		private Uri _operationPath;
+
 		/// <summary>
 		/// Creates an Resource Identity instance for a Resource given a resource's location.
 		/// </summary>
@@ -36,7 +42,6 @@ namespace Hl7.Fhir.Rest
 		/// <param name="uri">Relative or absolute location of a Resource</param>
 		/// <returns></returns>
 		public ResourceIdentity(Uri uri) : base(uri.ToString(), UriKind.RelativeOrAbsolute) { }
-
 
 		internal ResourceIdentity(string uri, UriKind kind) : base(uri, kind) { }
 
@@ -52,6 +57,7 @@ namespace Hl7.Fhir.Rest
 		{
 			base.GetObjectData(info, context);
 		}
+
 		#endregion
 
 		/// <summary>
@@ -74,7 +80,6 @@ namespace Hl7.Fhir.Rest
 				return new ResourceIdentity(construct(endpoint, collection, id));
 		}
 
-
 		/// <summary>
 		/// Creates a relative Uri representing a Resource identitity for a given resource type, id and optional version.
 		/// </summary>
@@ -82,7 +87,6 @@ namespace Hl7.Fhir.Rest
 		/// <param name="id">The resource's logical id</param>
 		/// <param name="vid">The resource's version id</param>
 		/// <returns></returns>
-
 		public static ResourceIdentity Build(string collection, string id, string vid = null)
 		{
 			if (collection == null) throw Error.ArgumentNull(nameof(collection));
@@ -95,18 +99,179 @@ namespace Hl7.Fhir.Rest
 			return new ResourceIdentity(url, UriKind.Relative);
 		}
 
-
-		// Encure path ends in a '/'
-		private static string delimit(string path)
+		private List<string> Components
 		{
-			return path.EndsWith(@"/") ? path : path + @"/";
+			get
+			{
+				if (_components == null)
+				{
+					string path = IsAbsoluteUri ? LocalPath : ToString();
+					_components = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
+				}
+
+				return _components;
+			}
 		}
 
+		/// <summary>
+		/// This is the FHIR service endpoint where the resource is located.
+		/// </summary>
+		public Uri Endpoint
+		{
+			get
+			{
+				if (_endpoint == null)
+				{
+					int count = Components.Count;
+
+					if (count < 2)
+						return null;
+
+					int index = Components.IndexOf(RestOperation.HISTORY);
+					int n = (index > 0) ? index - 2 : count - 2;
+					IEnumerable<string> _components = Components.Skip(n);
+					string path = string.Join("/", _components).Trim('/');
+					string s = ToString();
+					string endpoint = s.Remove(s.LastIndexOf(path));
+
+					_endpoint = (endpoint.Length > 0) ? new Uri(endpoint) : null;
+				}
+
+				return _endpoint;
+			}
+		}
+
+		/// <summary>
+		/// The name of the resource as it occurs in the Resource url
+		/// </summary>
+		public string Collection
+		{
+			get
+			{
+				if (_collection == null)
+				{
+					int index = Components.IndexOf(RestOperation.HISTORY);
+					if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
+
+					if (index >= 2)
+					{
+						_collection = Components[index - 2];
+					}
+					else if (Components.Count > 2)
+					{
+						_collection = Components[Components.Count - 2];
+					}
+					else if (Components.Count == 2 && index == -1)
+					{
+						_collection = Components[0];
+					}
+
+					if (!Model.ModelInfo.IsKnownResource(_collection))
+						Message.Warn($"Unknown resource identity {_collection} in {nameof(ResourceIdentity)}");
+				}
+
+				return _collection;
+			}
+		}
+
+		/// <summary>
+		/// The logical id of the resource as it occurs in the Resource url
+		/// </summary>
+		public string Id
+		{
+			get
+			{
+				if (_id == null)
+				{
+					int index = Components.IndexOf(RestOperation.HISTORY);
+
+					if (index > -1 && index == Components.Count - 1)
+						_id = null; // illegal use, there's just a _history component, but no version id
+					else if (index >= 2)
+						_id = Components[index - 1];
+					else if (index == -1 && Components.Count >= 2)
+						_id = Components[Components.Count - 1];
+					else
+						_id = null;
+				}
+
+				return _id;
+			}
+		}
+
+		/// <summary>
+		/// The version id of the resource as it occurs in the Resource url
+		/// </summary>
+		public string VersionId
+		{
+			get
+			{
+				if (_versionId == null)
+				{
+					int index = Components.IndexOf(RestOperation.HISTORY);
+					if (index > -1 && index == Components.Count - 1)
+						_versionId = null; // illegal use, there's just a _history component, but no version id
+
+					if (index >= 2 && Components.Count >= 4 && index < Components.Count - 1)
+						_versionId = Components[index + 1];
+				}
+
+				return _versionId;
+			}
+		}
+
+		/// <summary>
+		/// Returns a Uri that is a relative version of the ResourceIdentity
+		/// </summary>
+		public Uri OperationPath
+		{
+			get
+			{
+				if (_operationPath == null)
+					_operationPath = Build(Collection, Id, VersionId);//this always makes the uri relative
+
+				return _operationPath;
+			}
+		}
+
+		/// <summary>
+		/// Indicates whether this ResourceIdentity is version-specific (has a _history part)
+		/// </summary>
+		public bool HasVersion => VersionId != null;
+
+		/// <summary>
+		/// Returns a new ResourceIdentity made specific for the given version
+		/// </summary>
+		/// <param name="version">The version to add to the ResourceIdentity (part after the _history/)</param>
+		/// <returns></returns>
+		public ResourceIdentity WithVersion(string version)
+		{
+			if (Endpoint == null)
+				return Build(Collection, Id, version);
+			else
+				return Build(Endpoint, Collection, Id, version);
+		}
+
+		/// <summary>
+		/// Turns a version-specific ResourceIdentity into a non-version-specific ResourceIdentity
+		/// </summary>
+		/// <returns></returns>
+		public ResourceIdentity WithoutVersion()
+		{
+			if (Endpoint == null)
+				return Build(Collection, Id);
+			else
+				return Build(Endpoint, Collection, Id);
+		}
 
 		private static Uri construct(Uri endpoint, IEnumerable<string> components)
 		{
 			UriBuilder builder = new UriBuilder(endpoint);
-			string _path = delimit(builder.Path);
+			string _path = builder.Path;
+
+			if (!_path.EndsWith("/"))
+				_path += "/";
+
 			string _components = string.Join("/", components).Trim('/');
 			builder.Path = _path + _components;
 
@@ -118,185 +283,5 @@ namespace Hl7.Fhir.Rest
 			return construct(endpoint, (IEnumerable<string>)components);
 		}
 
-		private List<string> _components = null;
-
-		private IEnumerable<string> splitPath()
-		{
-			string path = (this.IsAbsoluteUri) ? this.LocalPath : this.ToString();
-			return path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
-		}
-
-		internal List<string> Components
-		{
-			get
-			{
-				if (_components == null)
-				{
-					_components = splitPath().ToList();
-				}
-				return _components;
-			}
-		}
-
-
-		/// <summary>
-		/// This is the FHIR service endpoint where the resource is located.
-		/// </summary>
-		public Uri Endpoint
-		{
-			get
-			{
-				int count = Components.Count;
-
-				if (count < 2)
-					return null;
-
-				int index = Components.IndexOf(RestOperation.HISTORY);
-				int n = (index > 0) ? index - 2 : count - 2;
-				IEnumerable<string> _components = Components.Skip(n);
-				string path = string.Join("/", _components).Trim('/');
-				string s = this.ToString();
-				string endpoint = s.Remove(s.LastIndexOf(path));
-
-				return (endpoint.Length > 0) ? new Uri(endpoint) : null;
-
-			}
-		}
-
-		/// <summary>
-		/// The name of the resource as it occurs in the Resource url
-		/// </summary>
-		public string Collection
-		{
-			get
-			{
-				int index = Components.IndexOf(RestOperation.HISTORY);
-				if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
-
-				string collectionName = null;
-				if (index >= 2)
-				{
-					collectionName = Components[index - 2];
-				}
-				else if (Components.Count > 2)
-				{
-					collectionName = Components[Components.Count - 2];
-				}
-				else if (Components.Count == 2 && index == -1)
-				{
-					collectionName = Components[0];
-				}
-
-				return collectionName;
-				//if (!string.IsNullOrEmpty(collectionName))
-				//{
-				//    if (Model.ModelInfo.IsKnownResource(collectionName))
-				//        return collectionName;
-				//}
-				//return null;
-			}
-		}
-
-
-		/// <summary>
-		/// The logical id of the resource as it occurs in the Resource url
-		/// </summary>
-		public string Id
-		{
-			get
-			{
-				int index = Components.IndexOf(RestOperation.HISTORY);
-				if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
-
-				if (index >= 2)
-				{
-					return Components[index - 1];
-				}
-				else if (index == -1 && Components.Count >= 2)
-				{
-					return Components[Components.Count - 1];
-				}
-				else
-				{
-					return null;
-				}
-			}
-		}
-
-
-		/// <summary>
-		/// The version id of the resource as it occurs in the Resource url
-		/// </summary>
-		public string VersionId
-		{
-			get
-			{
-				int index = Components.IndexOf(RestOperation.HISTORY);
-				if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
-
-				if (index >= 2 && Components.Count >= 4 && index < Components.Count - 1)
-				{
-					return Components[index + 1];
-				}
-				else
-				{
-					return null;
-				}
-			}
-		}
-
-
-		/// <summary>
-		/// Indicates whether this ResourceIdentity is version-specific (has a _history part)
-		/// </summary>
-		public bool HasVersion
-		{
-			get
-			{
-				return VersionId != null;
-			}
-		}
-
-		/// <summary>
-		/// Returns a new ResourceIdentity made specific for the given version
-		/// </summary>
-		/// <param name="version">The version to add to the ResourceIdentity (part after the _history/)</param>
-		/// <returns></returns>
-		public ResourceIdentity WithVersion(string version)
-		{
-			Uri endpoint = this.Endpoint;
-
-			if (endpoint == null)
-				return ResourceIdentity.Build(this.Collection, this.Id, version);
-			else
-				return ResourceIdentity.Build(this.Endpoint, this.Collection, this.Id, version);
-		}
-
-		/// <summary>
-		/// Turns a version-specific ResourceIdentity into a non-version-specific ResourceIdentity
-		/// </summary>
-		/// <returns></returns>
-		public ResourceIdentity WithoutVersion()
-		{
-			Uri endpoint = this.Endpoint;
-
-			if (endpoint == null)
-				return ResourceIdentity.Build(this.Collection, this.Id);
-			else
-				return ResourceIdentity.Build(endpoint, this.Collection, this.Id);
-		}
-
-
-		/// <summary>
-		/// Returns a Uri that is a relative version of the ResourceIdentity
-		/// </summary>
-		public Uri OperationPath
-		{
-			get
-			{
-				// dit maakt de uri altijd relatief
-				return ResourceIdentity.Build(this.Collection, this.Id, this.VersionId);
-			}
-		}
 	}
 }

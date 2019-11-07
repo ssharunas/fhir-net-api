@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Validation;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,77 +38,77 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Typed element containing the primitive code
-    /// </summary>
-    [FhirType("code")]
-    [DataContract]
-    public partial class Code : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        // Must conform to the pattern "[^\s]+([\s]+[^\s]+)*"
-        public const string PATTERN = @"[^\s]+([\s]+[^\s]+)*";
-        
-        public Code(string value)
-        {
-            Value = value; 
-        }
-        
-        public Code(): this((string)null) {}
-        
-        /// <summary>
-        /// Primitive value of the element
-        /// </summary>
-        [FhirElement("value", IsPrimitiveValue=true, XmlSerialization=XmlSerializationHint.Attribute, InSummary=true, Order=40)]
-        [CodePattern]
-        [DataMember]
-        public string Value
-        {
-            get { return _Value; }
-            set { _Value = value; OnPropertyChanged("Value"); }
-        }
-        private string _Value;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Code;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Value != null) dest.Value = Value;
-                return dest;
-            }
-            else
+	/// <summary>
+	/// Typed element containing the primitive code
+	/// </summary>
+	[FhirType("code")]
+	[DataContract]
+	public partial class Code : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		// Must conform to the pattern "[^\s]+([\s]+[^\s]+)*"
+		public const string PATTERN = @"[^\s]+([\s]+[^\s]+)*";
+
+		public Code(string value)
+		{
+			Value = value;
+		}
+
+		public Code() : this((string)null) { }
+
+		/// <summary>
+		/// Primitive value of the element
+		/// </summary>
+		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
+		[CodePattern]
+		[DataMember]
+		public string Value
+		{
+			get { return _Value; }
+			set { _Value = value; OnPropertyChanged("Value"); }
+		}
+		private string _Value;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Code;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Value != null) dest.Value = Value;
+				return dest;
+			}
+			else
 				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
 		}
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Code());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Code;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Code;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( Value != otherT.Value ) return false;
-            
-            return true;
-        }
-        
-    }
-    
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Code());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Code;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (Value != otherT.Value) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Code;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (Value != otherT.Value) return false;
+
+			return true;
+		}
+
+	}
+
 }

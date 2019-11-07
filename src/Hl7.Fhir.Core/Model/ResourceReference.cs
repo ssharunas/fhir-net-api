@@ -24,51 +24,36 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using Hl7.Fhir.Introspection;
-
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class ResourceReference
-    {
-        [NotMapped]
-        public Uri Url
-        {
-            get
-            {
-                if (Reference != null)
-                    return new Uri(Reference, UriKind.RelativeOrAbsolute);
-                else
-                    return null;
-            }
-            set
-            {
-                if (value != null)
-                    Reference = value.ToString();
-                else
-                    Reference = null;
-            }
-        }
+	public partial class ResourceReference
+	{
+		[NotMapped]
+		public Uri Url
+		{
+			get
+			{
+				if (Reference != null)
+					return new Uri(Reference, UriKind.RelativeOrAbsolute);
+				else
+					return null;
+			}
+			set
+			{
+				Reference = value?.ToString();
+			}
+		}
 
-        /// <summary>
-        /// Determines whether the ResourceReference is a reference to a contained resource (i.e. the reference value starts with an Url anchor ('#'))
-        /// </summary>
-        [NotMapped]
-        public bool IsContainedReference
-        {
-            get
-            {
-                return Reference != null && Reference.StartsWith("#");
-            }
-        }
-    }
-  
+		/// <summary>
+		/// Determines whether the ResourceReference is a reference to a contained resource (i.e. the reference value starts with an Url anchor ('#'))
+		/// </summary>
+		[NotMapped]
+		public bool IsContainedReference => Reference?.StartsWith("#") ?? false;
+
+	}
 }

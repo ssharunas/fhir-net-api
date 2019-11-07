@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Validation;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,83 +38,83 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// Resource for capturing binary data
-    /// </summary>
-    [FhirType("Binary", IsResource=true)]
-    [DataContract]
-    public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// Binary contents
-        /// </summary>
-        [FhirElement("content", XmlSerialization=XmlSerializationHint.TextNode, Order=70)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public byte[] Content
-        {
-            get { return _Content; }
-            set { _Content = value; OnPropertyChanged("Content"); }
-        }
-        private byte[] _Content;
-        
-        /// <summary>
-        /// Media type of contents
-        /// </summary>
-        [FhirElement("contentType", XmlSerialization=XmlSerializationHint.Attribute, Order=80)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public string ContentType
-        {
-            get { return _ContentType; }
-            set { _ContentType = value; OnPropertyChanged("ContentType"); }
-        }
-        private string _ContentType;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Binary;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(Content != null) dest.Content = Content;
-                if(ContentType != null) dest.ContentType = ContentType;
-                return dest;
-            }
-            else
+	/// <summary>
+	/// Resource for capturing binary data
+	/// </summary>
+	[FhirType("Binary", IsResource = true)]
+	[DataContract]
+	public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// Binary contents
+		/// </summary>
+		[FhirElement("content", XmlSerialization = XmlSerializationHint.TextNode, Order = 70)]
+		[Cardinality(Min = 1, Max = 1)]
+		[DataMember]
+		public byte[] Content
+		{
+			get { return _Content; }
+			set { _Content = value; OnPropertyChanged("Content"); }
+		}
+		private byte[] _Content;
+
+		/// <summary>
+		/// Media type of contents
+		/// </summary>
+		[FhirElement("contentType", XmlSerialization = XmlSerializationHint.Attribute, Order = 80)]
+		[Cardinality(Min = 1, Max = 1)]
+		[DataMember]
+		public string ContentType
+		{
+			get { return _ContentType; }
+			set { _ContentType = value; OnPropertyChanged("ContentType"); }
+		}
+		private string _ContentType;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Binary;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (Content != null) dest.Content = Content;
+				if (ContentType != null) dest.ContentType = ContentType;
+				return dest;
+			}
+			else
 				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
 		}
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Binary());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Binary;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( Content != otherT.Content ) return false;
-            if( ContentType != otherT.ContentType ) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Binary;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( Content != otherT.Content ) return false;
-            if( ContentType != otherT.ContentType ) return false;
-            
-            return true;
-        }
-        
-    }
-    
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Binary());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Binary;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (Content != otherT.Content) return false;
+			if (ContentType != otherT.ContentType) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Binary;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (Content != otherT.Content) return false;
+			if (ContentType != otherT.ContentType) return false;
+
+			return true;
+		}
+
+	}
+
 }

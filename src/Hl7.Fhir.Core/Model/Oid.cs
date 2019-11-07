@@ -28,21 +28,15 @@
 
 */
 
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Oid
-    {
-        public static bool IsValidValue(string value)
-        {
-            return Regex.IsMatch(value, "^" + Oid.PATTERN + "$", RegexOptions.Singleline);
-        }
-    }
+	public partial class Oid
+	{
+		public static bool IsValidValue(string value)
+		{
+			return Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+		}
+	}
 }

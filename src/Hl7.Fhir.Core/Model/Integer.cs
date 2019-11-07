@@ -24,34 +24,26 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Xml;
-using Hl7.Fhir.Model;
-
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Integer
-    {
-        public static bool IsValidValue(string value)
-        {
-            try
-            {
-                var dummy = XmlConvert.ToInt32(value);
-            }
-            catch
-            {
-                return false;
-            }
+	public partial class Integer
+	{
+		public static bool IsValidValue(string value)
+		{
+			try
+			{
+				var dummy = XmlConvert.ToInt32(value);
+			}
+			catch
+			{
+				return false;
+			}
 
-            return true;
-        }
-    }
+			return true;
+		}
+	}
 }

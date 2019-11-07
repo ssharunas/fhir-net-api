@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Validation;
-using System.Linq;
-using System.Runtime.Serialization;
+﻿using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
+using Hl7.Fhir.Validation;
+using System.Runtime.Serialization;
 
 /*
   Copyright (c) 2011-2013, HL7, Inc.
@@ -41,131 +38,131 @@ using Hl7.Fhir.Support;
 //
 namespace Hl7.Fhir.Model
 {
-    /// <summary>
-    /// A human-readable formatted text, including images
-    /// </summary>
-    [FhirType("Narrative")]
-    [DataContract]
-    public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
-    {
-        /// <summary>
-        /// The status of a resource narrative
-        /// </summary>
-        [FhirEnumeration("NarrativeStatus")]
-        public enum NarrativeStatus
-        {
-            /// <summary>
-            /// The contents of the narrative are entirely generated from the structured data in the resource.
-            /// </summary>
-            [EnumLiteral("generated")]
-            Generated,
-            /// <summary>
-            /// The contents of the narrative are entirely generated from the structured data in the resource and some of the content is generated from extensions.
-            /// </summary>
-            [EnumLiteral("extensions")]
-            Extensions,
-            /// <summary>
-            /// The contents of the narrative contain additional information not found in the structured data.
-            /// </summary>
-            [EnumLiteral("additional")]
-            Additional,
-            /// <summary>
-            /// the contents of the narrative are some equivalent of "No human-readable text provided for this resource".
-            /// </summary>
-            [EnumLiteral("empty")]
-            Empty,
-        }
-        
-        /// <summary>
-        /// generated | extensions | additional
-        /// </summary>
-        [FhirElement("status", InSummary=true, Order=40)]
-        [Cardinality(Min=1,Max=1)]
-        [DataMember]
-        public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
-        {
-            get { return _StatusElement; }
-            set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-        }
-        private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
-        
-        /// <summary>
-        /// generated | extensions | additional
-        /// </summary>
-        /// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
-        [NotMapped]
-        [IgnoreDataMemberAttribute]
-        public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
-        {
-            get { return StatusElement != null ? StatusElement.Value : null; }
-            set
-            {
-                if(value == null)
-                  StatusElement = null; 
-                else
-                  StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
-                OnPropertyChanged("Status");
-            }
-        }
-        
-        /// <summary>
-        /// Limited xhtml content
-        /// </summary>
-        [FhirElement("div", XmlSerialization=XmlSerializationHint.XhtmlElement, InSummary=true, Order=50)]
-        [Cardinality(Min=1,Max=1)]
-        [NarrativeXhtmlPattern]
-        [DataMember]
-        public string Div
-        {
-            get { return _Div; }
-            set { _Div = value; OnPropertyChanged("Div"); }
-        }
-        private string _Div;
-        
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Narrative;
-            
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if(StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)StatusElement.DeepCopy();
-                if(Div != null) dest.Div = Div;
-                return dest;
-            }
-            else
-            	throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
-        
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Narrative());
-        }
-        
-        public override bool Matches(IDeepComparable other)
-        {
-            var otherT = other as Narrative;
-            if(otherT == null) return false;
-            
-            if(!base.Matches(otherT)) return false;
-            if( !DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
-            if( Div != otherT.Div ) return false;
-            
-            return true;
-        }
-        
-        public override bool IsExactly(IDeepComparable other)
-        {
-            var otherT = other as Narrative;
-            if(otherT == null) return false;
-            
-            if(!base.IsExactly(otherT)) return false;
-            if( !DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
-            if( Div != otherT.Div ) return false;
-            
-            return true;
-        }
-        
-    }
-    
+	/// <summary>
+	/// A human-readable formatted text, including images
+	/// </summary>
+	[FhirType("Narrative")]
+	[DataContract]
+	public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	{
+		/// <summary>
+		/// The status of a resource narrative
+		/// </summary>
+		[FhirEnumeration("NarrativeStatus")]
+		public enum NarrativeStatus
+		{
+			/// <summary>
+			/// The contents of the narrative are entirely generated from the structured data in the resource.
+			/// </summary>
+			[EnumLiteral("generated")]
+			Generated,
+			/// <summary>
+			/// The contents of the narrative are entirely generated from the structured data in the resource and some of the content is generated from extensions.
+			/// </summary>
+			[EnumLiteral("extensions")]
+			Extensions,
+			/// <summary>
+			/// The contents of the narrative contain additional information not found in the structured data.
+			/// </summary>
+			[EnumLiteral("additional")]
+			Additional,
+			/// <summary>
+			/// the contents of the narrative are some equivalent of "No human-readable text provided for this resource".
+			/// </summary>
+			[EnumLiteral("empty")]
+			Empty,
+		}
+
+		/// <summary>
+		/// generated | extensions | additional
+		/// </summary>
+		[FhirElement("status", InSummary = true, Order = 40)]
+		[Cardinality(Min = 1, Max = 1)]
+		[DataMember]
+		public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
+		{
+			get { return _StatusElement; }
+			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
+		}
+		private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
+
+		/// <summary>
+		/// generated | extensions | additional
+		/// </summary>
+		/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
+		[NotMapped]
+		[IgnoreDataMember]
+		public Hl7.Fhir.Model.Narrative.NarrativeStatus? Status
+		{
+			get { return StatusElement != null ? StatusElement.Value : null; }
+			set
+			{
+				if (value == null)
+					StatusElement = null;
+				else
+					StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
+				OnPropertyChanged("Status");
+			}
+		}
+
+		/// <summary>
+		/// Limited xhtml content
+		/// </summary>
+		[FhirElement("div", XmlSerialization = XmlSerializationHint.XhtmlElement, InSummary = true, Order = 50)]
+		[Cardinality(Min = 1, Max = 1)]
+		[NarrativeXhtmlPattern]
+		[DataMember]
+		public string Div
+		{
+			get { return _Div; }
+			set { _Div = value; OnPropertyChanged("Div"); }
+		}
+		private string _Div;
+
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Narrative;
+
+			if (dest != null)
+			{
+				base.CopyTo(dest);
+				if (StatusElement != null) dest.StatusElement = (Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>)StatusElement.DeepCopy();
+				if (Div != null) dest.Div = Div;
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Narrative());
+		}
+
+		public override bool Matches(IDeepComparable other)
+		{
+			var otherT = other as Narrative;
+			if (otherT == null) return false;
+
+			if (!base.Matches(otherT)) return false;
+			if (!DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
+			if (Div != otherT.Div) return false;
+
+			return true;
+		}
+
+		public override bool IsExactly(IDeepComparable other)
+		{
+			var otherT = other as Narrative;
+			if (otherT == null) return false;
+
+			if (!base.IsExactly(otherT)) return false;
+			if (!DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
+			if (Div != otherT.Div) return false;
+
+			return true;
+		}
+
+	}
+
 }

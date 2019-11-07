@@ -24,13 +24,13 @@ namespace Hl7.Fhir.Tests.Rest
             RestUrl resturi;
 
             resturi = endpoint.ForCollection("patient");
-            Assert.AreEqual("http://localhost/fhir/patient", resturi.AsString);
+            Assert.AreEqual("http://localhost/fhir/patient", resturi.ToString());
 
             resturi = endpoint.Resource("patient", "1");
-            Assert.AreEqual("http://localhost/fhir/patient/1", resturi.AsString);
+            Assert.AreEqual("http://localhost/fhir/patient/1", resturi.ToString());
 
             resturi = endpoint.Resource("patient", "1");
-            Assert.AreEqual("http://localhost/fhir/patient/1", resturi.AsString);
+            Assert.AreEqual("http://localhost/fhir/patient/1", resturi.ToString());
         }
 
         [TestMethod]
@@ -40,12 +40,12 @@ namespace Hl7.Fhir.Tests.Rest
             RestUrl resturi;
             
             resturi = endpoint.Search("organization").AddParam("family", "Johnson").AddParam("given", "William");
-            Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.AsString);
+            Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William", resturi.ToString());
 
             var rl2 = new RestUrl(resturi.Uri);
 
             rl2.AddParam("given","Piet");
-            Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William&given=Piet", rl2.AsString);
+            Assert.AreEqual("http://localhost/fhir/organization/_search?family=Johnson&given=William&given=Piet", rl2.ToString());
         }
 
 

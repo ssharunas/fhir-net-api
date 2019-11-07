@@ -24,54 +24,41 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
+using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Hl7.Fhir.Model;
-using System.IO;
-
-using Hl7.Fhir.Validation;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace Hl7.Fhir.Model
 {
-    [InvokeIValidatableObject]
-    public class DeletedEntry : BundleEntry, Hl7.Fhir.Validation.IValidatableObject
-    {
-        public DeletedEntry()
-        {
-        }
+	[InvokeIValidatableObject]
+	public class DeletedEntry : BundleEntry, Validation.IValidatableObject
+	{
+		public DeletedEntry()
+		{
+		}
 
-        public DeletedEntry(DateTimeOffset when)
-        {
-            When = when;
-        }
+		public DeletedEntry(DateTimeOffset when)
+		{
+			When = when;
+		}
 
-        [Required(ErrorMessage="A DeletedEntry must have a non-null deletion time (When)")]
-        public DateTimeOffset? When { get; set; }
+		[Required(ErrorMessage = "A DeletedEntry must have a non-null deletion time (When)")]
+		public DateTimeOffset? When { get; set; }
 
-        public override string Summary
-        {
-            get
-            {
-                return "<div xmlns='http://www.w3.org/1999/xhtml'>This resource has been deleted " +
-                    "on " + When.ToString() + "</div>";
-            }
-        }
+		public override string Summary => $"<div xmlns='http://www.w3.org/1999/xhtml'>This resource has been deleted on {When}</div>";
 
-        public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
-        {
-            var result = new List<ValidationResult>();
-            result.AddRange(base.Validate(validationContext));
+		public override IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
+		{
+			var result = new List<ValidationResult>(base.Validate(validationContext));
 
-            if (!result.Any()) result.Add(ValidationResult.Success);
+			if (!result.Any())
+				result.Add(ValidationResult.Success);
 
-            return result;
-        }
-    }
+			return result;
+		}
+	}
 }

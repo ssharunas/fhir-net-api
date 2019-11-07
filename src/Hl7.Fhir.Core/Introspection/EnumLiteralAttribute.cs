@@ -24,31 +24,21 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Introspection
 {
-    [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
-    public sealed class EnumLiteralAttribute : Attribute
-    {
-        readonly string literal;
+	[AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
+	internal sealed class EnumLiteralAttribute : Attribute
+	{
+		// This is a positional argument
+		public EnumLiteralAttribute(string literal)
+		{
+			Literal = literal;
+		}
 
-        // This is a positional argument
-        public EnumLiteralAttribute(string literal)
-        {
-            this.literal = literal;
-        }
-
-        public string Literal
-        {
-            get { return literal; }
-        }
-    }
+		public string Literal { get; }
+	}
 }

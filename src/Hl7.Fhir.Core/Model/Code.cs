@@ -24,68 +24,62 @@
   WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
   ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE 
   POSSIBILITY OF SUCH DAMAGE.
-  
-
 */
 
-
-using System;
-using System.Reflection;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-
 using Hl7.Fhir.Introspection;
-using System.Runtime.Serialization;
 using Hl7.Fhir.Support;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class Code
-    {
-        public static bool IsValidValue(string value)
-        {
-            return Regex.IsMatch(value, "^" + Code.PATTERN + "$", RegexOptions.Singleline);
-        }
-    }
+	public partial class Code
+	{
+		public static bool IsValidValue(string value)
+		{
+			return Regex.IsMatch(value, "^" + PATTERN + "$", RegexOptions.Singleline);
+		}
+	}
 
-    [FhirType("codeOfT")]
-    [DataContract]
-    public class Code<T> : Element where T : struct
-    {
-        // Primitive value of element
-        [FhirElement("value", IsPrimitiveValue=true)]
-        [DataMember]
-        public T? Value { get; set; }
+	[FhirType("codeOfT")]
+	[DataContract]
+	public class Code<T> : Element where T : struct
+	{
+		// Primitive value of element
+		[FhirElement("value", IsPrimitiveValue = true)]
+		[DataMember]
+		public T? Value { get; set; }
 
-        public Code() : this(null) {}
+		public Code() : this(null) { }
 
-        public Code(T? value)
-        {
-            if (!typeof(T).IsEnum) 
-                throw Error.Argument(nameof(T), "T must be an enumerated type");
+		public Code(T? value)
+		{
+			if (!typeof(T).IsEnum)
+				throw Error.Argument(nameof(T), "T must be an enumerated type");
 
-            Value = value;
-        }
+			Value = value;
+		}
 
-        public override IDeepCopyable CopyTo(IDeepCopyable other)
-        {
-            var dest = other as Code<T>;
+		public override IDeepCopyable CopyTo(IDeepCopyable other)
+		{
+			var dest = other as Code<T>;
 
-            if (dest != null)
-            {
-                base.CopyTo(dest);
-                if (Value != null) dest.Value = Value;
-                return dest;
-            }
-            else
-                throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
-        }
+			if (dest != null)
+			{
+				base.CopyTo(dest);
 
-        public override IDeepCopyable DeepCopy()
-        {
-            return CopyTo(new Code<T>());
-        }
-    }
+				if (Value != null)
+					dest.Value = Value;
+
+				return dest;
+			}
+			else
+				throw Error.Argument(nameof(other), "Can only copy to an object of the same type");
+		}
+
+		public override IDeepCopyable DeepCopy()
+		{
+			return CopyTo(new Code<T>());
+		}
+	}
 }

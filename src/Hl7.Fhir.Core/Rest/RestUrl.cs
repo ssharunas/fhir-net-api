@@ -12,14 +12,15 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Rest
 {
-	public class RestUrl
+	internal class RestUrl
 	{
 		private UriBuilder _builder;
 		private List<Tuple<string, string>> _parameters = new List<Tuple<string, string>>();
 
-		public RestUrl(RestUrl url) : this(url.Uri)
-		{
-		}
+		public RestUrl(string endpoint) : this(new Uri(endpoint, UriKind.RelativeOrAbsolute)) { }
+
+		public RestUrl(RestUrl url) : this(url.Uri) { }
+
 		public RestUrl(Uri url)
 		{
 			if (!url.IsAbsoluteUri) throw Error.Argument(nameof(url), "Must be an absolute url");
@@ -29,11 +30,8 @@ namespace Hl7.Fhir.Rest
 
 			_builder = new UriBuilder(url);
 
-			if (!String.IsNullOrEmpty(_builder.Query))
-				_parameters = new List<Tuple<string, string>>(HttpUtil.SplitParams(_builder.Query));
-		}
-		public RestUrl(string endpoint) : this(new Uri(endpoint, UriKind.RelativeOrAbsolute))
-		{
+			if (!string.IsNullOrEmpty(_builder.Query))
+				_parameters = HttpUtil.SplitParams(_builder.Query);
 		}
 
 		public Uri Uri
@@ -45,21 +43,9 @@ namespace Hl7.Fhir.Rest
 			}
 		}
 
-		public string AsString
-		{
-			get
-			{
-				return Uri.ToString();
-			}
-		}
-
 		private static string delimit(string path)
 		{
 			return path.EndsWith(@"/") ? path : path + @"/";
-		}
-		private static string prefix(string path)
-		{
-			return path.StartsWith(@"/") ? path : @"/" + path;
 		}
 
 		/// <summary>
@@ -82,16 +68,16 @@ namespace Hl7.Fhir.Rest
 				_components = _components.Trim('/');
 
 			_builder.Path = delimit(_builder.Path) + _components;
+
 			return this;
 		}
 
 		public RestUrl AddPath(Uri uri)
 		{
 			if (!uri.IsAbsoluteUri)
-			{
 				return AddPath(uri.ToString());
-			}
-			else throw Error.Argument(nameof(uri), "An absolute path cannot be added to a rest URL.");
+
+			throw Error.Argument(nameof(uri), "An absolute path cannot be added to a rest URL.");
 		}
 
 		/// <summary>
@@ -133,7 +119,7 @@ namespace Hl7.Fhir.Rest
 
 		public bool IsEndpointFor(string other)
 		{
-			var baseAddress = this.Uri.ToString();
+			var baseAddress = Uri.ToString();
 
 			// HACK! To support Fiddler2 on Win8, localhost needs to be spelled out as localhost.fiddler, but still functions as localhost
 			baseAddress = baseAddress.Replace("localhost.fiddler", "localhost");
@@ -177,12 +163,12 @@ namespace Hl7.Fhir.Rest
 			if (path.IsAbsoluteUri)
 				throw Error.Argument(nameof(path), "Can only navigate to relative paths");
 
-			return new RestUrl(new Uri(this.Uri, path));
+			return new RestUrl(new Uri(Uri, path));
 		}
 
 		public override string ToString()
 		{
-			return AsString;
+			return Uri.ToString();
 		}
 	}
 }

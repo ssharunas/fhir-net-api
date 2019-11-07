@@ -6,63 +6,47 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Model;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
-using Hl7.Fhir.Validation;
-using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
-using System.Text;
 
 namespace Hl7.Fhir.Search
 {
-    public class ChoiceValue : ValueExpression
-    {
-        private const char VALUESEPARATOR = ',';
+	internal class ChoiceValue : ValueExpression
+	{
+		private const char VALUESEPARATOR = ',';
 
-        public ValueExpression[]  Choices { get; private set; }
+		public ValueExpression[] Choices { get; private set; }
 
-        public ChoiceValue(ValueExpression[] choices)
-        {
-            if (choices == null) throw Error.ArgumentNull(nameof(choices));
+		public ChoiceValue(ValueExpression[] choices)
+		{
+			if (choices == null) throw Error.ArgumentNull(nameof(choices));
 
-            Choices = choices;
-        }
+			Choices = choices;
+		}
 
-        public ChoiceValue(IEnumerable<ValueExpression> choices)
-        {
-            if (choices == null) throw Error.ArgumentNull(nameof(choices));
+		public override string ToString()
+		{
+			return string.Join<ValueExpression>(VALUESEPARATOR.ToString(), Choices);
+		}
 
-            Choices = choices.ToArray();
-        }
+		public static ChoiceValue Parse(string text)
+		{
+			if (text == null) throw Error.ArgumentNull(nameof(text));
 
-        public override string ToString()
-        {
-            var values = Choices.Select(v => v.ToString());
-            return String.Join(VALUESEPARATOR.ToString(),values);
-        }
+			var values = text.SplitNotEscaped(VALUESEPARATOR);
 
-        public static ChoiceValue Parse(string text)
-        {
-            if (text == null) throw Error.ArgumentNull(nameof(text));
+			return new ChoiceValue(values.Select(v => splitIntoComposite(v)).ToArray());
+		}
 
-            var values = text.SplitNotEscaped(VALUESEPARATOR);
+		private static ValueExpression splitIntoComposite(string text)
+		{
+			var composite = CompositeValue.Parse(text);
 
-            return new ChoiceValue(values.Select(v => splitIntoComposite(v)));
-        }
-
-        private static ValueExpression splitIntoComposite(string text)
-        {
-            var composite = CompositeValue.Parse(text);
-
-            // If there's only one component, this really was a single value
-            if (composite.Components.Length == 1)
-                return composite.Components[0];
-            else
-                return composite;
-        }
-    }
+			// If there's only one component, this really was a single value
+			if (composite.Components.Length == 1)
+				return composite.Components[0];
+			else
+				return composite;
+		}
+	}
 }

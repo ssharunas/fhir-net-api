@@ -11,54 +11,43 @@ using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Rest
 {
-    public static class BundleExtensions
-    {
-        public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
-        {
-            if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+	public static class BundleExtensions
+	{
+		public static Bundle RefreshBundle(this FhirClient client, Bundle bundle)
+		{
+			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
 
-            // Clone old bundle, without the entries (so, just the header)
-            var oldEntries = bundle.Entries;
-            Bundle result;
+			// Clone old bundle, without the entries (so, just the header)
+			var oldEntries = bundle.Entries;
+			Bundle result;
 
-            try
-            {
-                bundle.Entries = new List<BundleEntry>();
-                var xml = FhirSerializer.SerializeBundleToXml(bundle, summary:false);
-                result = FhirParser.ParseBundleFromXml(xml);
-            }
-            catch
-            {
-                throw;
-            }
-            finally
-            {
-                bundle.Entries = oldEntries;
-            }
+			bundle.Entries = new List<BundleEntry>();
+			var xml = FhirSerializer.SerializeBundleToXml(bundle, summary: false);
+			result = FhirParser.ParseBundleFromXml(xml);
 
-            result.Id = new Uri("urn:uuid:" + Guid.NewGuid().ToString());
-            result.LastUpdated = DateTimeOffset.Now;
-            result.Entries = new List<BundleEntry>();
-            foreach (var entry in bundle.Entries)
-            {
-                if (entry is ResourceEntry)
-                {
-                    var newEntry = client.Read(entry.Id);
-                    if (entry.Links.Alternate != null) newEntry.Links.Alternate = entry.Links.Alternate;
-                    result.Entries.Add(newEntry);
-                }
-                else if (entry is DeletedEntry)
-                    result.Entries.Add(entry);
-                else
-                    throw Error.NotSupported($"Cannot refresh an entry of type {entry.GetType().Name}");
-            }
+			bundle.Entries = oldEntries;
 
-            return result;
-        }
-    }
+			result.Id = new Uri("urn:uuid:" + Guid.NewGuid().ToString());
+			result.LastUpdated = DateTimeOffset.Now;
+			result.Entries = new List<BundleEntry>();
+			foreach (var entry in bundle.Entries)
+			{
+				if (entry is ResourceEntry)
+				{
+					var newEntry = client.Read(entry.Id);
+					if (entry.Links.Alternate != null) newEntry.Links.Alternate = entry.Links.Alternate;
+					result.Entries.Add(newEntry);
+				}
+				else if (entry is DeletedEntry)
+					result.Entries.Add(entry);
+				else
+					throw Error.NotSupported($"Cannot refresh an entry of type {entry.GetType().Name}");
+			}
+
+			return result;
+		}
+	}
 }

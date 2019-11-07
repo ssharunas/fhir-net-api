@@ -27,15 +27,12 @@
   
 */
 
-
-
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text;
 
 namespace Hl7.Fhir.Model
 {
@@ -70,7 +67,6 @@ namespace Hl7.Fhir.Model
 			return result;
 		}
 
-
 		/// <summary>
 		/// Finds a Resource amongst this Resource's contained resources
 		/// </summary>
@@ -104,11 +100,13 @@ namespace Hl7.Fhir.Model
 			if (containedReference == null) throw Error.ArgumentNull(nameof(containedReference));
 			if (!containedReference.StartsWith("#")) throw Error.Argument(nameof(containedReference), "Reference is not a local anchored reference");
 
-			var rref = containedReference.Substring(1);
+			if (Contained != null)
+			{
+				var rref = containedReference.Substring(1);
+				return Contained.SingleOrDefault(r => r.Id != null && r.Id == rref);
+			}
 
-			if (Contained == null) return null;
-
-			return Contained.SingleOrDefault(r => r.Id != null && r.Id == rref);
+			return null;
 		}
 	}
 }

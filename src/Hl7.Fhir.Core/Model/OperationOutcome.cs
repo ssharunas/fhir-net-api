@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Hl7.Fhir.Model
 {
-    public partial class OperationOutcome
-    {
-        public static OperationOutcome ForMessage(string message, OperationOutcome.IssueSeverity severity = IssueSeverity.Error)
-        {
-            return new OperationOutcome() {
-                      Issue = new List<OperationOutcome.OperationOutcomeIssueComponent>()
-                            { new OperationOutcome.OperationOutcomeIssueComponent() 
-                                    { Severity = severity, Details = message } 
-                            } };
-        }
-    }
+	public partial class OperationOutcome
+	{
+		public static OperationOutcome ForMessage(string message, IssueSeverity severity = IssueSeverity.Error)
+		{
+			return new OperationOutcome()
+			{
+				Issue = new List<OperationOutcomeIssueComponent>()
+				{
+					new OperationOutcomeIssueComponent() { Severity = severity, Details = message }
+				}
+			};
+		}
+	}
 }

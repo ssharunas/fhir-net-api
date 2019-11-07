@@ -9,87 +9,83 @@
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Reflection;
 
 namespace Hl7.Fhir.Introspection
 {
-    public class EnumMapping
-    {
-        // Symbolic name of the enumeration
-        public string Name { get; private set; }
+	internal class EnumMapping
+	{
+		// Symbolic name of the enumeration
+		public string Name { get; private set; }
 
-        // .NET enumeration type
-        public Type EnumType { get; private set; }
+		// .NET enumeration type
+		public Type EnumType { get; private set; }
 
-        private Dictionary<string, Enum> _literalToEnum = new Dictionary<string, Enum>();
-        private Dictionary<Enum, string> _enumToLiteral = new Dictionary<Enum, string>();
+		private Dictionary<string, Enum> _literalToEnum = new Dictionary<string, Enum>();
+		private Dictionary<Enum, string> _enumToLiteral = new Dictionary<Enum, string>();
 
-        public string GetLiteral(Enum value)
-        {
-            if (_enumToLiteral.ContainsKey(value))
-                return _enumToLiteral[value];
-            else
-                return null;
-        }
+		public string GetLiteral(Enum value)
+		{
+			if (_enumToLiteral.ContainsKey(value))
+				return _enumToLiteral[value];
+			else
+				return null;
+		}
 
-        public Enum ParseLiteral(string literal)
-        {
-            if (_literalToEnum.ContainsKey(literal))
-                return _literalToEnum[literal];
-            else
-                return null;
-        }
+		public Enum ParseLiteral(string literal)
+		{
+			if (_literalToEnum.ContainsKey(literal))
+				return _literalToEnum[literal];
+			else
+				return null;
+		}
 
-        public bool ContainsLiteral(string literal)
-        {
-            return _literalToEnum.ContainsKey(literal);
-        }
+		public bool ContainsLiteral(string literal)
+		{
+			return _literalToEnum.ContainsKey(literal);
+		}
 
-        public static EnumMapping Create(Type enumType)
-        {
-            if (enumType == null) throw Error.ArgumentNull(nameof(enumType));
-            if (!enumType.IsEnum()) throw Error.Argument(nameof(enumType), $"Type {enumType.Name} is not an enumerated type");
+		public static EnumMapping Create(Type enumType)
+		{
+			if (enumType == null) throw Error.ArgumentNull(nameof(enumType));
+			if (!enumType.IsEnum()) throw Error.Argument(nameof(enumType), $"Type {enumType.Name} is not an enumerated type");
 
-            var result = new EnumMapping();
+			var result = new EnumMapping();
 
-            result.Name = getEnumName(enumType);
-            result.EnumType = enumType;
-            result._enumToLiteral = new Dictionary<Enum, string>();
-            result._literalToEnum = new Dictionary<string, Enum>();
+			result.Name = getEnumName(enumType);
+			result.EnumType = enumType;
+			result._enumToLiteral = new Dictionary<Enum, string>();
+			result._literalToEnum = new Dictionary<string, Enum>();
 
-            foreach(var enumValue in ReflectionHelper.FindEnumFields(enumType))
-            {
-                var attr = ReflectionHelper.GetAttribute<EnumLiteralAttribute>(enumValue);
+			foreach (var enumValue in ReflectionHelper.FindEnumFields(enumType))
+			{
+				var attr = ReflectionHelper.GetAttribute<EnumLiteralAttribute>(enumValue);
 
-                string literal = enumValue.Name;
-                if (attr != null) literal = attr.Literal;
+				string literal = enumValue.Name;
+				if (attr != null) literal = attr.Literal;
 
-                Enum value = (Enum)enumValue.GetValue(null);
+				Enum value = (Enum)enumValue.GetValue(null);
 
-                result._enumToLiteral.Add(value, literal);
-                result._literalToEnum.Add(literal, value);
-            }
+				result._enumToLiteral.Add(value, literal);
+				result._literalToEnum.Add(literal, value);
+			}
 
-            return result;
-        }
+			return result;
+		}
 
-        public static bool IsMappableEnum(Type t)
-        {
-            return t.IsEnum() && ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t) != null;
-        }
+		public static bool IsMappableEnum(Type t)
+		{
+			return t.IsEnum() && ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t) != null;
+		}
 
+		private static string getEnumName(Type t)
+		{
+			var attr = ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t);
 
-        private static string getEnumName(Type t)
-        {
-            var attr = ReflectionHelper.GetAttribute<FhirEnumerationAttribute>(t);
-
-            if (attr != null)
-                return attr.BindingName;
-            else
-                return t.Name;
-        }
-    }
+			if (attr != null)
+				return attr.BindingName;
+			else
+				return t.Name;
+		}
+	}
 
 }
