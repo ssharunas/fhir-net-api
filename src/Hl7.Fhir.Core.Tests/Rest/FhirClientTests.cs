@@ -49,24 +49,8 @@ namespace Hl7.Fhir.Tests.Rest
 			Assert.AreEqual(HttpStatusCode.OK, lastResponse.Result);
 
 			// Does't currently work on Grahame's server
-			Assert.AreEqual(ContentType.XML_CONTENT_HEADER, lastResponse.ContentType.ToLower());
+			Assert.AreEqual(ContentType.XML_FHIR_CONTENT_HEADER, lastResponse.ContentType.ToLower());
 		}
-
-		[TestMethod, TestCategory("FhirClient")]
-		public void ReadWithFormat()
-		{
-			FhirResponse lastResponse = null;
-			FhirClient client = new FhirClient(testEndpoint);
-			client.OnAfterResponse += (object sender, AfterResponseEventArgs e) => { lastResponse = e.Response; };
-
-			client.IsUseFormatParam = true;
-			client.PreferredFormat = ResourceFormat.Json;
-
-			var loc = client.Read("Patient/1");
-
-			Assert.AreEqual(ResourceFormat.Json, ContentType.GetResourceFormatFromContentType(lastResponse.ContentType));
-		}
-
 
 		class FhirClientWithHooks : FhirClient
 		{

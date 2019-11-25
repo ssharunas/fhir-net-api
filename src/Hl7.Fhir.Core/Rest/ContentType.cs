@@ -35,14 +35,15 @@ namespace Hl7.Fhir.Rest
 			"application/json"
 		};
 
-		public const string XML_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered).
+		public const string XML_FHIR_CONTENT_HEADER = "application/xml+fhir";   // The formal FHIR mime type (still to be registered)
+		public const string XML_CONTENT_HEADER = "application/xml";
 
 		public static readonly string[] XML_CONTENT_HEADERS =
 		{
-			XML_CONTENT_HEADER,
+			XML_FHIR_CONTENT_HEADER,
 			"application/fhir+xml",
 			"text/xml",
-			"application/xml",
+			XML_CONTENT_HEADER,
 			"text/xml+fhir",
 			ATOM_CONTENT_HEADER
 		};
@@ -113,11 +114,13 @@ namespace Hl7.Fhir.Rest
 			else if (format == ResourceFormat.Xml && forBundle)
 				contentType = ATOM_CONTENT_HEADER;
 			else if (format == ResourceFormat.Xml && !forBundle)
-				contentType = XML_CONTENT_HEADER;
+				contentType = XML_FHIR_CONTENT_HEADER;
 			else if (format == ResourceFormat.Pdf)
 				contentType = PDF_CONTENT_HEADER;
 			else if (format == ResourceFormat.Octet)
 				contentType = OCTET_CONTENT_HEADER;
+			else if (format == ResourceFormat.Unknown)
+				return null;
 			else
 				throw Error.Argument(nameof(format), "Cannot determine content type for data format " + format);
 

@@ -70,6 +70,10 @@
     <Compile Include="Model\Date.cs" />
     <Compile Include="Model\DeletedEntry.cs" />
     <Compile Include="Model\Element.cs" />
+    <Compile Include="Model\ESPBI\DrugInteraction.cs" />
+    <Compile Include="Model\ESPBI\DrugInteractionItem.cs" />
+    <Compile Include="Model\ESPBI\DrugInteractionQuery.cs" />
+    <Compile Include="Model\ESPBI\DrugInteractionQueryItem.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />
@@ -214,6 +218,7 @@
     <Compile Include="Serialization\DispatchingReader.cs" />
     <Compile Include="Introspection\EnumMapping.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Serialization\EspbiSerializer.cs" />
     <Compile Include="Serialization\FhirParser.cs" />
     <Compile Include="Serialization\FhirSerializer.cs" />
     <Compile Include="Serialization\IFhirReader.cs" />

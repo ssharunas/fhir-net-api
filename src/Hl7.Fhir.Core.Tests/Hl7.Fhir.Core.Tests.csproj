@@ -78,6 +78,7 @@
   <ItemGroup>
     <Compile Include="Model\DeepMatchTest.cs" />
     <Compile Include="Model\DeepCompareTest.cs" />
+    <Compile Include="Model\EspbiTest.cs" />
     <Compile Include="Model\ModelTests.cs" />
     <Compile Include="Model\DeepCopyTest.cs" />
     <Compile Include="Model\BundleExtensionsTest.cs" />

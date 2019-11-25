@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Model.ESPBI;
 using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Support;
 using System;
@@ -101,8 +102,6 @@ namespace Hl7.Fhir.Rest
 
 		public ResourceFormat PreferredFormat { get; set; }
 
-		public bool IsUseFormatParam { get; set; }
-
 		public int? Timeout { get; set; }
 
 		/// <summary>
@@ -110,6 +109,8 @@ namespace Hl7.Fhir.Rest
 		/// instead of explicit uri endpoints.
 		/// </summary>
 		public Uri Endpoint { get; }
+
+		public bool IsDisposed { get; private set; }
 
 		private Uri makeAbsolute(Uri location = null)
 		{
@@ -165,8 +166,11 @@ namespace Hl7.Fhir.Rest
 			FhirResponse response = doRequest(req, new[] { HttpStatusCode.Created, HttpStatusCode.OK }, r => r);
 
 			ResourceEntry<TResource> entry = (ResourceEntry<TResource>)ResourceEntry.Create(resource);
-			entry.Links.SelfLink = new ResourceIdentity(response.Location);
-			entry.Id = new ResourceIdentity(response.Location).WithoutVersion();
+			if (!string.IsNullOrEmpty(response.Location)) //ESPBI Query gražinami resursai būna be Location
+			{
+				entry.Links.SelfLink = new ResourceIdentity(response.Location);
+				entry.Id = new ResourceIdentity(response.Location).WithoutVersion();
+			}
 
 			if (!string.IsNullOrEmpty(response.LastModified))
 				entry.LastUpdated = DateTimeOffset.Parse(response.LastModified);
@@ -277,7 +281,6 @@ namespace Hl7.Fhir.Rest
 
 		private T doRequest<T>(FhirRequest request, HttpStatusCode[] success, Func<FhirResponse, T> onSuccess, ResourceFormat? format = null)
 		{
-			request.IsUseFormatParameter = IsUseFormatParam;
 			FhirResponse response = request.GetResponse(format ?? PreferredFormat);
 
 			if (success.Contains(response.Result))
@@ -769,7 +772,21 @@ namespace Hl7.Fhir.Rest
 			if (resource == null) throw Error.ArgumentNull(nameof(resource));
 			if (id == null) throw Error.ArgumentNull(nameof(id));
 
-			return Search(new Query(resource, null, includes, pageSize).Where(Query.SEARCH_PARAM_ID, id));
+			return Search(new Query(resource, null, includes, pageSize).Where(Model.Query.SEARCH_PARAM_ID, id));
+		}
+
+		/// <summary>
+		/// Queries ESPBI data via their Query API.
+		/// </summary>
+		/// <param name="query">Query information</param>
+		/// <returns></returns>
+		public Bundle Query(Query query)
+		{
+			FhirRequest req = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).ForCollection(ModelInfo.GetCollectionName<Query>()).Uri), "POST");
+			req.SetBody(query, PreferredFormat);
+			req.IsForBundle = true;
+
+			return doRequest(req, HttpStatusCode.OK, resp => resp.GetBodyAsBundle());
 		}
 
 		/// <summary>
@@ -1000,6 +1017,26 @@ namespace Hl7.Fhir.Rest
 
 		//-------------
 
+		//TODO: Delete
+		public string Raw(Uri uri, string method, string body, ResourceFormat? format, string contentType = null)
+		{
+			FhirRequest req = createFhirRequest(uri, method);
+
+			if (!string.IsNullOrEmpty(body))
+				req.SetBody(body, ResourceFormat.Xml);
+
+			if (!string.IsNullOrEmpty(contentType))
+				req.ContentType = contentType;
+
+			FhirResponse response = req.GetResponse(format);
+
+			if (response.Result == HttpStatusCode.OK)
+				return response.GetBodyAsString();
+
+			throw new FhirOperationException("Operation failed with status code " + response.Result, req, response);
+		}
+
+
 		/// <summary>
 		/// Returns FHIR resource by id.
 		/// </summary>
@@ -1167,5 +1204,94 @@ namespace Hl7.Fhir.Rest
 
 			return null;
 		}
+
+		/// <summary>
+		/// SSO authentication token.
+		/// </summary>
+		/// <param name="endpoint">Something like https://sso-mokymai.esveikata.lt</param>
+		/// <returns></returns>
+		public string GetSsoAuthToken(string endpoint)
+		{
+			var uri = new RestUrl(endpoint).AddPath("espbi-sso/api/auth/login");
+			FhirRequest req = createFhirRequest(uri.Uri, "GET");
+
+			return doRequest(req, HttpStatusCode.OK, resp => resp.GetBodyAsString());
+		}
+
+		/// <summary>
+		/// Returns full composition and it's related documents in one query,
+		/// </summary>
+		/// <param name="id">ID of composition</param>
+		public Bundle Document(ulong id)
+		{
+			return Document(new Uri("Documents/" + id, UriKind.Relative));
+		}
+
+		/// <summary>
+		/// Returns full composition and it's related documents in one query,
+		/// </summary>
+		/// <param name="location">Location of composition document (ie. Documents/1)</param>
+		public Bundle Document(Uri location)
+		{
+			location = makeAbsolute(location);
+			var request = createFhirRequest(location, "GET");
+			request.IsForBundle = true;
+
+			return doRequest(request, HttpStatusCode.OK, resp => resp.GetBodyAsBundle());
+		}
+
+		/// <summary>
+		/// Retrievs information about drug interactions.
+		/// </summary>
+		/// <param name="query"></param>
+		/// <returns></returns>
+		public DrugInteraction GetDrugInteraction(DrugInteractionQuery query)
+		{
+			var uri = new RestUrl(Endpoint).AddPath("ERXCustom", "MedicationPrescription", "drugInteraction");
+			var request = createFhirRequest(uri.Uri, "POST");
+			request.SetBody(EspbiSerializer.Serialize(query), ResourceFormat.Xml);
+			request.IsForBundle = true;
+			request.ContentType = ContentType.XML_CONTENT_HEADER;
+
+			return doRequest(request, HttpStatusCode.OK, resp => EspbiSerializer.Deserialize<DrugInteraction>(resp.Body), ResourceFormat.Unknown);
+		}
+
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!IsDisposed)
+			{
+				if (disposing)
+				{
+					var beforeRequest = OnBeforeRequest?.GetInvocationList();
+					if (beforeRequest?.Length > 0)
+					{
+						foreach (BeforeRequestEventHandler item in beforeRequest)
+							OnBeforeRequest -= item;
+					}
+
+					var afterRequest = OnAfterResponse?.GetInvocationList();
+					if (afterRequest?.Length > 0)
+					{
+						foreach (AfterResponseEventHandler item in afterRequest)
+							OnAfterResponse -= item;
+					}
+				}
+
+				IsDisposed = true;
+			}
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		~FhirClient()
+		{
+			Dispose(false);
+		}
+
+
 	}
 }
