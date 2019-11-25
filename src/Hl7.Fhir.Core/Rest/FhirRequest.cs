@@ -41,10 +41,9 @@ namespace Hl7.Fhir.Rest
 		public string Method { get; }
 		public int Timeout { get; set; } = 100000; // Default timeout is 100 seconds
 		public byte[] Body { get; private set; }
-		public string ContentType { get; private set; }
+		public string ContentType { get; /*private*/ set; }
 		public string CategoryHeader { get; private set; }
 		public bool IsForBundle { get; internal set; }
-		public bool IsUseFormatParameter { get; internal set; }
 
 		internal void SetBody(string body, ResourceFormat format)
 		{
@@ -132,15 +131,12 @@ namespace Hl7.Fhir.Rest
 
 			var location = new RestUrl(Location);
 
-			if (IsUseFormatParameter && acceptFormat.HasValue)
-				location.AddParam(HttpUtil.RESTPARAM_FORMAT, Rest.ContentType.BuildFormatParam(acceptFormat.Value));
-
 			_request = (HttpWebRequest)WebRequest.Create(location.Uri);
 			_request.Timeout = Timeout;
 			_request.Method = Method;
 			_request.UserAgent = ".NET FhirClient for FHIR " + ModelInfo.Version;
 
-			if (acceptFormat != null && !IsUseFormatParameter)
+			if (acceptFormat != null)
 				_request.Accept = Rest.ContentType.BuildContentType(acceptFormat.Value, IsForBundle);
 
 			if (CategoryHeader != null)
