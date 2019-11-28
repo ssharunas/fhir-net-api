@@ -53,6 +53,7 @@ namespace Hl7.Fhir.Model
 		public const string SEARCH_PARAM_QUERY = "_query";
 		public const string SEARCH_PARAM_TYPE = "_type";
 
+		public const string SEARCH_PARAM_PAGE = "page";
 		public const string SEARCH_PARAM_COUNT = "_count";
 		public const string SEARCH_PARAM_INCLUDE = "_include";
 		public const string SEARCH_PARAM_SORT = "_sort";
@@ -164,6 +165,27 @@ namespace Hl7.Fhir.Model
 				RemoveParameter(Query.SEARCH_PARAM_COUNT);
 				if (value.HasValue)
 					AddParameter(Query.SEARCH_PARAM_COUNT, value.ToString());
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the special page search parameter, which specifies starting
+		/// page for returned results
+		/// </summary>
+		[NotMapped]
+		[IgnoreDataMember]
+		public int? Page
+		{
+			get
+			{
+				var page = GetSingleValue(Query.SEARCH_PARAM_PAGE);
+				return page != null ? int.Parse(page) : (int?)null;
+			}
+			set
+			{
+				RemoveParameter(Query.SEARCH_PARAM_PAGE);
+				if (value.HasValue)
+					AddParameter(Query.SEARCH_PARAM_PAGE, value.ToString());
 			}
 		}
 
