@@ -36,6 +36,7 @@ namespace Hl7.Fhir.Rest
 			_afterRequest = afterRequest;
 		}
 
+		public Guid ID { get; } = Guid.NewGuid();
 		public Uri Location { get; }
 		public Uri ContentLocation { get; internal set; }
 		public string Method { get; }
@@ -114,7 +115,7 @@ namespace Hl7.Fhir.Rest
 		public string GetHeadersAsString()
 		{
 			StringBuilder result = new StringBuilder();
-			result.AppendLine($"{_request.Method} {_request.RequestUri} HTTP/{_request.ProtocolVersion}");
+			result.AppendLine($"{_request.Method} {Uri.UnescapeDataString(_request.RequestUri.ToString())} HTTP/{_request.ProtocolVersion}");
 
 			foreach (var header in _request.Headers.AllKeys)
 			{

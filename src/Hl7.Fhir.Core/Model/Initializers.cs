@@ -36,6 +36,17 @@ namespace Hl7.Fhir.Model
 		{
 			return new List<HumanName>() { this };
 		}
+
+		/// <summary>
+		/// First name (and posibly second too)
+		/// </summary>
+		public string FirstName => string.Join(" ", Given);
+
+		/// <summary>
+		/// Last name (surname)
+		/// </summary>
+		public string LastName => string.Join(" ", Family);
+
 	}
 
 
