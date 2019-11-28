@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Identifier")]
 	[DataContract]
-	public partial class Identifier : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Identifier : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Identifies the purpose for this identifier, if known
@@ -77,12 +77,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("use", InSummary = true, Order = 40)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Identifier.IdentifierUse> UseElement
-		{
-			get { return _UseElement; }
-			set { _UseElement = value; OnPropertyChanged("UseElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Identifier.IdentifierUse> _UseElement;
+		public Code<Hl7.Fhir.Model.Identifier.IdentifierUse> UseElement { get; set; }
 
 		/// <summary>
 		/// usual | official | temp | secondary (If known)
@@ -99,7 +94,6 @@ namespace Hl7.Fhir.Model
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.Identifier.IdentifierUse>(value);
-				OnPropertyChanged("Use");
 			}
 		}
 
@@ -108,12 +102,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("label", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString LabelElement
-		{
-			get { return _LabelElement; }
-			set { _LabelElement = value; OnPropertyChanged("LabelElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _LabelElement;
+		public Hl7.Fhir.Model.FhirString LabelElement { get; set; }
 
 		/// <summary>
 		/// Description of identifier
@@ -130,7 +119,6 @@ namespace Hl7.Fhir.Model
 					LabelElement = null;
 				else
 					LabelElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Label");
 			}
 		}
 
@@ -139,12 +127,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("system", InSummary = true, Order = 60)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirUri SystemElement
-		{
-			get { return _SystemElement; }
-			set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
-		}
-		private Hl7.Fhir.Model.FhirUri _SystemElement;
+		public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
 
 		/// <summary>
 		/// The namespace for the identifier
@@ -161,7 +144,6 @@ namespace Hl7.Fhir.Model
 					SystemElement = null;
 				else
 					SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-				OnPropertyChanged("System");
 			}
 		}
 
@@ -170,12 +152,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("value", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString ValueElement
-		{
-			get { return _ValueElement; }
-			set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _ValueElement;
+		public Hl7.Fhir.Model.FhirString ValueElement { get; set; }
 
 		/// <summary>
 		/// The value that is unique
@@ -192,7 +169,6 @@ namespace Hl7.Fhir.Model
 					ValueElement = null;
 				else
 					ValueElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Value");
 			}
 		}
 
@@ -201,12 +177,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("period", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.Period Period
-		{
-			get { return _Period; }
-			set { _Period = value; OnPropertyChanged("Period"); }
-		}
-		private Hl7.Fhir.Model.Period _Period;
+		public Hl7.Fhir.Model.Period Period { get; set; }
 
 		/// <summary>
 		/// Organization that issued id (may be just text)
@@ -214,12 +185,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("assigner", InSummary = true, Order = 90)]
 		[References("Organization")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Assigner
-		{
-			get { return _Assigner; }
-			set { _Assigner = value; OnPropertyChanged("Assigner"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Assigner;
+		public Hl7.Fhir.Model.ResourceReference Assigner { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

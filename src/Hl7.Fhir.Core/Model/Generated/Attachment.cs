@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Attachment")]
 	[DataContract]
-	public partial class Attachment : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Attachment : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Mime type of the content, with charset etc.
@@ -51,12 +51,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("contentType", InSummary = true, Order = 40)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.Code ContentTypeElement
-		{
-			get { return _ContentTypeElement; }
-			set { _ContentTypeElement = value; OnPropertyChanged("ContentTypeElement"); }
-		}
-		private Hl7.Fhir.Model.Code _ContentTypeElement;
+		public Hl7.Fhir.Model.Code ContentTypeElement { get; set; }
 
 		/// <summary>
 		/// Mime type of the content, with charset etc.
@@ -73,7 +68,6 @@ namespace Hl7.Fhir.Model
 					ContentTypeElement = null;
 				else
 					ContentTypeElement = new Hl7.Fhir.Model.Code(value);
-				OnPropertyChanged("ContentType");
 			}
 		}
 
@@ -82,12 +76,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("language", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.Code LanguageElement
-		{
-			get { return _LanguageElement; }
-			set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
-		}
-		private Hl7.Fhir.Model.Code _LanguageElement;
+		public Hl7.Fhir.Model.Code LanguageElement { get; set; }
 
 		/// <summary>
 		/// Human language of the content (BCP-47)
@@ -104,7 +93,6 @@ namespace Hl7.Fhir.Model
 					LanguageElement = null;
 				else
 					LanguageElement = new Hl7.Fhir.Model.Code(value);
-				OnPropertyChanged("Language");
 			}
 		}
 
@@ -113,12 +101,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("data", InSummary = true, Order = 60)]
 		[DataMember]
-		public Hl7.Fhir.Model.Base64Binary DataElement
-		{
-			get { return _DataElement; }
-			set { _DataElement = value; OnPropertyChanged("DataElement"); }
-		}
-		private Hl7.Fhir.Model.Base64Binary _DataElement;
+		public Hl7.Fhir.Model.Base64Binary DataElement { get; set; }
 
 		/// <summary>
 		/// Data inline, base64ed
@@ -135,7 +118,6 @@ namespace Hl7.Fhir.Model
 					DataElement = null;
 				else
 					DataElement = new Hl7.Fhir.Model.Base64Binary(value);
-				OnPropertyChanged("Data");
 			}
 		}
 
@@ -144,12 +126,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("url", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirUri UrlElement
-		{
-			get { return _UrlElement; }
-			set { _UrlElement = value; OnPropertyChanged("UrlElement"); }
-		}
-		private Hl7.Fhir.Model.FhirUri _UrlElement;
+		public Hl7.Fhir.Model.FhirUri UrlElement { get; set; }
 
 		/// <summary>
 		/// Uri where the data can be found
@@ -166,7 +143,6 @@ namespace Hl7.Fhir.Model
 					UrlElement = null;
 				else
 					UrlElement = new Hl7.Fhir.Model.FhirUri(value);
-				OnPropertyChanged("Url");
 			}
 		}
 
@@ -175,12 +151,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("size", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer SizeElement
-		{
-			get { return _SizeElement; }
-			set { _SizeElement = value; OnPropertyChanged("SizeElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _SizeElement;
+		public Hl7.Fhir.Model.Integer SizeElement { get; set; }
 
 		/// <summary>
 		/// Number of bytes of content (if url provided)
@@ -197,7 +168,6 @@ namespace Hl7.Fhir.Model
 					SizeElement = null;
 				else
 					SizeElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Size");
 			}
 		}
 
@@ -206,12 +176,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("hash", InSummary = true, Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.Base64Binary HashElement
-		{
-			get { return _HashElement; }
-			set { _HashElement = value; OnPropertyChanged("HashElement"); }
-		}
-		private Hl7.Fhir.Model.Base64Binary _HashElement;
+		public Hl7.Fhir.Model.Base64Binary HashElement { get; set; }
 
 		/// <summary>
 		/// Hash of the data (sha-1, base64ed )
@@ -228,7 +193,6 @@ namespace Hl7.Fhir.Model
 					HashElement = null;
 				else
 					HashElement = new Hl7.Fhir.Model.Base64Binary(value);
-				OnPropertyChanged("Hash");
 			}
 		}
 
@@ -237,12 +201,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("title", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString TitleElement
-		{
-			get { return _TitleElement; }
-			set { _TitleElement = value; OnPropertyChanged("TitleElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _TitleElement;
+		public Hl7.Fhir.Model.FhirString TitleElement { get; set; }
 
 		/// <summary>
 		/// Label to display in place of the data
@@ -259,7 +218,6 @@ namespace Hl7.Fhir.Model
 					TitleElement = null;
 				else
 					TitleElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Title");
 			}
 		}
 

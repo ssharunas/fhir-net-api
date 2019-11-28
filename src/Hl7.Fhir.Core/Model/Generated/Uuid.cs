@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("uuid")]
 	[DataContract]
-	public partial class Uuid : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Uuid : Hl7.Fhir.Model.Element
 	{
 		// Must conform to the pattern "urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"
 		public const string PATTERN = @"urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}";
@@ -61,12 +61,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[UuidPattern]
 		[DataMember]
-		public string Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private string _Value;
+		public string Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

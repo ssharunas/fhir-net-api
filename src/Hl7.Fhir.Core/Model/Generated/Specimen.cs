@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Specimen", IsResource = true)]
 	[DataContract]
-	public partial class Specimen : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Specimen : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Type indicating if this is a parent or child relationship
@@ -67,7 +67,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("SpecimenCollectionComponent")]
 		[DataContract]
-		public partial class SpecimenCollectionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SpecimenCollectionComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Who collected the specimen
@@ -75,12 +75,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("collector", InSummary = true, Order = 40)]
 			[References("Practitioner")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Collector
-			{
-				get { return _Collector; }
-				set { _Collector = value; OnPropertyChanged("Collector"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Collector;
+			public Hl7.Fhir.Model.ResourceReference Collector { get; set; }
 
 			/// <summary>
 			/// Collector comments
@@ -88,12 +83,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("comment", InSummary = true, Order = 50)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.FhirString> CommentElement
-			{
-				get { return _CommentElement; }
-				set { _CommentElement = value; OnPropertyChanged("CommentElement"); }
-			}
-			private List<Hl7.Fhir.Model.FhirString> _CommentElement;
+			public List<Hl7.Fhir.Model.FhirString> CommentElement { get; set; }
 
 			/// <summary>
 			/// Collector comments
@@ -110,7 +100,6 @@ namespace Hl7.Fhir.Model
 						CommentElement = null;
 					else
 						CommentElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-					OnPropertyChanged("Comment");
 				}
 			}
 
@@ -120,48 +109,28 @@ namespace Hl7.Fhir.Model
 			[FhirElement("collected", InSummary = true, Order = 60, Choice = ChoiceType.DatatypeChoice)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirDateTime), typeof(Hl7.Fhir.Model.Period))]
 			[DataMember]
-			public Hl7.Fhir.Model.Element Collected
-			{
-				get { return _Collected; }
-				set { _Collected = value; OnPropertyChanged("Collected"); }
-			}
-			private Hl7.Fhir.Model.Element _Collected;
+			public Hl7.Fhir.Model.Element Collected { get; set; }
 
 			/// <summary>
 			/// The quantity of specimen collected
 			/// </summary>
 			[FhirElement("quantity", InSummary = true, Order = 70)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity Quantity
-			{
-				get { return _Quantity; }
-				set { _Quantity = value; OnPropertyChanged("Quantity"); }
-			}
-			private Hl7.Fhir.Model.Quantity _Quantity;
+			public Hl7.Fhir.Model.Quantity Quantity { get; set; }
 
 			/// <summary>
 			/// Technique used to perform collection
 			/// </summary>
 			[FhirElement("method", InSummary = true, Order = 80)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Method
-			{
-				get { return _Method; }
-				set { _Method = value; OnPropertyChanged("Method"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Method;
+			public Hl7.Fhir.Model.CodeableConcept Method { get; set; }
 
 			/// <summary>
 			/// Anatomical collection site
 			/// </summary>
 			[FhirElement("sourceSite", InSummary = true, Order = 90)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept SourceSite
-			{
-				get { return _SourceSite; }
-				set { _SourceSite = value; OnPropertyChanged("SourceSite"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _SourceSite;
+			public Hl7.Fhir.Model.CodeableConcept SourceSite { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -224,7 +193,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("SpecimenSourceComponent")]
 		[DataContract]
-		public partial class SpecimenSourceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SpecimenSourceComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// parent | child
@@ -232,12 +201,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("relationship", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType> RelationshipElement
-			{
-				get { return _RelationshipElement; }
-				set { _RelationshipElement = value; OnPropertyChanged("RelationshipElement"); }
-			}
-			private Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType> _RelationshipElement;
+			public Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType> RelationshipElement { get; set; }
 
 			/// <summary>
 			/// parent | child
@@ -254,7 +218,6 @@ namespace Hl7.Fhir.Model
 						RelationshipElement = null;
 					else
 						RelationshipElement = new Code<Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType>(value);
-					OnPropertyChanged("Relationship");
 				}
 			}
 
@@ -265,12 +228,7 @@ namespace Hl7.Fhir.Model
 			[References("Specimen")]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.ResourceReference> Target
-			{
-				get { return _Target; }
-				set { _Target = value; OnPropertyChanged("Target"); }
-			}
-			private List<Hl7.Fhir.Model.ResourceReference> _Target;
+			public List<Hl7.Fhir.Model.ResourceReference> Target { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -321,19 +279,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("SpecimenTreatmentComponent")]
 		[DataContract]
-		public partial class SpecimenTreatmentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SpecimenTreatmentComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Textual description of procedure
 			/// </summary>
 			[FhirElement("description", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirString DescriptionElement
-			{
-				get { return _DescriptionElement; }
-				set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-			}
-			private Hl7.Fhir.Model.FhirString _DescriptionElement;
+			public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
 
 			/// <summary>
 			/// Textual description of procedure
@@ -350,7 +303,6 @@ namespace Hl7.Fhir.Model
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-					OnPropertyChanged("Description");
 				}
 			}
 
@@ -359,12 +311,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("procedure", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Procedure
-			{
-				get { return _Procedure; }
-				set { _Procedure = value; OnPropertyChanged("Procedure"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Procedure;
+			public Hl7.Fhir.Model.CodeableConcept Procedure { get; set; }
 
 			/// <summary>
 			/// Material used in the processing step
@@ -373,12 +320,7 @@ namespace Hl7.Fhir.Model
 			[References("Substance")]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.ResourceReference> Additive
-			{
-				get { return _Additive; }
-				set { _Additive = value; OnPropertyChanged("Additive"); }
-			}
-			private List<Hl7.Fhir.Model.ResourceReference> _Additive;
+			public List<Hl7.Fhir.Model.ResourceReference> Additive { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -432,7 +374,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("SpecimenContainerComponent")]
 		[DataContract]
-		public partial class SpecimenContainerComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SpecimenContainerComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Id for the container
@@ -440,24 +382,14 @@ namespace Hl7.Fhir.Model
 			[FhirElement("identifier", InSummary = true, Order = 40)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.Identifier> Identifier
-			{
-				get { return _Identifier; }
-				set { _Identifier = value; OnPropertyChanged("Identifier"); }
-			}
-			private List<Hl7.Fhir.Model.Identifier> _Identifier;
+			public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 			/// <summary>
 			/// Textual description of the container
 			/// </summary>
 			[FhirElement("description", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirString DescriptionElement
-			{
-				get { return _DescriptionElement; }
-				set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-			}
-			private Hl7.Fhir.Model.FhirString _DescriptionElement;
+			public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
 
 			/// <summary>
 			/// Textual description of the container
@@ -474,7 +406,6 @@ namespace Hl7.Fhir.Model
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-					OnPropertyChanged("Description");
 				}
 			}
 
@@ -483,36 +414,21 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("type", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Type
-			{
-				get { return _Type; }
-				set { _Type = value; OnPropertyChanged("Type"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Type;
+			public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
 
 			/// <summary>
 			/// Container volume or size
 			/// </summary>
 			[FhirElement("capacity", InSummary = true, Order = 70)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity Capacity
-			{
-				get { return _Capacity; }
-				set { _Capacity = value; OnPropertyChanged("Capacity"); }
-			}
-			private Hl7.Fhir.Model.Quantity _Capacity;
+			public Hl7.Fhir.Model.Quantity Capacity { get; set; }
 
 			/// <summary>
 			/// Quantity of specimen within container
 			/// </summary>
 			[FhirElement("specimenQuantity", InSummary = true, Order = 80)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity SpecimenQuantity
-			{
-				get { return _SpecimenQuantity; }
-				set { _SpecimenQuantity = value; OnPropertyChanged("SpecimenQuantity"); }
-			}
-			private Hl7.Fhir.Model.Quantity _SpecimenQuantity;
+			public Hl7.Fhir.Model.Quantity SpecimenQuantity { get; set; }
 
 			/// <summary>
 			/// Additive associated with container
@@ -520,12 +436,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("additive", InSummary = true, Order = 90)]
 			[References("Substance")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Additive
-			{
-				get { return _Additive; }
-				set { _Additive = value; OnPropertyChanged("Additive"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Additive;
+			public Hl7.Fhir.Model.ResourceReference Additive { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -592,24 +503,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// Kind of material that forms the specimen
 		/// </summary>
 		[FhirElement("type", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Type
-		{
-			get { return _Type; }
-			set { _Type = value; OnPropertyChanged("Type"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Type;
+		public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
 
 		/// <summary>
 		/// Parent of specimen
@@ -617,12 +518,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("source", Order = 90)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent> Source
-		{
-			get { return _Source; }
-			set { _Source = value; OnPropertyChanged("Source"); }
-		}
-		private List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent> _Source;
+		public List<Hl7.Fhir.Model.Specimen.SpecimenSourceComponent> Source { get; set; }
 
 		/// <summary>
 		/// Where the specimen came from. This may be the patient(s) or from the environment or  a device
@@ -631,36 +527,21 @@ namespace Hl7.Fhir.Model
 		[References("Patient", "Group", "Device", "Substance")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Identifier assigned by the lab
 		/// </summary>
 		[FhirElement("accessionIdentifier", Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.Identifier AccessionIdentifier
-		{
-			get { return _AccessionIdentifier; }
-			set { _AccessionIdentifier = value; OnPropertyChanged("AccessionIdentifier"); }
-		}
-		private Hl7.Fhir.Model.Identifier _AccessionIdentifier;
+		public Hl7.Fhir.Model.Identifier AccessionIdentifier { get; set; }
 
 		/// <summary>
 		/// The time when specimen was received for processing
 		/// </summary>
 		[FhirElement("receivedTime", Order = 120)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime ReceivedTimeElement
-		{
-			get { return _ReceivedTimeElement; }
-			set { _ReceivedTimeElement = value; OnPropertyChanged("ReceivedTimeElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _ReceivedTimeElement;
+		public Hl7.Fhir.Model.FhirDateTime ReceivedTimeElement { get; set; }
 
 		/// <summary>
 		/// The time when specimen was received for processing
@@ -677,7 +558,6 @@ namespace Hl7.Fhir.Model
 					ReceivedTimeElement = null;
 				else
 					ReceivedTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("ReceivedTime");
 			}
 		}
 
@@ -687,12 +567,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("collection", Order = 130)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.Specimen.SpecimenCollectionComponent Collection
-		{
-			get { return _Collection; }
-			set { _Collection = value; OnPropertyChanged("Collection"); }
-		}
-		private Hl7.Fhir.Model.Specimen.SpecimenCollectionComponent _Collection;
+		public Hl7.Fhir.Model.Specimen.SpecimenCollectionComponent Collection { get; set; }
 
 		/// <summary>
 		/// Treatment and processing step details
@@ -700,12 +575,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("treatment", Order = 140)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent> Treatment
-		{
-			get { return _Treatment; }
-			set { _Treatment = value; OnPropertyChanged("Treatment"); }
-		}
-		private List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent> _Treatment;
+		public List<Hl7.Fhir.Model.Specimen.SpecimenTreatmentComponent> Treatment { get; set; }
 
 		/// <summary>
 		/// Direct container of specimen (tube/slide, etc)
@@ -713,12 +583,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("container", Order = 150)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent> Container
-		{
-			get { return _Container; }
-			set { _Container = value; OnPropertyChanged("Container"); }
-		}
-		private List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent> _Container;
+		public List<Hl7.Fhir.Model.Specimen.SpecimenContainerComponent> Container { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

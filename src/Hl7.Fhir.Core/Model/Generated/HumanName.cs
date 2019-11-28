@@ -45,7 +45,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("HumanName")]
 	[DataContract]
-	public partial class HumanName : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class HumanName : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// The use of a human name
@@ -95,12 +95,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("use", InSummary = true, Order = 40)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.HumanName.NameUse> UseElement
-		{
-			get { return _UseElement; }
-			set { _UseElement = value; OnPropertyChanged("UseElement"); }
-		}
-		private Code<Hl7.Fhir.Model.HumanName.NameUse> _UseElement;
+		public Code<Hl7.Fhir.Model.HumanName.NameUse> UseElement { get; set; }
 
 		/// <summary>
 		/// usual | official | temp | nickname | anonymous | old | maiden
@@ -117,7 +112,6 @@ namespace Hl7.Fhir.Model
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
-				OnPropertyChanged("Use");
 			}
 		}
 
@@ -126,12 +120,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("text", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString TextElement
-		{
-			get { return _TextElement; }
-			set { _TextElement = value; OnPropertyChanged("TextElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _TextElement;
+		public Hl7.Fhir.Model.FhirString TextElement { get; set; }
 
 		/// <summary>
 		/// Text representation of the full name
@@ -148,7 +137,6 @@ namespace Hl7.Fhir.Model
 					TextElement = null;
 				else
 					TextElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Text");
 			}
 		}
 
@@ -158,12 +146,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("family", InSummary = true, Order = 60)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.FhirString> FamilyElement
-		{
-			get { return _FamilyElement; }
-			set { _FamilyElement = value; OnPropertyChanged("FamilyElement"); }
-		}
-		private List<Hl7.Fhir.Model.FhirString> _FamilyElement;
+		public List<Hl7.Fhir.Model.FhirString> FamilyElement { get; set; }
 
 		/// <summary>
 		/// Family name (often called 'Surname')
@@ -180,7 +163,6 @@ namespace Hl7.Fhir.Model
 					FamilyElement = null;
 				else
 					FamilyElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-				OnPropertyChanged("Family");
 			}
 		}
 
@@ -190,12 +172,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("given", InSummary = true, Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.FhirString> GivenElement
-		{
-			get { return _GivenElement; }
-			set { _GivenElement = value; OnPropertyChanged("GivenElement"); }
-		}
-		private List<Hl7.Fhir.Model.FhirString> _GivenElement;
+		public List<Hl7.Fhir.Model.FhirString> GivenElement { get; set; }
 
 		/// <summary>
 		/// Given names (not always 'first'). Includes middle names
@@ -212,7 +189,6 @@ namespace Hl7.Fhir.Model
 					GivenElement = null;
 				else
 					GivenElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-				OnPropertyChanged("Given");
 			}
 		}
 
@@ -222,12 +198,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("prefix", InSummary = true, Order = 80)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.FhirString> PrefixElement
-		{
-			get { return _PrefixElement; }
-			set { _PrefixElement = value; OnPropertyChanged("PrefixElement"); }
-		}
-		private List<Hl7.Fhir.Model.FhirString> _PrefixElement;
+		public List<Hl7.Fhir.Model.FhirString> PrefixElement { get; set; }
 
 		/// <summary>
 		/// Parts that come before the name
@@ -244,7 +215,6 @@ namespace Hl7.Fhir.Model
 					PrefixElement = null;
 				else
 					PrefixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-				OnPropertyChanged("Prefix");
 			}
 		}
 
@@ -254,12 +224,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("suffix", InSummary = true, Order = 90)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.FhirString> SuffixElement
-		{
-			get { return _SuffixElement; }
-			set { _SuffixElement = value; OnPropertyChanged("SuffixElement"); }
-		}
-		private List<Hl7.Fhir.Model.FhirString> _SuffixElement;
+		public List<Hl7.Fhir.Model.FhirString> SuffixElement { get; set; }
 
 		/// <summary>
 		/// Parts that come after the name
@@ -276,7 +241,6 @@ namespace Hl7.Fhir.Model
 					SuffixElement = null;
 				else
 					SuffixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-				OnPropertyChanged("Suffix");
 			}
 		}
 
@@ -285,12 +249,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("period", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.Period Period
-		{
-			get { return _Period; }
-			set { _Period = value; OnPropertyChanged("Period"); }
-		}
-		private Hl7.Fhir.Model.Period _Period;
+		public Hl7.Fhir.Model.Period Period { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

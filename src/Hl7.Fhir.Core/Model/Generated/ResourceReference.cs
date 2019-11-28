@@ -42,19 +42,14 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("ResourceReference")]
 	[DataContract]
-	public partial class ResourceReference : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class ResourceReference : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Relative, internal or absolute URL reference
 		/// </summary>
 		[FhirElement("reference", InSummary = true, Order = 40)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString ReferenceElement
-		{
-			get { return _ReferenceElement; }
-			set { _ReferenceElement = value; OnPropertyChanged("ReferenceElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _ReferenceElement;
+		public Hl7.Fhir.Model.FhirString ReferenceElement { get; set; }
 
 		/// <summary>
 		/// Relative, internal or absolute URL reference
@@ -71,7 +66,6 @@ namespace Hl7.Fhir.Model
 					ReferenceElement = null;
 				else
 					ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Reference");
 			}
 		}
 
@@ -80,12 +74,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("display", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString DisplayElement
-		{
-			get { return _DisplayElement; }
-			set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _DisplayElement;
+		public Hl7.Fhir.Model.FhirString DisplayElement { get; set; }
 
 		/// <summary>
 		/// Text alternative for the resource
@@ -102,7 +91,6 @@ namespace Hl7.Fhir.Model
 					DisplayElement = null;
 				else
 					DisplayElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Display");
 			}
 		}
 

@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Narrative")]
 	[DataContract]
-	public partial class Narrative : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Narrative : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// The status of a resource narrative
@@ -79,12 +79,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("status", InSummary = true, Order = 40)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.Narrative.NarrativeStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// generated | extensions | additional
@@ -101,7 +96,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Narrative.NarrativeStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -112,12 +106,7 @@ namespace Hl7.Fhir.Model
 		[Cardinality(Min = 1, Max = 1)]
 		[NarrativeXhtmlPattern]
 		[DataMember]
-		public string Div
-		{
-			get { return _Div; }
-			set { _Div = value; OnPropertyChanged("Div"); }
-		}
-		private string _Div;
+		public string Div { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

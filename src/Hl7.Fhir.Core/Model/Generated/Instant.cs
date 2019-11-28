@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("instant")]
 	[DataContract]
-	public partial class Instant : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Instant : Hl7.Fhir.Model.Element
 	{
 		public Instant(DateTimeOffset? value)
 		{
@@ -59,12 +59,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[InstantPattern]
 		[DataMember]
-		public DateTimeOffset? Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private DateTimeOffset? _Value;
+		public DateTimeOffset? Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

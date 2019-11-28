@@ -44,35 +44,25 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Order", IsResource = true)]
 	[DataContract]
-	public partial class Order : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Order : Hl7.Fhir.Model.Resource
 	{
 		[FhirType("OrderWhenComponent")]
 		[DataContract]
-		public partial class OrderWhenComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class OrderWhenComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Code specifies when request should be done. The code may simply be a priority code
 			/// </summary>
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// A formal schedule
 			/// </summary>
 			[FhirElement("schedule", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.Schedule Schedule
-			{
-				get { return _Schedule; }
-				set { _Schedule = value; OnPropertyChanged("Schedule"); }
-			}
-			private Hl7.Fhir.Model.Schedule _Schedule;
+			public Hl7.Fhir.Model.Schedule Schedule { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -127,24 +117,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// When the order was made
 		/// </summary>
 		[FhirElement("date", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime DateElement
-		{
-			get { return _DateElement; }
-			set { _DateElement = value; OnPropertyChanged("DateElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _DateElement;
+		public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
 		/// <summary>
 		/// When the order was made
@@ -161,7 +141,6 @@ namespace Hl7.Fhir.Model
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("Date");
 			}
 		}
 
@@ -171,12 +150,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("subject", Order = 90)]
 		[References("Patient")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Who initiated the order
@@ -184,12 +158,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("source", Order = 100)]
 		[References("Practitioner")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Source
-		{
-			get { return _Source; }
-			set { _Source = value; OnPropertyChanged("Source"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Source;
+		public Hl7.Fhir.Model.ResourceReference Source { get; set; }
 
 		/// <summary>
 		/// Who is intended to fulfill the order
@@ -197,12 +166,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("target", Order = 110)]
 		[References("Organization", "Device", "Practitioner")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Target
-		{
-			get { return _Target; }
-			set { _Target = value; OnPropertyChanged("Target"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Target;
+		public Hl7.Fhir.Model.ResourceReference Target { get; set; }
 
 		/// <summary>
 		/// Text - why the order was made
@@ -210,12 +174,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("reason", Order = 120, Choice = ChoiceType.DatatypeChoice)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept), typeof(Hl7.Fhir.Model.ResourceReference))]
 		[DataMember]
-		public Hl7.Fhir.Model.Element Reason
-		{
-			get { return _Reason; }
-			set { _Reason = value; OnPropertyChanged("Reason"); }
-		}
-		private Hl7.Fhir.Model.Element _Reason;
+		public Hl7.Fhir.Model.Element Reason { get; set; }
 
 		/// <summary>
 		/// If required by policy
@@ -223,24 +182,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("authority", Order = 130)]
 		[References()]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Authority
-		{
-			get { return _Authority; }
-			set { _Authority = value; OnPropertyChanged("Authority"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Authority;
+		public Hl7.Fhir.Model.ResourceReference Authority { get; set; }
 
 		/// <summary>
 		/// When order should be fulfilled
 		/// </summary>
 		[FhirElement("when", Order = 140)]
 		[DataMember]
-		public Hl7.Fhir.Model.Order.OrderWhenComponent When
-		{
-			get { return _When; }
-			set { _When = value; OnPropertyChanged("When"); }
-		}
-		private Hl7.Fhir.Model.Order.OrderWhenComponent _When;
+		public Hl7.Fhir.Model.Order.OrderWhenComponent When { get; set; }
 
 		/// <summary>
 		/// What action is being ordered
@@ -249,12 +198,7 @@ namespace Hl7.Fhir.Model
 		[References()]
 		[Cardinality(Min = 1, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> Detail
-		{
-			get { return _Detail; }
-			set { _Detail = value; OnPropertyChanged("Detail"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+		public List<Hl7.Fhir.Model.ResourceReference> Detail { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

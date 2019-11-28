@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("SampledData")]
 	[DataContract]
-	public partial class SampledData : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class SampledData : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Zero value and units
@@ -51,12 +51,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("origin", InSummary = true, Order = 40)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.Quantity Origin
-		{
-			get { return _Origin; }
-			set { _Origin = value; OnPropertyChanged("Origin"); }
-		}
-		private Hl7.Fhir.Model.Quantity _Origin;
+		public Hl7.Fhir.Model.Quantity Origin { get; set; }
 
 		/// <summary>
 		/// Number of milliseconds between samples
@@ -64,12 +59,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("period", InSummary = true, Order = 50)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDecimal PeriodElement
-		{
-			get { return _PeriodElement; }
-			set { _PeriodElement = value; OnPropertyChanged("PeriodElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDecimal _PeriodElement;
+		public Hl7.Fhir.Model.FhirDecimal PeriodElement { get; set; }
 
 		/// <summary>
 		/// Number of milliseconds between samples
@@ -86,7 +76,6 @@ namespace Hl7.Fhir.Model
 					PeriodElement = null;
 				else
 					PeriodElement = new Hl7.Fhir.Model.FhirDecimal(value);
-				OnPropertyChanged("Period");
 			}
 		}
 
@@ -95,12 +84,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("factor", InSummary = true, Order = 60)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDecimal FactorElement
-		{
-			get { return _FactorElement; }
-			set { _FactorElement = value; OnPropertyChanged("FactorElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDecimal _FactorElement;
+		public Hl7.Fhir.Model.FhirDecimal FactorElement { get; set; }
 
 		/// <summary>
 		/// Multiply data by this before adding to origin
@@ -117,7 +101,6 @@ namespace Hl7.Fhir.Model
 					FactorElement = null;
 				else
 					FactorElement = new Hl7.Fhir.Model.FhirDecimal(value);
-				OnPropertyChanged("Factor");
 			}
 		}
 
@@ -126,12 +109,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("lowerLimit", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDecimal LowerLimitElement
-		{
-			get { return _LowerLimitElement; }
-			set { _LowerLimitElement = value; OnPropertyChanged("LowerLimitElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDecimal _LowerLimitElement;
+		public Hl7.Fhir.Model.FhirDecimal LowerLimitElement { get; set; }
 
 		/// <summary>
 		/// Lower limit of detection
@@ -148,7 +126,6 @@ namespace Hl7.Fhir.Model
 					LowerLimitElement = null;
 				else
 					LowerLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
-				OnPropertyChanged("LowerLimit");
 			}
 		}
 
@@ -157,12 +134,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("upperLimit", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDecimal UpperLimitElement
-		{
-			get { return _UpperLimitElement; }
-			set { _UpperLimitElement = value; OnPropertyChanged("UpperLimitElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDecimal _UpperLimitElement;
+		public Hl7.Fhir.Model.FhirDecimal UpperLimitElement { get; set; }
 
 		/// <summary>
 		/// Upper limit of detection
@@ -179,7 +151,6 @@ namespace Hl7.Fhir.Model
 					UpperLimitElement = null;
 				else
 					UpperLimitElement = new Hl7.Fhir.Model.FhirDecimal(value);
-				OnPropertyChanged("UpperLimit");
 			}
 		}
 
@@ -189,12 +160,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("dimensions", InSummary = true, Order = 90)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer DimensionsElement
-		{
-			get { return _DimensionsElement; }
-			set { _DimensionsElement = value; OnPropertyChanged("DimensionsElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _DimensionsElement;
+		public Hl7.Fhir.Model.Integer DimensionsElement { get; set; }
 
 		/// <summary>
 		/// Number of sample points at each time point
@@ -211,7 +177,6 @@ namespace Hl7.Fhir.Model
 					DimensionsElement = null;
 				else
 					DimensionsElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Dimensions");
 			}
 		}
 
@@ -221,12 +186,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("data", InSummary = true, Order = 100)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString DataElement
-		{
-			get { return _DataElement; }
-			set { _DataElement = value; OnPropertyChanged("DataElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _DataElement;
+		public Hl7.Fhir.Model.FhirString DataElement { get; set; }
 
 		/// <summary>
 		/// Decimal values with spaces, or "E" | "U" | "L"
@@ -243,7 +203,6 @@ namespace Hl7.Fhir.Model
 					DataElement = null;
 				else
 					DataElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Data");
 			}
 		}
 

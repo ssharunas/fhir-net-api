@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Address")]
 	[DataContract]
-	public partial class Address : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Address : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// The use of an address
@@ -81,12 +81,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("use", InSummary = true, Order = 40)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement
-		{
-			get { return _UseElement; }
-			set { _UseElement = value; OnPropertyChanged("UseElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Address.AddressUse> _UseElement;
+		public Code<Hl7.Fhir.Model.Address.AddressUse> UseElement { get; set; }
 
 		/// <summary>
 		/// home | work | temp | old - purpose of this address
@@ -103,7 +98,6 @@ namespace Hl7.Fhir.Model
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
-				OnPropertyChanged("Use");
 			}
 		}
 
@@ -112,12 +106,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("text", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString TextElement
-		{
-			get { return _TextElement; }
-			set { _TextElement = value; OnPropertyChanged("TextElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _TextElement;
+		public Hl7.Fhir.Model.FhirString TextElement { get; set; }
 
 		/// <summary>
 		/// Text representation of the address
@@ -134,7 +123,6 @@ namespace Hl7.Fhir.Model
 					TextElement = null;
 				else
 					TextElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Text");
 			}
 		}
 
@@ -144,12 +132,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("line", InSummary = true, Order = 60)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.FhirString> LineElement
-		{
-			get { return _LineElement; }
-			set { _LineElement = value; OnPropertyChanged("LineElement"); }
-		}
-		private List<Hl7.Fhir.Model.FhirString> _LineElement;
+		public List<Hl7.Fhir.Model.FhirString> LineElement { get; set; }
 
 		/// <summary>
 		/// Street name, number, direction &amp; P.O. Box etc
@@ -166,7 +149,6 @@ namespace Hl7.Fhir.Model
 					LineElement = null;
 				else
 					LineElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
-				OnPropertyChanged("Line");
 			}
 		}
 
@@ -175,12 +157,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("city", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString CityElement
-		{
-			get { return _CityElement; }
-			set { _CityElement = value; OnPropertyChanged("CityElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _CityElement;
+		public Hl7.Fhir.Model.FhirString CityElement { get; set; }
 
 		/// <summary>
 		/// Name of city, town etc.
@@ -197,7 +174,6 @@ namespace Hl7.Fhir.Model
 					CityElement = null;
 				else
 					CityElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("City");
 			}
 		}
 
@@ -206,12 +182,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("state", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString StateElement
-		{
-			get { return _StateElement; }
-			set { _StateElement = value; OnPropertyChanged("StateElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _StateElement;
+		public Hl7.Fhir.Model.FhirString StateElement { get; set; }
 
 		/// <summary>
 		/// Sub-unit of country (abreviations ok)
@@ -228,7 +199,6 @@ namespace Hl7.Fhir.Model
 					StateElement = null;
 				else
 					StateElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("State");
 			}
 		}
 
@@ -237,12 +207,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("zip", InSummary = true, Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString ZipElement
-		{
-			get { return _ZipElement; }
-			set { _ZipElement = value; OnPropertyChanged("ZipElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _ZipElement;
+		public Hl7.Fhir.Model.FhirString ZipElement { get; set; }
 
 		/// <summary>
 		/// Postal code for area
@@ -259,7 +224,6 @@ namespace Hl7.Fhir.Model
 					ZipElement = null;
 				else
 					ZipElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Zip");
 			}
 		}
 
@@ -268,12 +232,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("country", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString CountryElement
-		{
-			get { return _CountryElement; }
-			set { _CountryElement = value; OnPropertyChanged("CountryElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _CountryElement;
+		public Hl7.Fhir.Model.FhirString CountryElement { get; set; }
 
 		/// <summary>
 		/// Country (can be ISO 3166 3 letter code)
@@ -290,7 +249,6 @@ namespace Hl7.Fhir.Model
 					CountryElement = null;
 				else
 					CountryElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Country");
 			}
 		}
 
@@ -299,12 +257,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("period", InSummary = true, Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.Period Period
-		{
-			get { return _Period; }
-			set { _Period = value; OnPropertyChanged("Period"); }
-		}
-		private Hl7.Fhir.Model.Period _Period;
+		public Hl7.Fhir.Model.Period Period { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

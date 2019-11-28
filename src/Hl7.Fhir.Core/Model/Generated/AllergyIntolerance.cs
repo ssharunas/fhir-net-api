@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("AllergyIntolerance", IsResource = true)]
 	[DataContract]
-	public partial class AllergyIntolerance : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class AllergyIntolerance : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// The status of the adverse sensitivity
@@ -131,24 +131,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// fatal | high | medium | low
 		/// </summary>
 		[FhirElement("criticality", Order = 80)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality> Criticality_Element
-		{
-			get { return _Criticality_Element; }
-			set { _Criticality_Element = value; OnPropertyChanged("Criticality_Element"); }
-		}
-		private Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality> _Criticality_Element;
+		public Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality> Criticality_Element { get; set; }
 
 		/// <summary>
 		/// fatal | high | medium | low
@@ -165,7 +155,6 @@ namespace Hl7.Fhir.Model
 					Criticality_Element = null;
 				else
 					Criticality_Element = new Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality>(value);
-				OnPropertyChanged("Criticality_");
 			}
 		}
 
@@ -175,12 +164,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("sensitivityType", Order = 90)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType> SensitivityType_Element
-		{
-			get { return _SensitivityType_Element; }
-			set { _SensitivityType_Element = value; OnPropertyChanged("SensitivityType_Element"); }
-		}
-		private Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType> _SensitivityType_Element;
+		public Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType> SensitivityType_Element { get; set; }
 
 		/// <summary>
 		/// allergy | intolerance | unknown
@@ -197,7 +181,6 @@ namespace Hl7.Fhir.Model
 					SensitivityType_Element = null;
 				else
 					SensitivityType_Element = new Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType>(value);
-				OnPropertyChanged("SensitivityType_");
 			}
 		}
 
@@ -206,12 +189,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("recordedDate", Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime RecordedDateElement
-		{
-			get { return _RecordedDateElement; }
-			set { _RecordedDateElement = value; OnPropertyChanged("RecordedDateElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _RecordedDateElement;
+		public Hl7.Fhir.Model.FhirDateTime RecordedDateElement { get; set; }
 
 		/// <summary>
 		/// When recorded
@@ -228,7 +206,6 @@ namespace Hl7.Fhir.Model
 					RecordedDateElement = null;
 				else
 					RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("RecordedDate");
 			}
 		}
 
@@ -238,12 +215,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("status", Order = 110)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// suspected | confirmed | refuted | resolved
@@ -260,7 +232,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -271,12 +242,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Who recorded the sensitivity
@@ -284,12 +250,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("recorder", Order = 130)]
 		[References("Practitioner", "Patient")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Recorder
-		{
-			get { return _Recorder; }
-			set { _Recorder = value; OnPropertyChanged("Recorder"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Recorder;
+		public Hl7.Fhir.Model.ResourceReference Recorder { get; set; }
 
 		/// <summary>
 		/// The substance that causes the sensitivity
@@ -298,12 +259,7 @@ namespace Hl7.Fhir.Model
 		[References("Substance")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Substance
-		{
-			get { return _Substance; }
-			set { _Substance = value; OnPropertyChanged("Substance"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Substance;
+		public Hl7.Fhir.Model.ResourceReference Substance { get; set; }
 
 		/// <summary>
 		/// Reactions associated with the sensitivity
@@ -312,12 +268,7 @@ namespace Hl7.Fhir.Model
 		[References("AdverseReaction")]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> Reaction
-		{
-			get { return _Reaction; }
-			set { _Reaction = value; OnPropertyChanged("Reaction"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _Reaction;
+		public List<Hl7.Fhir.Model.ResourceReference> Reaction { get; set; }
 
 		/// <summary>
 		/// Observations that confirm or refute
@@ -326,12 +277,7 @@ namespace Hl7.Fhir.Model
 		[References("Observation")]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> SensitivityTest
-		{
-			get { return _SensitivityTest; }
-			set { _SensitivityTest = value; OnPropertyChanged("SensitivityTest"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _SensitivityTest;
+		public List<Hl7.Fhir.Model.ResourceReference> SensitivityTest { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Period")]
 	[DataContract]
-	public partial class Period : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Period : Hl7.Fhir.Model.Element
 	{
 		public Period()
 		{
@@ -63,12 +63,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("start", InSummary = true, Order = 40)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime StartElement
-		{
-			get { return _StartElement; }
-			set { _StartElement = value; OnPropertyChanged("StartElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _StartElement;
+		public Hl7.Fhir.Model.FhirDateTime StartElement { get; set; }
 
 		/// <summary>
 		/// Starting time with inclusive boundary
@@ -85,7 +80,6 @@ namespace Hl7.Fhir.Model
 					StartElement = null;
 				else
 					StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("Start");
 			}
 		}
 
@@ -94,12 +88,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("end", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime EndElement
-		{
-			get { return _EndElement; }
-			set { _EndElement = value; OnPropertyChanged("EndElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _EndElement;
+		public Hl7.Fhir.Model.FhirDateTime EndElement { get; set; }
 
 		/// <summary>
 		/// End time with inclusive boundary, if not ongoing
@@ -116,7 +105,6 @@ namespace Hl7.Fhir.Model
 					EndElement = null;
 				else
 					EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("End");
 			}
 		}
 

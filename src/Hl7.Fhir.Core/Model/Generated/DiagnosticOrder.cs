@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("DiagnosticOrder", IsResource = true)]
 	[DataContract]
-	public partial class DiagnosticOrder : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class DiagnosticOrder : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// The status of a diagnostic order
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("DiagnosticOrderItemComponent")]
 		[DataContract]
-		public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class DiagnosticOrderItemComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Code to indicate the item (test or panel) being ordered
@@ -137,12 +137,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// If this item relates to specific specimens
@@ -151,36 +146,21 @@ namespace Hl7.Fhir.Model
 			[References("Specimen")]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.ResourceReference> Specimen
-			{
-				get { return _Specimen; }
-				set { _Specimen = value; OnPropertyChanged("Specimen"); }
-			}
-			private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
+			public List<Hl7.Fhir.Model.ResourceReference> Specimen { get; set; }
 
 			/// <summary>
 			/// Location of requested test (if applicable)
 			/// </summary>
 			[FhirElement("bodySite", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept BodySite
-			{
-				get { return _BodySite; }
-				set { _BodySite = value; OnPropertyChanged("BodySite"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _BodySite;
+			public Hl7.Fhir.Model.CodeableConcept BodySite { get; set; }
 
 			/// <summary>
 			/// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
 			/// </summary>
 			[FhirElement("status", InSummary = true, Order = 70)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
-			{
-				get { return _StatusElement; }
-				set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-			}
-			private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
+			public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement { get; set; }
 
 			/// <summary>
 			/// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
@@ -197,7 +177,6 @@ namespace Hl7.Fhir.Model
 						StatusElement = null;
 					else
 						StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
-					OnPropertyChanged("Status");
 				}
 			}
 
@@ -207,12 +186,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("event", InSummary = true, Order = 80)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
-			{
-				get { return _Event; }
-				set { _Event = value; OnPropertyChanged("Event"); }
-			}
-			private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
+			public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -272,7 +246,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("DiagnosticOrderEventComponent")]
 		[DataContract]
-		public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class DiagnosticOrderEventComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
@@ -280,12 +254,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("status", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
-			{
-				get { return _StatusElement; }
-				set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-			}
-			private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
+			public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement { get; set; }
 
 			/// <summary>
 			/// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
@@ -302,7 +271,6 @@ namespace Hl7.Fhir.Model
 						StatusElement = null;
 					else
 						StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
-					OnPropertyChanged("Status");
 				}
 			}
 
@@ -311,12 +279,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("description", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Description
-			{
-				get { return _Description; }
-				set { _Description = value; OnPropertyChanged("Description"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Description;
+			public Hl7.Fhir.Model.CodeableConcept Description { get; set; }
 
 			/// <summary>
 			/// The date at which the event happened
@@ -324,12 +287,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("dateTime", InSummary = true, Order = 60)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDateTime DateTimeElement
-			{
-				get { return _DateTimeElement; }
-				set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
+			public Hl7.Fhir.Model.FhirDateTime DateTimeElement { get; set; }
 
 			/// <summary>
 			/// The date at which the event happened
@@ -346,7 +304,6 @@ namespace Hl7.Fhir.Model
 						DateTimeElement = null;
 					else
 						DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
-					OnPropertyChanged("DateTime");
 				}
 			}
 
@@ -356,12 +313,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("actor", InSummary = true, Order = 70)]
 			[References("Practitioner", "Device")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Actor
-			{
-				get { return _Actor; }
-				set { _Actor = value; OnPropertyChanged("Actor"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Actor;
+			public Hl7.Fhir.Model.ResourceReference Actor { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -423,12 +375,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient", "Group", "Location", "Device")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Who ordered the test
@@ -436,12 +383,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("orderer", Order = 80)]
 		[References("Practitioner")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Orderer
-		{
-			get { return _Orderer; }
-			set { _Orderer = value; OnPropertyChanged("Orderer"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Orderer;
+		public Hl7.Fhir.Model.ResourceReference Orderer { get; set; }
 
 		/// <summary>
 		/// Identifiers assigned to this order
@@ -449,12 +391,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 90)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// The encounter that this diagnostic order is associated with
@@ -462,24 +399,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("encounter", Order = 100)]
 		[References("Encounter")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Encounter
-		{
-			get { return _Encounter; }
-			set { _Encounter = value; OnPropertyChanged("Encounter"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Encounter;
+		public Hl7.Fhir.Model.ResourceReference Encounter { get; set; }
 
 		/// <summary>
 		/// Explanation/Justification for test
 		/// </summary>
 		[FhirElement("clinicalNotes", Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString ClinicalNotesElement
-		{
-			get { return _ClinicalNotesElement; }
-			set { _ClinicalNotesElement = value; OnPropertyChanged("ClinicalNotesElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _ClinicalNotesElement;
+		public Hl7.Fhir.Model.FhirString ClinicalNotesElement { get; set; }
 
 		/// <summary>
 		/// Explanation/Justification for test
@@ -496,7 +423,6 @@ namespace Hl7.Fhir.Model
 					ClinicalNotesElement = null;
 				else
 					ClinicalNotesElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("ClinicalNotes");
 			}
 		}
 
@@ -507,24 +433,14 @@ namespace Hl7.Fhir.Model
 		[References("Specimen")]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> Specimen
-		{
-			get { return _Specimen; }
-			set { _Specimen = value; OnPropertyChanged("Specimen"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _Specimen;
+		public List<Hl7.Fhir.Model.ResourceReference> Specimen { get; set; }
 
 		/// <summary>
 		/// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
 		/// </summary>
 		[FhirElement("status", Order = 130)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// requested | received | accepted | in progress | review | completed | suspended | rejected | failed
@@ -541,7 +457,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -550,12 +465,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("priority", Order = 140)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> PriorityElement
-		{
-			get { return _PriorityElement; }
-			set { _PriorityElement = value; OnPropertyChanged("PriorityElement"); }
-		}
-		private Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> _PriorityElement;
+		public Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority> PriorityElement { get; set; }
 
 		/// <summary>
 		/// routine | urgent | stat | asap
@@ -572,7 +482,6 @@ namespace Hl7.Fhir.Model
 					PriorityElement = null;
 				else
 					PriorityElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>(value);
-				OnPropertyChanged("Priority");
 			}
 		}
 
@@ -582,12 +491,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("event", Order = 150)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event
-		{
-			get { return _Event; }
-			set { _Event = value; OnPropertyChanged("Event"); }
-		}
-		private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> _Event;
+		public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderEventComponent> Event { get; set; }
 
 		/// <summary>
 		/// The items the orderer requested
@@ -595,12 +499,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("item", Order = 160)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> Item
-		{
-			get { return _Item; }
-			set { _Item = value; OnPropertyChanged("Item"); }
-		}
-		private List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> _Item;
+		public List<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderItemComponent> Item { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

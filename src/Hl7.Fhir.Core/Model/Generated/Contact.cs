@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Contact")]
 	[DataContract]
-	public partial class Contact : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Contact : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Telecommunications form for contact
@@ -110,12 +110,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("system", InSummary = true, Order = 40)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Contact.ContactSystem> SystemElement
-		{
-			get { return _SystemElement; }
-			set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Contact.ContactSystem> _SystemElement;
+		public Code<Hl7.Fhir.Model.Contact.ContactSystem> SystemElement { get; set; }
 
 		/// <summary>
 		/// phone | fax | email | url
@@ -132,7 +127,6 @@ namespace Hl7.Fhir.Model
 					SystemElement = null;
 				else
 					SystemElement = new Code<Hl7.Fhir.Model.Contact.ContactSystem>(value);
-				OnPropertyChanged("System");
 			}
 		}
 
@@ -141,12 +135,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("value", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString ValueElement
-		{
-			get { return _ValueElement; }
-			set { _ValueElement = value; OnPropertyChanged("ValueElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _ValueElement;
+		public Hl7.Fhir.Model.FhirString ValueElement { get; set; }
 
 		/// <summary>
 		/// The actual contact details
@@ -163,7 +152,6 @@ namespace Hl7.Fhir.Model
 					ValueElement = null;
 				else
 					ValueElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Value");
 			}
 		}
 
@@ -172,12 +160,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("use", InSummary = true, Order = 60)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Contact.ContactUse> UseElement
-		{
-			get { return _UseElement; }
-			set { _UseElement = value; OnPropertyChanged("UseElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Contact.ContactUse> _UseElement;
+		public Code<Hl7.Fhir.Model.Contact.ContactUse> UseElement { get; set; }
 
 		/// <summary>
 		/// home | work | temp | old | mobile - purpose of this address
@@ -194,7 +177,6 @@ namespace Hl7.Fhir.Model
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.Contact.ContactUse>(value);
-				OnPropertyChanged("Use");
 			}
 		}
 
@@ -203,12 +185,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("period", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.Period Period
-		{
-			get { return _Period; }
-			set { _Period = value; OnPropertyChanged("Period"); }
-		}
-		private Hl7.Fhir.Model.Period _Period;
+		public Hl7.Fhir.Model.Period Period { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

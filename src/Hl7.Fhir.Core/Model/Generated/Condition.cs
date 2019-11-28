@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Condition", IsResource = true)]
 	[DataContract]
-	public partial class Condition : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Condition : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// The clinical status of the Condition or diagnosis
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("ConditionRelatedItemComponent")]
 		[DataContract]
-		public partial class ConditionRelatedItemComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ConditionRelatedItemComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// due-to | following
@@ -102,12 +102,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("type", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType> TypeElement
-			{
-				get { return _TypeElement; }
-				set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-			}
-			private Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType> _TypeElement;
+			public Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType> TypeElement { get; set; }
 
 			/// <summary>
 			/// due-to | following
@@ -124,7 +119,6 @@ namespace Hl7.Fhir.Model
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.Condition.ConditionRelationshipType>(value);
-					OnPropertyChanged("Type");
 				}
 			}
 
@@ -133,12 +127,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("code", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Relationship target resource
@@ -146,12 +135,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("target", InSummary = true, Order = 60)]
 			[References("Condition", "Procedure", "MedicationAdministration", "Immunization", "MedicationStatement")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Target
-			{
-				get { return _Target; }
-				set { _Target = value; OnPropertyChanged("Target"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Target;
+			public Hl7.Fhir.Model.ResourceReference Target { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -205,19 +189,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("ConditionEvidenceComponent")]
 		[DataContract]
-		public partial class ConditionEvidenceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ConditionEvidenceComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Manifestation/symptom
 			/// </summary>
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Supporting information found elsewhere
@@ -226,12 +205,7 @@ namespace Hl7.Fhir.Model
 			[References()]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.ResourceReference> Detail
-			{
-				get { return _Detail; }
-				set { _Detail = value; OnPropertyChanged("Detail"); }
-			}
-			private List<Hl7.Fhir.Model.ResourceReference> _Detail;
+			public List<Hl7.Fhir.Model.ResourceReference> Detail { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -282,19 +256,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("ConditionStageComponent")]
 		[DataContract]
-		public partial class ConditionStageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ConditionStageComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Simple summary (disease specific)
 			/// </summary>
 			[FhirElement("summary", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Summary
-			{
-				get { return _Summary; }
-				set { _Summary = value; OnPropertyChanged("Summary"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Summary;
+			public Hl7.Fhir.Model.CodeableConcept Summary { get; set; }
 
 			/// <summary>
 			/// Formal record of assessment
@@ -303,12 +272,7 @@ namespace Hl7.Fhir.Model
 			[References()]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.ResourceReference> Assessment
-			{
-				get { return _Assessment; }
-				set { _Assessment = value; OnPropertyChanged("Assessment"); }
-			}
-			private List<Hl7.Fhir.Model.ResourceReference> _Assessment;
+			public List<Hl7.Fhir.Model.ResourceReference> Assessment { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -359,31 +323,21 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("ConditionLocationComponent")]
 		[DataContract]
-		public partial class ConditionLocationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ConditionLocationComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Location - may include laterality
 			/// </summary>
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Precise location details
 			/// </summary>
 			[FhirElement("detail", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirString DetailElement
-			{
-				get { return _DetailElement; }
-				set { _DetailElement = value; OnPropertyChanged("DetailElement"); }
-			}
-			private Hl7.Fhir.Model.FhirString _DetailElement;
+			public Hl7.Fhir.Model.FhirString DetailElement { get; set; }
 
 			/// <summary>
 			/// Precise location details
@@ -400,7 +354,6 @@ namespace Hl7.Fhir.Model
 						DetailElement = null;
 					else
 						DetailElement = new Hl7.Fhir.Model.FhirString(value);
-					OnPropertyChanged("Detail");
 				}
 			}
 
@@ -457,12 +410,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// Who has the condition?
@@ -471,12 +419,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Encounter when condition first asserted
@@ -484,12 +427,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("encounter", Order = 90)]
 		[References("Encounter")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Encounter
-		{
-			get { return _Encounter; }
-			set { _Encounter = value; OnPropertyChanged("Encounter"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Encounter;
+		public Hl7.Fhir.Model.ResourceReference Encounter { get; set; }
 
 		/// <summary>
 		/// Person who asserts this condition
@@ -497,24 +435,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("asserter", Order = 100)]
 		[References("Practitioner", "Patient")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Asserter
-		{
-			get { return _Asserter; }
-			set { _Asserter = value; OnPropertyChanged("Asserter"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Asserter;
+		public Hl7.Fhir.Model.ResourceReference Asserter { get; set; }
 
 		/// <summary>
 		/// When first detected/suspected/entered
 		/// </summary>
 		[FhirElement("dateAsserted", Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.Date DateAssertedElement
-		{
-			get { return _DateAssertedElement; }
-			set { _DateAssertedElement = value; OnPropertyChanged("DateAssertedElement"); }
-		}
-		private Hl7.Fhir.Model.Date _DateAssertedElement;
+		public Hl7.Fhir.Model.Date DateAssertedElement { get; set; }
 
 		/// <summary>
 		/// When first detected/suspected/entered
@@ -531,7 +459,6 @@ namespace Hl7.Fhir.Model
 					DateAssertedElement = null;
 				else
 					DateAssertedElement = new Hl7.Fhir.Model.Date(value);
-				OnPropertyChanged("DateAsserted");
 			}
 		}
 
@@ -541,24 +468,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("code", Order = 120)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Code
-		{
-			get { return _Code; }
-			set { _Code = value; OnPropertyChanged("Code"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Code;
+		public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 		/// <summary>
 		/// E.g. complaint | symptom | finding | diagnosis
 		/// </summary>
 		[FhirElement("category", Order = 130)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Category
-		{
-			get { return _Category; }
-			set { _Category = value; OnPropertyChanged("Category"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Category;
+		public Hl7.Fhir.Model.CodeableConcept Category { get; set; }
 
 		/// <summary>
 		/// provisional | working | confirmed | refuted
@@ -566,12 +483,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("status", Order = 140)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Condition.ConditionStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Condition.ConditionStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.Condition.ConditionStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// provisional | working | confirmed | refuted
@@ -588,7 +500,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Condition.ConditionStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -597,24 +508,14 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("certainty", Order = 150)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Certainty
-		{
-			get { return _Certainty; }
-			set { _Certainty = value; OnPropertyChanged("Certainty"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Certainty;
+		public Hl7.Fhir.Model.CodeableConcept Certainty { get; set; }
 
 		/// <summary>
 		/// Subjective severity of condition
 		/// </summary>
 		[FhirElement("severity", Order = 160)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Severity
-		{
-			get { return _Severity; }
-			set { _Severity = value; OnPropertyChanged("Severity"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Severity;
+		public Hl7.Fhir.Model.CodeableConcept Severity { get; set; }
 
 		/// <summary>
 		/// Estimated or actual date, or age
@@ -622,12 +523,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("onset", Order = 170, Choice = ChoiceType.DatatypeChoice)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date), typeof(Hl7.Fhir.Model.Age))]
 		[DataMember]
-		public Hl7.Fhir.Model.Element Onset
-		{
-			get { return _Onset; }
-			set { _Onset = value; OnPropertyChanged("Onset"); }
-		}
-		private Hl7.Fhir.Model.Element _Onset;
+		public Hl7.Fhir.Model.Element Onset { get; set; }
 
 		/// <summary>
 		/// If/when in resolution/remission
@@ -635,24 +531,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("abatement", Order = 180, Choice = ChoiceType.DatatypeChoice)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Date), typeof(Hl7.Fhir.Model.Age), typeof(Hl7.Fhir.Model.FhirBoolean))]
 		[DataMember]
-		public Hl7.Fhir.Model.Element Abatement
-		{
-			get { return _Abatement; }
-			set { _Abatement = value; OnPropertyChanged("Abatement"); }
-		}
-		private Hl7.Fhir.Model.Element _Abatement;
+		public Hl7.Fhir.Model.Element Abatement { get; set; }
 
 		/// <summary>
 		/// Stage/grade, usually assessed formally
 		/// </summary>
 		[FhirElement("stage", Order = 190)]
 		[DataMember]
-		public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage
-		{
-			get { return _Stage; }
-			set { _Stage = value; OnPropertyChanged("Stage"); }
-		}
-		private Hl7.Fhir.Model.Condition.ConditionStageComponent _Stage;
+		public Hl7.Fhir.Model.Condition.ConditionStageComponent Stage { get; set; }
 
 		/// <summary>
 		/// Supporting evidence
@@ -660,12 +546,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("evidence", Order = 200)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence
-		{
-			get { return _Evidence; }
-			set { _Evidence = value; OnPropertyChanged("Evidence"); }
-		}
-		private List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> _Evidence;
+		public List<Hl7.Fhir.Model.Condition.ConditionEvidenceComponent> Evidence { get; set; }
 
 		/// <summary>
 		/// Anatomical location, if relevant
@@ -673,12 +554,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("location", Order = 210)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> Location
-		{
-			get { return _Location; }
-			set { _Location = value; OnPropertyChanged("Location"); }
-		}
-		private List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> _Location;
+		public List<Hl7.Fhir.Model.Condition.ConditionLocationComponent> Location { get; set; }
 
 		/// <summary>
 		/// Causes or precedents for this Condition
@@ -686,24 +562,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("relatedItem", Order = 220)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Condition.ConditionRelatedItemComponent> RelatedItem
-		{
-			get { return _RelatedItem; }
-			set { _RelatedItem = value; OnPropertyChanged("RelatedItem"); }
-		}
-		private List<Hl7.Fhir.Model.Condition.ConditionRelatedItemComponent> _RelatedItem;
+		public List<Hl7.Fhir.Model.Condition.ConditionRelatedItemComponent> RelatedItem { get; set; }
 
 		/// <summary>
 		/// Additional information about the Condition
 		/// </summary>
 		[FhirElement("notes", Order = 230)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString NotesElement
-		{
-			get { return _NotesElement; }
-			set { _NotesElement = value; OnPropertyChanged("NotesElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _NotesElement;
+		public Hl7.Fhir.Model.FhirString NotesElement { get; set; }
 
 		/// <summary>
 		/// Additional information about the Condition
@@ -720,7 +586,6 @@ namespace Hl7.Fhir.Model
 					NotesElement = null;
 				else
 					NotesElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Notes");
 			}
 		}
 

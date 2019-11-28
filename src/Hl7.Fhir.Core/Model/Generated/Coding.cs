@@ -42,19 +42,14 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Coding")]
 	[DataContract]
-	public partial class Coding : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Coding : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Identity of the terminology system
 		/// </summary>
 		[FhirElement("system", InSummary = true, Order = 40)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirUri SystemElement
-		{
-			get { return _SystemElement; }
-			set { _SystemElement = value; OnPropertyChanged("SystemElement"); }
-		}
-		private Hl7.Fhir.Model.FhirUri _SystemElement;
+		public Hl7.Fhir.Model.FhirUri SystemElement { get; set; }
 
 		/// <summary>
 		/// Identity of the terminology system
@@ -71,7 +66,6 @@ namespace Hl7.Fhir.Model
 					SystemElement = null;
 				else
 					SystemElement = new Hl7.Fhir.Model.FhirUri(value);
-				OnPropertyChanged("System");
 			}
 		}
 
@@ -80,12 +74,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("version", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString VersionElement
-		{
-			get { return _VersionElement; }
-			set { _VersionElement = value; OnPropertyChanged("VersionElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _VersionElement;
+		public Hl7.Fhir.Model.FhirString VersionElement { get; set; }
 
 		/// <summary>
 		/// Version of the system - if relevant
@@ -102,7 +91,6 @@ namespace Hl7.Fhir.Model
 					VersionElement = null;
 				else
 					VersionElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Version");
 			}
 		}
 
@@ -111,12 +99,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("code", InSummary = true, Order = 60)]
 		[DataMember]
-		public Hl7.Fhir.Model.Code CodeElement
-		{
-			get { return _CodeElement; }
-			set { _CodeElement = value; OnPropertyChanged("CodeElement"); }
-		}
-		private Hl7.Fhir.Model.Code _CodeElement;
+		public Hl7.Fhir.Model.Code CodeElement { get; set; }
 
 		/// <summary>
 		/// Symbol in syntax defined by the system
@@ -133,7 +116,6 @@ namespace Hl7.Fhir.Model
 					CodeElement = null;
 				else
 					CodeElement = new Hl7.Fhir.Model.Code(value);
-				OnPropertyChanged("Code");
 			}
 		}
 
@@ -142,12 +124,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("display", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString DisplayElement
-		{
-			get { return _DisplayElement; }
-			set { _DisplayElement = value; OnPropertyChanged("DisplayElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _DisplayElement;
+		public Hl7.Fhir.Model.FhirString DisplayElement { get; set; }
 
 		/// <summary>
 		/// Representation defined by the system
@@ -164,7 +141,6 @@ namespace Hl7.Fhir.Model
 					DisplayElement = null;
 				else
 					DisplayElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Display");
 			}
 		}
 
@@ -173,12 +149,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("primary", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean PrimaryElement
-		{
-			get { return _PrimaryElement; }
-			set { _PrimaryElement = value; OnPropertyChanged("PrimaryElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _PrimaryElement;
+		public Hl7.Fhir.Model.FhirBoolean PrimaryElement { get; set; }
 
 		/// <summary>
 		/// If this code was chosen directly by the user
@@ -195,7 +166,6 @@ namespace Hl7.Fhir.Model
 					PrimaryElement = null;
 				else
 					PrimaryElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("Primary");
 			}
 		}
 
@@ -205,12 +175,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("valueSet", InSummary = true, Order = 90)]
 		[References("ValueSet")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference ValueSet
-		{
-			get { return _ValueSet; }
-			set { _ValueSet = value; OnPropertyChanged("ValueSet"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _ValueSet;
+		public Hl7.Fhir.Model.ResourceReference ValueSet { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

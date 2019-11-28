@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Medication", IsResource = true)]
 	[DataContract]
-	public partial class Medication : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Medication : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Whether the medication is a product or a package
@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("MedicationPackageContentComponent")]
 		[DataContract]
-		public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class MedicationPackageContentComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// A product in the package
@@ -75,24 +75,14 @@ namespace Hl7.Fhir.Model
 			[References("Medication")]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Item
-			{
-				get { return _Item; }
-				set { _Item = value; OnPropertyChanged("Item"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Item;
+			public Hl7.Fhir.Model.ResourceReference Item { get; set; }
 
 			/// <summary>
 			/// How many are in the package?
 			/// </summary>
 			[FhirElement("amount", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity Amount
-			{
-				get { return _Amount; }
-				set { _Amount = value; OnPropertyChanged("Amount"); }
-			}
-			private Hl7.Fhir.Model.Quantity _Amount;
+			public Hl7.Fhir.Model.Quantity Amount { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -143,19 +133,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("MedicationPackageComponent")]
 		[DataContract]
-		public partial class MedicationPackageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class MedicationPackageComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// E.g. box, vial, blister-pack
 			/// </summary>
 			[FhirElement("container", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Container
-			{
-				get { return _Container; }
-				set { _Container = value; OnPropertyChanged("Container"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Container;
+			public Hl7.Fhir.Model.CodeableConcept Container { get; set; }
 
 			/// <summary>
 			/// What is  in the package?
@@ -163,12 +148,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("content", InSummary = true, Order = 50)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content
-			{
-				get { return _Content; }
-				set { _Content = value; OnPropertyChanged("Content"); }
-			}
-			private List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> _Content;
+			public List<Hl7.Fhir.Model.Medication.MedicationPackageContentComponent> Content { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -219,7 +199,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("MedicationProductIngredientComponent")]
 		[DataContract]
-		public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class MedicationProductIngredientComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// The product contained
@@ -228,24 +208,14 @@ namespace Hl7.Fhir.Model
 			[References("Substance", "Medication")]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Item
-			{
-				get { return _Item; }
-				set { _Item = value; OnPropertyChanged("Item"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Item;
+			public Hl7.Fhir.Model.ResourceReference Item { get; set; }
 
 			/// <summary>
 			/// How much ingredient in product
 			/// </summary>
 			[FhirElement("amount", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.Ratio Amount
-			{
-				get { return _Amount; }
-				set { _Amount = value; OnPropertyChanged("Amount"); }
-			}
-			private Hl7.Fhir.Model.Ratio _Amount;
+			public Hl7.Fhir.Model.Ratio Amount { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -296,19 +266,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("MedicationProductComponent")]
 		[DataContract]
-		public partial class MedicationProductComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class MedicationProductComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// powder | tablets | carton +
 			/// </summary>
 			[FhirElement("form", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Form
-			{
-				get { return _Form; }
-				set { _Form = value; OnPropertyChanged("Form"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Form;
+			public Hl7.Fhir.Model.CodeableConcept Form { get; set; }
 
 			/// <summary>
 			/// Active or inactive ingredient
@@ -316,12 +281,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("ingredient", InSummary = true, Order = 50)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient
-			{
-				get { return _Ingredient; }
-				set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
-			}
-			private List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> _Ingredient;
+			public List<Hl7.Fhir.Model.Medication.MedicationProductIngredientComponent> Ingredient { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -375,12 +335,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("name", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString NameElement
-		{
-			get { return _NameElement; }
-			set { _NameElement = value; OnPropertyChanged("NameElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _NameElement;
+		public Hl7.Fhir.Model.FhirString NameElement { get; set; }
 
 		/// <summary>
 		/// Common / Commercial name
@@ -397,7 +352,6 @@ namespace Hl7.Fhir.Model
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Name");
 			}
 		}
 
@@ -406,24 +360,14 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("code", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Code
-		{
-			get { return _Code; }
-			set { _Code = value; OnPropertyChanged("Code"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Code;
+		public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 		/// <summary>
 		/// True if a brand
 		/// </summary>
 		[FhirElement("isBrand", InSummary = true, Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean IsBrandElement
-		{
-			get { return _IsBrandElement; }
-			set { _IsBrandElement = value; OnPropertyChanged("IsBrandElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _IsBrandElement;
+		public Hl7.Fhir.Model.FhirBoolean IsBrandElement { get; set; }
 
 		/// <summary>
 		/// True if a brand
@@ -440,7 +384,6 @@ namespace Hl7.Fhir.Model
 					IsBrandElement = null;
 				else
 					IsBrandElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("IsBrand");
 			}
 		}
 
@@ -450,24 +393,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("manufacturer", InSummary = true, Order = 100)]
 		[References("Organization")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Manufacturer
-		{
-			get { return _Manufacturer; }
-			set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Manufacturer;
+		public Hl7.Fhir.Model.ResourceReference Manufacturer { get; set; }
 
 		/// <summary>
 		/// product | package
 		/// </summary>
 		[FhirElement("kind", InSummary = true, Order = 110)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement
-		{
-			get { return _KindElement; }
-			set { _KindElement = value; OnPropertyChanged("KindElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Medication.MedicationKind> _KindElement;
+		public Code<Hl7.Fhir.Model.Medication.MedicationKind> KindElement { get; set; }
 
 		/// <summary>
 		/// product | package
@@ -484,7 +417,6 @@ namespace Hl7.Fhir.Model
 					KindElement = null;
 				else
 					KindElement = new Code<Hl7.Fhir.Model.Medication.MedicationKind>(value);
-				OnPropertyChanged("Kind");
 			}
 		}
 
@@ -493,24 +425,14 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("product", Order = 120)]
 		[DataMember]
-		public Hl7.Fhir.Model.Medication.MedicationProductComponent Product
-		{
-			get { return _Product; }
-			set { _Product = value; OnPropertyChanged("Product"); }
-		}
-		private Hl7.Fhir.Model.Medication.MedicationProductComponent _Product;
+		public Hl7.Fhir.Model.Medication.MedicationProductComponent Product { get; set; }
 
 		/// <summary>
 		/// Details about packaged medications
 		/// </summary>
 		[FhirElement("package", Order = 130)]
 		[DataMember]
-		public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package
-		{
-			get { return _Package; }
-			set { _Package = value; OnPropertyChanged("Package"); }
-		}
-		private Hl7.Fhir.Model.Medication.MedicationPackageComponent _Package;
+		public Hl7.Fhir.Model.Medication.MedicationPackageComponent Package { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Group", IsResource = true)]
 	[DataContract]
-	public partial class Group : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Group : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Types of resources that are part of group
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("GroupCharacteristicComponent")]
 		[DataContract]
-		public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class GroupCharacteristicComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Kind of characteristic
@@ -94,12 +94,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Value held by characteristic
@@ -108,12 +103,7 @@ namespace Hl7.Fhir.Model
 			[AllowedTypes(typeof(Hl7.Fhir.Model.CodeableConcept), typeof(Hl7.Fhir.Model.FhirBoolean), typeof(Hl7.Fhir.Model.Quantity), typeof(Hl7.Fhir.Model.Range))]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.Element Value
-			{
-				get { return _Value; }
-				set { _Value = value; OnPropertyChanged("Value"); }
-			}
-			private Hl7.Fhir.Model.Element _Value;
+			public Hl7.Fhir.Model.Element Value { get; set; }
 
 			/// <summary>
 			/// Group includes or excludes
@@ -121,12 +111,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("exclude", InSummary = true, Order = 60)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirBoolean ExcludeElement
-			{
-				get { return _ExcludeElement; }
-				set { _ExcludeElement = value; OnPropertyChanged("ExcludeElement"); }
-			}
-			private Hl7.Fhir.Model.FhirBoolean _ExcludeElement;
+			public Hl7.Fhir.Model.FhirBoolean ExcludeElement { get; set; }
 
 			/// <summary>
 			/// Group includes or excludes
@@ -143,7 +128,6 @@ namespace Hl7.Fhir.Model
 						ExcludeElement = null;
 					else
 						ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
-					OnPropertyChanged("Exclude");
 				}
 			}
 
@@ -202,12 +186,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("identifier", InSummary = true, Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.Identifier Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private Hl7.Fhir.Model.Identifier _Identifier;
+		public Hl7.Fhir.Model.Identifier Identifier { get; set; }
 
 		/// <summary>
 		/// person | animal | practitioner | device | medication | substance
@@ -215,12 +194,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("type", InSummary = true, Order = 80)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement
-		{
-			get { return _TypeElement; }
-			set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Group.GroupType> _TypeElement;
+		public Code<Hl7.Fhir.Model.Group.GroupType> TypeElement { get; set; }
 
 		/// <summary>
 		/// person | animal | practitioner | device | medication | substance
@@ -237,7 +211,6 @@ namespace Hl7.Fhir.Model
 					TypeElement = null;
 				else
 					TypeElement = new Code<Hl7.Fhir.Model.Group.GroupType>(value);
-				OnPropertyChanged("Type");
 			}
 		}
 
@@ -247,12 +220,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("actual", InSummary = true, Order = 90)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean ActualElement
-		{
-			get { return _ActualElement; }
-			set { _ActualElement = value; OnPropertyChanged("ActualElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _ActualElement;
+		public Hl7.Fhir.Model.FhirBoolean ActualElement { get; set; }
 
 		/// <summary>
 		/// Descriptive or actual
@@ -269,7 +237,6 @@ namespace Hl7.Fhir.Model
 					ActualElement = null;
 				else
 					ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("Actual");
 			}
 		}
 
@@ -278,24 +245,14 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("code", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Code
-		{
-			get { return _Code; }
-			set { _Code = value; OnPropertyChanged("Code"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Code;
+		public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 		/// <summary>
 		/// Label for Group
 		/// </summary>
 		[FhirElement("name", InSummary = true, Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString NameElement
-		{
-			get { return _NameElement; }
-			set { _NameElement = value; OnPropertyChanged("NameElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _NameElement;
+		public Hl7.Fhir.Model.FhirString NameElement { get; set; }
 
 		/// <summary>
 		/// Label for Group
@@ -312,7 +269,6 @@ namespace Hl7.Fhir.Model
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Name");
 			}
 		}
 
@@ -321,12 +277,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("quantity", InSummary = true, Order = 120)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer QuantityElement
-		{
-			get { return _QuantityElement; }
-			set { _QuantityElement = value; OnPropertyChanged("QuantityElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _QuantityElement;
+		public Hl7.Fhir.Model.Integer QuantityElement { get; set; }
 
 		/// <summary>
 		/// Number of members
@@ -343,7 +294,6 @@ namespace Hl7.Fhir.Model
 					QuantityElement = null;
 				else
 					QuantityElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Quantity");
 			}
 		}
 
@@ -353,12 +303,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("characteristic", Order = 130)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> Characteristic
-		{
-			get { return _Characteristic; }
-			set { _Characteristic = value; OnPropertyChanged("Characteristic"); }
-		}
-		private List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> _Characteristic;
+		public List<Hl7.Fhir.Model.Group.GroupCharacteristicComponent> Characteristic { get; set; }
 
 		/// <summary>
 		/// Who is in group
@@ -367,12 +312,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient", "Practitioner", "Device", "Medication", "Substance")]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> Member
-		{
-			get { return _Member; }
-			set { _Member = value; OnPropertyChanged("Member"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _Member;
+		public List<Hl7.Fhir.Model.ResourceReference> Member { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

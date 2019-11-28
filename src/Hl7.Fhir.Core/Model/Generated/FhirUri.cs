@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("uri")]
 	[DataContract]
-	public partial class FhirUri : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class FhirUri : Hl7.Fhir.Model.Element
 	{
 		public FhirUri(string value)
 		{
@@ -58,12 +58,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[UriPattern]
 		[DataMember]
-		public string Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private string _Value;
+		public string Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

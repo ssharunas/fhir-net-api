@@ -220,7 +220,6 @@ namespace Hl7.Fhir.Model
 			}
 		}
 
-
 		/// <summary>
 		/// Returns a modifiable collection of _include parameters. These are used to include
 		/// resources in the search result that the matched resources refer to.
@@ -441,6 +440,20 @@ namespace Hl7.Fhir.Model
 		public Query SummaryOnly(bool summaryOnly = true)
 		{
 			Summary = summaryOnly;
+			return this;
+		}
+
+		/// <summary>
+		/// Adds sort parameter
+		/// </summary>
+		public Query AddSort(string key, SortOrder order)
+		{
+			if (key == null) throw Error.ArgumentNull(nameof(key));
+
+			var sort = Sort ?? new List<Tuple<string, SortOrder>>();
+			sort.Add(new Tuple<string, SortOrder>(key, order));
+			Sort = sort;
+
 			return this;
 		}
 

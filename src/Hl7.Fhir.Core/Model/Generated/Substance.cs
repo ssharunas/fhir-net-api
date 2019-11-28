@@ -44,23 +44,18 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Substance", IsResource = true)]
 	[DataContract]
-	public partial class Substance : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Substance : Hl7.Fhir.Model.Resource
 	{
 		[FhirType("SubstanceIngredientComponent")]
 		[DataContract]
-		public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SubstanceIngredientComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Optional amount (concentration)
 			/// </summary>
 			[FhirElement("quantity", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.Ratio Quantity
-			{
-				get { return _Quantity; }
-				set { _Quantity = value; OnPropertyChanged("Quantity"); }
-			}
-			private Hl7.Fhir.Model.Ratio _Quantity;
+			public Hl7.Fhir.Model.Ratio Quantity { get; set; }
 
 			/// <summary>
 			/// A component of the substance
@@ -69,12 +64,7 @@ namespace Hl7.Fhir.Model
 			[References("Substance")]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Substance
-			{
-				get { return _Substance; }
-				set { _Substance = value; OnPropertyChanged("Substance"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Substance;
+			public Hl7.Fhir.Model.ResourceReference Substance { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -125,31 +115,21 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("SubstanceInstanceComponent")]
 		[DataContract]
-		public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SubstanceInstanceComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Identifier of the package/container
 			/// </summary>
 			[FhirElement("identifier", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.Identifier Identifier
-			{
-				get { return _Identifier; }
-				set { _Identifier = value; OnPropertyChanged("Identifier"); }
-			}
-			private Hl7.Fhir.Model.Identifier _Identifier;
+			public Hl7.Fhir.Model.Identifier Identifier { get; set; }
 
 			/// <summary>
 			/// When no longer valid to use
 			/// </summary>
 			[FhirElement("expiry", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDateTime ExpiryElement
-			{
-				get { return _ExpiryElement; }
-				set { _ExpiryElement = value; OnPropertyChanged("ExpiryElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDateTime _ExpiryElement;
+			public Hl7.Fhir.Model.FhirDateTime ExpiryElement { get; set; }
 
 			/// <summary>
 			/// When no longer valid to use
@@ -166,7 +146,6 @@ namespace Hl7.Fhir.Model
 						ExpiryElement = null;
 					else
 						ExpiryElement = new Hl7.Fhir.Model.FhirDateTime(value);
-					OnPropertyChanged("Expiry");
 				}
 			}
 
@@ -175,12 +154,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("quantity", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity Quantity
-			{
-				get { return _Quantity; }
-				set { _Quantity = value; OnPropertyChanged("Quantity"); }
-			}
-			private Hl7.Fhir.Model.Quantity _Quantity;
+			public Hl7.Fhir.Model.Quantity Quantity { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -238,24 +212,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("type", Order = 70)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Type
-		{
-			get { return _Type; }
-			set { _Type = value; OnPropertyChanged("Type"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Type;
+		public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
 
 		/// <summary>
 		/// Textual description of the substance, comments
 		/// </summary>
 		[FhirElement("description", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString DescriptionElement
-		{
-			get { return _DescriptionElement; }
-			set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _DescriptionElement;
+		public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
 
 		/// <summary>
 		/// Textual description of the substance, comments
@@ -272,7 +236,6 @@ namespace Hl7.Fhir.Model
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Description");
 			}
 		}
 
@@ -281,12 +244,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("instance", Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance
-		{
-			get { return _Instance; }
-			set { _Instance = value; OnPropertyChanged("Instance"); }
-		}
-		private Hl7.Fhir.Model.Substance.SubstanceInstanceComponent _Instance;
+		public Hl7.Fhir.Model.Substance.SubstanceInstanceComponent Instance { get; set; }
 
 		/// <summary>
 		/// Composition information about the substance
@@ -294,12 +252,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("ingredient", Order = 100)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient
-		{
-			get { return _Ingredient; }
-			set { _Ingredient = value; OnPropertyChanged("Ingredient"); }
-		}
-		private List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> _Ingredient;
+		public List<Hl7.Fhir.Model.Substance.SubstanceIngredientComponent> Ingredient { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

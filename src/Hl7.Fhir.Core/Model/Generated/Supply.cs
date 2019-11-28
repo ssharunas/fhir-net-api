@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Supply", IsResource = true)]
 	[DataContract]
-	public partial class Supply : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Supply : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Status of the dispense
@@ -104,31 +104,21 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("SupplyDispenseComponent")]
 		[DataContract]
-		public partial class SupplyDispenseComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class SupplyDispenseComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// External identifier
 			/// </summary>
 			[FhirElement("identifier", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.Identifier Identifier
-			{
-				get { return _Identifier; }
-				set { _Identifier = value; OnPropertyChanged("Identifier"); }
-			}
-			private Hl7.Fhir.Model.Identifier _Identifier;
+			public Hl7.Fhir.Model.Identifier Identifier { get; set; }
 
 			/// <summary>
 			/// in progress | dispensed | abandoned
 			/// </summary>
 			[FhirElement("status", InSummary = true, Order = 50)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> StatusElement
-			{
-				get { return _StatusElement; }
-				set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-			}
-			private Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> _StatusElement;
+			public Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus> StatusElement { get; set; }
 
 			/// <summary>
 			/// in progress | dispensed | abandoned
@@ -145,7 +135,6 @@ namespace Hl7.Fhir.Model
 						StatusElement = null;
 					else
 						StatusElement = new Code<Hl7.Fhir.Model.Supply.SupplyDispenseStatus>(value);
-					OnPropertyChanged("Status");
 				}
 			}
 
@@ -154,24 +143,14 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("type", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Type
-			{
-				get { return _Type; }
-				set { _Type = value; OnPropertyChanged("Type"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Type;
+			public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
 
 			/// <summary>
 			/// Amount dispensed
 			/// </summary>
 			[FhirElement("quantity", InSummary = true, Order = 70)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity Quantity
-			{
-				get { return _Quantity; }
-				set { _Quantity = value; OnPropertyChanged("Quantity"); }
-			}
-			private Hl7.Fhir.Model.Quantity _Quantity;
+			public Hl7.Fhir.Model.Quantity Quantity { get; set; }
 
 			/// <summary>
 			/// Medication, Substance, or Device supplied
@@ -179,12 +158,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("suppliedItem", InSummary = true, Order = 80)]
 			[References("Medication", "Substance", "Device")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference SuppliedItem
-			{
-				get { return _SuppliedItem; }
-				set { _SuppliedItem = value; OnPropertyChanged("SuppliedItem"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _SuppliedItem;
+			public Hl7.Fhir.Model.ResourceReference SuppliedItem { get; set; }
 
 			/// <summary>
 			/// Dispenser
@@ -192,36 +166,21 @@ namespace Hl7.Fhir.Model
 			[FhirElement("supplier", InSummary = true, Order = 90)]
 			[References("Practitioner")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Supplier
-			{
-				get { return _Supplier; }
-				set { _Supplier = value; OnPropertyChanged("Supplier"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Supplier;
+			public Hl7.Fhir.Model.ResourceReference Supplier { get; set; }
 
 			/// <summary>
 			/// Dispensing time
 			/// </summary>
 			[FhirElement("whenPrepared", InSummary = true, Order = 100)]
 			[DataMember]
-			public Hl7.Fhir.Model.Period WhenPrepared
-			{
-				get { return _WhenPrepared; }
-				set { _WhenPrepared = value; OnPropertyChanged("WhenPrepared"); }
-			}
-			private Hl7.Fhir.Model.Period _WhenPrepared;
+			public Hl7.Fhir.Model.Period WhenPrepared { get; set; }
 
 			/// <summary>
 			/// Handover time
 			/// </summary>
 			[FhirElement("whenHandedOver", InSummary = true, Order = 110)]
 			[DataMember]
-			public Hl7.Fhir.Model.Period WhenHandedOver
-			{
-				get { return _WhenHandedOver; }
-				set { _WhenHandedOver = value; OnPropertyChanged("WhenHandedOver"); }
-			}
-			private Hl7.Fhir.Model.Period _WhenHandedOver;
+			public Hl7.Fhir.Model.Period WhenHandedOver { get; set; }
 
 			/// <summary>
 			/// Where the Supply was sent
@@ -229,12 +188,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("destination", InSummary = true, Order = 120)]
 			[References("Location")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Destination
-			{
-				get { return _Destination; }
-				set { _Destination = value; OnPropertyChanged("Destination"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Destination;
+			public Hl7.Fhir.Model.ResourceReference Destination { get; set; }
 
 			/// <summary>
 			/// Who collected the Supply
@@ -243,12 +197,7 @@ namespace Hl7.Fhir.Model
 			[References("Practitioner")]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.ResourceReference> Receiver
-			{
-				get { return _Receiver; }
-				set { _Receiver = value; OnPropertyChanged("Receiver"); }
-			}
-			private List<Hl7.Fhir.Model.ResourceReference> _Receiver;
+			public List<Hl7.Fhir.Model.ResourceReference> Receiver { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -326,36 +275,21 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("kind", Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Kind
-		{
-			get { return _Kind; }
-			set { _Kind = value; OnPropertyChanged("Kind"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Kind;
+		public Hl7.Fhir.Model.CodeableConcept Kind { get; set; }
 
 		/// <summary>
 		/// Unique identifier
 		/// </summary>
 		[FhirElement("identifier", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.Identifier Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private Hl7.Fhir.Model.Identifier _Identifier;
+		public Hl7.Fhir.Model.Identifier Identifier { get; set; }
 
 		/// <summary>
 		/// requested | dispensed | received | failed | cancelled
 		/// </summary>
 		[FhirElement("status", Order = 90)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Supply.SupplyStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Supply.SupplyStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.Supply.SupplyStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// requested | dispensed | received | failed | cancelled
@@ -372,7 +306,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Supply.SupplyStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -382,12 +315,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("orderedItem", Order = 100)]
 		[References("Medication", "Substance", "Device")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference OrderedItem
-		{
-			get { return _OrderedItem; }
-			set { _OrderedItem = value; OnPropertyChanged("OrderedItem"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _OrderedItem;
+		public Hl7.Fhir.Model.ResourceReference OrderedItem { get; set; }
 
 		/// <summary>
 		/// Patient for whom the item is supplied
@@ -395,12 +323,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("patient", Order = 110)]
 		[References("Patient")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Patient
-		{
-			get { return _Patient; }
-			set { _Patient = value; OnPropertyChanged("Patient"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Patient;
+		public Hl7.Fhir.Model.ResourceReference Patient { get; set; }
 
 		/// <summary>
 		/// Supply details
@@ -408,12 +331,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("dispense", Order = 120)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> Dispense
-		{
-			get { return _Dispense; }
-			set { _Dispense = value; OnPropertyChanged("Dispense"); }
-		}
-		private List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> _Dispense;
+		public List<Hl7.Fhir.Model.Supply.SupplyDispenseComponent> Dispense { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

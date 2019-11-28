@@ -45,23 +45,18 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("DeviceObservationReport", IsResource = true)]
 	[DataContract]
-	public partial class DeviceObservationReport : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class DeviceObservationReport : Hl7.Fhir.Model.Resource
 	{
 		[FhirType("DeviceObservationReportVirtualDeviceComponent")]
 		[DataContract]
-		public partial class DeviceObservationReportVirtualDeviceComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class DeviceObservationReportVirtualDeviceComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Describes the compartment
 			/// </summary>
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Groups related data items
@@ -69,12 +64,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("channel", InSummary = true, Order = 50)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelComponent> Channel
-			{
-				get { return _Channel; }
-				set { _Channel = value; OnPropertyChanged("Channel"); }
-			}
-			private List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelComponent> _Channel;
+			public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelComponent> Channel { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -125,7 +115,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("DeviceObservationReportVirtualDeviceChannelMetricComponent")]
 		[DataContract]
-		public partial class DeviceObservationReportVirtualDeviceChannelMetricComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class DeviceObservationReportVirtualDeviceChannelMetricComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// The data for the metric
@@ -134,12 +124,7 @@ namespace Hl7.Fhir.Model
 			[References("Observation")]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Observation
-			{
-				get { return _Observation; }
-				set { _Observation = value; OnPropertyChanged("Observation"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Observation;
+			public Hl7.Fhir.Model.ResourceReference Observation { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -187,19 +172,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("DeviceObservationReportVirtualDeviceChannelComponent")]
 		[DataContract]
-		public partial class DeviceObservationReportVirtualDeviceChannelComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class DeviceObservationReportVirtualDeviceChannelComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Describes the channel
 			/// </summary>
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Piece of data reported by device
@@ -207,12 +187,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("metric", InSummary = true, Order = 50)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelMetricComponent> Metric
-			{
-				get { return _Metric; }
-				set { _Metric = value; OnPropertyChanged("Metric"); }
-			}
-			private List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelMetricComponent> _Metric;
+			public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceChannelMetricComponent> Metric { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -267,12 +242,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("instant", Order = 70)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.Instant InstantElement
-		{
-			get { return _InstantElement; }
-			set { _InstantElement = value; OnPropertyChanged("InstantElement"); }
-		}
-		private Hl7.Fhir.Model.Instant _InstantElement;
+		public Hl7.Fhir.Model.Instant InstantElement { get; set; }
 
 		/// <summary>
 		/// When the data values are reported
@@ -289,7 +259,6 @@ namespace Hl7.Fhir.Model
 					InstantElement = null;
 				else
 					InstantElement = new Hl7.Fhir.Model.Instant(value);
-				OnPropertyChanged("Instant");
 			}
 		}
 
@@ -298,12 +267,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("identifier", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.Identifier Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private Hl7.Fhir.Model.Identifier _Identifier;
+		public Hl7.Fhir.Model.Identifier Identifier { get; set; }
 
 		/// <summary>
 		/// Identifies/describes where the data came from
@@ -312,12 +276,7 @@ namespace Hl7.Fhir.Model
 		[References("Device")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Source
-		{
-			get { return _Source; }
-			set { _Source = value; OnPropertyChanged("Source"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Source;
+		public Hl7.Fhir.Model.ResourceReference Source { get; set; }
 
 		/// <summary>
 		/// Subject of the measurement
@@ -325,12 +284,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("subject", Order = 100)]
 		[References("Patient", "Device", "Location")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// A medical-related subsystem of a medical device
@@ -338,12 +292,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("virtualDevice", Order = 110)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> VirtualDevice
-		{
-			get { return _VirtualDevice; }
-			set { _VirtualDevice = value; OnPropertyChanged("VirtualDevice"); }
-		}
-		private List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> _VirtualDevice;
+		public List<Hl7.Fhir.Model.DeviceObservationReport.DeviceObservationReportVirtualDeviceComponent> VirtualDevice { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("base64Binary")]
 	[DataContract]
-	public partial class Base64Binary : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Base64Binary : Hl7.Fhir.Model.Element
 	{
 		public Base64Binary(byte[] value)
 		{
@@ -56,12 +56,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[DataMember]
-		public byte[] Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private byte[] _Value;
+		public byte[] Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

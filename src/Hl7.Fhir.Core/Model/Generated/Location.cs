@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Location", IsResource = true)]
 	[DataContract]
-	public partial class Location : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Location : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Indicates whether the location is still in use
@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("LocationPositionComponent")]
 		[DataContract]
-		public partial class LocationPositionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class LocationPositionComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Longitude as expressed in KML
@@ -97,12 +97,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("longitude", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDecimal LongitudeElement
-			{
-				get { return _LongitudeElement; }
-				set { _LongitudeElement = value; OnPropertyChanged("LongitudeElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDecimal _LongitudeElement;
+			public Hl7.Fhir.Model.FhirDecimal LongitudeElement { get; set; }
 
 			/// <summary>
 			/// Longitude as expressed in KML
@@ -119,7 +114,6 @@ namespace Hl7.Fhir.Model
 						LongitudeElement = null;
 					else
 						LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
-					OnPropertyChanged("Longitude");
 				}
 			}
 
@@ -129,12 +123,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("latitude", InSummary = true, Order = 50)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDecimal LatitudeElement
-			{
-				get { return _LatitudeElement; }
-				set { _LatitudeElement = value; OnPropertyChanged("LatitudeElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDecimal _LatitudeElement;
+			public Hl7.Fhir.Model.FhirDecimal LatitudeElement { get; set; }
 
 			/// <summary>
 			/// Latitude as expressed in KML
@@ -151,7 +140,6 @@ namespace Hl7.Fhir.Model
 						LatitudeElement = null;
 					else
 						LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
-					OnPropertyChanged("Latitude");
 				}
 			}
 
@@ -160,12 +148,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("altitude", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDecimal AltitudeElement
-			{
-				get { return _AltitudeElement; }
-				set { _AltitudeElement = value; OnPropertyChanged("AltitudeElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDecimal _AltitudeElement;
+			public Hl7.Fhir.Model.FhirDecimal AltitudeElement { get; set; }
 
 			/// <summary>
 			/// Altitude as expressed in KML
@@ -182,7 +165,6 @@ namespace Hl7.Fhir.Model
 						AltitudeElement = null;
 					else
 						AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
-					OnPropertyChanged("Altitude");
 				}
 			}
 
@@ -241,24 +223,14 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("identifier", Order = 70)]
 		[DataMember]
-		public Hl7.Fhir.Model.Identifier Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private Hl7.Fhir.Model.Identifier _Identifier;
+		public Hl7.Fhir.Model.Identifier Identifier { get; set; }
 
 		/// <summary>
 		/// Name of the location as used by humans
 		/// </summary>
 		[FhirElement("name", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString NameElement
-		{
-			get { return _NameElement; }
-			set { _NameElement = value; OnPropertyChanged("NameElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _NameElement;
+		public Hl7.Fhir.Model.FhirString NameElement { get; set; }
 
 		/// <summary>
 		/// Name of the location as used by humans
@@ -275,7 +247,6 @@ namespace Hl7.Fhir.Model
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Name");
 			}
 		}
 
@@ -284,12 +255,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("description", Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString DescriptionElement
-		{
-			get { return _DescriptionElement; }
-			set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _DescriptionElement;
+		public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
 
 		/// <summary>
 		/// Description of the Location, which helps in finding or referencing the place
@@ -306,7 +272,6 @@ namespace Hl7.Fhir.Model
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Description");
 			}
 		}
 
@@ -315,12 +280,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("type", Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Type
-		{
-			get { return _Type; }
-			set { _Type = value; OnPropertyChanged("Type"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Type;
+		public Hl7.Fhir.Model.CodeableConcept Type { get; set; }
 
 		/// <summary>
 		/// Contact details of the location
@@ -328,48 +288,28 @@ namespace Hl7.Fhir.Model
 		[FhirElement("telecom", Order = 110)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Contact> Telecom
-		{
-			get { return _Telecom; }
-			set { _Telecom = value; OnPropertyChanged("Telecom"); }
-		}
-		private List<Hl7.Fhir.Model.Contact> _Telecom;
+		public List<Hl7.Fhir.Model.Contact> Telecom { get; set; }
 
 		/// <summary>
 		/// Physical location
 		/// </summary>
 		[FhirElement("address", Order = 120)]
 		[DataMember]
-		public Hl7.Fhir.Model.Address Address
-		{
-			get { return _Address; }
-			set { _Address = value; OnPropertyChanged("Address"); }
-		}
-		private Hl7.Fhir.Model.Address _Address;
+		public Hl7.Fhir.Model.Address Address { get; set; }
 
 		/// <summary>
 		/// Physical form of the location
 		/// </summary>
 		[FhirElement("physicalType", Order = 130)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept PhysicalType
-		{
-			get { return _PhysicalType; }
-			set { _PhysicalType = value; OnPropertyChanged("PhysicalType"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _PhysicalType;
+		public Hl7.Fhir.Model.CodeableConcept PhysicalType { get; set; }
 
 		/// <summary>
 		/// The absolute geographic location
 		/// </summary>
 		[FhirElement("position", Order = 140)]
 		[DataMember]
-		public Hl7.Fhir.Model.Location.LocationPositionComponent Position
-		{
-			get { return _Position; }
-			set { _Position = value; OnPropertyChanged("Position"); }
-		}
-		private Hl7.Fhir.Model.Location.LocationPositionComponent _Position;
+		public Hl7.Fhir.Model.Location.LocationPositionComponent Position { get; set; }
 
 		/// <summary>
 		/// The organization that is responsible for the provisioning and upkeep of the location
@@ -377,24 +317,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("managingOrganization", Order = 150)]
 		[References("Organization")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference ManagingOrganization
-		{
-			get { return _ManagingOrganization; }
-			set { _ManagingOrganization = value; OnPropertyChanged("ManagingOrganization"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _ManagingOrganization;
+		public Hl7.Fhir.Model.ResourceReference ManagingOrganization { get; set; }
 
 		/// <summary>
 		/// active | suspended | inactive
 		/// </summary>
 		[FhirElement("status", Order = 160)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Location.LocationStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.Location.LocationStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// active | suspended | inactive
@@ -411,7 +341,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Location.LocationStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -421,24 +350,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("partOf", Order = 170)]
 		[References("Location")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference PartOf
-		{
-			get { return _PartOf; }
-			set { _PartOf = value; OnPropertyChanged("PartOf"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _PartOf;
+		public Hl7.Fhir.Model.ResourceReference PartOf { get; set; }
 
 		/// <summary>
 		/// instance | kind
 		/// </summary>
 		[FhirElement("mode", Order = 180)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement
-		{
-			get { return _ModeElement; }
-			set { _ModeElement = value; OnPropertyChanged("ModeElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Location.LocationMode> _ModeElement;
+		public Code<Hl7.Fhir.Model.Location.LocationMode> ModeElement { get; set; }
 
 		/// <summary>
 		/// instance | kind
@@ -455,7 +374,6 @@ namespace Hl7.Fhir.Model
 					ModeElement = null;
 				else
 					ModeElement = new Code<Hl7.Fhir.Model.Location.LocationMode>(value);
-				OnPropertyChanged("Mode");
 			}
 		}
 

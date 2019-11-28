@@ -40,7 +40,7 @@ using System.Runtime.Serialization;
 namespace Hl7.Fhir.Model
 {
 	[DataContract]
-	public abstract partial class Resource : System.ComponentModel.INotifyPropertyChanged
+	public abstract partial class Resource
 	{
 		/// <summary>
 		/// Additional Content defined by implementations
@@ -48,12 +48,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("extension", Order = 10)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Extension> Extension
-		{
-			get { return _Extension; }
-			set { _Extension = value; OnPropertyChanged("Extension"); }
-		}
-		private List<Hl7.Fhir.Model.Extension> _Extension;
+		public List<Hl7.Fhir.Model.Extension> Extension { get; set; }
 
 		/// <summary>
 		/// Extensions that cannot be ignored
@@ -61,24 +56,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("modifierExtension", Order = 20)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Extension> ModifierExtension
-		{
-			get { return _ModifierExtension; }
-			set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
-		}
-		private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
+		public List<Hl7.Fhir.Model.Extension> ModifierExtension { get; set; }
 
 		/// <summary>
 		/// Language of the resource content
 		/// </summary>
 		[FhirElement("language", Order = 30)]
 		[DataMember]
-		public Hl7.Fhir.Model.Code LanguageElement
-		{
-			get { return _LanguageElement; }
-			set { _LanguageElement = value; OnPropertyChanged("LanguageElement"); }
-		}
-		private Hl7.Fhir.Model.Code _LanguageElement;
+		public Hl7.Fhir.Model.Code LanguageElement { get; set; }
 
 		/// <summary>
 		/// Language of the resource content
@@ -95,7 +80,6 @@ namespace Hl7.Fhir.Model
 					LanguageElement = null;
 				else
 					LanguageElement = new Hl7.Fhir.Model.Code(value);
-				OnPropertyChanged("Language");
 			}
 		}
 
@@ -104,12 +88,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("text", Order = 40)]
 		[DataMember]
-		public Hl7.Fhir.Model.Narrative Text
-		{
-			get { return _Text; }
-			set { _Text = value; OnPropertyChanged("Text"); }
-		}
-		private Hl7.Fhir.Model.Narrative _Text;
+		public Hl7.Fhir.Model.Narrative Text { get; set; }
 
 		/// <summary>
 		/// Contained, inline Resources
@@ -118,12 +97,7 @@ namespace Hl7.Fhir.Model
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Resource))]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Resource> Contained
-		{
-			get { return _Contained; }
-			set { _Contained = value; OnPropertyChanged("Contained"); }
-		}
-		private List<Hl7.Fhir.Model.Resource> _Contained;
+		public List<Hl7.Fhir.Model.Resource> Contained { get; set; }
 
 		/// <summary>
 		/// Local id for element
@@ -131,12 +105,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("id", XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 60)]
 		[IdPattern]
 		[DataMember]
-		public string Id
-		{
-			get { return _Id; }
-			set { _Id = value; OnPropertyChanged("Id"); }
-		}
-		private string _Id;
+		public string Id { get; set; }
 
 		public virtual IDeepCopyable CopyTo(IDeepCopyable other)
 		{
@@ -185,13 +154,5 @@ namespace Hl7.Fhir.Model
 
 			return true;
 		}
-
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		protected void OnPropertyChanged(string property)
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));
-		}
 	}
-
 }

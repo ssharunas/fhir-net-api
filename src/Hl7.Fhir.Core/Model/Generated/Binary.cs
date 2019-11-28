@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Binary", IsResource = true)]
 	[DataContract]
-	public partial class Binary : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Binary : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Binary contents
@@ -51,12 +51,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("content", XmlSerialization = XmlSerializationHint.TextNode, Order = 70)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public byte[] Content
-		{
-			get { return _Content; }
-			set { _Content = value; OnPropertyChanged("Content"); }
-		}
-		private byte[] _Content;
+		public byte[] Content { get; set; }
 
 		/// <summary>
 		/// Media type of contents
@@ -64,12 +59,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("contentType", XmlSerialization = XmlSerializationHint.Attribute, Order = 80)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public string ContentType
-		{
-			get { return _ContentType; }
-			set { _ContentType = value; OnPropertyChanged("ContentType"); }
-		}
-		private string _ContentType;
+		public string ContentType { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

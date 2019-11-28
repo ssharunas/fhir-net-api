@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Other", IsResource = true)]
 	[DataContract]
-	public partial class Other : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Other : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Business identifier
@@ -52,12 +52,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// Kind of Resource
@@ -65,12 +60,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("code", Order = 80)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Code
-		{
-			get { return _Code; }
-			set { _Code = value; OnPropertyChanged("Code"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Code;
+		public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 		/// <summary>
 		/// Identifies the
@@ -78,12 +68,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("subject", Order = 90)]
 		[References()]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Who created
@@ -91,24 +76,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("author", Order = 100)]
 		[References("Practitioner", "Patient", "RelatedPerson")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Author
-		{
-			get { return _Author; }
-			set { _Author = value; OnPropertyChanged("Author"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Author;
+		public Hl7.Fhir.Model.ResourceReference Author { get; set; }
 
 		/// <summary>
 		/// When created
 		/// </summary>
 		[FhirElement("created", Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.Date CreatedElement
-		{
-			get { return _CreatedElement; }
-			set { _CreatedElement = value; OnPropertyChanged("CreatedElement"); }
-		}
-		private Hl7.Fhir.Model.Date _CreatedElement;
+		public Hl7.Fhir.Model.Date CreatedElement { get; set; }
 
 		/// <summary>
 		/// When created
@@ -125,7 +100,6 @@ namespace Hl7.Fhir.Model
 					CreatedElement = null;
 				else
 					CreatedElement = new Hl7.Fhir.Model.Date(value);
-				OnPropertyChanged("Created");
 			}
 		}
 

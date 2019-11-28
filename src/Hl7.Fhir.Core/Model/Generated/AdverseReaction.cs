@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("AdverseReaction", IsResource = true)]
 	[DataContract]
-	public partial class AdverseReaction : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class AdverseReaction : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// The severity of an adverse reaction.
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("AdverseReactionSymptomComponent")]
 		[DataContract]
-		public partial class AdverseReactionSymptomComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class AdverseReactionSymptomComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// E.g. Rash, vomiting
@@ -135,24 +135,14 @@ namespace Hl7.Fhir.Model
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// severe | serious | moderate | minor
 			/// </summary>
 			[FhirElement("severity", InSummary = true, Order = 50)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.AdverseReaction.ReactionSeverity> SeverityElement
-			{
-				get { return _SeverityElement; }
-				set { _SeverityElement = value; OnPropertyChanged("SeverityElement"); }
-			}
-			private Code<Hl7.Fhir.Model.AdverseReaction.ReactionSeverity> _SeverityElement;
+			public Code<Hl7.Fhir.Model.AdverseReaction.ReactionSeverity> SeverityElement { get; set; }
 
 			/// <summary>
 			/// severe | serious | moderate | minor
@@ -169,7 +159,6 @@ namespace Hl7.Fhir.Model
 						SeverityElement = null;
 					else
 						SeverityElement = new Code<Hl7.Fhir.Model.AdverseReaction.ReactionSeverity>(value);
-					OnPropertyChanged("Severity");
 				}
 			}
 
@@ -222,19 +211,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("AdverseReactionExposureComponent")]
 		[DataContract]
-		public partial class AdverseReactionExposureComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class AdverseReactionExposureComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// When the exposure occurred
 			/// </summary>
 			[FhirElement("date", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDateTime DateElement
-			{
-				get { return _DateElement; }
-				set { _DateElement = value; OnPropertyChanged("DateElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDateTime _DateElement;
+			public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
 			/// <summary>
 			/// When the exposure occurred
@@ -251,7 +235,6 @@ namespace Hl7.Fhir.Model
 						DateElement = null;
 					else
 						DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-					OnPropertyChanged("Date");
 				}
 			}
 
@@ -260,12 +243,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("type", InSummary = true, Order = 50)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.AdverseReaction.ExposureType> TypeElement
-			{
-				get { return _TypeElement; }
-				set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-			}
-			private Code<Hl7.Fhir.Model.AdverseReaction.ExposureType> _TypeElement;
+			public Code<Hl7.Fhir.Model.AdverseReaction.ExposureType> TypeElement { get; set; }
 
 			/// <summary>
 			/// drugadmin | immuniz | coincidental
@@ -282,7 +260,6 @@ namespace Hl7.Fhir.Model
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.AdverseReaction.ExposureType>(value);
-					OnPropertyChanged("Type");
 				}
 			}
 
@@ -291,12 +268,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("causalityExpectation", InSummary = true, Order = 60)]
 			[DataMember]
-			public Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation> CausalityExpectationElement
-			{
-				get { return _CausalityExpectationElement; }
-				set { _CausalityExpectationElement = value; OnPropertyChanged("CausalityExpectationElement"); }
-			}
-			private Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation> _CausalityExpectationElement;
+			public Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation> CausalityExpectationElement { get; set; }
 
 			/// <summary>
 			/// likely | unlikely | confirmed | unknown
@@ -313,7 +285,6 @@ namespace Hl7.Fhir.Model
 						CausalityExpectationElement = null;
 					else
 						CausalityExpectationElement = new Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation>(value);
-					OnPropertyChanged("CausalityExpectation");
 				}
 			}
 
@@ -323,12 +294,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("substance", InSummary = true, Order = 70)]
 			[References("Substance")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Substance
-			{
-				get { return _Substance; }
-				set { _Substance = value; OnPropertyChanged("Substance"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Substance;
+			public Hl7.Fhir.Model.ResourceReference Substance { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -389,24 +355,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// When the reaction occurred
 		/// </summary>
 		[FhirElement("date", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime DateElement
-		{
-			get { return _DateElement; }
-			set { _DateElement = value; OnPropertyChanged("DateElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _DateElement;
+		public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
 		/// <summary>
 		/// When the reaction occurred
@@ -423,7 +379,6 @@ namespace Hl7.Fhir.Model
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("Date");
 			}
 		}
 
@@ -434,12 +389,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Indicates lack of reaction
@@ -447,12 +397,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("didNotOccurFlag", Order = 100)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean DidNotOccurFlagElement
-		{
-			get { return _DidNotOccurFlagElement; }
-			set { _DidNotOccurFlagElement = value; OnPropertyChanged("DidNotOccurFlagElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _DidNotOccurFlagElement;
+		public Hl7.Fhir.Model.FhirBoolean DidNotOccurFlagElement { get; set; }
 
 		/// <summary>
 		/// Indicates lack of reaction
@@ -469,7 +414,6 @@ namespace Hl7.Fhir.Model
 					DidNotOccurFlagElement = null;
 				else
 					DidNotOccurFlagElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("DidNotOccurFlag");
 			}
 		}
 
@@ -479,12 +423,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("recorder", Order = 110)]
 		[References("Practitioner", "Patient")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Recorder
-		{
-			get { return _Recorder; }
-			set { _Recorder = value; OnPropertyChanged("Recorder"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Recorder;
+		public Hl7.Fhir.Model.ResourceReference Recorder { get; set; }
 
 		/// <summary>
 		/// What was reaction?
@@ -492,12 +431,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("symptom", Order = 120)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionSymptomComponent> Symptom
-		{
-			get { return _Symptom; }
-			set { _Symptom = value; OnPropertyChanged("Symptom"); }
-		}
-		private List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionSymptomComponent> _Symptom;
+		public List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionSymptomComponent> Symptom { get; set; }
 
 		/// <summary>
 		/// Suspected substance
@@ -505,12 +439,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("exposure", Order = 130)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionExposureComponent> Exposure
-		{
-			get { return _Exposure; }
-			set { _Exposure = value; OnPropertyChanged("Exposure"); }
-		}
-		private List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionExposureComponent> _Exposure;
+		public List<Hl7.Fhir.Model.AdverseReaction.AdverseReactionExposureComponent> Exposure { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

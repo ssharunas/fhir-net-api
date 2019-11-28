@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("boolean")]
 	[DataContract]
-	public partial class FhirBoolean : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class FhirBoolean : Hl7.Fhir.Model.Element
 	{
 		public FhirBoolean(bool? value)
 		{
@@ -56,12 +56,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[DataMember]
-		public bool? Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private bool? _Value;
+		public bool? Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

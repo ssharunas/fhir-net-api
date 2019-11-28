@@ -102,6 +102,15 @@ namespace Hl7.Fhir.Tests.Search
 		}
 
 		[TestMethod]
+		public void TestSort()
+		{
+			var q = new Query();
+			q.AddSort("_id", SortOrder.Ascending);
+
+			Assert.AreEqual(Tuple.Create("_id", SortOrder.Ascending), q.Sort.Single());
+		}
+
+		[TestMethod]
 		public void ManageSearchResult()
 		{
 			var q = Query.For<Patient>()

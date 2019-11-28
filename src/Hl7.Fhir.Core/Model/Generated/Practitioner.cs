@@ -44,11 +44,11 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Practitioner", IsResource = true)]
 	[DataContract]
-	public partial class Practitioner : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Practitioner : Hl7.Fhir.Model.Resource
 	{
 		[FhirType("PractitionerQualificationComponent")]
 		[DataContract]
-		public partial class PractitionerQualificationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class PractitionerQualificationComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Coded representation of the qualification
@@ -56,24 +56,14 @@ namespace Hl7.Fhir.Model
 			[FhirElement("code", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Code
-			{
-				get { return _Code; }
-				set { _Code = value; OnPropertyChanged("Code"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Code;
+			public Hl7.Fhir.Model.CodeableConcept Code { get; set; }
 
 			/// <summary>
 			/// Period during which the qualification is valid
 			/// </summary>
 			[FhirElement("period", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.Period Period
-			{
-				get { return _Period; }
-				set { _Period = value; OnPropertyChanged("Period"); }
-			}
-			private Hl7.Fhir.Model.Period _Period;
+			public Hl7.Fhir.Model.Period Period { get; set; }
 
 			/// <summary>
 			/// Organization that regulates and issues the qualification
@@ -81,12 +71,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("issuer", InSummary = true, Order = 60)]
 			[References("Organization")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Issuer
-			{
-				get { return _Issuer; }
-				set { _Issuer = value; OnPropertyChanged("Issuer"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Issuer;
+			public Hl7.Fhir.Model.ResourceReference Issuer { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -144,24 +129,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", InSummary = true, Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// A name associated with the person
 		/// </summary>
 		[FhirElement("name", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.HumanName Name
-		{
-			get { return _Name; }
-			set { _Name = value; OnPropertyChanged("Name"); }
-		}
-		private Hl7.Fhir.Model.HumanName _Name;
+		public Hl7.Fhir.Model.HumanName Name { get; set; }
 
 		/// <summary>
 		/// A contact detail for the practitioner
@@ -169,48 +144,28 @@ namespace Hl7.Fhir.Model
 		[FhirElement("telecom", InSummary = true, Order = 90)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Contact> Telecom
-		{
-			get { return _Telecom; }
-			set { _Telecom = value; OnPropertyChanged("Telecom"); }
-		}
-		private List<Hl7.Fhir.Model.Contact> _Telecom;
+		public List<Hl7.Fhir.Model.Contact> Telecom { get; set; }
 
 		/// <summary>
 		/// Where practitioner can be found/visited
 		/// </summary>
 		[FhirElement("address", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.Address Address
-		{
-			get { return _Address; }
-			set { _Address = value; OnPropertyChanged("Address"); }
-		}
-		private Hl7.Fhir.Model.Address _Address;
+		public Hl7.Fhir.Model.Address Address { get; set; }
 
 		/// <summary>
 		/// Gender for administrative purposes
 		/// </summary>
 		[FhirElement("gender", InSummary = true, Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Gender
-		{
-			get { return _Gender; }
-			set { _Gender = value; OnPropertyChanged("Gender"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Gender;
+		public Hl7.Fhir.Model.CodeableConcept Gender { get; set; }
 
 		/// <summary>
 		/// The date and time of birth for the practitioner
 		/// </summary>
 		[FhirElement("birthDate", InSummary = true, Order = 120)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime BirthDateElement
-		{
-			get { return _BirthDateElement; }
-			set { _BirthDateElement = value; OnPropertyChanged("BirthDateElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _BirthDateElement;
+		public Hl7.Fhir.Model.FhirDateTime BirthDateElement { get; set; }
 
 		/// <summary>
 		/// The date and time of birth for the practitioner
@@ -227,7 +182,6 @@ namespace Hl7.Fhir.Model
 					BirthDateElement = null;
 				else
 					BirthDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("BirthDate");
 			}
 		}
 
@@ -237,12 +191,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("photo", Order = 130)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Attachment> Photo
-		{
-			get { return _Photo; }
-			set { _Photo = value; OnPropertyChanged("Photo"); }
-		}
-		private List<Hl7.Fhir.Model.Attachment> _Photo;
+		public List<Hl7.Fhir.Model.Attachment> Photo { get; set; }
 
 		/// <summary>
 		/// The represented organization
@@ -250,12 +199,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("organization", InSummary = true, Order = 140)]
 		[References("Organization")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Organization
-		{
-			get { return _Organization; }
-			set { _Organization = value; OnPropertyChanged("Organization"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Organization;
+		public Hl7.Fhir.Model.ResourceReference Organization { get; set; }
 
 		/// <summary>
 		/// Roles which this practitioner may perform
@@ -263,12 +207,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("role", InSummary = true, Order = 150)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.CodeableConcept> Role
-		{
-			get { return _Role; }
-			set { _Role = value; OnPropertyChanged("Role"); }
-		}
-		private List<Hl7.Fhir.Model.CodeableConcept> _Role;
+		public List<Hl7.Fhir.Model.CodeableConcept> Role { get; set; }
 
 		/// <summary>
 		/// Specific specialty of the practitioner
@@ -276,24 +215,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("specialty", InSummary = true, Order = 160)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.CodeableConcept> Specialty
-		{
-			get { return _Specialty; }
-			set { _Specialty = value; OnPropertyChanged("Specialty"); }
-		}
-		private List<Hl7.Fhir.Model.CodeableConcept> _Specialty;
+		public List<Hl7.Fhir.Model.CodeableConcept> Specialty { get; set; }
 
 		/// <summary>
 		/// The period during which the practitioner is authorized to perform in these role(s)
 		/// </summary>
 		[FhirElement("period", InSummary = true, Order = 170)]
 		[DataMember]
-		public Hl7.Fhir.Model.Period Period
-		{
-			get { return _Period; }
-			set { _Period = value; OnPropertyChanged("Period"); }
-		}
-		private Hl7.Fhir.Model.Period _Period;
+		public Hl7.Fhir.Model.Period Period { get; set; }
 
 		/// <summary>
 		/// The location(s) at which this practitioner provides care
@@ -302,12 +231,7 @@ namespace Hl7.Fhir.Model
 		[References("Location")]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> Location
-		{
-			get { return _Location; }
-			set { _Location = value; OnPropertyChanged("Location"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _Location;
+		public List<Hl7.Fhir.Model.ResourceReference> Location { get; set; }
 
 		/// <summary>
 		/// Qualifications obtained by training and certification
@@ -315,12 +239,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("qualification", Order = 190)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification
-		{
-			get { return _Qualification; }
-			set { _Qualification = value; OnPropertyChanged("Qualification"); }
-		}
-		private List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> _Qualification;
+		public List<Hl7.Fhir.Model.Practitioner.PractitionerQualificationComponent> Qualification { get; set; }
 
 		/// <summary>
 		/// A language the practitioner is able to use in patient communication
@@ -328,12 +247,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("communication", Order = 200)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.CodeableConcept> Communication
-		{
-			get { return _Communication; }
-			set { _Communication = value; OnPropertyChanged("Communication"); }
-		}
-		private List<Hl7.Fhir.Model.CodeableConcept> _Communication;
+		public List<Hl7.Fhir.Model.CodeableConcept> Communication { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

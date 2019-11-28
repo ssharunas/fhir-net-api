@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("dateTime")]
 	[DataContract]
-	public partial class FhirDateTime : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class FhirDateTime : Hl7.Fhir.Model.Element
 	{
 		// Must conform to the pattern "-?([1-9][0-9]{3}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01])(T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?)?)?)?"
 		public const string PATTERN = @"-?([1-9][0-9]{3}|0[0-9]{3})(-(0[1-9]|1[0-2])(-(0[1-9]|[12][0-9]|3[01])(T(([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9](\.[0-9]+)?|(24:00:00(\.0+)?))(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00))?)?)?)?";
@@ -61,12 +61,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[DateTimePattern]
 		[DataMember]
-		public string Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private string _Value;
+		public string Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

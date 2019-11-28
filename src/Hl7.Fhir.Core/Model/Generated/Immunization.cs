@@ -44,11 +44,11 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Immunization", IsResource = true)]
 	[DataContract]
-	public partial class Immunization : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Immunization : Hl7.Fhir.Model.Resource
 	{
 		[FhirType("ImmunizationVaccinationProtocolComponent")]
 		[DataContract]
-		public partial class ImmunizationVaccinationProtocolComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ImmunizationVaccinationProtocolComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// What dose number within series?
@@ -56,12 +56,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("doseSequence", InSummary = true, Order = 40)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.Integer DoseSequenceElement
-			{
-				get { return _DoseSequenceElement; }
-				set { _DoseSequenceElement = value; OnPropertyChanged("DoseSequenceElement"); }
-			}
-			private Hl7.Fhir.Model.Integer _DoseSequenceElement;
+			public Hl7.Fhir.Model.Integer DoseSequenceElement { get; set; }
 
 			/// <summary>
 			/// What dose number within series?
@@ -78,7 +73,6 @@ namespace Hl7.Fhir.Model
 						DoseSequenceElement = null;
 					else
 						DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
-					OnPropertyChanged("DoseSequence");
 				}
 			}
 
@@ -87,12 +81,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("description", InSummary = true, Order = 50)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirString DescriptionElement
-			{
-				get { return _DescriptionElement; }
-				set { _DescriptionElement = value; OnPropertyChanged("DescriptionElement"); }
-			}
-			private Hl7.Fhir.Model.FhirString _DescriptionElement;
+			public Hl7.Fhir.Model.FhirString DescriptionElement { get; set; }
 
 			/// <summary>
 			/// Details of vaccine protocol
@@ -109,7 +98,6 @@ namespace Hl7.Fhir.Model
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
-					OnPropertyChanged("Description");
 				}
 			}
 
@@ -119,24 +107,14 @@ namespace Hl7.Fhir.Model
 			[FhirElement("authority", InSummary = true, Order = 60)]
 			[References("Organization")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Authority
-			{
-				get { return _Authority; }
-				set { _Authority = value; OnPropertyChanged("Authority"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Authority;
+			public Hl7.Fhir.Model.ResourceReference Authority { get; set; }
 
 			/// <summary>
 			/// Name of vaccine series
 			/// </summary>
 			[FhirElement("series", InSummary = true, Order = 70)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirString SeriesElement
-			{
-				get { return _SeriesElement; }
-				set { _SeriesElement = value; OnPropertyChanged("SeriesElement"); }
-			}
-			private Hl7.Fhir.Model.FhirString _SeriesElement;
+			public Hl7.Fhir.Model.FhirString SeriesElement { get; set; }
 
 			/// <summary>
 			/// Name of vaccine series
@@ -153,7 +131,6 @@ namespace Hl7.Fhir.Model
 						SeriesElement = null;
 					else
 						SeriesElement = new Hl7.Fhir.Model.FhirString(value);
-					OnPropertyChanged("Series");
 				}
 			}
 
@@ -162,12 +139,7 @@ namespace Hl7.Fhir.Model
 			/// </summary>
 			[FhirElement("seriesDoses", InSummary = true, Order = 80)]
 			[DataMember]
-			public Hl7.Fhir.Model.Integer SeriesDosesElement
-			{
-				get { return _SeriesDosesElement; }
-				set { _SeriesDosesElement = value; OnPropertyChanged("SeriesDosesElement"); }
-			}
-			private Hl7.Fhir.Model.Integer _SeriesDosesElement;
+			public Hl7.Fhir.Model.Integer SeriesDosesElement { get; set; }
 
 			/// <summary>
 			/// Recommended number of doses for immunity
@@ -184,7 +156,6 @@ namespace Hl7.Fhir.Model
 						SeriesDosesElement = null;
 					else
 						SeriesDosesElement = new Hl7.Fhir.Model.Integer(value);
-					OnPropertyChanged("SeriesDoses");
 				}
 			}
 
@@ -194,12 +165,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("doseTarget", InSummary = true, Order = 90)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept DoseTarget
-			{
-				get { return _DoseTarget; }
-				set { _DoseTarget = value; OnPropertyChanged("DoseTarget"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _DoseTarget;
+			public Hl7.Fhir.Model.CodeableConcept DoseTarget { get; set; }
 
 			/// <summary>
 			/// Does dose count towards immunity?
@@ -207,24 +173,14 @@ namespace Hl7.Fhir.Model
 			[FhirElement("doseStatus", InSummary = true, Order = 100)]
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept DoseStatus
-			{
-				get { return _DoseStatus; }
-				set { _DoseStatus = value; OnPropertyChanged("DoseStatus"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _DoseStatus;
+			public Hl7.Fhir.Model.CodeableConcept DoseStatus { get; set; }
 
 			/// <summary>
 			/// Why does does count/not count?
 			/// </summary>
 			[FhirElement("doseStatusReason", InSummary = true, Order = 110)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept DoseStatusReason
-			{
-				get { return _DoseStatusReason; }
-				set { _DoseStatusReason = value; OnPropertyChanged("DoseStatusReason"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _DoseStatusReason;
+			public Hl7.Fhir.Model.CodeableConcept DoseStatusReason { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -293,7 +249,7 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("ImmunizationExplanationComponent")]
 		[DataContract]
-		public partial class ImmunizationExplanationComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ImmunizationExplanationComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// Why immunization occurred
@@ -301,12 +257,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("reason", InSummary = true, Order = 40)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.CodeableConcept> Reason
-			{
-				get { return _Reason; }
-				set { _Reason = value; OnPropertyChanged("Reason"); }
-			}
-			private List<Hl7.Fhir.Model.CodeableConcept> _Reason;
+			public List<Hl7.Fhir.Model.CodeableConcept> Reason { get; set; }
 
 			/// <summary>
 			/// Why immunization did not occur
@@ -314,12 +265,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("refusalReason", InSummary = true, Order = 50)]
 			[Cardinality(Min = 0, Max = -1)]
 			[DataMember]
-			public List<Hl7.Fhir.Model.CodeableConcept> RefusalReason
-			{
-				get { return _RefusalReason; }
-				set { _RefusalReason = value; OnPropertyChanged("RefusalReason"); }
-			}
-			private List<Hl7.Fhir.Model.CodeableConcept> _RefusalReason;
+			public List<Hl7.Fhir.Model.CodeableConcept> RefusalReason { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -370,19 +316,14 @@ namespace Hl7.Fhir.Model
 
 		[FhirType("ImmunizationReactionComponent")]
 		[DataContract]
-		public partial class ImmunizationReactionComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class ImmunizationReactionComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// When did reaction start?
 			/// </summary>
 			[FhirElement("date", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirDateTime DateElement
-			{
-				get { return _DateElement; }
-				set { _DateElement = value; OnPropertyChanged("DateElement"); }
-			}
-			private Hl7.Fhir.Model.FhirDateTime _DateElement;
+			public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
 			/// <summary>
 			/// When did reaction start?
@@ -399,7 +340,6 @@ namespace Hl7.Fhir.Model
 						DateElement = null;
 					else
 						DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-					OnPropertyChanged("Date");
 				}
 			}
 
@@ -409,24 +349,14 @@ namespace Hl7.Fhir.Model
 			[FhirElement("detail", InSummary = true, Order = 50)]
 			[References("AdverseReaction", "Observation")]
 			[DataMember]
-			public Hl7.Fhir.Model.ResourceReference Detail
-			{
-				get { return _Detail; }
-				set { _Detail = value; OnPropertyChanged("Detail"); }
-			}
-			private Hl7.Fhir.Model.ResourceReference _Detail;
+			public Hl7.Fhir.Model.ResourceReference Detail { get; set; }
 
 			/// <summary>
 			/// Was reaction self-reported?
 			/// </summary>
 			[FhirElement("reported", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.FhirBoolean ReportedElement
-			{
-				get { return _ReportedElement; }
-				set { _ReportedElement = value; OnPropertyChanged("ReportedElement"); }
-			}
-			private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
+			public Hl7.Fhir.Model.FhirBoolean ReportedElement { get; set; }
 
 			/// <summary>
 			/// Was reaction self-reported?
@@ -443,7 +373,6 @@ namespace Hl7.Fhir.Model
 						ReportedElement = null;
 					else
 						ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-					OnPropertyChanged("Reported");
 				}
 			}
 
@@ -503,12 +432,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// Vaccination administration date
@@ -516,12 +440,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("date", Order = 80)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime DateElement
-		{
-			get { return _DateElement; }
-			set { _DateElement = value; OnPropertyChanged("DateElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _DateElement;
+		public Hl7.Fhir.Model.FhirDateTime DateElement { get; set; }
 
 		/// <summary>
 		/// Vaccination administration date
@@ -538,7 +457,6 @@ namespace Hl7.Fhir.Model
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("Date");
 			}
 		}
 
@@ -548,12 +466,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("vaccineType", Order = 90)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept VaccineType
-		{
-			get { return _VaccineType; }
-			set { _VaccineType = value; OnPropertyChanged("VaccineType"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _VaccineType;
+		public Hl7.Fhir.Model.CodeableConcept VaccineType { get; set; }
 
 		/// <summary>
 		/// Who was immunized?
@@ -562,12 +475,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Was immunization refused?
@@ -575,12 +483,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("refusedIndicator", Order = 110)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean RefusedIndicatorElement
-		{
-			get { return _RefusedIndicatorElement; }
-			set { _RefusedIndicatorElement = value; OnPropertyChanged("RefusedIndicatorElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _RefusedIndicatorElement;
+		public Hl7.Fhir.Model.FhirBoolean RefusedIndicatorElement { get; set; }
 
 		/// <summary>
 		/// Was immunization refused?
@@ -597,7 +500,6 @@ namespace Hl7.Fhir.Model
 					RefusedIndicatorElement = null;
 				else
 					RefusedIndicatorElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("RefusedIndicator");
 			}
 		}
 
@@ -607,12 +509,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("reported", Order = 120)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean ReportedElement
-		{
-			get { return _ReportedElement; }
-			set { _ReportedElement = value; OnPropertyChanged("ReportedElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _ReportedElement;
+		public Hl7.Fhir.Model.FhirBoolean ReportedElement { get; set; }
 
 		/// <summary>
 		/// Is this a self-reported record?
@@ -629,7 +526,6 @@ namespace Hl7.Fhir.Model
 					ReportedElement = null;
 				else
 					ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("Reported");
 			}
 		}
 
@@ -639,12 +535,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("performer", Order = 130)]
 		[References("Practitioner")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Performer
-		{
-			get { return _Performer; }
-			set { _Performer = value; OnPropertyChanged("Performer"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Performer;
+		public Hl7.Fhir.Model.ResourceReference Performer { get; set; }
 
 		/// <summary>
 		/// Who ordered vaccination?
@@ -652,12 +543,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("requester", Order = 140)]
 		[References("Practitioner")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Requester
-		{
-			get { return _Requester; }
-			set { _Requester = value; OnPropertyChanged("Requester"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Requester;
+		public Hl7.Fhir.Model.ResourceReference Requester { get; set; }
 
 		/// <summary>
 		/// Vaccine manufacturer
@@ -665,12 +551,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("manufacturer", Order = 150)]
 		[References("Organization")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Manufacturer
-		{
-			get { return _Manufacturer; }
-			set { _Manufacturer = value; OnPropertyChanged("Manufacturer"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Manufacturer;
+		public Hl7.Fhir.Model.ResourceReference Manufacturer { get; set; }
 
 		/// <summary>
 		/// Where did vaccination occur?
@@ -678,24 +559,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("location", Order = 160)]
 		[References("Location")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Location
-		{
-			get { return _Location; }
-			set { _Location = value; OnPropertyChanged("Location"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Location;
+		public Hl7.Fhir.Model.ResourceReference Location { get; set; }
 
 		/// <summary>
 		/// Vaccine lot number
 		/// </summary>
 		[FhirElement("lotNumber", Order = 170)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString LotNumberElement
-		{
-			get { return _LotNumberElement; }
-			set { _LotNumberElement = value; OnPropertyChanged("LotNumberElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _LotNumberElement;
+		public Hl7.Fhir.Model.FhirString LotNumberElement { get; set; }
 
 		/// <summary>
 		/// Vaccine lot number
@@ -712,7 +583,6 @@ namespace Hl7.Fhir.Model
 					LotNumberElement = null;
 				else
 					LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("LotNumber");
 			}
 		}
 
@@ -721,12 +591,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("expirationDate", Order = 180)]
 		[DataMember]
-		public Hl7.Fhir.Model.Date ExpirationDateElement
-		{
-			get { return _ExpirationDateElement; }
-			set { _ExpirationDateElement = value; OnPropertyChanged("ExpirationDateElement"); }
-		}
-		private Hl7.Fhir.Model.Date _ExpirationDateElement;
+		public Hl7.Fhir.Model.Date ExpirationDateElement { get; set; }
 
 		/// <summary>
 		/// Vaccine expiration date
@@ -743,7 +608,6 @@ namespace Hl7.Fhir.Model
 					ExpirationDateElement = null;
 				else
 					ExpirationDateElement = new Hl7.Fhir.Model.Date(value);
-				OnPropertyChanged("ExpirationDate");
 			}
 		}
 
@@ -752,48 +616,28 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("site", Order = 190)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Site
-		{
-			get { return _Site; }
-			set { _Site = value; OnPropertyChanged("Site"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Site;
+		public Hl7.Fhir.Model.CodeableConcept Site { get; set; }
 
 		/// <summary>
 		/// How vaccine entered body
 		/// </summary>
 		[FhirElement("route", Order = 200)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Route
-		{
-			get { return _Route; }
-			set { _Route = value; OnPropertyChanged("Route"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Route;
+		public Hl7.Fhir.Model.CodeableConcept Route { get; set; }
 
 		/// <summary>
 		/// Amount of vaccine administered
 		/// </summary>
 		[FhirElement("doseQuantity", Order = 210)]
 		[DataMember]
-		public Hl7.Fhir.Model.Quantity DoseQuantity
-		{
-			get { return _DoseQuantity; }
-			set { _DoseQuantity = value; OnPropertyChanged("DoseQuantity"); }
-		}
-		private Hl7.Fhir.Model.Quantity _DoseQuantity;
+		public Hl7.Fhir.Model.Quantity DoseQuantity { get; set; }
 
 		/// <summary>
 		/// Administration / refusal reasons
 		/// </summary>
 		[FhirElement("explanation", Order = 220)]
 		[DataMember]
-		public Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent Explanation
-		{
-			get { return _Explanation; }
-			set { _Explanation = value; OnPropertyChanged("Explanation"); }
-		}
-		private Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent _Explanation;
+		public Hl7.Fhir.Model.Immunization.ImmunizationExplanationComponent Explanation { get; set; }
 
 		/// <summary>
 		/// Details of a reaction that follows immunization
@@ -801,12 +645,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("reaction", Order = 230)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> Reaction
-		{
-			get { return _Reaction; }
-			set { _Reaction = value; OnPropertyChanged("Reaction"); }
-		}
-		private List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> _Reaction;
+		public List<Hl7.Fhir.Model.Immunization.ImmunizationReactionComponent> Reaction { get; set; }
 
 		/// <summary>
 		/// What protocol was followed
@@ -814,12 +653,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("vaccinationProtocol", Order = 240)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> VaccinationProtocol
-		{
-			get { return _VaccinationProtocol; }
-			set { _VaccinationProtocol = value; OnPropertyChanged("VaccinationProtocol"); }
-		}
-		private List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> _VaccinationProtocol;
+		public List<Hl7.Fhir.Model.Immunization.ImmunizationVaccinationProtocolComponent> VaccinationProtocol { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

@@ -40,7 +40,7 @@ namespace Hl7.Fhir.Model
 {
 	[FhirType("Extension")]
 	[DataContract]
-	public partial class Extension : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Extension : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// identifies the meaning of the extension
@@ -49,12 +49,7 @@ namespace Hl7.Fhir.Model
 		[Cardinality(Min = 1, Max = 1)]
 		[UriPattern]
 		[DataMember]
-		public string Url
-		{
-			get { return _Url; }
-			set { _Url = value; OnPropertyChanged("Url"); }
-		}
-		private string _Url;
+		public string Url { get; set; }
 
 		/// <summary>
 		/// Value of extension
@@ -62,12 +57,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", InSummary = true, Order = 50, Choice = ChoiceType.DatatypeChoice)]
 		[AllowedTypes(typeof(Hl7.Fhir.Model.Element))]
 		[DataMember]
-		public Hl7.Fhir.Model.Element Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private Hl7.Fhir.Model.Element _Value;
+		public Hl7.Fhir.Model.Element Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

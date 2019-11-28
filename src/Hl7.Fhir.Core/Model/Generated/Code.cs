@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("code")]
 	[DataContract]
-	public partial class Code : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Code : Hl7.Fhir.Model.Element
 	{
 		// Must conform to the pattern "[^\s]+([\s]+[^\s]+)*"
 		public const string PATTERN = @"[^\s]+([\s]+[^\s]+)*";
@@ -61,12 +61,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[CodePattern]
 		[DataMember]
-		public string Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private string _Value;
+		public string Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

@@ -44,23 +44,18 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("MedicationStatement", IsResource = true)]
 	[DataContract]
-	public partial class MedicationStatement : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class MedicationStatement : Hl7.Fhir.Model.Resource
 	{
 		[FhirType("MedicationStatementDosageComponent")]
 		[DataContract]
-		public partial class MedicationStatementDosageComponent : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+		public partial class MedicationStatementDosageComponent : Hl7.Fhir.Model.Element
 		{
 			/// <summary>
 			/// When/how often was medication taken?
 			/// </summary>
 			[FhirElement("timing", InSummary = true, Order = 40)]
 			[DataMember]
-			public Hl7.Fhir.Model.Schedule Timing
-			{
-				get { return _Timing; }
-				set { _Timing = value; OnPropertyChanged("Timing"); }
-			}
-			private Hl7.Fhir.Model.Schedule _Timing;
+			public Hl7.Fhir.Model.Schedule Timing { get; set; }
 
 			/// <summary>
 			/// Take "as needed" f(or x)
@@ -68,84 +63,49 @@ namespace Hl7.Fhir.Model
 			[FhirElement("asNeeded", InSummary = true, Order = 50, Choice = ChoiceType.DatatypeChoice)]
 			[AllowedTypes(typeof(Hl7.Fhir.Model.FhirBoolean), typeof(Hl7.Fhir.Model.CodeableConcept))]
 			[DataMember]
-			public Hl7.Fhir.Model.Element AsNeeded
-			{
-				get { return _AsNeeded; }
-				set { _AsNeeded = value; OnPropertyChanged("AsNeeded"); }
-			}
-			private Hl7.Fhir.Model.Element _AsNeeded;
+			public Hl7.Fhir.Model.Element AsNeeded { get; set; }
 
 			/// <summary>
 			/// Where on body was medication administered?
 			/// </summary>
 			[FhirElement("site", InSummary = true, Order = 60)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Site
-			{
-				get { return _Site; }
-				set { _Site = value; OnPropertyChanged("Site"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Site;
+			public Hl7.Fhir.Model.CodeableConcept Site { get; set; }
 
 			/// <summary>
 			/// How did the medication enter the body?
 			/// </summary>
 			[FhirElement("route", InSummary = true, Order = 70)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Route
-			{
-				get { return _Route; }
-				set { _Route = value; OnPropertyChanged("Route"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Route;
+			public Hl7.Fhir.Model.CodeableConcept Route { get; set; }
 
 			/// <summary>
 			/// Technique used to administer medication
 			/// </summary>
 			[FhirElement("method", InSummary = true, Order = 80)]
 			[DataMember]
-			public Hl7.Fhir.Model.CodeableConcept Method
-			{
-				get { return _Method; }
-				set { _Method = value; OnPropertyChanged("Method"); }
-			}
-			private Hl7.Fhir.Model.CodeableConcept _Method;
+			public Hl7.Fhir.Model.CodeableConcept Method { get; set; }
 
 			/// <summary>
 			/// Amount administered in one dose
 			/// </summary>
 			[FhirElement("quantity", InSummary = true, Order = 90)]
 			[DataMember]
-			public Hl7.Fhir.Model.Quantity Quantity
-			{
-				get { return _Quantity; }
-				set { _Quantity = value; OnPropertyChanged("Quantity"); }
-			}
-			private Hl7.Fhir.Model.Quantity _Quantity;
+			public Hl7.Fhir.Model.Quantity Quantity { get; set; }
 
 			/// <summary>
 			/// Dose quantity per unit of time
 			/// </summary>
 			[FhirElement("rate", InSummary = true, Order = 100)]
 			[DataMember]
-			public Hl7.Fhir.Model.Ratio Rate
-			{
-				get { return _Rate; }
-				set { _Rate = value; OnPropertyChanged("Rate"); }
-			}
-			private Hl7.Fhir.Model.Ratio _Rate;
+			public Hl7.Fhir.Model.Ratio Rate { get; set; }
 
 			/// <summary>
 			/// Maximum dose that was consumed per unit of time
 			/// </summary>
 			[FhirElement("maxDosePerPeriod", InSummary = true, Order = 110)]
 			[DataMember]
-			public Hl7.Fhir.Model.Ratio MaxDosePerPeriod
-			{
-				get { return _MaxDosePerPeriod; }
-				set { _MaxDosePerPeriod = value; OnPropertyChanged("MaxDosePerPeriod"); }
-			}
-			private Hl7.Fhir.Model.Ratio _MaxDosePerPeriod;
+			public Hl7.Fhir.Model.Ratio MaxDosePerPeriod { get; set; }
 
 			public override IDeepCopyable CopyTo(IDeepCopyable other)
 			{
@@ -218,12 +178,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// Who was/is taking medication
@@ -231,24 +186,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("patient", Order = 80)]
 		[References("Patient")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Patient
-		{
-			get { return _Patient; }
-			set { _Patient = value; OnPropertyChanged("Patient"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Patient;
+		public Hl7.Fhir.Model.ResourceReference Patient { get; set; }
 
 		/// <summary>
 		/// True if medication is/was not being taken
 		/// </summary>
 		[FhirElement("wasNotGiven", Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirBoolean WasNotGivenElement
-		{
-			get { return _WasNotGivenElement; }
-			set { _WasNotGivenElement = value; OnPropertyChanged("WasNotGivenElement"); }
-		}
-		private Hl7.Fhir.Model.FhirBoolean _WasNotGivenElement;
+		public Hl7.Fhir.Model.FhirBoolean WasNotGivenElement { get; set; }
 
 		/// <summary>
 		/// True if medication is/was not being taken
@@ -265,7 +210,6 @@ namespace Hl7.Fhir.Model
 					WasNotGivenElement = null;
 				else
 					WasNotGivenElement = new Hl7.Fhir.Model.FhirBoolean(value);
-				OnPropertyChanged("WasNotGiven");
 			}
 		}
 
@@ -275,24 +219,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("reasonNotGiven", Order = 100)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven
-		{
-			get { return _ReasonNotGiven; }
-			set { _ReasonNotGiven = value; OnPropertyChanged("ReasonNotGiven"); }
-		}
-		private List<Hl7.Fhir.Model.CodeableConcept> _ReasonNotGiven;
+		public List<Hl7.Fhir.Model.CodeableConcept> ReasonNotGiven { get; set; }
 
 		/// <summary>
 		/// Over what period was medication consumed?
 		/// </summary>
 		[FhirElement("whenGiven", Order = 110)]
 		[DataMember]
-		public Hl7.Fhir.Model.Period WhenGiven
-		{
-			get { return _WhenGiven; }
-			set { _WhenGiven = value; OnPropertyChanged("WhenGiven"); }
-		}
-		private Hl7.Fhir.Model.Period _WhenGiven;
+		public Hl7.Fhir.Model.Period WhenGiven { get; set; }
 
 		/// <summary>
 		/// What medication was taken?
@@ -300,12 +234,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("medication", Order = 120)]
 		[References("Medication")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Medication
-		{
-			get { return _Medication; }
-			set { _Medication = value; OnPropertyChanged("Medication"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Medication;
+		public Hl7.Fhir.Model.ResourceReference Medication { get; set; }
 
 		/// <summary>
 		/// E.g. infusion pump
@@ -314,12 +243,7 @@ namespace Hl7.Fhir.Model
 		[References("Device")]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.ResourceReference> Device
-		{
-			get { return _Device; }
-			set { _Device = value; OnPropertyChanged("Device"); }
-		}
-		private List<Hl7.Fhir.Model.ResourceReference> _Device;
+		public List<Hl7.Fhir.Model.ResourceReference> Device { get; set; }
 
 		/// <summary>
 		/// Details of how medication was taken
@@ -327,12 +251,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("dosage", Order = 140)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> Dosage
-		{
-			get { return _Dosage; }
-			set { _Dosage = value; OnPropertyChanged("Dosage"); }
-		}
-		private List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> _Dosage;
+		public List<Hl7.Fhir.Model.MedicationStatement.MedicationStatementDosageComponent> Dosage { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

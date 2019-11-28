@@ -42,31 +42,21 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Ratio")]
 	[DataContract]
-	public partial class Ratio : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Ratio : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Numerator value
 		/// </summary>
 		[FhirElement("numerator", InSummary = true, Order = 40)]
 		[DataMember]
-		public Hl7.Fhir.Model.Quantity Numerator
-		{
-			get { return _Numerator; }
-			set { _Numerator = value; OnPropertyChanged("Numerator"); }
-		}
-		private Hl7.Fhir.Model.Quantity _Numerator;
+		public Hl7.Fhir.Model.Quantity Numerator { get; set; }
 
 		/// <summary>
 		/// Denominator value
 		/// </summary>
 		[FhirElement("denominator", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.Quantity Denominator
-		{
-			get { return _Denominator; }
-			set { _Denominator = value; OnPropertyChanged("Denominator"); }
-		}
-		private Hl7.Fhir.Model.Quantity _Denominator;
+		public Hl7.Fhir.Model.Quantity Denominator { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("xhtml")]
 	[DataContract]
-	public partial class XHtml : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class XHtml : Hl7.Fhir.Model.Element
 	{
 		public XHtml(string value)
 		{
@@ -58,12 +58,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[NarrativeXhtmlPattern]
 		[DataMember]
-		public string Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private string _Value;
+		public string Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

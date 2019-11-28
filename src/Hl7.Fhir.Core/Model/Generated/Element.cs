@@ -43,7 +43,7 @@ namespace Hl7.Fhir.Model
 	/// Basetype for all composite-typed elements
 	/// </summary>
 	[DataContract]
-	public abstract partial class Element : System.ComponentModel.INotifyPropertyChanged
+	public abstract partial class Element
 	{
 		/// <summary>
 		/// Additional Content defined by implementations
@@ -51,12 +51,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("extension", Order = 10)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Extension> Extension
-		{
-			get { return _Extension; }
-			set { _Extension = value; OnPropertyChanged("Extension"); }
-		}
-		private List<Hl7.Fhir.Model.Extension> _Extension;
+		public List<Hl7.Fhir.Model.Extension> Extension { get; set; }
 
 		/// <summary>
 		/// Extensions that cannot be ignored
@@ -64,12 +59,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("modifierExtension", Order = 20)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Extension> ModifierExtension
-		{
-			get { return _ModifierExtension; }
-			set { _ModifierExtension = value; OnPropertyChanged("ModifierExtension"); }
-		}
-		private List<Hl7.Fhir.Model.Extension> _ModifierExtension;
+		public List<Hl7.Fhir.Model.Extension> ModifierExtension { get; set; }
 
 		/// <summary>
 		/// Local id for element
@@ -77,12 +67,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("id", XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 30)]
 		[IdPattern]
 		[DataMember]
-		public string Id
-		{
-			get { return _Id; }
-			set { _Id = value; OnPropertyChanged("Id"); }
-		}
-		private string _Id;
+		public string Id { get; set; }
 
 		public virtual IDeepCopyable CopyTo(IDeepCopyable other)
 		{
@@ -121,13 +106,6 @@ namespace Hl7.Fhir.Model
 			if (Id != otherT.Id) return false;
 
 			return true;
-		}
-
-		public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
-		protected void OnPropertyChanged(string property)
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(property));
 		}
 	}
 

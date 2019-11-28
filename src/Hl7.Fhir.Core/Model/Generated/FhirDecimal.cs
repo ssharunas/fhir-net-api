@@ -42,7 +42,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("decimal")]
 	[DataContract]
-	public partial class FhirDecimal : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class FhirDecimal : Hl7.Fhir.Model.Element
 	{
 		public FhirDecimal(decimal? value)
 		{
@@ -56,12 +56,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("value", IsPrimitiveValue = true, XmlSerialization = XmlSerializationHint.Attribute, InSummary = true, Order = 40)]
 		[DataMember]
-		public decimal? Value
-		{
-			get { return _Value; }
-			set { _Value = value; OnPropertyChanged("Value"); }
-		}
-		private decimal? _Value;
+		public decimal? Value { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

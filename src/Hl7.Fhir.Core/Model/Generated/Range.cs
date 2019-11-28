@@ -42,31 +42,21 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Range")]
 	[DataContract]
-	public partial class Range : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class Range : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Low limit
 		/// </summary>
 		[FhirElement("low", InSummary = true, Order = 40)]
 		[DataMember]
-		public Hl7.Fhir.Model.Quantity Low
-		{
-			get { return _Low; }
-			set { _Low = value; OnPropertyChanged("Low"); }
-		}
-		private Hl7.Fhir.Model.Quantity _Low;
+		public Hl7.Fhir.Model.Quantity Low { get; set; }
 
 		/// <summary>
 		/// High limit
 		/// </summary>
 		[FhirElement("high", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.Quantity High
-		{
-			get { return _High; }
-			set { _High = value; OnPropertyChanged("High"); }
-		}
-		private Hl7.Fhir.Model.Quantity _High;
+		public Hl7.Fhir.Model.Quantity High { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

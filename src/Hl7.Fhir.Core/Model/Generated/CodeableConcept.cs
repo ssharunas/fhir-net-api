@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("CodeableConcept")]
 	[DataContract]
-	public partial class CodeableConcept : Hl7.Fhir.Model.Element, System.ComponentModel.INotifyPropertyChanged
+	public partial class CodeableConcept : Hl7.Fhir.Model.Element
 	{
 		/// <summary>
 		/// Code defined by a terminology system
@@ -52,24 +52,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("coding", InSummary = true, Order = 40)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Coding> Coding
-		{
-			get { return _Coding; }
-			set { _Coding = value; OnPropertyChanged("Coding"); }
-		}
-		private List<Hl7.Fhir.Model.Coding> _Coding;
+		public List<Hl7.Fhir.Model.Coding> Coding { get; set; }
 
 		/// <summary>
 		/// Plain text representation of the concept
 		/// </summary>
 		[FhirElement("text", InSummary = true, Order = 50)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString TextElement
-		{
-			get { return _TextElement; }
-			set { _TextElement = value; OnPropertyChanged("TextElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _TextElement;
+		public Hl7.Fhir.Model.FhirString TextElement { get; set; }
 
 		/// <summary>
 		/// Plain text representation of the concept
@@ -86,7 +76,6 @@ namespace Hl7.Fhir.Model
 					TextElement = null;
 				else
 					TextElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Text");
 			}
 		}
 

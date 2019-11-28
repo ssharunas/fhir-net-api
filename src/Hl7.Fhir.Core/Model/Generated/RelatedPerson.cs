@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("RelatedPerson", IsResource = true)]
 	[DataContract]
-	public partial class RelatedPerson : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class RelatedPerson : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// A Human identifier for this person
@@ -52,12 +52,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", InSummary = true, Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// The patient this person is related to
@@ -66,36 +61,21 @@ namespace Hl7.Fhir.Model
 		[References("Patient")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Patient
-		{
-			get { return _Patient; }
-			set { _Patient = value; OnPropertyChanged("Patient"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Patient;
+		public Hl7.Fhir.Model.ResourceReference Patient { get; set; }
 
 		/// <summary>
 		/// The nature of the relationship
 		/// </summary>
 		[FhirElement("relationship", InSummary = true, Order = 90)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Relationship
-		{
-			get { return _Relationship; }
-			set { _Relationship = value; OnPropertyChanged("Relationship"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Relationship;
+		public Hl7.Fhir.Model.CodeableConcept Relationship { get; set; }
 
 		/// <summary>
 		/// A name associated with the person
 		/// </summary>
 		[FhirElement("name", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.HumanName Name
-		{
-			get { return _Name; }
-			set { _Name = value; OnPropertyChanged("Name"); }
-		}
-		private Hl7.Fhir.Model.HumanName _Name;
+		public Hl7.Fhir.Model.HumanName Name { get; set; }
 
 		/// <summary>
 		/// A contact detail for the person
@@ -103,36 +83,21 @@ namespace Hl7.Fhir.Model
 		[FhirElement("telecom", InSummary = true, Order = 110)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Contact> Telecom
-		{
-			get { return _Telecom; }
-			set { _Telecom = value; OnPropertyChanged("Telecom"); }
-		}
-		private List<Hl7.Fhir.Model.Contact> _Telecom;
+		public List<Hl7.Fhir.Model.Contact> Telecom { get; set; }
 
 		/// <summary>
 		/// Gender for administrative purposes
 		/// </summary>
 		[FhirElement("gender", InSummary = true, Order = 120)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Gender
-		{
-			get { return _Gender; }
-			set { _Gender = value; OnPropertyChanged("Gender"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Gender;
+		public Hl7.Fhir.Model.CodeableConcept Gender { get; set; }
 
 		/// <summary>
 		/// Address where the related person can be contacted or visited
 		/// </summary>
 		[FhirElement("address", InSummary = true, Order = 130)]
 		[DataMember]
-		public Hl7.Fhir.Model.Address Address
-		{
-			get { return _Address; }
-			set { _Address = value; OnPropertyChanged("Address"); }
-		}
-		private Hl7.Fhir.Model.Address _Address;
+		public Hl7.Fhir.Model.Address Address { get; set; }
 
 		/// <summary>
 		/// Image of the person
@@ -140,12 +105,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("photo", Order = 140)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Attachment> Photo
-		{
-			get { return _Photo; }
-			set { _Photo = value; OnPropertyChanged("Photo"); }
-		}
-		private List<Hl7.Fhir.Model.Attachment> _Photo;
+		public List<Hl7.Fhir.Model.Attachment> Photo { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

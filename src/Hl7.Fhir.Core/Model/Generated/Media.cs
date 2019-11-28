@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Media", IsResource = true)]
 	[DataContract]
-	public partial class Media : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Media : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Whether the Media is a photo, video, or audio
@@ -75,12 +75,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("type", InSummary = true, Order = 70)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Media.MediaType> TypeElement
-		{
-			get { return _TypeElement; }
-			set { _TypeElement = value; OnPropertyChanged("TypeElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Media.MediaType> _TypeElement;
+		public Code<Hl7.Fhir.Model.Media.MediaType> TypeElement { get; set; }
 
 		/// <summary>
 		/// photo | video | audio
@@ -97,7 +92,6 @@ namespace Hl7.Fhir.Model
 					TypeElement = null;
 				else
 					TypeElement = new Code<Hl7.Fhir.Model.Media.MediaType>(value);
-				OnPropertyChanged("Type");
 			}
 		}
 
@@ -106,12 +100,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("subtype", InSummary = true, Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Subtype
-		{
-			get { return _Subtype; }
-			set { _Subtype = value; OnPropertyChanged("Subtype"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Subtype;
+		public Hl7.Fhir.Model.CodeableConcept Subtype { get; set; }
 
 		/// <summary>
 		/// Identifier(s) for the image
@@ -119,24 +108,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", InSummary = true, Order = 90)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// When the media was taken/recorded (end)
 		/// </summary>
 		[FhirElement("dateTime", InSummary = true, Order = 100)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirDateTime DateTimeElement
-		{
-			get { return _DateTimeElement; }
-			set { _DateTimeElement = value; OnPropertyChanged("DateTimeElement"); }
-		}
-		private Hl7.Fhir.Model.FhirDateTime _DateTimeElement;
+		public Hl7.Fhir.Model.FhirDateTime DateTimeElement { get; set; }
 
 		/// <summary>
 		/// When the media was taken/recorded (end)
@@ -153,7 +132,6 @@ namespace Hl7.Fhir.Model
 					DateTimeElement = null;
 				else
 					DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
-				OnPropertyChanged("DateTime");
 			}
 		}
 
@@ -163,12 +141,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("subject", InSummary = true, Order = 110)]
 		[References("Patient", "Practitioner", "Group", "Device", "Specimen")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// The person who generated the image
@@ -176,36 +149,21 @@ namespace Hl7.Fhir.Model
 		[FhirElement("operator", InSummary = true, Order = 120)]
 		[References("Practitioner")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Operator
-		{
-			get { return _Operator; }
-			set { _Operator = value; OnPropertyChanged("Operator"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Operator;
+		public Hl7.Fhir.Model.ResourceReference Operator { get; set; }
 
 		/// <summary>
 		/// Imaging view e.g Lateral or Antero-posterior
 		/// </summary>
 		[FhirElement("view", InSummary = true, Order = 130)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept View
-		{
-			get { return _View; }
-			set { _View = value; OnPropertyChanged("View"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _View;
+		public Hl7.Fhir.Model.CodeableConcept View { get; set; }
 
 		/// <summary>
 		/// Name of the device/manufacturer
 		/// </summary>
 		[FhirElement("deviceName", InSummary = true, Order = 140)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString DeviceNameElement
-		{
-			get { return _DeviceNameElement; }
-			set { _DeviceNameElement = value; OnPropertyChanged("DeviceNameElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _DeviceNameElement;
+		public Hl7.Fhir.Model.FhirString DeviceNameElement { get; set; }
 
 		/// <summary>
 		/// Name of the device/manufacturer
@@ -222,7 +180,6 @@ namespace Hl7.Fhir.Model
 					DeviceNameElement = null;
 				else
 					DeviceNameElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("DeviceName");
 			}
 		}
 
@@ -231,12 +188,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("height", InSummary = true, Order = 150)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer HeightElement
-		{
-			get { return _HeightElement; }
-			set { _HeightElement = value; OnPropertyChanged("HeightElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _HeightElement;
+		public Hl7.Fhir.Model.Integer HeightElement { get; set; }
 
 		/// <summary>
 		/// Height of the image in pixels(photo/video)
@@ -253,7 +205,6 @@ namespace Hl7.Fhir.Model
 					HeightElement = null;
 				else
 					HeightElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Height");
 			}
 		}
 
@@ -262,12 +213,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("width", InSummary = true, Order = 160)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer WidthElement
-		{
-			get { return _WidthElement; }
-			set { _WidthElement = value; OnPropertyChanged("WidthElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _WidthElement;
+		public Hl7.Fhir.Model.Integer WidthElement { get; set; }
 
 		/// <summary>
 		/// Width of the image in pixels (photo/video)
@@ -284,7 +230,6 @@ namespace Hl7.Fhir.Model
 					WidthElement = null;
 				else
 					WidthElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Width");
 			}
 		}
 
@@ -293,12 +238,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("frames", InSummary = true, Order = 170)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer FramesElement
-		{
-			get { return _FramesElement; }
-			set { _FramesElement = value; OnPropertyChanged("FramesElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _FramesElement;
+		public Hl7.Fhir.Model.Integer FramesElement { get; set; }
 
 		/// <summary>
 		/// Number of frames if &gt; 1 (photo)
@@ -315,7 +255,6 @@ namespace Hl7.Fhir.Model
 					FramesElement = null;
 				else
 					FramesElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Frames");
 			}
 		}
 
@@ -324,12 +263,7 @@ namespace Hl7.Fhir.Model
 		/// </summary>
 		[FhirElement("length", InSummary = true, Order = 180)]
 		[DataMember]
-		public Hl7.Fhir.Model.Integer LengthElement
-		{
-			get { return _LengthElement; }
-			set { _LengthElement = value; OnPropertyChanged("LengthElement"); }
-		}
-		private Hl7.Fhir.Model.Integer _LengthElement;
+		public Hl7.Fhir.Model.Integer LengthElement { get; set; }
 
 		/// <summary>
 		/// Length in seconds (audio / video)
@@ -346,7 +280,6 @@ namespace Hl7.Fhir.Model
 					LengthElement = null;
 				else
 					LengthElement = new Hl7.Fhir.Model.Integer(value);
-				OnPropertyChanged("Length");
 			}
 		}
 
@@ -356,12 +289,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("content", Order = 190)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.Attachment Content
-		{
-			get { return _Content; }
-			set { _Content = value; OnPropertyChanged("Content"); }
-		}
-		private Hl7.Fhir.Model.Attachment _Content;
+		public Hl7.Fhir.Model.Attachment Content { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

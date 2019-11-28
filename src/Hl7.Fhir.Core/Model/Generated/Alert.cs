@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 	/// </summary>
 	[FhirType("Alert", IsResource = true)]
 	[DataContract]
-	public partial class Alert : Hl7.Fhir.Model.Resource, System.ComponentModel.INotifyPropertyChanged
+	public partial class Alert : Hl7.Fhir.Model.Resource
 	{
 		/// <summary>
 		/// Indicates whether this alert is active and needs to be displayed to a user, or whether it is no longer needed or entered in error
@@ -75,24 +75,14 @@ namespace Hl7.Fhir.Model
 		[FhirElement("identifier", Order = 70)]
 		[Cardinality(Min = 0, Max = -1)]
 		[DataMember]
-		public List<Hl7.Fhir.Model.Identifier> Identifier
-		{
-			get { return _Identifier; }
-			set { _Identifier = value; OnPropertyChanged("Identifier"); }
-		}
-		private List<Hl7.Fhir.Model.Identifier> _Identifier;
+		public List<Hl7.Fhir.Model.Identifier> Identifier { get; set; }
 
 		/// <summary>
 		/// Clinical, administrative, etc.
 		/// </summary>
 		[FhirElement("category", Order = 80)]
 		[DataMember]
-		public Hl7.Fhir.Model.CodeableConcept Category
-		{
-			get { return _Category; }
-			set { _Category = value; OnPropertyChanged("Category"); }
-		}
-		private Hl7.Fhir.Model.CodeableConcept _Category;
+		public Hl7.Fhir.Model.CodeableConcept Category { get; set; }
 
 		/// <summary>
 		/// active | inactive | entered in error
@@ -100,12 +90,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("status", Order = 90)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Code<Hl7.Fhir.Model.Alert.AlertStatus> StatusElement
-		{
-			get { return _StatusElement; }
-			set { _StatusElement = value; OnPropertyChanged("StatusElement"); }
-		}
-		private Code<Hl7.Fhir.Model.Alert.AlertStatus> _StatusElement;
+		public Code<Hl7.Fhir.Model.Alert.AlertStatus> StatusElement { get; set; }
 
 		/// <summary>
 		/// active | inactive | entered in error
@@ -122,7 +107,6 @@ namespace Hl7.Fhir.Model
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Alert.AlertStatus>(value);
-				OnPropertyChanged("Status");
 			}
 		}
 
@@ -133,12 +117,7 @@ namespace Hl7.Fhir.Model
 		[References("Patient")]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Subject
-		{
-			get { return _Subject; }
-			set { _Subject = value; OnPropertyChanged("Subject"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Subject;
+		public Hl7.Fhir.Model.ResourceReference Subject { get; set; }
 
 		/// <summary>
 		/// Alert creator
@@ -146,12 +125,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("author", Order = 110)]
 		[References("Practitioner", "Patient", "Device")]
 		[DataMember]
-		public Hl7.Fhir.Model.ResourceReference Author
-		{
-			get { return _Author; }
-			set { _Author = value; OnPropertyChanged("Author"); }
-		}
-		private Hl7.Fhir.Model.ResourceReference _Author;
+		public Hl7.Fhir.Model.ResourceReference Author { get; set; }
 
 		/// <summary>
 		/// Text of alert
@@ -159,12 +133,7 @@ namespace Hl7.Fhir.Model
 		[FhirElement("note", Order = 120)]
 		[Cardinality(Min = 1, Max = 1)]
 		[DataMember]
-		public Hl7.Fhir.Model.FhirString NoteElement
-		{
-			get { return _NoteElement; }
-			set { _NoteElement = value; OnPropertyChanged("NoteElement"); }
-		}
-		private Hl7.Fhir.Model.FhirString _NoteElement;
+		public Hl7.Fhir.Model.FhirString NoteElement { get; set; }
 
 		/// <summary>
 		/// Text of alert
@@ -181,7 +150,6 @@ namespace Hl7.Fhir.Model
 					NoteElement = null;
 				else
 					NoteElement = new Hl7.Fhir.Model.FhirString(value);
-				OnPropertyChanged("Note");
 			}
 		}
 
