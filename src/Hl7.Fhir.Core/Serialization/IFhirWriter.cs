@@ -25,8 +25,6 @@ namespace Hl7.Fhir.Serialization
 		void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint);
 
 		void WriteStartArray();
-		//void WriteStartArrayElement(string name);
-		//void WriteEndArrayElement();
 		void WriteEndArray();
 
 		bool HasValueElementSupport { get; }

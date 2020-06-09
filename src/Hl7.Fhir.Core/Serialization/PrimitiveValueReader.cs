@@ -6,41 +6,31 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using Hl7.Fhir.Introspection;
 using Hl7.Fhir.Support;
 using System;
 
 namespace Hl7.Fhir.Serialization
 {
-	internal class PrimitiveValueReader
+	internal static class PrimitiveValueReader
 	{
-		private IFhirReader _current;
-		private ModelInspector _inspector;
-
-		public PrimitiveValueReader(IFhirReader data)
+		internal static object Deserialize(IFhirReader reader, Type nativeType)
 		{
-			_current = data;
-			_inspector = SerializationConfig.Inspector;
+			if (nativeType == null)
+				throw Error.ArgumentNull(nameof(nativeType));
+
+			if (reader.IsPrimitive())
+				return read(reader, nativeType);
+
+			throw Error.Format("Trying to read a value, but reader is not at the start of a primitive", reader);
 		}
 
-		internal object Deserialize(Type nativeType)
+		private static object read(IFhirReader reader, Type nativeType)
 		{
-			if (nativeType == null) throw Error.ArgumentNull(nameof(nativeType));
+			object primitiveValue = reader.GetPrimitiveValue();
 
-			if (_current.IsPrimitive())
-				return read(nativeType);
-
-			throw Error.Format("Trying to read a value, but reader is not at the start of a primitive", _current);
-		}
-
-
-		private object read(Type nativeType)
-		{
-			object primitiveValue = _current.GetPrimitiveValue();
-
-			if (nativeType.IsEnum() && primitiveValue.GetType() == typeof(string))
+			if (nativeType.IsEnum && primitiveValue is string)
 			{
-				var enumMapping = _inspector.FindEnumMappingByType(nativeType);
+				var enumMapping = SerializationConfig.Inspector.FindEnumMappingByType(nativeType);
 
 				if (enumMapping != null)
 				{
@@ -48,10 +38,10 @@ namespace Hl7.Fhir.Serialization
 					if (enumMapping.ContainsLiteral(enumLiteral))
 						return enumMapping.ParseLiteral((string)primitiveValue);
 
-					throw Error.Format($"Literal {enumLiteral} is not a valid value for enumeration {enumMapping.Name}", _current);
+					throw Error.Format($"Literal {enumLiteral} is not a valid value for enumeration {enumMapping.Name}", reader);
 				}
 
-				throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, _current);
+				throw Error.Format("Cannot find an enumeration mapping for enum " + nativeType.Name, reader);
 			}
 
 			try
@@ -61,9 +51,8 @@ namespace Hl7.Fhir.Serialization
 			catch (NotSupportedException exc)
 			{
 				// thrown when an unsupported conversion was required
-				throw Error.Format(exc.Message, _current);
+				throw Error.Format(exc.Message, reader);
 			}
 		}
 	}
-
 }

@@ -113,7 +113,6 @@ namespace Hl7.Fhir.Rest
 			ResourceEntry result = ResourceEntry.Create(resource);
 
 			var location = Location ?? ContentLocation ?? ResponseUri.OriginalString;
-
 			if (!string.IsNullOrEmpty(location))
 			{
 				ResourceIdentity reqId = new ResourceIdentity(location);

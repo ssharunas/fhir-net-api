@@ -11,15 +11,13 @@ using Hl7.Fhir.Model;
 
 namespace Hl7.Fhir.Serialization
 {
-	internal static class SerializationConfig
+	public static class SerializationConfig
 	{
 		private static ModelInspector _inspector;
 
-		public const string BINARY_CONTENT_MEMBER_NAME = "content";
-
 		public static bool AcceptUnknownMembers { get; set; }
 
-		public static bool EnforceNoXsiAttributesOnRoot { get; set; }
+		public static bool IsIndentOutput { get; set; }
 
 		internal static ModelInspector Inspector
 		{

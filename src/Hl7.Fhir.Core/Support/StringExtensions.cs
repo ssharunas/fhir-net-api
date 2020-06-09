@@ -27,41 +27,6 @@ namespace Hl7.Fhir.Support
 			return parts;
 		}
 
-		internal static string[] SplitNotEscaped(this string value, char separator)
-		{
-			string word = string.Empty;
-			List<string> result = new List<string>();
-			bool seenEscape = false;
-
-			for (int i = 0; i < value.Length; i++)
-			{
-				if (value[i] == '\\')
-				{
-					seenEscape = true;
-					continue;
-				}
-
-				if (value[i] == separator && !seenEscape)
-				{
-					result.Add(word);
-					word = string.Empty;
-					continue;
-				}
-
-				if (seenEscape)
-				{
-					word += '\\';
-					seenEscape = false;
-				}
-
-				word += value[i];
-			}
-
-			result.Add(word);
-
-			return result.ToArray<string>();
-		}
-
 		internal static Tuple<string, string> SplitLeft(this string text, char separator)
 		{
 			var pos = text.IndexOf(separator);

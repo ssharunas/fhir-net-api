@@ -20,7 +20,7 @@ namespace Hl7.Fhir.Model
 
 			Assert.AreEqual(@"<?xml version=""1.0"" encoding=""utf-8""?>
 <drugInteractionQuery xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns=""http://www.esveikata.lt/erx-fhir"">
-  <patientID>1</patientID>
+  <patientId>1</patientId>
   <qDrug>
     <activeSubstances>vorfarinas</activeSubstances>
     <pharmForm>tabletės</pharmForm>

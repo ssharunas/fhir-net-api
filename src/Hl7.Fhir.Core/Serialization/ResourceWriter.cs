@@ -13,20 +13,18 @@ namespace Hl7.Fhir.Serialization
 {
 	internal class ResourceWriter
 	{
-		private IFhirWriter _writer;
-		private ModelInspector _inspector;
+		private readonly IFhirWriter _writer;
 
 		public ResourceWriter(IFhirWriter writer)
 		{
 			_writer = writer;
-			_inspector = SerializationConfig.Inspector;
 		}
 
 		public void Serialize(object instance, bool summary, bool contained = false)
 		{
 			if (instance == null) throw Error.ArgumentNull(nameof(instance));
 
-			var mapping = _inspector.ImportType(instance.GetType());
+			var mapping = SerializationConfig.Inspector.ImportType(instance.GetType());
 
 			_writer.WriteStartRootObject(mapping.Name, contained);
 

@@ -7,20 +7,17 @@
  */
 
 using Hl7.Fhir.Introspection;
-using Hl7.Fhir.Support;
 using System;
 
 namespace Hl7.Fhir.Serialization
 {
 	internal class PrimitiveValueWriter
 	{
-		private IFhirWriter _current;
-		private ModelInspector _inspector;
+		private readonly IFhirWriter _current;
 
 		public PrimitiveValueWriter(IFhirWriter data)
 		{
 			_current = data;
-			_inspector = SerializationConfig.Inspector;
 		}
 
 		internal void Serialize(object value, XmlSerializationHint hint)
@@ -29,9 +26,9 @@ namespace Hl7.Fhir.Serialization
 			{
 				var nativeType = value.GetType();
 
-				if (nativeType.IsEnum())
+				if (nativeType.IsEnum)
 				{
-					var enumMapping = _inspector.FindEnumMappingByType(nativeType);
+					var enumMapping = SerializationConfig.Inspector.FindEnumMappingByType(nativeType);
 
 					if (enumMapping != null)
 						value = enumMapping.GetLiteral((Enum)value);

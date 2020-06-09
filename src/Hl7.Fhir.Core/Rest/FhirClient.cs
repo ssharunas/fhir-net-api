@@ -6,6 +6,7 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Applicator;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.ESPBI;
 using Hl7.Fhir.Serialization;
@@ -61,7 +62,7 @@ namespace Hl7.Fhir.Rest
 		public string Body => Response.GetBodyAsString();
 	}
 
-	public class FhirClient
+	public class FhirClient : IDisposable
 	{
 		public delegate void BeforeRequestEventHandler(object sender, BeforeRequestEventArgs e);
 		public delegate void AfterResponseEventHandler(object sender, AfterResponseEventArgs e);
@@ -345,6 +346,7 @@ namespace Hl7.Fhir.Rest
 		/// Refreshes the data and metadata for a given ResourceEntry.
 		/// </summary>
 		/// <param name="entry">The entry to refresh. It's id property will be used to fetch the latest version of the Resource.</param>
+		/// <param name="versionSpecific"></param>
 		/// <typeparam name="TResource">The type of resource to refresh</typeparam>
 		/// <returns>A resource entry containing up-to-date data and metadata.</returns>
 		internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
@@ -1007,8 +1009,10 @@ namespace Hl7.Fhir.Rest
 		/// <summary>
 		/// Inspect the HttpWebResponse as it came back from the server 
 		/// </summary>
-		/// <param name="webResponse"></param>
 		/// <param name="fhirResponse"></param>
+		/// <param name="request"></param>
+		/// <param name="webResponse"></param>
+		/// <param name="rawRequest"></param>
 		protected virtual void AfterResponse(FhirResponse fhirResponse, FhirRequest request, WebResponse webResponse, HttpWebRequest rawRequest)
 		{
 			// Default implementation: call event
@@ -1228,7 +1232,7 @@ namespace Hl7.Fhir.Rest
 		}
 
 		/// <summary>
-		/// Returns full composition and it's related documents in one query,
+		/// Returns full composition and it's related documents in one query.
 		/// </summary>
 		/// <param name="location">Location of composition document (ie. Documents/1)</param>
 		public Bundle Document(Uri location)
@@ -1255,6 +1259,173 @@ namespace Hl7.Fhir.Rest
 
 			return doRequest(request, HttpStatusCode.OK, resp => EspbiSerializer.Deserialize<DrugInteraction>(resp.Body), ResourceFormat.Unknown);
 		}
+
+		public bool IsFirstPrescription(ulong patientID, string form, string subtance = null, string strength = null)
+		{
+			var query = new Query("MedicationPrescription/prescriptionInfo", null);
+
+			if (patientID != 0)
+				query.AddParameter("patientId", patientID.ToString());
+
+			if (!string.IsNullOrEmpty(form))
+				query.AddParameter("pharmFormCode", form);
+
+			if (!string.IsNullOrEmpty(subtance))
+				query.AddParameter("activeSubstances", subtance);
+
+			if (!string.IsNullOrEmpty(strength))
+				query.AddParameter("strength", strength);
+
+			RestUrl url = new RestUrl(Endpoint).Query(query);
+
+			FhirRequest req = createFhirRequest(makeAbsolute(url.Uri), "GET");
+
+			return doRequest(req, HttpStatusCode.OK, resp => EspbiSerializer.Deserialize<PrescriptionInfo>(resp.Body)?.IsFirstPrescribing ?? true, ResourceFormat.Unknown);
+		}
+
+		#region Template API
+
+		public TDto Document<TDto>(Template<TDto> template, ulong id)
+		{
+			var request = createFhirRequest(makeAbsolute(new Uri("Documents/" + id, UriKind.Relative)), "GET");
+			request.IsForBundle = true;
+
+			return doRequest(request, HttpStatusCode.OK, resp => template.Read(resp));
+		}
+
+		/// <summary>
+		/// Reads data based on a template.
+		/// </summary>
+		/// <typeparam name="TDto">Type of DTO object</typeparam>
+		/// <param name="template">Template for deserializing received data</param>
+		/// <param name="id">ID of resource to fetch</param>
+		/// <returns>Transforms response into DTO using template.</returns>
+		public TDto Read<TDto>(Template<TDto> template, ulong id)
+		{
+			if (template == null) throw Error.ArgumentNull(nameof(template));
+
+			var request = createFhirRequest(makeAbsolute(template.GetLocation(id)), "GET");
+			return doRequest(request, HttpStatusCode.OK, resp => template.Read(resp));
+		}
+
+		/// <summary>
+		/// Reads data based on a template.
+		/// </summary>
+		/// <typeparam name="TDto">Type of DTO object</typeparam>
+		/// <param name="template">Template for deserializing received data</param>
+		/// <param name="query">Query to fetch the resource. Query must return only one result.</param>
+		/// <returns>Transforms response into DTO using template.</returns>
+		public TDto Read<TDto>(Template<TDto> template, Query query)
+		{
+			if (template == null) throw Error.ArgumentNull(nameof(template));
+			if (query == null) throw Error.ArgumentNull(nameof(query));
+
+			var request = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).Search(query).Uri), "GET");
+			request.IsForBundle = true;
+
+			return doRequest(request, HttpStatusCode.OK, resp => template.Read(resp));
+		}
+
+		/// <summary>
+		/// Reads data based on a template.
+		/// </summary>
+		/// <typeparam name="TDto">Type of DTO object</typeparam>
+		/// <typeparam name="TCriteria">Type of Search query</typeparam>
+		/// <param name="template">Template for deserializing received data</param>
+		/// <param name="query">ID of resource to fetch</param>
+		/// <param name="pageCount">Count of total pages</param>
+		/// <returns>Transforms response into DTO using template.</returns>
+		public IList<TDto> Search<TDto, TCriteria>(SearchableTemplate<TDto, TCriteria> template, TCriteria query, out int pageCount)
+		{
+			if (template == null) throw Error.ArgumentNull(nameof(template));
+
+			pageCount = 0;
+			IList<TDto> result = null;
+
+			var fhirQuery = template.GetSearcQuery(query);
+
+			if (fhirQuery != null)
+			{
+				var request = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).Search(fhirQuery).Uri), "GET");
+				request.IsForBundle = true;
+
+				int totalPages = 0;
+				int totalResults = 0;
+				result = doRequest(request, HttpStatusCode.OK, resp => template.ReadAtomSearch(resp, out totalPages, out totalResults));
+
+				if (fhirQuery.Count == 0)
+					pageCount = totalResults;
+				else
+					pageCount = totalPages;
+			}
+
+			return result;
+		}
+
+		/// <summary>
+		/// Creates a new resource based on data and the template. Create is executed in a transaction.
+		/// </summary>
+		/// <typeparam name="TDto">Type of DTO object</typeparam>
+		/// <param name="template">Template to transform data into a transaction</param>
+		/// <param name="data">Data to sent to the server</param>
+		/// <returns>TemplateResponseReader to read ids from response</returns>
+		public TemplateResponseReader Create<TDto>(Template<TDto> template, TDto data)
+		{
+			if (data == null) throw Error.ArgumentNull(nameof(data));
+			if (template == null) throw Error.ArgumentNull(nameof(template));
+
+			var context = template.GetGetter(data, null);
+			var req = createFhirRequest(Endpoint, "POST");
+			req.SetBody(template.Create(context), PreferredFormat);
+
+			return doRequest(req, HttpStatusCode.OK, resp => template.GetReaderForCreate(resp.GetBodyAsString(), context));
+		}
+
+		public TemplateResponseReader Transaction(UpdateData data)
+		{
+			if (data == null) throw Error.ArgumentNull(nameof(data));
+			return Transaction(data.Bundle, data.Context);
+		}
+
+		public TemplateResponseReader Transaction(Bundle bundle, IDataGetterContext context)
+		{
+			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+
+			var req = createFhirRequest(Endpoint, "POST");
+			req.SetBody(bundle, PreferredFormat);
+
+			return doRequest(req, HttpStatusCode.OK, resp => new TemplateResponseReader(resp.GetBodyAsString(), context));
+		}
+
+		public UpdateData GetForUpdate<TDto>(Template<TDto> template, Query query, Func<TDto, TDto> update)
+		{
+			if (template == null) throw Error.ArgumentNull(nameof(template));
+
+			if (query != null)
+			{
+				var request = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).Search(query).Uri), "GET");
+				request.IsForBundle = true;
+
+				return doRequest(request, HttpStatusCode.OK, resp => template.Update(resp, update));
+			}
+
+			return null;
+		}
+
+		public UpdateData GetForUpdate<TDto>(Template<TDto> template, long id, Func<TDto, TDto> update)
+		{
+			if (template == null) throw Error.ArgumentNull(nameof(template));
+
+			var request = createFhirRequest(makeAbsolute(new Uri("Documents/" + id, UriKind.Relative)), "GET");
+			request.IsForBundle = true;
+
+			return doRequest(request, HttpStatusCode.OK, resp => template.Update(resp, update));
+		}
+
+		#endregion
+
+
+
 
 		protected virtual void Dispose(bool disposing)
 		{

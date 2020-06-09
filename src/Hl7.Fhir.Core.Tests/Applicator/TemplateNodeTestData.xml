@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<entry>
+		<id>666</id>
+		<content type="text/xml">
+			<Observation xmlns="http://hl7.org/fhir">
+				<name>
+					<coding>
+						<system value="http://loinc.org"/>
+						<code value="code1"/>
+						<display value="Some text" />
+					</coding>
+					<coding>
+						<system value="http://loinc.org"/>
+						<code value="code2"/>
+					</coding>
+				</name>
+				<valueString value="This is a remark"/>
+				<appliesDateTime value="2020-01-01"/>
+				<status value="final"/>
+				<reliability value="ok"/>
+				<subject>
+					<reference value="Patient/123"/>
+				</subject>
+			</Observation>
+		</content>
+	</entry>
+</feed>

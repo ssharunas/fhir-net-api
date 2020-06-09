@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Model.ESPBI
 		/// sąveikoti su užklausoje pateikiamais vaistais. Nepateikus, tikrinant vaistų sąveiką, bus tikrinamama
 		/// tik užklausoje pateiktų vaistų tarpusavio sąveika.
 		/// </summary>
-		[XmlElement(ElementName = "patientID")]
+		[XmlElement(ElementName = "patientId")]
 		public ulong? PatientID { get; set; }
 
 		/// <summary>
@@ -46,12 +46,24 @@ namespace Hl7.Fhir.Model.ESPBI
 		/// </summary>
 		public DrugInteractionQuery AddDrug(string activeSubstances, string formName)
 		{
-			if (Drugs == null)
-				Drugs = new List<DrugInteractionQueryItem>();
+			return AddDrug(new DrugInteractionQueryItem(activeSubstances, formName));
+		}
 
-			Drugs.Add(new DrugInteractionQueryItem(activeSubstances, formName));
+		/// <summary>
+		/// Pridėti medžiagą tikrinimui. Sąraše turėtų būti bent 1 medžiaga.
+		/// </summary>
+		public DrugInteractionQuery AddDrug(DrugInteractionQueryItem item)
+		{
+			if (item != null)
+			{
+				if (Drugs == null)
+					Drugs = new List<DrugInteractionQueryItem>();
+
+				Drugs.Add(item);
+			}
 
 			return this;
 		}
+
 	}
 }

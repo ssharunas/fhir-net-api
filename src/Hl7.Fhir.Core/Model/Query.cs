@@ -31,6 +31,7 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Runtime.Serialization;
 
@@ -100,6 +101,13 @@ namespace Hl7.Fhir.Model
 			Parameter = new List<Extension>();
 		}
 
+		/// <summary>
+		/// Constructs a query object.
+		/// </summary>
+		/// <param name="collection">Type of resources to return (Patient, Compositsion, Observation, etc)</param>
+		/// <param name="criteria">List of search parameters.</param>
+		/// <param name="includes">These are used to include resources in the search result that the matched resources refer to</param>
+		/// <param name="count">Limits the number of mathes returned per page in the pages search result.</param>
 		public Query(string collection, IList<string> criteria, IList<string> includes = null, int? count = null)
 			: this()
 		{
@@ -255,7 +263,6 @@ namespace Hl7.Fhir.Model
 
 		/// <summary>
 		/// Returns a modifiable collection of all the parameters that are not reserved parameters.
-		/// These are the parameters that can be parsed as <see cref="Hl7.Fhir.Search.Criterium"/>.
 		/// These include the resource-independent parameters _id, _text, _content, _tag, _profile and _security.
 		/// </summary>
 		[NotMapped]
@@ -271,6 +278,12 @@ namespace Hl7.Fhir.Model
 		/// <param name="key">The name of the parameter, possibly including the modifier</param>
 		/// <param name="value">The string representation of the parameter value</param>
 		/// <returns>this (Query), so you can chain AddParameter calls</returns>
+
+		public Query AddParameter(string key, long value)
+		{
+			return AddParameter(key, value.ToString(CultureInfo.InvariantCulture));
+		}
+
 		public Query AddParameter(string key, string value)
 		{
 			if (key == null) throw Error.ArgumentNull(nameof(key));
@@ -374,7 +387,7 @@ namespace Hl7.Fhir.Model
 			return XmlNs.FHIR_URL_SEARCHPARAM + "#" + paramKey;
 		}
 
-		private const string PARAMETERURLANDFRAGMENT = XmlNs.FHIR_URL_SEARCHPARAM + "#";
+		private const string PARAMETER_URL_AND_FRAGMENT = XmlNs.FHIR_URL_SEARCHPARAM + "#";
 
 		/// <summary>
 		/// Given a Extension containing a FHIR search parameter, returns the
@@ -389,8 +402,8 @@ namespace Hl7.Fhir.Model
 
 			var uriString = paramExt.Url.ToString();
 
-			if (uriString.StartsWith(PARAMETERURLANDFRAGMENT))
-				return uriString.Remove(0, PARAMETERURLANDFRAGMENT.Length);
+			if (uriString.StartsWith(PARAMETER_URL_AND_FRAGMENT))
+				return uriString.Remove(0, PARAMETER_URL_AND_FRAGMENT.Length);
 			else
 				return null;
 		}
@@ -453,7 +466,7 @@ namespace Hl7.Fhir.Model
 			return this;
 		}
 
-		public Query LimitTo(int count)
+		public Query SetCount(int count)
 		{
 			Count = count;
 			return this;
@@ -465,17 +478,9 @@ namespace Hl7.Fhir.Model
 			return this;
 		}
 
-		/// <summary>
-		/// Adds sort parameter
-		/// </summary>
-		public Query AddSort(string key, SortOrder order)
+		public Query SetPage(int page, bool isZeroBased = false)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
-
-			var sort = Sort ?? new List<Tuple<string, SortOrder>>();
-			sort.Add(new Tuple<string, SortOrder>(key, order));
-			Sort = sort;
-
+			Page = page + (isZeroBased ? 0 : 1);
 			return this;
 		}
 

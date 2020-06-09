@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+	<entry>
+		<id>{ID}</id>
+		<content type="text/xml">
+			<x-include source="TemplateNodeTestObservation.xml" root="Observation" scope="Items." x-if=".">
+				<reliability value="ok"/>
+				<subject>
+					<reference value="{PatientID}"/>
+				</subject>
+			</x-include>
+		</content>
+	</entry>
+</feed>

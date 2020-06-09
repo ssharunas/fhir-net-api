@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<feed>
+	<id>123</id>
+	<extension url="http://esveikata.lt/Profile/ltnhr-practitioner#department">
+		<valueResource>
+			<reference value="Organization/123546"/>
+		</valueResource>
+	</extension>
+	<careProvider>
+		<reference value="Doctor/123"/>
+	</careProvider>
+	<careProvider>
+		<reference value="Organisation/123"/>
+	</careProvider>
+
+	<participant>
+		<type>
+			<!-- Classificator: participant-type -->
+			<coding>
+				<system value="http://hl7.org/fhir/participant-type"/>
+				<code value="ADM"/>
+			</coding>
+		</type>
+	</participant>
+	
+</feed>

@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Tests.Search
 			var q = Query
 				.For<Patient>().Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
 				.SummaryOnly().Include("Patient.managingOrganization")
-				.LimitTo(20);
+				.SetCount(20);
 			Assert.AreEqual(1, q.Criteria.Count());
 			Assert.AreEqual("ewout", Query.ExtractParamValue(q.Criteria.First()));
 		}
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Tests.Search
 		public void TestSort()
 		{
 			var q = new Query();
-			q.AddSort("_id", SortOrder.Ascending);
+			q.OrderBy("_id", SortOrder.Ascending);
 
 			Assert.AreEqual(Tuple.Create("_id", SortOrder.Ascending), q.Sort.Single());
 		}
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Tests.Search
 			var q = Query.For<Patient>()
 				.Where("name:exact=ewout").OrderBy("birthDate", SortOrder.Descending)
 				.SummaryOnly().Include("Patient.managingOrganization")
-				.LimitTo(20);
+				.SetCount(20);
 
 			var x = FhirSerializer.SerializeResourceToXml(q);
 			Console.WriteLine(x);
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Tests.Search
 		{
 			var q = new Query()
 				.WithName("mySearch").OrderBy("adsfadf").OrderBy("q", SortOrder.Descending)
-				.LimitTo(10).LimitTo(20).WithName("miSearch").SummaryOnly().SummaryOnly(false);
+				.SetCount(10).SetCount(20).WithName("miSearch").SummaryOnly().SummaryOnly(false);
 
 			Assert.AreEqual("miSearch", q.QueryName);
 			Assert.IsFalse(q.Summary);

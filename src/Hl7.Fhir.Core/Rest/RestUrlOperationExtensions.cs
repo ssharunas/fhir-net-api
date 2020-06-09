@@ -67,11 +67,30 @@ namespace Hl7.Fhir.Rest
 
 			foreach (var par in q.Parameter)
 			{
-				var paramKey = Query.ExtractParamKey(par);
-				if (paramKey != Query.SEARCH_PARAM_TYPE)
+				var paramKey = Model.Query.ExtractParamKey(par);
+				if (paramKey != Model.Query.SEARCH_PARAM_TYPE)
 				{
-					result.AddParam(Query.ExtractParamKey(par),
-								Query.ExtractParamValue(par));
+					result.AddParam(Model.Query.ExtractParamKey(par),
+								Model.Query.ExtractParamValue(par));
+				}
+			}
+
+			return result;
+		}
+
+		public static RestUrl Query(this RestUrl url, Query q)
+		{
+			// The ResourceType is the only parameter that needs special handling,
+			// since the others are all "normal" parameters. Just make sure we don't
+			// include the special _type parameter on the REST url
+			var result = url.AddPath(q.ResourceType);
+
+			foreach (var par in q.Parameter)
+			{
+				var paramKey = Model.Query.ExtractParamKey(par);
+				if (paramKey != Model.Query.SEARCH_PARAM_TYPE)
+				{
+					result.AddParam(Model.Query.ExtractParamKey(par), Model.Query.ExtractParamValue(par));
 				}
 			}
 

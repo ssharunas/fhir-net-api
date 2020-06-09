@@ -16,6 +16,8 @@ namespace Hl7.Fhir.Introspection
 {
 	internal class ClassMapping
 	{
+		private static Dictionary<Type, bool> _definedTypes = new Dictionary<Type, bool>();
+
 		/// <summary>
 		/// Name of the FHIR datatype/resource this class represents
 		/// </summary>
@@ -106,7 +108,7 @@ namespace Hl7.Fhir.Introspection
 			foreach (var property in ReflectionHelper.FindPublicProperties(me.NativeType))
 			{
 				// Skip properties that are marked as NotMapped
-				if (ReflectionHelper.GetAttribute<NotMappedAttribute>(property) != null) continue;
+				if (ReflectionHelper.HasAttribute<NotMappedAttribute>(property)) continue;
 
 				var propMapping = PropertyMapping.Create(property);
 				var propKey = propMapping.Name.ToUpperInvariant();
@@ -153,33 +155,38 @@ namespace Hl7.Fhir.Introspection
 
 		public static bool IsFhirResource(Type type)
 		{
-			var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
+			if (typeof(Resource).IsAssignableFrom(type))
+				return true;
 
-			return typeof(Resource).IsAssignableFrom(type)
-					|| (attr != null && attr.IsResource);
+			return ReflectionHelper.GetAttribute<FhirTypeAttribute>(type)?.IsResource ?? false;
 		}
 
 		public static bool IsMappableType(Type type)
 		{
-			var hasAttribute = type.IsDefined(typeof(FhirTypeAttribute), false);
-
-			if (!hasAttribute) return false;
-
-			if (type.IsAbstract)
-				throw Error.Argument(nameof(type), $"Type {type.Name} is marked as a mappable tpe, but is abstract so cannot be used directly to represent a FHIR datatype");
-
-			// Open generic type definitions can never appear as roots of objects
-			// to parse. In instances, they will either have been used in closed type definitions
-			// or as the closed type of a property. However, the FhirType attribute propagates to
-			// these closed definitions, so we will allow having this attribute on an open generic,
-			// it's not going to be directly mappable however.
-			if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+			if (!_definedTypes.TryGetValue(type, out bool result))
 			{
-				Message.Debug("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
-				return false;
+				if (!type.IsDefined(typeof(FhirTypeAttribute), false))
+					result = false;
+				else if (type.IsAbstract)
+					throw Error.Argument(nameof(type), $"Type {type.Name} is marked as a mappable type, but is abstract so cannot be used directly to represent a FHIR datatype");
+				else if (ReflectionHelper.IsOpenGenericTypeDefinition(type))
+				{
+					// Open generic type definitions can never appear as roots of objects
+					// to parse. In instances, they will either have been used in closed type definitions
+					// or as the closed type of a property. However, the FhirType attribute propagates to
+					// these closed definitions, so we will allow having this attribute on an open generic,
+					// it's not going to be directly mappable however.
+
+					Message.Debug("Type {0} is marked as a FhirType and is an open generic type, which cannot be used directly to represent a FHIR datatype", type.Name);
+					result = false;
+				}
+				else
+					result = true;
+
+				_definedTypes[type] = result;
 			}
 
-			return true;
+			return result;
 		}
 	}
 }

@@ -17,8 +17,9 @@ namespace Hl7.Fhir.Serialization
 {
 	internal class XmlFhirWriter : IFhirWriter
 	{
+		private readonly XmlWriter _xw;
+		private readonly Stack<string> _memberNameStack = new Stack<string>();
 		private string _currentMemberName = null;
-		private XmlWriter _xw;
 
 		public XmlFhirWriter(XmlWriter xwriter)
 		{
@@ -49,7 +50,6 @@ namespace Hl7.Fhir.Serialization
 
 		}
 
-		private Stack<string> _memberNameStack = new Stack<string>();
 
 		public void WriteStartComplexContent()
 		{

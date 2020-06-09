@@ -132,8 +132,10 @@ namespace Hl7.Fhir.Serialization
 			{
 				if (entry[JATOM_DELETED] != null)
 				{
-					result = new DeletedEntry();
-					result.Id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
+					result = new DeletedEntry
+					{
+						Id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID])
+					};
 				}
 				else
 				{
@@ -188,9 +190,8 @@ namespace Hl7.Fhir.Serialization
 		private static UriLinkList getLinks(JToken token)
 		{
 			var result = new UriLinkList();
-			var links = token as JArray;
 
-			if (links != null)
+			if (token is JArray links)
 			{
 				foreach (var link in links)
 				{
@@ -210,7 +211,7 @@ namespace Hl7.Fhir.Serialization
 
 		private static Resource getContents(JToken token)
 		{
-			return (Resource)(new ResourceReader(new JsonDomFhirReader(token)).Deserialize());
+			return (Resource)(ResourceReader.Deserialize(new JsonDomFhirReader(token)));
 		}
 	}
 }

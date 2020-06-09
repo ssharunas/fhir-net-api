@@ -7,38 +7,21 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization.Xml;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.RegularExpressions;
 using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
 	internal class FhirParser
 	{
-		public static bool ProbeIsXml(string data)
+		private static T Parse<T>(IFhirReader reader) where T : class
 		{
-			Regex xml = new Regex("^<[^>]+>");
-
-			return xml.IsMatch(data.TrimStart());
-		}
-
-		public static bool ProbeIsJson(string data)
-		{
-			return data.TrimStart().StartsWith("{");
-		}
-
-		internal static object Parse(IFhirReader reader)
-		{
-			return new ResourceReader(reader).Deserialize();
-		}
-
-		internal static T Parse<T>(IFhirReader reader) where T : class
-		{
-			var result = Parse(reader);
+			var result = ResourceReader.Deserialize(reader);
 
 			if (result is T)
 				return (T)result;
@@ -46,42 +29,42 @@ namespace Hl7.Fhir.Serialization
 				throw Error.Format($"Parsed data is not of given type {typeof(T).Name}", reader);
 		}
 
-		internal static object Parse(XmlReader reader)
+		//private static object Parse(XmlReader reader)
+		//{
+		//	return Parse(new XmlDomFhirReader(reader));
+		//}
+
+		private static T Parse<T>(XmlReader reader) where T : class
 		{
-			return Parse(new XmlDomFhirReader(reader));
+			return Parse<T>(new XmlDomFhirReader(FhirXmlNode.Create(reader)));
 		}
 
-		internal static T Parse<T>(XmlReader reader) where T : class
-		{
-			return Parse<T>(new XmlDomFhirReader(reader));
-		}
+		//private static object Parse(JsonReader reader)
+		//{
+		//	return Parse(new JsonDomFhirReader(reader));
+		//}
 
-		internal static object Parse(JsonReader reader)
-		{
-			return Parse(new JsonDomFhirReader(reader));
-		}
-
-		internal static T Parse<T>(JsonReader reader) where T : class
+		private static T Parse<T>(JsonReader reader) where T : class
 		{
 			return Parse<T>(new JsonDomFhirReader(reader));
 		}
 
-		internal static object ParseFromXml(string xml)
-		{
-			return Parse(XmlReaderFromString(xml));
-		}
+		//internal static object ParseFromXml(string xml)
+		//{
+		//	return Parse(XmlReaderFromString(xml));
+		//}
 
-		internal static T ParseFromXml<T>(string xml) where T : class
+		private static T ParseFromXml<T>(string xml) where T : class
 		{
 			return Parse<T>(XmlReaderFromString(xml));
 		}
 
-		internal static object ParseFromJson(string json)
-		{
-			return Parse(JsonReaderFromString(json));
-		}
+		//internal static object ParseFromJson(string json)
+		//{
+		//	return Parse(JsonReaderFromString(json));
+		//}
 
-		internal static T ParseFromJson<T>(string json) where T : class
+		private static T ParseFromJson<T>(string json) where T : class
 		{
 			return Parse<T>(JsonReaderFromString(json));
 		}
@@ -111,20 +94,20 @@ namespace Hl7.Fhir.Serialization
 			return Parse<Resource>(reader);
 		}
 
-		public static Resource ParseResource(JsonReader reader)
-		{
-			return Parse<Resource>(reader);
-		}
+		//public static Resource ParseResource(JsonReader reader)
+		//{
+		//	return Parse<Resource>(reader);
+		//}
 
-		public static TagList ParseTagList(XmlReader reader)
-		{
-			return Parse<TagList>(reader);
-		}
+		//public static TagList ParseTagList(XmlReader reader)
+		//{
+		//	return Parse<TagList>(reader);
+		//}
 
-		public static TagList ParseTagList(JsonReader reader)
-		{
-			return Parse<TagList>(reader);
-		}
+		//public static TagList ParseTagList(JsonReader reader)
+		//{
+		//	return Parse<TagList>(reader);
+		//}
 
 		public static BundleEntry ParseBundleEntry(JsonReader reader)
 		{
@@ -136,10 +119,10 @@ namespace Hl7.Fhir.Serialization
 			return BundleXmlParser.LoadEntry(reader);
 		}
 
-		public static BundleEntry ParseBundleEntryFromJson(string json)
-		{
-			return ParseBundleEntry(JsonReaderFromString(json));
-		}
+		//public static BundleEntry ParseBundleEntryFromJson(string json)
+		//{
+		//	return ParseBundleEntry(JsonReaderFromString(json));
+		//}
 
 		public static BundleEntry ParseBundleEntryFromXml(string xml)
 		{
@@ -166,7 +149,7 @@ namespace Hl7.Fhir.Serialization
 			return ParseBundle(XmlReaderFromString(xml));
 		}
 
-		public static Query ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<String, String>> parameters)
+		public static Query ParseQueryFromUriParameters(string resource, IEnumerable<Tuple<string, string>> parameters)
 		{
 			return QueryParser.Load(resource, parameters);
 		}

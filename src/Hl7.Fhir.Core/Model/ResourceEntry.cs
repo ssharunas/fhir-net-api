@@ -110,10 +110,7 @@ namespace Hl7.Fhir.Model
 
 			if (!isResource) throw Error.Argument(nameof(type), "Must be a subtype of Resource");
 
-			Type typedREType = typeof(ResourceEntry<>).MakeGenericType(type);
-			var result = (ResourceEntry)Activator.CreateInstance(typedREType);
-
-			return result;
+			return (ResourceEntry)ReflectionHelper.CreateInstance(ReflectionHelper.GetGenericResourceType(type));
 		}
 
 		/// <summary>

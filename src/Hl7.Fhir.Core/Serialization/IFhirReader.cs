@@ -7,16 +7,16 @@
  */
 
 using Hl7.Fhir.Support;
-using System;
 using System.Collections.Generic;
+using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
-	internal interface IFhirReader : IPostitionInfo
+	internal interface IFhirReader : IPositionInfo
 	{
 		string GetResourceTypeName(bool nested);
 
-		IEnumerable<Tuple<string, IFhirReader>> GetMembers();
+		IEnumerable<MemberInfo> GetMembers();
 
 		IEnumerable<IFhirReader> GetArrayElements();
 
@@ -39,9 +39,22 @@ namespace Hl7.Fhir.Serialization
 	{
 		public static bool IsPrimitive(this IFhirReader reader)
 		{
-			return reader.CurrentToken == TokenType.Boolean ||
+			return reader.CurrentToken == TokenType.String ||
 					reader.CurrentToken == TokenType.Number ||
-					reader.CurrentToken == TokenType.String;
+					reader.CurrentToken == TokenType.Boolean;
 		}
 	}
+
+	internal class MemberInfo
+	{
+		public MemberInfo(string memberName, IFhirReader reader)
+		{
+			MemberName = memberName;
+			Reader = reader;
+		}
+
+		public string MemberName { get; }
+		public IFhirReader Reader { get; }
+	}
+
 }

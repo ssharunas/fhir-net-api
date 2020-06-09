@@ -42,20 +42,8 @@ namespace Hl7.Fhir.Tests.Serialization
             var xml = "<Patient xmlns='http://hl7.org/fhir' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' " +
                             "xsi:schemaLocation='http://hl7.org/fhir ../../schema/fhir-all.xsd'></Patient>";
 
-            SerializationConfig.EnforceNoXsiAttributesOnRoot = false;
             var result = FhirParser.ParseResourceFromXml(xml);
             Assert.IsNotNull(result);
-
-            SerializationConfig.EnforceNoXsiAttributesOnRoot = true;
-
-            try
-            {
-                FhirParser.ParseResourceFromXml(xml);
-                Assert.Fail("Should have failed on xsi: elements in root");
-            }
-            catch (FormatException)
-            {
-            }
         }
 
 

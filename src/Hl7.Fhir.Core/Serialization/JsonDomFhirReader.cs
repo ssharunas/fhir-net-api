@@ -34,9 +34,9 @@ namespace Hl7.Fhir.Serialization
 			{
 				Current = JObject.Load(reader);
 			}
-			catch (Exception e)
+			catch (Exception ex)
 			{
-				throw Error.Format("Cannot parse json: " + e.Message);
+				throw Error.Format("Cannot parse json: " + ex.Message, innerException: ex);
 			}
 		}
 
@@ -44,15 +44,22 @@ namespace Hl7.Fhir.Serialization
 		{
 			get
 			{
-				if (Current is JObject) return TokenType.Object;
-				if (Current is JArray) return TokenType.Array;
-				if (Current is JValue)
+				if (Current is JObject)
+					return TokenType.Object;
+
+				if (Current is JArray)
+					return TokenType.Array;
+
+				if (Current is JValue val)
 				{
-					var val = (JValue)Current;
-					if (val.Type == JTokenType.Integer || val.Type == JTokenType.Float) return TokenType.Number;
-					if (val.Type == JTokenType.Boolean) return TokenType.Boolean;
-					if (val.Type == JTokenType.String) return TokenType.String;
-					if (val.Type == JTokenType.Null) return TokenType.Null;
+					if (val.Type == JTokenType.Integer || val.Type == JTokenType.Float)
+						return TokenType.Number;
+					if (val.Type == JTokenType.Boolean)
+						return TokenType.Boolean;
+					if (val.Type == JTokenType.String)
+						return TokenType.String;
+					if (val.Type == JTokenType.Null)
+						return TokenType.Null;
 
 					throw Error.Format($"Encountered a json primitive of type {val.Type} while only string, boolean and number are allowed", this);
 				}
@@ -99,7 +106,7 @@ namespace Hl7.Fhir.Serialization
 		//done in an abstraction around the json or xml readers.
 
 
-		public IEnumerable<Tuple<string, IFhirReader>> GetMembers()
+		public IEnumerable<MemberInfo> GetMembers()
 		{
 			var complex = Current as JObject;
 
@@ -110,7 +117,7 @@ namespace Hl7.Fhir.Serialization
 			{
 				var memberName = member.Key;
 
-				if (memberName != JsonDomFhirReader.RESOURCETYPE_MEMBER_NAME)
+				if (memberName != RESOURCETYPE_MEMBER_NAME)
 				{
 					IFhirReader nestedReader = new JsonDomFhirReader(member.Value);
 
@@ -119,7 +126,7 @@ namespace Hl7.Fhir.Serialization
 					// over two separate json objects
 					if (memberName.StartsWith("_")) memberName = memberName.Remove(0, 1);
 
-					yield return Tuple.Create(memberName, nestedReader);
+					yield return new MemberInfo(memberName, nestedReader);
 				}
 			}
 		}
@@ -137,7 +144,7 @@ namespace Hl7.Fhir.Serialization
 			}
 		}
 
-		public static IPostitionInfo GetLineInfo(JToken obj)
+		public static IPositionInfo GetLineInfo(JToken obj)
 		{
 			return new JsonDomFhirReader(obj);
 		}

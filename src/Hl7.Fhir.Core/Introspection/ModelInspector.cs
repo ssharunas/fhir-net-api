@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Introspection
 	internal class ModelInspector
 	{
 		// Index for easy lookup of resources, key is Tuple<upper resourcename, upper profile>
-		private Dictionary<Tuple<string, string>, ClassMapping> _resourceClasses = new Dictionary<Tuple<string, string>, ClassMapping>();
+		private Dictionary<string, ClassMapping> _resourceClasses = new Dictionary<string, ClassMapping>();
 
 		// Index for easy lookup of datatypes, key is upper typenanme
 		private Dictionary<string, ClassMapping> _dataTypeClasses = new Dictionary<string, ClassMapping>();
@@ -28,20 +28,25 @@ namespace Hl7.Fhir.Introspection
 		// Index for easy lookup of enummappings, key is Type
 		private Dictionary<Type, EnumMapping> _enumMappingsByType = new Dictionary<Type, EnumMapping>();
 
+		private object lockObject = new object();
+
 		public void Import(Assembly assembly)
 		{
-			if (assembly == null) throw Error.ArgumentNull(nameof(assembly));
+			if (assembly == null)
+				throw Error.ArgumentNull(nameof(assembly));
 
-			if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null) return;
+			if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null)
+				return;
 
 			Type[] exportedTypes = assembly.GetExportedTypes();
 
 			foreach (Type type in exportedTypes)
 			{
 				// Don't import types marked with [NotMapped]
-				if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null) continue;
+				if (Attribute.GetCustomAttribute(type, typeof(NotMappedAttribute)) != null)
+					continue;
 
-				if (type.IsEnum())
+				if (type.IsEnum)
 				{
 					// Map an enumeration
 					if (EnumMapping.IsMappableEnum(type))
@@ -60,9 +65,6 @@ namespace Hl7.Fhir.Introspection
 			}
 		}
 
-
-		private object lockObject = new object();
-
 		internal EnumMapping ImportEnum(Type type)
 		{
 			EnumMapping mapping = null;
@@ -73,17 +75,16 @@ namespace Hl7.Fhir.Introspection
 			lock (lockObject)
 			{
 				mapping = FindEnumMappingByType(type);
-				if (mapping != null) return mapping;
 
-				mapping = EnumMapping.Create(type);
-				_enumMappingsByType[type] = mapping;
-
-				Message.Debug($"Created Enum mapping for newly encountered type {type.Name}");
+				if (mapping == null)
+				{
+					mapping = EnumMapping.Create(type);
+					_enumMappingsByType[type] = mapping;
+				}
 			}
 
 			return mapping;
 		}
-
 
 		internal ClassMapping ImportType(Type type)
 		{
@@ -95,40 +96,44 @@ namespace Hl7.Fhir.Introspection
 			lock (lockObject)
 			{
 				mapping = FindClassMappingByType(type);
-				if (mapping != null) return mapping;
-
-				mapping = ClassMapping.Create(type);
-				_classMappingsByType[type] = mapping;
-				Message.Debug("Created Class mapping for newly encountered type {0} (FHIR type {1})", type.Name, mapping.Name);
-
-				if (mapping.IsResource)
+				if (mapping == null)
 				{
-					var key = buildResourceKey(mapping.Name, mapping.Profile);
-					_resourceClasses[key] = mapping;
-				}
-				else
-				{
-					var key = mapping.Name.ToUpperInvariant();
-					_dataTypeClasses[key] = mapping;
+					mapping = ClassMapping.Create(type);
+					_classMappingsByType[type] = mapping;
+
+					if (mapping.IsResource)
+					{
+						var key = buildResourceKey(mapping.Name, mapping.Profile);
+						_resourceClasses[key] = mapping;
+					}
+					else
+					{
+						var key = mapping.Name.ToUpperInvariant();
+						_dataTypeClasses[key] = mapping;
+					}
 				}
 			}
 
 			return mapping;
 		}
 
-
-		private static Tuple<string, string> buildResourceKey(string name, string profile)
+		private static string buildResourceKey(string name, string profile)
 		{
-			var normalizedName = name.ToUpperInvariant();
-			var normalizedProfile = profile != null ? profile.ToUpperInvariant() : null;
+			name = name.ToUpperInvariant();
 
-			return Tuple.Create(normalizedName, normalizedProfile);
+			if (!string.IsNullOrEmpty(profile))
+				name = string.Concat(",", profile.ToUpperInvariant());
+
+			return name;
 		}
 
 		public EnumMapping FindEnumMappingByType(Type type)
 		{
-			if (type == null) throw Error.ArgumentNull(nameof(type));
-			if (!type.IsEnum()) throw Error.Argument(nameof(type), $"Type {type.Name} is not an enumeration");
+			if (type == null)
+				throw Error.ArgumentNull(nameof(type));
+
+			if (!type.IsEnum)
+				throw Error.Argument(nameof(type), $"Type {type.Name} is not an enumeration");
 
 			// Try finding a resource with the specified profile first
 			if (_enumMappingsByType.TryGetValue(type, out EnumMapping entry))
@@ -140,12 +145,16 @@ namespace Hl7.Fhir.Introspection
 		public ClassMapping FindClassMappingForResource(string name, string profile = null)
 		{
 			var key = buildResourceKey(name, profile);
-			var noProfileKey = buildResourceKey(name, null);
 
-			// Try finding a resource with the specified profile first
-			// If that didn't work, try again with no profile
-			if (_resourceClasses.TryGetValue(key, out ClassMapping entry) || _resourceClasses.TryGetValue(noProfileKey, out entry))
+			if (_resourceClasses.TryGetValue(key, out ClassMapping entry))
 				return entry;
+
+			if (!string.IsNullOrEmpty(profile))
+			{
+				key = buildResourceKey(name, null);
+				if (_resourceClasses.TryGetValue(key, out entry))
+					return entry;
+			}
 
 			return null;
 		}

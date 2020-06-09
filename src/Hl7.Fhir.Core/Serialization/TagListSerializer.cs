@@ -45,8 +45,10 @@ namespace Hl7.Fhir.Serialization
 
 			if (!string.IsNullOrEmpty(tag.Term))
 				result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_TERM, tag.Term));
+
 			if (!string.IsNullOrEmpty(tag.Label))
 				result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_LABEL, tag.Label));
+
 			result.Add(new XAttribute(BundleXmlParser.XATOM_CAT_SCHEME, tag.Scheme.ToString()));
 
 			return result;

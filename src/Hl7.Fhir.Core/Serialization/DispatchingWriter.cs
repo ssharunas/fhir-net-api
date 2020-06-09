@@ -33,7 +33,8 @@ namespace Hl7.Fhir.Serialization
 			if (prop.IsCollection)
 			{
 				var elements = instance as IList;
-				if (elements == null) throw Error.Argument(nameof(elements), "Can only write repeating elements from a type implementing IList");
+				if (elements == null)
+					throw Error.Argument(nameof(elements), "Can only write repeating elements from a type implementing IList");
 
 				_current.WriteStartArray();
 
@@ -56,8 +57,7 @@ namespace Hl7.Fhir.Serialization
 			// just serialize the primitive to the writer
 			if (prop.IsPrimitive)
 			{
-				var writer = new PrimitiveValueWriter(_current);
-				writer.Serialize(instance, prop.SerializationHint);
+				new PrimitiveValueWriter(_current).Serialize(instance, prop.SerializationHint);
 				return;
 			}
 

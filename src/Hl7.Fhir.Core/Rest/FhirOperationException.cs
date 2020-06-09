@@ -7,10 +7,13 @@
  */
 
 using Hl7.Fhir.Model;
+using Newtonsoft.Json;
 using System;
+using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Rest
 {
+	[Serializable]
 	public class FhirOperationException : Exception
 	{
 		public FhirOperationException(string message) : base(message) { }
@@ -35,6 +38,23 @@ namespace Hl7.Fhir.Rest
 				if (!string.IsNullOrEmpty(body))
 					Outcome = OperationOutcome.ForMessage(body);
 			}
+		}
+
+		protected FhirOperationException(SerializationInfo info, StreamingContext context)
+			: base(info, context)
+		{
+			Outcome = JsonConvert.DeserializeObject<OperationOutcome>(info.GetString(nameof(Outcome)));
+			Request = JsonConvert.DeserializeObject<FhirRequest>(info.GetString(nameof(Request)));
+			Response = JsonConvert.DeserializeObject<FhirResponse>(info.GetString(nameof(Response)));
+		}
+
+		public override void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue(nameof(Outcome), JsonConvert.SerializeObject(Outcome));
+			info.AddValue(nameof(Request), JsonConvert.SerializeObject(Request));
+			info.AddValue(nameof(Response), JsonConvert.SerializeObject(Response));
+
+			base.GetObjectData(info, context);
 		}
 
 		public OperationOutcome Outcome { get; }

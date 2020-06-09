@@ -11,21 +11,12 @@ using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Xml.Linq;
+using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
-	internal class SerializationUtil
+	internal static class SerializationUtil
 	{
-		//public const string RESTPARAM_FORMAT = "_format";
-		//public const string SEARCH_PARAM_ID = "_id";
-		//public const string SEARCH_PARAM_COUNT = "_count";
-		//public const string SEARCH_PARAM_INCLUDE = "_include";
-		//public const string HISTORY_PARAM_SINCE = "_since";
-		//public const string SEARCH_PARAM_SORT = "_sort";
-		//public const string HISTORY_PARAM_COUNT = SEARCH_PARAM_COUNT;
-
-
 		public static ResourceEntry CreateResourceEntryFromId(Uri id)
 		{
 			// Figure out the resource type from the id
@@ -33,66 +24,35 @@ namespace Hl7.Fhir.Serialization
 
 			if (rid.Collection != null)
 			{
-				var inspector = SerializationConfig.Inspector;
-				var classMapping = inspector.FindClassMappingForResource(rid.Collection);
+				var classMapping = SerializationConfig.Inspector.FindClassMappingForResource(rid.Collection);
 				return ResourceEntry.Create(classMapping.NativeType);
 			}
 
 			throw Error.Format($"BundleEntry's id '{id}' does not specify the type of resource: cannot determine Resource type in parser.");
 		}
 
-		public static bool UriHasValue(Uri u)
+		public static bool HasUriValue(Uri uri)
 		{
-			return u != null && !string.IsNullOrEmpty(u.ToString());
-		}
-
-		private static string xValue(XObject elem)
-		{
-			if (elem == null) return null;
-
-			if (elem is XElement)
-				return (elem as XElement).Value;
-			if (elem is XAttribute)
-				return (elem as XAttribute).Value;
-
-			return null;
-		}
-
-		public static string StringValueOrNull(XObject elem)
-		{
-			string value = xValue(elem);
-
-			return string.IsNullOrEmpty(value) ? null : value;
-		}
-
-		public static int? IntValueOrNull(XObject elem)
-		{
-			string value = xValue(elem);
-
-			return string.IsNullOrEmpty(value) ? (int?)null : int.Parse(value);
-		}
-
-		public static Uri UriValueOrNull(XObject elem)
-		{
-			string value = StringValueOrNull(elem);
-
-			return string.IsNullOrEmpty(value) ? null : new Uri(value, UriKind.RelativeOrAbsolute);
+			return !string.IsNullOrEmpty(uri?.ToString());
 		}
 
 		public static Uri UriValueOrNull(JToken attr)
 		{
-			if (attr == null) return null;
+			if (attr == null)
+				return null;
 
 			var value = attr.Value<string>();
 
 			return string.IsNullOrEmpty(value) ? null : new Uri(value, UriKind.RelativeOrAbsolute);
 		}
 
-		public static DateTimeOffset? InstantOrNull(XObject elem)
+		public static IPositionInfo GetLineInfo(this XmlReader reader)
 		{
-			string value = StringValueOrNull(elem);
+			var lineInfo = (IXmlLineInfo)reader;
+			if (lineInfo?.HasLineInfo() ?? false)
+				return new PostitionInfo(lineInfo.LineNumber, lineInfo.LinePosition);
 
-			return string.IsNullOrEmpty(value) ? (DateTimeOffset?)null : PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(value);
+			return null;
 		}
 	}
 }

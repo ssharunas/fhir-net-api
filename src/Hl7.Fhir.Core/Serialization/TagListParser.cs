@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization.Xml;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Xml.Linq;
@@ -15,17 +16,17 @@ namespace Hl7.Fhir.Serialization
 {
 	internal static class TagListParser
 	{
-		internal static IList<Tag> ParseTags(IEnumerable<XElement> tags)
+		internal static IList<Tag> ParseTags(IList<IFhirXmlNode> tags)
 		{
 			var result = new List<Tag>();
 
-			if (tags != null)
+			if (tags?.Count > 0)
 			{
 				foreach (var tag in tags)
 				{
-					var scheme = SerializationUtil.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_SCHEME));
-					var term = SerializationUtil.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_TERM));
-					var label = SerializationUtil.StringValueOrNull(tag.Attribute(BundleXmlParser.XATOM_CAT_LABEL));
+					var scheme = tag.Attribute(BundleXmlParser.XATOM_CAT_SCHEME)?.ValueAsString;
+					var term = tag.Attribute(BundleXmlParser.XATOM_CAT_TERM)?.ValueAsString;
+					var label = tag.Attribute(BundleXmlParser.XATOM_CAT_LABEL)?.ValueAsString;
 
 					result.Add(new Tag(term, scheme, label));
 				}

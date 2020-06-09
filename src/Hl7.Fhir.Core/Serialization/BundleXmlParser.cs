@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization.Xml;
 using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,9 @@ namespace Hl7.Fhir.Serialization
 		public const string XATOM_LINK = "link";
 		public const string XATOM_LINK_REL = "rel";
 		public const string XATOM_LINK_HREF = "href";
-		public const string XATOM_CONTENT_BINARY = "Binary";
+		//public const string XATOM_CONTENT_BINARY = "Binary";
 		public const string XATOM_CONTENT_TYPE = "type";
-		public const string XATOM_CONTENT_BINARY_TYPE = "contentType";
+		//public const string XATOM_CONTENT_BINARY_TYPE = "contentType";
 		public const string XATOM_TITLE = "title";
 		public const string XATOM_UPDATED = "updated";
 		public const string XATOM_ID = "id";
@@ -46,43 +47,44 @@ namespace Hl7.Fhir.Serialization
 
 		internal static Bundle Load(XmlReader reader)
 		{
-			XElement feed;
-
-			var settings = new XmlReaderSettings();
-			settings.IgnoreComments = true;
-			settings.IgnoreProcessingInstructions = true;
-			settings.IgnoreWhitespace = true;
+			IFhirXmlNode feed;
+			var settings = new XmlReaderSettings()
+			{
+				IgnoreComments = true,
+				IgnoreProcessingInstructions = true,
+				IgnoreWhitespace = true,
+			};
 
 			try
 			{
-				var internalReader = XmlReader.Create(reader, settings);
-				feed = XDocument.Load(internalReader, LoadOptions.SetLineInfo).Root;
-				if (feed.Name != XmlNs.XATOM + "feed")
+				feed = FhirXmlNode.Create(XmlReader.Create(reader, settings));  // new FhirXmlNode(XmlReader.Create(reader, settings));
+				if (!feed.Is(XmlNs.ATOM, "feed"))
 					throw Error.Format("Input data is not an Atom feed");
 			}
-			catch (Exception exc)
+			catch (Exception ex)
 			{
-				throw Error.Format("Exception while loading feed: " + exc.Message);
+				throw Error.Format("Exception while loading feed: " + ex.Message, null, ex);
 			}
 
+			return Load(feed);
+		}
+
+		internal static Bundle Load(IFhirXmlNode feed)
+		{
 			Bundle result;
 
 			try
 			{
 				result = new Bundle()
 				{
-					Title = SerializationUtil.StringValueOrNull(feed.Element(XmlNs.XATOM + XATOM_TITLE)),
-					LastUpdated = SerializationUtil.InstantOrNull(feed.Element(XmlNs.XATOM + XATOM_UPDATED)),
-					Id = SerializationUtil.UriValueOrNull(feed.Element(XmlNs.XATOM + XATOM_ID)),
-					Links = getLinks(feed.Elements(XmlNs.XATOM + XATOM_LINK)),
-					Tags = TagListParser.ParseTags(feed.Elements(XmlNs.XATOM + XATOM_CATEGORY)),
-					AuthorName = feed.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
-							SerializationUtil.StringValueOrNull(feed.Element(XmlNs.XATOM + XATOM_AUTHOR)
-								.Element(XmlNs.XATOM + XATOM_AUTH_NAME)),
-					AuthorUri = feed.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
-							SerializationUtil.StringValueOrNull(feed.Element(XmlNs.XATOM + XATOM_AUTHOR)
-								.Element(XmlNs.XATOM + XATOM_AUTH_URI)),
-					TotalResults = SerializationUtil.IntValueOrNull(feed.Element(XmlNs.XOPENSEARCH + XATOM_TOTALRESULTS))
+					Links = getLinks(feed.Elements(XmlNs.ATOM, XATOM_LINK)),
+					Id = feed.Element(XmlNs.ATOM, XATOM_ID)?.ValueAsUri,
+					Title = feed.Element(XmlNs.ATOM, XATOM_TITLE)?.ValueAsString,
+					LastUpdated = feed.Element(XmlNs.ATOM, XATOM_UPDATED)?.ValueAsInstant,
+					AuthorUri = feed.Element(XmlNs.ATOM, XATOM_AUTHOR)?.Element(XmlNs.ATOM, XATOM_AUTH_URI)?.ValueAsString,
+					AuthorName = feed.Element(XmlNs.ATOM, XATOM_AUTHOR)?.Element(XmlNs.ATOM, XATOM_AUTH_NAME)?.ValueAsString,
+					TotalResults = feed.Element(XmlNs.OPENSEARCH, XATOM_TOTALRESULTS)?.ValueAsInt,
+					Tags = TagListParser.ParseTags(feed.Elements(XmlNs.ATOM, XATOM_CATEGORY)),
 				};
 			}
 			catch (Exception exc)
@@ -90,26 +92,19 @@ namespace Hl7.Fhir.Serialization
 				throw Error.Format("Exception while parsing xml feed attributes: " + exc.Message);
 			}
 
-			result.Entries = loadEntries(feed.Elements().Where(elem =>
-						(elem.Name == XmlNs.XATOM + XATOM_ENTRY ||
-						 elem.Name == XmlNs.XATOMPUB_TOMBSTONES + XATOM_DELETED_ENTRY)), result);
+			result.Entries = loadEntries(feed.Elements().Where(elem => elem.Is(XmlNs.ATOM, XATOM_ENTRY) || elem.Is(XmlNs.ATOMPUB_TOMBSTONES, XATOM_DELETED_ENTRY)));
 
 			return result;
 		}
 
-		internal static Bundle Load(string xml)
-		{
-			return Load(FhirParser.XmlReaderFromString(xml));
-		}
-
-		private static IList<BundleEntry> loadEntries(IEnumerable<XElement> entries, Bundle parent)
+		private static IList<BundleEntry> loadEntries(IEnumerable<IFhirXmlNode> entries)
 		{
 			var result = new List<BundleEntry>();
 
 			foreach (var entry in entries)
 			{
-				var loaded = loadEntry(entry);
-				if (entry != null) result.Add(loaded);
+				if (entry != null)
+					result.Add(loadEntry(entry));
 			}
 
 			return result;
@@ -122,35 +117,37 @@ namespace Hl7.Fhir.Serialization
 
 		internal static BundleEntry LoadEntry(XmlReader reader)
 		{
-			XElement entry;
+			IFhirXmlNode entry;
 
 			try
 			{
-				entry = XDocument.Load(reader).Root;
+				entry = FhirXmlNode.Create(reader);
 			}
-			catch (Exception exc)
+			catch (Exception ex)
 			{
-				throw Error.Format("Exception while loading entry: " + exc.Message);
+				throw Error.Format("Exception while loading entry: " + ex.Message, innerException: ex);
 			}
 
 			return loadEntry(entry);
 		}
 
-		private static BundleEntry loadEntry(XElement entry)
+		private static BundleEntry loadEntry(IFhirXmlNode entry)
 		{
 			BundleEntry result;
 
-			try
+			//try
 			{
-				if (entry.Name == XmlNs.XATOMPUB_TOMBSTONES + XATOM_DELETED_ENTRY)
+				if (entry.Is(XmlNs.ATOMPUB_TOMBSTONES, XATOM_DELETED_ENTRY))
 				{
-					result = new DeletedEntry();
-					result.Id = SerializationUtil.UriValueOrNull(entry.Attribute(XATOM_DELETED_REF));
+					result = new DeletedEntry()
+					{
+						Id = entry.Attribute(XATOM_DELETED_REF)?.ValueAsUri,
+					};
 				}
 				else
 				{
-					XElement content = entry.Element(XmlNs.XATOM + XATOM_CONTENT);
-					var id = SerializationUtil.UriValueOrNull(entry.Element(XmlNs.XATOM + XATOM_ID));
+					var content = entry.Element(XmlNs.ATOM, XATOM_CONTENT);
+					var id = entry.Element(XmlNs.ATOM, XATOM_ID)?.ValueAsUri;
 
 					if (content != null)
 					{
@@ -158,7 +155,7 @@ namespace Hl7.Fhir.Serialization
 						if (parsed != null)
 							result = ResourceEntry.Create(parsed);
 						else
-							throw Error.Format("BundleEntry has a content element without content", XmlDomFhirReader.GetLineInfo(content));
+							throw Error.Format("BundleEntry has a content element without content", content.Position);
 					}
 					else
 					{
@@ -168,73 +165,69 @@ namespace Hl7.Fhir.Serialization
 					result.Id = id;
 				}
 
-				result.Links = getLinks(entry.Elements(XmlNs.XATOM + XATOM_LINK));
-				result.Tags = TagListParser.ParseTags(entry.Elements(XmlNs.XATOM + XATOM_CATEGORY));
+				result.Links = getLinks(entry.Elements(XmlNs.ATOM, XATOM_LINK));
+				result.Tags = TagListParser.ParseTags(entry.Elements(XmlNs.ATOM, XATOM_CATEGORY));
 
 				if (result is DeletedEntry)
 				{
-					((DeletedEntry)result).When = SerializationUtil.InstantOrNull(entry.Attribute(XATOM_DELETED_WHEN));
+					((DeletedEntry)result).When = entry.Attribute(XATOM_DELETED_WHEN)?.ValueAsInstant;
 				}
 				else
 				{
 					ResourceEntry re = (ResourceEntry)result;
-					re.Title = SerializationUtil.StringValueOrNull(entry.Element(XmlNs.XATOM + XATOM_TITLE));
-					re.LastUpdated = SerializationUtil.InstantOrNull(entry.Element(XmlNs.XATOM + XATOM_UPDATED));
-					re.Published = SerializationUtil.InstantOrNull(entry.Element(XmlNs.XATOM + XATOM_PUBLISHED));
-					re.AuthorName = entry.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
-								SerializationUtil.StringValueOrNull(entry.Element(XmlNs.XATOM + XATOM_AUTHOR)
-									.Element(XmlNs.XATOM + XATOM_AUTH_NAME));
-					re.AuthorUri = entry.Elements(XmlNs.XATOM + XATOM_AUTHOR).Count() == 0 ? null :
-								SerializationUtil.StringValueOrNull(entry.Element(XmlNs.XATOM + XATOM_AUTHOR)
-									.Element(XmlNs.XATOM + XATOM_AUTH_URI));
+					re.Title = entry.Element(XmlNs.ATOM, XATOM_TITLE)?.ValueAsString;
+					re.LastUpdated = entry.Element(XmlNs.ATOM, XATOM_UPDATED)?.ValueAsInstant;
+					re.Published = entry.Element(XmlNs.ATOM, XATOM_PUBLISHED)?.ValueAsInstant;
+					re.AuthorName = entry.Element(XmlNs.ATOM, XATOM_AUTHOR)?.Element(XmlNs.ATOM, XATOM_AUTH_NAME)?.ValueAsString;
+					re.AuthorUri = entry.Element(XmlNs.ATOM, XATOM_AUTHOR)?.Element(XmlNs.ATOM, XATOM_AUTH_URI)?.ValueAsString;
 				}
 			}
-			catch (Exception exc)
-			{
-				throw Error.Format("Exception while reading entry: " + exc.Message, XmlDomFhirReader.GetLineInfo(entry));
-			}
+			//catch (Exception exc)
+			//{
+			//	throw Error.Format("Exception while reading entry: " + exc.Message, entry.Position);
+			//}
 
 			return result;
 		}
 
-		private static UriLinkList getLinks(IEnumerable<XElement> links)
+		private static UriLinkList getLinks(IEnumerable<IFhirXmlNode> links)
 		{
 			return new UriLinkList(
 				links.Select(el => new UriLinkEntry
 				{
-					Rel = SerializationUtil.StringValueOrNull(el.Attribute(XATOM_LINK_REL)),
-					Uri = SerializationUtil.UriValueOrNull(el.Attribute(XATOM_LINK_HREF))
+					Rel = el.Attribute(XATOM_LINK_REL)?.ValueAsString,
+					Uri = el.Attribute(XATOM_LINK_HREF)?.ValueAsUri,
 				}));
 		}
 
-		private static Resource getContents(XElement content)
+		private static Resource getContents(IFhirXmlNode content)
 		{
-			string contentType = SerializationUtil.StringValueOrNull(content.Attribute(XATOM_CONTENT_TYPE));
+			string contentType = content.Attribute(XATOM_CONTENT_TYPE)?.ValueAsString;
 
 			if (contentType != "text/xml" && contentType != "application/xml+fhir")
 			{
-				throw Error.Format("Bundle Entry should have contents of type 'text/xml'", XmlDomFhirReader.GetLineInfo(content));
+				throw Error.Format("Bundle Entry should have contents of type 'text/xml'", content.Position);
 			}
 
 #if DEBUG
 			if (contentType == "application/xml+fhir")
 			{
-				Message.Debug("Bundle Entry should have contents of type 'text/xml'", XmlDomFhirReader.GetLineInfo(content));
+				Message.Debug("Bundle Entry should have contents of type 'text/xml'", content.Position);
 			}
 #endif
 
-			XElement resource = null;
+			IFhirXmlNode resource = null;
 
 			try
 			{
 				resource = content.Elements().Single();
 			}
-			catch
+			catch (Exception ex)
 			{
-				throw Error.Format("Entry <content> node should have a single child: the resource", XmlDomFhirReader.GetLineInfo(content));
+				throw Error.Format("Entry <content> node should have a single child: the resource", content.Position, ex);
 			}
 
-			return (Resource)(new ResourceReader(new XmlDomFhirReader(resource)).Deserialize());
+			return (Resource)(ResourceReader.Deserialize(new XmlDomFhirReader(resource)));
 		}
 	}
 }

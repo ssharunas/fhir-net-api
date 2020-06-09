@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Serialization
 {
 	internal class JsonDomFhirWriter : IFhirWriter
 	{
-		private JsonWriter jw;
+		private readonly JsonWriter jw;
 		private JToken _current = null;
 
 		internal JsonDomFhirWriter() { }

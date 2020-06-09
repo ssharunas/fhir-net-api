@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Serialization
 
 			if (!string.IsNullOrWhiteSpace(bundle.Title))
 				result.Add(new JProperty(BundleXmlParser.XATOM_TITLE, bundle.Title));
-			if (SerializationUtil.UriHasValue(bundle.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, bundle.Id));
+			if (SerializationUtil.HasUriValue(bundle.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, bundle.Id));
 			if (bundle.LastUpdated != null)
 				result.Add(new JProperty(BundleXmlParser.XATOM_UPDATED, bundle.LastUpdated));
 
@@ -65,7 +65,7 @@ namespace Hl7.Fhir.Serialization
 			{
 				ResourceEntry re = (ResourceEntry)entry;
 				if (!string.IsNullOrEmpty(re.Title)) result.Add(new JProperty(BundleXmlParser.XATOM_TITLE, re.Title));
-				if (SerializationUtil.UriHasValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
+				if (SerializationUtil.HasUriValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
 
 				if (re.LastUpdated != null) result.Add(new JProperty(BundleXmlParser.XATOM_UPDATED, re.LastUpdated));
 				if (re.Published != null) result.Add(new JProperty(BundleXmlParser.XATOM_PUBLISHED, re.Published));
@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Serialization
 			{
 				DeletedEntry de = (DeletedEntry)entry;
 				if (de.When != null) result.Add(new JProperty(BundleJsonParser.JATOM_DELETED, de.When));
-				if (SerializationUtil.UriHasValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
+				if (SerializationUtil.HasUriValue(entry.Id)) result.Add(new JProperty(BundleXmlParser.XATOM_ID, entry.Id.ToString()));
 			}
 
 			if (entry.Links != null && entry.Links.Count() > 0)

@@ -6,81 +6,53 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
+using Hl7.Fhir.Model;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Hl7.Fhir.Support
 {
 	internal static class ReflectionHelper
 	{
+		private static readonly Dictionary<Type, Type> _listTypes = new Dictionary<Type, Type>();
+		private static readonly Dictionary<Type, Type> _resourceTypes = new Dictionary<Type, Type>();
+		private static readonly Dictionary<Type, Func<object>> _cachedTypes = new Dictionary<Type, Func<object>>();
+
 		/// <summary>
 		/// Gets an attribute on an enum field value
 		/// </summary>
 		/// <typeparam name="T">The type of the attribute you want to retrieve</typeparam>
 		/// <param name="enumVal">The enum value</param>
 		/// <returns>The attribute of type T that exists on the enum value</returns>
-		public static T GetAttributeOnEnum<T>(this Enum enumVal) where T : System.Attribute
+		public static T GetAttributeOnEnum<T>(this Enum enumVal) where T : Attribute
 		{
-			var type = enumVal.GetType();
-			var memInfo = type.GetMember(enumVal.ToString())[0];
+			var memInfo = enumVal.GetType().GetMember(enumVal.ToString())[0];
 			var attributes = memInfo.GetCustomAttributes(typeof(T), false);
 			return (attributes.Count() > 0) ? (T)attributes.First() : null;
 		}
 
-
 		public static IEnumerable<PropertyInfo> FindPublicProperties(Type t)
 		{
-			if (t == null) throw Error.ArgumentNull(nameof(t));
+			if (t == null)
+				throw Error.ArgumentNull(nameof(t));
+
 			return t.GetProperties(BindingFlags.Instance | BindingFlags.Public);
-		}
-
-		public static PropertyInfo FindPublicProperty(Type t, string name)
-		{
-			if (t == null) throw Error.ArgumentNull(nameof(t));
-			if (name == null) throw Error.ArgumentNull(nameof(name));
-
-			return t.GetProperty(name, BindingFlags.Instance | BindingFlags.Public);
-		}
-
-		internal static MethodInfo FindPublicStaticMethod(Type t, string name, params Type[] arguments)
-		{
-			if (t == null) throw Error.ArgumentNull(nameof(t));
-			if (name == null) throw Error.ArgumentNull(nameof(name));
-
-			return t.GetMethod(name, arguments);
-		}
-
-		internal static bool HasDefaultPublicConstructor(Type t)
-		{
-			if (t == null) throw Error.ArgumentNull(nameof(t));
-
-			if (t.IsValueType)
-				return true;
-
-			return (GetDefaultPublicConstructor(t) != null);
-		}
-
-		internal static ConstructorInfo GetDefaultPublicConstructor(Type t)
-		{
-			BindingFlags bindingFlags = BindingFlags.Instance | BindingFlags.Public;
-
-			return t.GetConstructors(bindingFlags).SingleOrDefault(c => !c.GetParameters().Any());
 		}
 
 		public static bool IsNullableType(Type type)
 		{
-			if (type == null) throw Error.ArgumentNull(nameof(type));
+			if (type == null)
+				throw Error.ArgumentNull(nameof(type));
 
 			return (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>));
 		}
 
 		public static Type GetNullableArgument(Type type)
 		{
-			if (type == null) throw Error.ArgumentNull(nameof(type));
-
 			if (IsNullableType(type))
 				return type.GetGenericArguments()[0];
 
@@ -93,26 +65,41 @@ namespace Hl7.Fhir.Support
 		}
 
 
-		public static IList CreateGenericList(Type itemType)
+		public static IList CreateGenericList(Type elementType)
 		{
-			return (IList)Activator.CreateInstance(typeof(List<>).MakeGenericType(itemType));
+			return (IList)CreateInstance(GetGenericListType(elementType));
 		}
 
+		public static Type GetGenericListType(Type elementType)
+		{
+			if (!_listTypes.TryGetValue(elementType, out Type result))
+			{
+				result = typeof(List<>).MakeGenericType(elementType);
+				_listTypes[elementType] = result;
+			}
+
+			return result;
+		}
+
+		public static Type GetGenericResourceType(Type elementType)
+		{
+			if (!_resourceTypes.TryGetValue(elementType, out Type result))
+			{
+				result = typeof(ResourceEntry<>).MakeGenericType(elementType);
+				_resourceTypes[elementType] = result;
+			}
+
+			return result;
+		}
 
 		public static bool IsClosedGenericType(Type type)
 		{
 			return type.IsGenericType && !type.ContainsGenericParameters;
 		}
 
-
 		public static bool IsOpenGenericTypeDefinition(Type type)
 		{
 			return type.IsGenericTypeDefinition;
-		}
-
-		public static bool IsConstructedFromGenericTypeDefinition(Type type, Type genericBase)
-		{
-			return type.GetGenericTypeDefinition() == genericBase;
 		}
 
 		/// <summary>
@@ -124,13 +111,12 @@ namespace Hl7.Fhir.Support
 		{
 			if (type == null) throw Error.ArgumentNull(nameof(type));
 
-			Type genericListType;
 
 			if (type.IsArray)
 			{
 				return type.GetElementType();
 			}
-			else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out genericListType))
+			else if (ImplementsGenericDefinition(type, typeof(ICollection<>), out Type genericListType))
 			{
 				//EK: If I look at ImplementsGenericDefinition, I don't think this can actually occur.
 				//if (genericListType.IsGenericTypeDefinition)
@@ -155,24 +141,23 @@ namespace Hl7.Fhir.Support
 
 		public static bool ImplementsGenericDefinition(Type type, Type genericInterfaceDefinition, out Type implementingType)
 		{
-			if (type == null) throw Error.ArgumentNull(nameof(type));
-			if (genericInterfaceDefinition == null) throw Error.ArgumentNull(nameof(genericInterfaceDefinition));
+			if (type == null)
+				throw Error.ArgumentNull(nameof(type));
+
+			if (genericInterfaceDefinition == null)
+				throw Error.ArgumentNull(nameof(genericInterfaceDefinition));
 
 			if (!genericInterfaceDefinition.IsInterface || !genericInterfaceDefinition.IsGenericTypeDefinition)
 				throw Error.Argument(nameof(genericInterfaceDefinition), $"'{genericInterfaceDefinition.Name}' is not a generic interface definition.");
 
-			if (type.IsInterface)
+			if (type.IsInterface && type.IsGenericType)
 			{
+				Type interfaceDefinition = type.GetGenericTypeDefinition();
 
-				if (type.IsGenericType)
+				if (genericInterfaceDefinition == interfaceDefinition)
 				{
-					Type interfaceDefinition = type.GetGenericTypeDefinition();
-
-					if (genericInterfaceDefinition == interfaceDefinition)
-					{
-						implementingType = type;
-						return true;
-					}
+					implementingType = type;
+					return true;
 				}
 			}
 
@@ -194,38 +179,55 @@ namespace Hl7.Fhir.Support
 			return false;
 		}
 
-		#region << Extension methods to make the handling of PCL easier >>
-
-		internal static bool IsEnum(this Type t)
-		{
-			return t.IsEnum;
-		}
-
-		#endregion
-
 		internal static T GetAttribute<T>(MemberInfo member) where T : Attribute
 		{
 			return (T)Attribute.GetCustomAttribute(member, typeof(T));
 		}
 
-		internal static ICollection<T> GetAttributes<T>(MemberInfo member) where T : Attribute
+		internal static bool HasAttribute<T>(MemberInfo member) where T : Attribute
 		{
-			return (ICollection<T>)Attribute.GetCustomAttributes(member, typeof(T)).Select(a => (T)a);
+			return Attribute.IsDefined(member, typeof(T));
 		}
-
 
 		internal static IEnumerable<FieldInfo> FindEnumFields(Type t)
 		{
-			if (t == null) throw Error.ArgumentNull(nameof(t));
+			if (t == null)
+				throw Error.ArgumentNull(nameof(t));
 
 			return t.GetFields(BindingFlags.Public | BindingFlags.Static);
 		}
 
 		internal static bool IsArray(object value)
 		{
-			if (value == null) throw Error.ArgumentNull(nameof(value));
+			if (value == null)
+				throw Error.ArgumentNull(nameof(value));
 
 			return value.GetType().IsArray;
+		}
+
+		internal static object CreateInstance(Type type)
+		{
+			//Activator.CreateInstance(type);
+
+			if (!_cachedTypes.TryGetValue(type, out Func<object> creator))
+			{
+				var constructor = type.GetConstructor(Array.Empty<Type>());
+
+				if (constructor == null)
+				{
+					creator = () => Activator.CreateInstance(type);
+				}
+				else
+				{
+					Expression expr = Expression.New(constructor);
+					LambdaExpression lambda = Expression.Lambda(typeof(Func<object>), expr);
+					creator = (Func<object>)lambda.Compile();
+				}
+
+				_cachedTypes[type] = creator;
+			}
+
+			return creator();
 		}
 	}
 }

@@ -36,7 +36,6 @@ namespace Hl7.Fhir.Support
 		/// Creates an <see cref="ArgumentException"/> with the provided properties.
 		/// </summary>
 		/// <param name="message">A composite format string explaining the reason for the exception.</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
 		internal static ArgumentException Argument(string message)
 		{
@@ -48,7 +47,6 @@ namespace Hl7.Fhir.Support
 		/// </summary>
 		/// <param name="parameterName">The name of the parameter that caused the current exception.</param>
 		/// <param name="message">A composite format string explaining the reason for the exception.</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
 		internal static ArgumentException Argument(string parameterName, string message)
 		{
@@ -70,7 +68,6 @@ namespace Hl7.Fhir.Support
 		/// </summary>
 		/// <param name="parameterName">The name of the parameter that caused the current exception.</param>
 		/// <param name="message">A composite format string explaining the reason for the exception.</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
 		internal static ArgumentNullException ArgumentNull(string parameterName, string message)
 		{
@@ -81,18 +78,18 @@ namespace Hl7.Fhir.Support
 		/// Creates an <see cref="InvalidOperationException"/>.
 		/// </summary>
 		/// <param name="message">A composite format string explaining the reason for the exception.</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+		/// <param name="ex">inner exeption</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
-		internal static InvalidOperationException InvalidOperation(string message)
+		internal static InvalidOperationException InvalidOperation(string message, Exception ex = null)
 		{
-			return new InvalidOperationException(message);
+			return new InvalidOperationException(message, ex);
 		}
 
 		/// <summary>
 		/// Creates an <see cref="NotSupportedException"/>.
 		/// </summary>
 		/// <param name="message">A composite format string explaining the reason for the exception.</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+		/// <param name="innerException">An inner exception.</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
 		internal static NotSupportedException NotSupported(string message, Exception innerException = null)
 		{
@@ -104,21 +101,20 @@ namespace Hl7.Fhir.Support
 		/// </summary>
 		/// <param name="message">A composite format string explaining the reason for the exception.</param>
 		/// <param name="pos">Optional line position information for the message</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+		/// <param name="innerException">An inner exception.</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
-		internal static FormatException Format(string message, IPostitionInfo pos = null)
+		internal static FormatException Format(string message, IPositionInfo pos = null, Exception innerException = null)
 		{
 			if (pos != null)
 				message = $"At line {pos.LineNumber}, pos {pos.LinePosition}: {message}";
 
-			return new FormatException(message);
+			return new FormatException(message, innerException);
 		}
 
 		/// <summary>
 		/// Creates an <see cref="NotImplementedException"/>.
 		/// </summary>
-		/// <param name="messageFormat">A composite format string explaining the reason for the exception.</param>
-		/// <param name="messageArgs">An object array that contains zero or more objects to format.</param>
+		/// <param name="message">A composite format string explaining the reason for the exception.</param>
 		/// <returns>The logged <see cref="Exception"/>.</returns>
 		internal static NotImplementedException NotImplemented(string message)
 		{

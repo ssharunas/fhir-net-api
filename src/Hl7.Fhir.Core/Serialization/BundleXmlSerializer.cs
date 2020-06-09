@@ -18,25 +18,33 @@ namespace Hl7.Fhir.Serialization
 	{
 		public static void WriteTo(Bundle bundle, XmlWriter writer, bool summary = false)
 		{
-			if (bundle == null) Error.Argument(nameof(bundle), "Bundle cannot be null");
+			if (bundle == null)
+				Error.ArgumentNull(nameof(bundle), "Bundle cannot be null");
 
 			var root = new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_FEED);
 
-			if (!string.IsNullOrWhiteSpace(bundle.Title)) root.Add(xmlCreateTitle(bundle.Title));
-			if (SerializationUtil.UriHasValue(bundle.Id)) root.Add(xmlCreateId(bundle.Id));
-			if (bundle.LastUpdated != null) root.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_UPDATED, bundle.LastUpdated));
+			if (!string.IsNullOrWhiteSpace(bundle.Title))
+				root.Add(xmlCreateTitle(bundle.Title));
+
+			if (SerializationUtil.HasUriValue(bundle.Id))
+				root.Add(xmlCreateId(bundle.Id));
+
+			if (bundle.LastUpdated != null)
+				root.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_UPDATED, bundle.LastUpdated));
 
 			if (!string.IsNullOrWhiteSpace(bundle.AuthorName))
 				root.Add(xmlCreateAuthor(bundle.AuthorName, bundle.AuthorUri));
-			if (bundle.TotalResults != null) root.Add(new XElement(XmlNs.XOPENSEARCH + BundleXmlParser.XATOM_TOTALRESULTS, bundle.TotalResults));
 
-			if (bundle.Links != null)
+			if (bundle.TotalResults != null)
+				root.Add(new XElement(XmlNs.XOPENSEARCH + BundleXmlParser.XATOM_TOTALRESULTS, bundle.TotalResults));
+
+			if (bundle.Links?.Count > 0)
 			{
 				foreach (var l in bundle.Links)
 					root.Add(xmlCreateLink(l.Rel, l.Uri));
 			}
 
-			if (bundle.Tags != null)
+			if (bundle.Tags?.Count > 0)
 			{
 				foreach (var tag in bundle.Tags)
 					root.Add(TagListSerializer.CreateTagCategoryPropertyXml(tag));
@@ -50,12 +58,10 @@ namespace Hl7.Fhir.Serialization
 
 		public static void WriteTo(BundleEntry entry, XmlWriter writer, bool summary = false)
 		{
-			if (entry == null) Error.Argument(nameof(entry), "Entry cannot be null");
+			if (entry == null)
+				Error.ArgumentNull(nameof(entry), "Entry cannot be null");
 
-			var result = createEntry(entry, summary);
-
-			var doc = new XDocument(result);
-			doc.WriteTo(writer);
+			new XDocument(createEntry(entry, summary)).WriteTo(writer);
 		}
 
 		private static XElement createEntry(BundleEntry entry, bool summary)
@@ -67,11 +73,17 @@ namespace Hl7.Fhir.Serialization
 				ResourceEntry re = (ResourceEntry)entry;
 				result = new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_ENTRY);
 
-				if (!string.IsNullOrEmpty(re.Title)) result.Add(xmlCreateTitle(re.Title));
-				if (SerializationUtil.UriHasValue(entry.Id)) result.Add(xmlCreateId(entry.Id));
+				if (!string.IsNullOrEmpty(re.Title))
+					result.Add(xmlCreateTitle(re.Title));
 
-				if (re.LastUpdated != null) result.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_UPDATED, re.LastUpdated.Value));
-				if (re.Published != null) result.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_PUBLISHED, re.Published.Value));
+				if (SerializationUtil.HasUriValue(entry.Id))
+					result.Add(xmlCreateId(entry.Id));
+
+				if (re.LastUpdated != null)
+					result.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_UPDATED, re.LastUpdated.Value));
+
+				if (re.Published != null)
+					result.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_PUBLISHED, re.Published.Value));
 
 				if (!string.IsNullOrWhiteSpace(re.AuthorName))
 					result.Add(xmlCreateAuthor(re.AuthorName, re.AuthorUri));
@@ -79,27 +91,38 @@ namespace Hl7.Fhir.Serialization
 			else
 			{
 				result = new XElement(XmlNs.XATOMPUB_TOMBSTONES + BundleXmlParser.XATOM_DELETED_ENTRY);
-				if (SerializationUtil.UriHasValue(entry.Id))
+
+				if (SerializationUtil.HasUriValue(entry.Id))
 					result.Add(new XAttribute(BundleXmlParser.XATOM_DELETED_REF, entry.Id.ToString()));
+
 				if (((DeletedEntry)entry).When != null)
 					result.Add(new XAttribute(BundleXmlParser.XATOM_DELETED_WHEN, ((DeletedEntry)entry).When));
 			}
 
 			if (entry.Links != null)
-				foreach (var l in entry.Links)
-					if (l.Uri != null) result.Add(xmlCreateLink(l.Rel, l.Uri));
+			{
+				foreach (var link in entry.Links)
+				{
+					if (link.Uri != null)
+						result.Add(xmlCreateLink(link.Rel, link.Uri));
+				}
+			}
 
 			if (entry.Tags != null)
+			{
 				foreach (var tag in entry.Tags)
 					result.Add(TagListSerializer.CreateTagCategoryPropertyXml(tag));
+			}
 
 			if (entry is ResourceEntry)
 			{
 				ResourceEntry re = (ResourceEntry)entry;
 				if (re.Resource != null)
+				{
 					result.Add(new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_CONTENT,
 						new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "text/xml"),
 						getContentAsXElement(re.Resource, summary)));
+				}
 
 				// Note: this is a read-only property, so it is serialized but never parsed
 				if (entry.Summary != null)
@@ -117,9 +140,7 @@ namespace Hl7.Fhir.Serialization
 
 		private static object getContentAsXElement(Resource resource, bool summary)
 		{
-			var xml = FhirSerializer.SerializeResourceToXml(resource, summary);
-
-			return XElement.Parse(xml);
+			return XElement.Parse(FhirSerializer.SerializeResourceToXml(resource, summary));
 		}
 
 		private static XElement xmlCreateId(Uri id)
@@ -129,14 +150,12 @@ namespace Hl7.Fhir.Serialization
 
 		private static XElement xmlCreateLink(string rel, Uri uri)
 		{
-			return new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_LINK,
-						new XAttribute(BundleXmlParser.XATOM_LINK_REL, rel), new XAttribute(BundleXmlParser.XATOM_LINK_HREF, uri.ToString()));
+			return new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_LINK, new XAttribute(BundleXmlParser.XATOM_LINK_REL, rel), new XAttribute(BundleXmlParser.XATOM_LINK_HREF, uri.ToString()));
 		}
 
 		private static XElement xmlCreateTitle(string title)
 		{
-			return new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_TITLE,
-				new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "text"), title);
+			return new XElement(XmlNs.XATOM + BundleXmlParser.XATOM_TITLE, new XAttribute(BundleXmlParser.XATOM_CONTENT_TYPE, "text"), title);
 		}
 
 		private static XElement xmlCreateAuthor(string name, string uri)

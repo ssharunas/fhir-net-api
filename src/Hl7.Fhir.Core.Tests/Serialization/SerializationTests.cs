@@ -39,22 +39,6 @@ namespace Hl7.Fhir.Tests.Serialization
         }
 
         [TestMethod]
-        public void TestProbing()
-        {
-            Assert.IsFalse(FhirParser.ProbeIsJson("this is nothing"));
-            Assert.IsFalse(FhirParser.ProbeIsJson("  crap { "));
-            Assert.IsFalse(FhirParser.ProbeIsJson("<element/>"));
-            Assert.IsTrue(FhirParser.ProbeIsJson("   { x:5 }"));
-
-            Assert.IsFalse(FhirParser.ProbeIsXml("this is nothing"));
-            Assert.IsFalse(FhirParser.ProbeIsXml("  crap { "));
-            Assert.IsFalse(FhirParser.ProbeIsXml(" < crap  "));
-            Assert.IsFalse(FhirParser.ProbeIsXml("   { x:5 }"));
-            Assert.IsTrue(FhirParser.ProbeIsXml("   <element/>"));
-            Assert.IsTrue(FhirParser.ProbeIsXml("<?xml />"));
-        }
-
-        [TestMethod]
         public void TestSummary()
         {
             var p = new Patient();

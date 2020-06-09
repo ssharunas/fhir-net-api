@@ -8,7 +8,7 @@
 
 namespace Hl7.Fhir.Support
 {
-	internal interface IPostitionInfo
+	public interface IPositionInfo
 	{
 		int LineNumber { get; }
 		int LinePosition { get; }

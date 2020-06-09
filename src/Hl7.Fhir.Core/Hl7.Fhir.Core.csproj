@@ -15,26 +15,27 @@
     <RestorePackages>true</RestorePackages>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'DebugNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\Net40\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <Prefer32Bit>false</Prefer32Bit>
-    <DocumentationFile>bin\Debug\Net40\Hl7.Fhir.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Debug\Hl7.Fhir.Core.xml</DocumentationFile>
+    <NoWarn>CS1591</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'ReleaseNet40|AnyCPU' ">
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\Release\Net40\</OutputPath>
+    <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>RELEASE;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Net40\Hl7.Fhir.Core.xml</DocumentationFile>
+    <DocumentationFile>bin\Release\Hl7.Fhir.Core.xml</DocumentationFile>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup>
@@ -54,6 +55,50 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Applicator\IDataContext.cs" />
+    <Compile Include="Applicator\IPathable.cs" />
+    <Compile Include="Applicator\ITemplate.cs" />
+    <Compile Include="Applicator\Navigation\NavigatorAttribute.cs" />
+    <Compile Include="Applicator\TemplateResponseReader.cs" />
+    <Compile Include="Applicator\Navigation\ElementNavigator.cs" />
+    <Compile Include="Applicator\Navigation\FhirObjectNavigatorBase.cs" />
+    <Compile Include="Applicator\Navigation\IWrapper.cs" />
+    <Compile Include="Applicator\Navigation\Navigator.cs" />
+    <Compile Include="Applicator\Navigation\NullNavigator.cs" />
+    <Compile Include="Applicator\Navigation\SimpleNavigator.cs" />
+    <Compile Include="Applicator\Navigation\ResourceEntryNavigator.cs" />
+    <Compile Include="Applicator\Navigation\BundleNavigator.cs" />
+    <Compile Include="Applicator\Navigation\HardcodedNavigator.cs" />
+    <Compile Include="Applicator\Navigation\NavigatorBase.cs" />
+    <Compile Include="Applicator\Navigation\ResourceNavigator.cs" />
+    <Compile Include="Applicator\SearchableTemplate.cs" />
+    <Compile Include="Applicator\Template.cs" />
+    <Compile Include="Applicator\IDataGetterContext.cs" />
+    <Compile Include="Applicator\IDataSetterContext.cs" />
+    <Compile Include="Applicator\UpdateData.cs" />
+    <Compile Include="Applicator\Xml\TemplateNode.cs" />
+    <Compile Include="Applicator\Xml\TemplateNodeAttribute.cs" />
+    <Compile Include="Applicator\Xml\TemplateNodeAutoIdGenerator.cs" />
+    <Compile Include="Applicator\Xml\TemplateNodeValidationResult.cs" />
+    <Compile Include="Applicator\XPath\FhirXPathBuilder.cs" />
+    <Compile Include="Applicator\XPath\IXpathBuilder.cs" />
+    <Compile Include="Applicator\XPath\Navigation\IXPathNavigator.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathNodeText.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathFunction.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XpathNavigatorNode.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathAttribute.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathElement.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathOperatorNode.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathParent.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathRoot.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathSelf.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathValueNode.cs" />
+    <Compile Include="Applicator\XPath\XPath.cs" />
+    <Compile Include="Applicator\XPath\XPathAxis.cs" />
+    <Compile Include="Applicator\XPath\XPathOperator.cs" />
+    <Compile Include="Applicator\XPath\XPathParser.cs" />
+    <Compile Include="Applicator\XPath\XPathParserException.cs" />
+    <Compile Include="Applicator\XPath\XPathScanner.cs" />
     <Compile Include="Introspection\ChoiceType.cs" />
     <Compile Include="Introspection\EnumLiteralAttribute.cs" />
     <Compile Include="Introspection\FhirElementAttribute.cs" />
@@ -74,6 +119,7 @@
     <Compile Include="Model\ESPBI\DrugInteractionItem.cs" />
     <Compile Include="Model\ESPBI\DrugInteractionQuery.cs" />
     <Compile Include="Model\ESPBI\DrugInteractionQueryItem.cs" />
+    <Compile Include="Model\ESPBI\PrescriptionInfo.cs" />
     <Compile Include="Model\Extension.cs" />
     <Compile Include="Model\Base64Binary.cs" />
     <Compile Include="Model\FhirString.cs" />
@@ -224,20 +270,27 @@
     <Compile Include="Serialization\IFhirReader.cs" />
     <Compile Include="Serialization\IFhirWriter.cs" />
     <Compile Include="Serialization\JsonDomFhirWriter.cs" />
+    <Compile Include="Serialization\PostitionInfo.cs" />
     <Compile Include="Serialization\PrimitiveValueWriter.cs" />
     <Compile Include="Serialization\QueryParser.cs" />
     <Compile Include="Serialization\RepeatingElementWriter.cs" />
     <Compile Include="Serialization\TagListParser.cs" />
     <Compile Include="Serialization\TagListSerializer.cs" />
-    <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\JsonDomFhirReader.cs" />
     <Compile Include="Serialization\ResourceWriter.cs" />
+    <Compile Include="Serialization\XmlDomFhirReader.cs" />
     <Compile Include="Serialization\XmlFhirWriter.cs" />
     <Compile Include="Rest\RestUrl.cs" />
     <Compile Include="Rest\RestUrlOperationExtensions.cs" />
+    <Compile Include="Serialization\Xml\FhirXmlReader.cs" />
+    <Compile Include="Serialization\Xml\FhirXmlValue.cs" />
+    <Compile Include="Serialization\Xml\IFhirXmlAttribute.cs" />
+    <Compile Include="Serialization\Xml\IFhirXmlNode.cs" />
+    <Compile Include="Serialization\Xml\IFhirXmlValue.cs" />
+    <Compile Include="Serialization\Xml\FhirXmlAttribute.cs" />
+    <Compile Include="Serialization\Xml\FhirXmlNode.cs" />
     <Compile Include="Support\IPositionInfo.cs" />
     <Compile Include="Support\Logging.cs" />
-    <Compile Include="Serialization\ModelFactoryList.cs" />
     <Compile Include="Introspection\ModelInspector.cs" />
     <Compile Include="Serialization\PrimitiveTypeConverter.cs" />
     <Compile Include="Serialization\PrimitiveValueReader.cs" />

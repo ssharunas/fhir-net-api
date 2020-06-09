@@ -26,7 +26,9 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
+using Hl7.Fhir.Introspection;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Hl7.Fhir.Model
 {
@@ -40,12 +42,16 @@ namespace Hl7.Fhir.Model
 		/// <summary>
 		/// First name (and posibly second too)
 		/// </summary>
-		public string FirstName => string.Join(" ", Given);
+		[NotMapped]
+		[IgnoreDataMember]
+		public string FirstName => Given != null ? string.Join(" ", Given) : null;
 
 		/// <summary>
 		/// Last name (surname)
 		/// </summary>
-		public string LastName => string.Join(" ", Family);
+		[NotMapped]
+		[IgnoreDataMember]
+		public string LastName => Family != null ? string.Join(" ", Family) : null;
 
 	}
 

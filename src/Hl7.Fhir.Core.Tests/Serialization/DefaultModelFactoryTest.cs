@@ -6,100 +6,94 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-using Hl7.Fhir.Model;
-using System.Collections;
-using Hl7.Fhir.Support;
-using Hl7.Fhir.Serialization;
 using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Model;
+using Hl7.Fhir.Serialization;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Collections.Generic;
 
 namespace Hl7.Fhir.Tests.Serialization
 {
-    [TestClass]
+	[TestClass]
 	public class DefaultModelFactoryTest
-    {    
-        [TestMethod]
-        public void TestSupportedTypes()
-        {
-            var factory = new DefaultModelFactory();
+	{
+		[TestMethod]
+		public void TestSupportedTypes()
+		{
+			// Test creation of a class with no constructor
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(TestCreate)));
+			Assert.IsNotNull(DefaultModelFactory.Create(typeof(TestCreate)));
 
-            // Test creation of a class with no constructor
-            Assert.IsTrue(factory.CanCreate(typeof(TestCreate)));
-            Assert.IsNotNull(factory.Create(typeof(TestCreate)));
-            
-            // Test creation of class with a public no-args constructor
-            Assert.IsTrue(factory.CanCreate(typeof(TestCreatePublicConstructor)));
-            Assert.IsNotNull(factory.Create(typeof(TestCreatePublicConstructor)));
-            
-            // Test creation of primitives
-            Assert.IsTrue(factory.CanCreate(typeof(int)));
-            Assert.IsNotNull(factory.Create(typeof(int)));
+			// Test creation of class with a public no-args constructor
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(TestCreatePublicConstructor)));
+			Assert.IsNotNull(DefaultModelFactory.Create(typeof(TestCreatePublicConstructor)));
 
-            // Test creation of Nullable<T>
-            Assert.IsTrue(factory.CanCreate(typeof(int?)));
-            Assert.IsNotNull(factory.Create(typeof(int?)));
+			// Test creation of primitives
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(int)));
+			Assert.IsNotNull(DefaultModelFactory.Create(typeof(int)));
 
-            // Test handling of collection interfaces
-            object collection = null;
-            Assert.IsTrue(factory.CanCreate(typeof(ICollection<string>)));
-            collection = factory.Create(typeof(ICollection<string>));
-            Assert.IsNotNull(collection);
-            Assert.IsTrue(collection is List<string>);
+			// Test creation of Nullable<T>
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(int?)));
+			Assert.IsNotNull(DefaultModelFactory.Create(typeof(int?)));
 
-            Assert.IsTrue(factory.CanCreate(typeof(IList<HumanName>)));
-            Assert.IsNotNull(factory.Create(typeof(ICollection<HumanName>)));
-            
-            Assert.IsTrue(factory.CanCreate(typeof(IList<int?>)));
-            collection = factory.Create(typeof(ICollection<int?>));
-            Assert.IsNotNull(collection);
-            Assert.IsTrue(collection is List<int?>);
+			// Test handling of collection interfaces
+			object collection = null;
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(ICollection<string>)));
+			collection = DefaultModelFactory.Create(typeof(ICollection<string>));
+			Assert.IsNotNull(collection);
+			Assert.IsTrue(collection is List<string>);
 
-            // Test handling of closed generics
-            Assert.IsTrue(factory.CanCreate(typeof(Code<Address.AddressUse>)));
-            Assert.IsNotNull(factory.Create(typeof(Code<Address.AddressUse>)));
-        }
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(IList<HumanName>)));
+			Assert.IsNotNull(DefaultModelFactory.Create(typeof(ICollection<HumanName>)));
 
-        [TestMethod]
-        public void TestUnsupportedTypes()
-        {
-            var factory = new DefaultModelFactory();
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(IList<int?>)));
+			collection = DefaultModelFactory.Create(typeof(ICollection<int?>));
+			Assert.IsNotNull(collection);
+			Assert.IsTrue(collection is List<int?>);
 
-            Assert.IsFalse(factory.CanCreate(typeof(TestCreatePrivateConstructor)));
-            Assert.IsFalse(factory.CanCreate(typeof(TestCreateArgConstructor)));
+			// Test handling of closed generics
+			//Assert.IsTrue(DefaultModelFactory.CanCreate(typeof(Code<Address.AddressUse>)));
+			Assert.IsNotNull(DefaultModelFactory.Create(typeof(Code<Address.AddressUse>)));
+		}
 
-            // Cannot create interface types
-            Assert.IsFalse(factory.CanCreate(typeof(ICloneable)));
+		[TestMethod]
+		public void TestUnsupportedTypes()
+		{
+			//Assert.IsFalse(DefaultModelFactory.CanCreate(typeof(TestCreatePrivateConstructor)));
+			//Assert.IsFalse(DefaultModelFactory.CanCreate(typeof(TestCreateArgConstructor)));
 
-            // Cannot create arrays, since we don't know size upfront
-            Assert.IsFalse(factory.CanCreate(typeof(int[])));
-        }
-    }
+			// Cannot create interface types
+			//Assert.IsFalse(DefaultModelFactory.CanCreate(typeof(ICloneable)));
 
-    [FhirType("Patient")]   // implicitly, this is a resource
-    public class NewPatient : Patient { }
+			// Cannot create arrays, since we don't know size upfront
+			//Assert.IsFalse(DefaultModelFactory.CanCreate(typeof(int[])));
+		}
+	}
 
-    public class TestCreate
-    {
-    }
+	[FhirType("Patient")]   // implicitly, this is a resource
+	public class NewPatient : Patient { }
 
-    public class TestCreatePublicConstructor
-    {
-        public TestCreatePublicConstructor()
-        {
-        }
-    }
+	public class TestCreate
+	{
+	}
 
-    public class TestCreateArgConstructor
-    {
-        public TestCreateArgConstructor(int test)
-        {
-        }
-    }
+	public class TestCreatePublicConstructor
+	{
+		public TestCreatePublicConstructor()
+		{
+		}
+	}
 
-    public class TestCreatePrivateConstructor
-    {
-        private TestCreatePrivateConstructor() { }
-    }
+	public class TestCreateArgConstructor
+	{
+		public TestCreateArgConstructor(int test)
+		{
+		}
+	}
+
+	public class TestCreatePrivateConstructor
+	{
+		private TestCreatePrivateConstructor() { }
+	}
 }

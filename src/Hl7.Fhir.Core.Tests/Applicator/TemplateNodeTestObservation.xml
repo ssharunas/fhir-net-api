@@ -1,0 +1,9 @@
+﻿<test xmlns="http://hl7.org/fhir">
+	<name>
+		<coding x-foreach="Codes">
+			<system value="http://loinc.org"/>
+			<code value="{Value}"/>
+		</coding>
+	</name>
+	<valueString value="{Remarks}"/>
+</test>

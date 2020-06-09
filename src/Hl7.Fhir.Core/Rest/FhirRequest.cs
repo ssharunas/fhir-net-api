@@ -149,13 +149,16 @@ namespace Hl7.Fhir.Rest
 
 				if (ContentLocation != null)
 					_request.Headers[HttpRequestHeader.ContentLocation] = ContentLocation.ToString();
+			}
 
+			_beforeRequest?.Invoke(this, _request);
+
+			if (Body != null)
+			{
 				Stream stream = _request.GetRequestStream();
 				stream.Write(Body, 0, Body.Length);
 				stream.Flush();
 			}
-
-			_beforeRequest?.Invoke(this, _request);
 
 			// Make sure the HttpResponse gets disposed!
 			using (HttpWebResponse webResponse = GetResponseNoEx(_request))

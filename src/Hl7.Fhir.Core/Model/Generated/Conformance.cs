@@ -1291,6 +1291,8 @@ namespace Hl7.Fhir.Model
 			[Cardinality(Min = 1, Max = 1)]
 			[DataMember]
 			public Code<Hl7.Fhir.Model.Conformance.RestfulOperationType> CodeElement { get; set; }
+
+			/// <summary>
 			/// read | vread | update | delete | history-instance | validate | history-type | create | search-type
 			/// </summary>
 			/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>
@@ -1314,6 +1316,7 @@ namespace Hl7.Fhir.Model
 			[FhirElement("documentation", InSummary = true, Order = 50)]
 			[DataMember]
 			public Hl7.Fhir.Model.FhirString DocumentationElement { get; set; }
+			/// <summary>
 			/// Anything special about operation behavior
 			/// </summary>
 			/// <remarks>This uses the native .NET datatype, rather than the FHIR equivalent</remarks>

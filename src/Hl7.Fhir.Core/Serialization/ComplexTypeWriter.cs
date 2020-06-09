@@ -17,8 +17,7 @@ namespace Hl7.Fhir.Serialization
 {
 	internal class ComplexTypeWriter
 	{
-		private IFhirWriter _current;
-		private ModelInspector _inspector;
+		private readonly IFhirWriter _current;
 
 		internal enum SerializationMode
 		{
@@ -30,12 +29,12 @@ namespace Hl7.Fhir.Serialization
 		public ComplexTypeWriter(IFhirWriter writer)
 		{
 			_current = writer;
-			_inspector = SerializationConfig.Inspector;
 		}
 
 		internal void Serialize(ClassMapping mapping, object instance, bool summary, SerializationMode mode = SerializationMode.AllMembers)
 		{
-			if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
+			if (mapping == null)
+				throw Error.ArgumentNull(nameof(mapping));
 
 			_current.WriteStartComplexContent();
 
@@ -61,13 +60,14 @@ namespace Hl7.Fhir.Serialization
 			// Check whether we are asked to just serialize the value element (Value members of primitive Fhir datatypes)
 			// or only the other members (Extension, Id etc in primitive Fhir datatypes)
 			// Default is all
-			if (mode == SerializationMode.ValueElement && !prop.RepresentsValueElement) return;
-			if (mode == SerializationMode.NonValueElements && prop.RepresentsValueElement) return;
+			if (mode == SerializationMode.ValueElement && !prop.RepresentsValueElement)
+				return;
+
+			if (mode == SerializationMode.NonValueElements && prop.RepresentsValueElement)
+				return;
 
 			var value = prop.GetValue(instance);
-			var isEmptyArray = (value as IList) != null && ((IList)value).Count == 0;
-
-			//   Message.Info("Handling member {0}.{1}", mapping.Name, prop.Name);
+			var isEmptyArray = (value as IList)?.Count == 0;
 
 			if (value != null && !isEmptyArray)
 			{
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Serialization
 				// For Choice properties, determine the actual name of the element
 				// by appending its type to the base property name (i.e. deceasedBoolean, deceasedDate)
 				if (prop.Choice == ChoiceType.DatatypeChoice)
-					memberName = determineElementMemberName(prop.Name, value.GetType());
+					memberName = DetermineElementMemberName(prop.Name, value.GetType());
 
 				_current.WriteStartProperty(memberName);
 
@@ -102,12 +102,12 @@ namespace Hl7.Fhir.Serialization
 		// If we have a normal complex property, for which the type has a primitive value member...
 		private bool serializedIntoTwoProperties(PropertyMapping prop, object instance)
 		{
-			if (instance is IList)
-				instance = ((IList)instance)[0];
+			if (instance is IList list)
+				instance = list[0];
 
 			if (instance != null && !prop.IsPrimitive && prop.Choice != ChoiceType.ResourceChoice)
 			{
-				var mapping = _inspector.ImportType(instance.GetType());
+				var mapping = SerializationConfig.Inspector.ImportType(instance.GetType());
 				return mapping.HasPrimitiveValueMember;
 			}
 			else
@@ -116,19 +116,21 @@ namespace Hl7.Fhir.Serialization
 
 		private static string upperCamel(string p)
 		{
-			if (string.IsNullOrEmpty(p)) return p;
+			if (string.IsNullOrEmpty(p))
+				return p;
 
 			return char.ToUpperInvariant(p[0]) + p.Remove(0, 1);
 		}
 
-		private string determineElementMemberName(string memberName, Type type)
+		internal static string DetermineElementMemberName(string memberName, Type type)
 		{
-			var mapping = _inspector.ImportType(type);
+			var suffix = SerializationConfig.Inspector.ImportType(type).Name;
 
-			var suffix = mapping.Name;
-			if (suffix == "ResourceReference") suffix = "Resource";
+			if (suffix == "ResourceReference")
+				suffix = "Resource";
 
 			return memberName + upperCamel(suffix);
 		}
+
 	}
 }

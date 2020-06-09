@@ -11,21 +11,14 @@ using Hl7.Fhir.Support;
 using System;
 using System.Collections.Generic;
 
-
 namespace Hl7.Fhir.Serialization
 {
-	internal class ComplexTypeReader
+	internal static class ComplexTypeReader
 	{
-		private IFhirReader _current;
-
-		public ComplexTypeReader(IFhirReader reader)
+		internal static object Deserialize(IFhirReader reader, ClassMapping mapping, object existing = null)
 		{
-			_current = reader;
-		}
-
-		internal object Deserialize(ClassMapping mapping, object existing = null)
-		{
-			if (mapping == null) throw Error.ArgumentNull(nameof(mapping));
+			if (mapping == null)
+				throw Error.ArgumentNull(nameof(mapping));
 
 			if (existing != null)
 			{
@@ -34,51 +27,46 @@ namespace Hl7.Fhir.Serialization
 			}
 			else
 			{
-				var fac = new DefaultModelFactory();
-				existing = fac.Create(mapping.NativeType);
+				existing = DefaultModelFactory.Create(mapping.NativeType);
 			}
 
-			IEnumerable<Tuple<string, IFhirReader>> members;
+			IEnumerable<MemberInfo> members;
 
-			if (_current.CurrentToken == TokenType.Object)
+			if (reader.CurrentToken == TokenType.Object)
 			{
-				members = _current.GetMembers();
+				members = reader.GetMembers();
 			}
-			else if (_current.IsPrimitive())
+			else if (reader.IsPrimitive())
 			{
 				// Ok, we expected a complex type, but we found a primitive instead. This may happen
 				// in Json where the value property and the other elements are separately put into
 				// member and _member. In this case, we will parse the primitive into the Value property
 				// of the complex type
 				if (!mapping.HasPrimitiveValueMember)
-					throw Error.Format("Complex object does not have a value property, yet the reader is at a primitive", _current);
+					throw Error.Format("Complex object does not have a value property, yet the reader is at a primitive", reader);
 
 				// Simulate this as actually receiving a member "Value" in a normal complex object,
 				// and resume normally
-				var valueMember = Tuple.Create(mapping.PrimitiveValueProperty.Name, _current);
-				members = new List<Tuple<string, IFhirReader>> { valueMember };
+				members = new[] { new MemberInfo(mapping.PrimitiveValueProperty.Name, reader) };
 			}
 			else
-				throw Error.Format("Trying to read a complex object, but reader is not at the start of an object or primitive", _current);
+			{
+				throw Error.Format("Trying to read a complex object, but reader is not at the start of an object or primitive", reader);
+			}
 
-			read(mapping, members, existing);
+			read(reader, mapping, members, existing);
 
 			return existing;
 
 		}
 
-		private void read(ClassMapping mapping, IEnumerable<Tuple<string, IFhirReader>> members, object existing)
+		private static void read(IFhirReader reader, ClassMapping mapping, IEnumerable<MemberInfo> members, object existing)
 		{
-			//bool hasMember;
-
 			foreach (var memberData in members)
 			{
-				//hasMember = true;
-				var memberName = memberData.Item1;  // tuple: first is name of member
-
 				// Find a property on the instance that matches the element found in the data
 				// NB: This function knows how to handle suffixed names (e.g. xxxxBoolean) (for choice types).
-				var mappedProperty = mapping.FindMappedElementByName(memberName);
+				var mappedProperty = mapping.FindMappedElementByName(memberData.MemberName);
 
 				if (mappedProperty != null)
 				{
@@ -90,17 +78,16 @@ namespace Hl7.Fhir.Serialization
 					if (!mappedProperty.IsPrimitive)
 						value = mappedProperty.GetValue(existing);
 
-					var reader = new DispatchingReader(memberData.Item2);
-					value = reader.Deserialize(mappedProperty, memberName, value);
+					value = DispatchingReader.DeserializeObject(memberData.Reader, mappedProperty, memberData.MemberName, value);
 
 					mappedProperty.SetValue(existing, value);
 				}
 				else
 				{
 					if (SerializationConfig.AcceptUnknownMembers == false)
-						throw Error.Format($"Encountered unknown member '{memberName}' while deserializing", _current);
+						throw Error.Format($"Encountered unknown member '{memberData.MemberName}' while deserializing", reader);
 					else
-						Message.Debug("Skipping unknown member " + memberName);
+						Message.Debug("Skipping unknown member " + memberData.MemberName);
 				}
 			}
 
