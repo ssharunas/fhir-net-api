@@ -106,15 +106,15 @@ namespace Hl7.Fhir.Serialization.Xml
 
 		public string ToXml()
 		{
-			return ToXml(this);
+			return ToXml(this, string.Empty);
 		}
 
-		internal static string ToXml(IFhirXmlNode node)
+		internal static string ToXml(IFhirXmlNode node, string prefix)
 		{
 			if (node == null)
 				return null;
 
-			StringBuilder result = new StringBuilder("<").Append(node.Name);
+			StringBuilder result = new StringBuilder(prefix).Append("<").Append(node.Name);
 
 			if (!string.IsNullOrEmpty(node.Namespace) && (node.Parent == null || node.Parent.Namespace != node.Namespace))
 			{
@@ -145,10 +145,12 @@ namespace Hl7.Fhir.Serialization.Xml
 			{
 				result.AppendLine();
 				foreach (var child in elements)
-					result.Append(child.ToXml());
+					result.Append(ToXml(child, prefix + '\t'));
+				result.Append(prefix);
 			}
 
-			result.Append("</")
+			result
+				.Append("</")
 				.Append(node.Name)
 				.AppendLine(">");
 

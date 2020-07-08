@@ -14,6 +14,18 @@ namespace Hl7.Fhir.Applicator
 		}
 
 		[TestMethod]
+		public void IsNullTest()
+		{
+			var xml = GetXml();
+
+			Assert.IsNull(XPath.XPath.Parse("")?.IsMatch(xml));
+			Assert.IsNull(XPath.XPath.Parse("")?.Value(xml));
+
+			Assert.IsNull(XPath.XPath.Parse(null)?.IsMatch(xml));
+			Assert.IsNull(XPath.XPath.Parse(null)?.Value(xml));
+		}
+
+		[TestMethod]
 		public void IsMatchTest()
 		{
 			var xml = GetXml();

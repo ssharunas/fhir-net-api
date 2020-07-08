@@ -15,6 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.InteropServices;
 
 namespace Hl7.Fhir.Rest
 {
@@ -1397,7 +1398,7 @@ namespace Hl7.Fhir.Rest
 			return doRequest(req, HttpStatusCode.OK, resp => new TemplateResponseReader(resp.GetBodyAsString(), context));
 		}
 
-		public UpdateData GetForUpdate<TDto>(Template<TDto> template, Query query, Func<TDto, TDto> update)
+		public UpdateData<TDto> GetForUpdate<TDto>(Template<TDto> template, Query query, Func<TDto, TDto> update)
 		{
 			if (template == null) throw Error.ArgumentNull(nameof(template));
 
@@ -1412,7 +1413,7 @@ namespace Hl7.Fhir.Rest
 			return null;
 		}
 
-		public UpdateData GetForUpdate<TDto>(Template<TDto> template, long id, Func<TDto, TDto> update)
+		public UpdateData<TDto> GetForUpdate<TDto>(Template<TDto> template, long id, Func<TDto, TDto> update)
 		{
 			if (template == null) throw Error.ArgumentNull(nameof(template));
 

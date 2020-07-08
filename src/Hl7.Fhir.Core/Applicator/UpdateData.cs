@@ -15,4 +15,15 @@ namespace Hl7.Fhir.Applicator
 		public IDataGetterContext Context { get; private set; }
 		public Bundle Bundle { get; set; }
 	}
+
+	public class UpdateData<TDto> : UpdateData
+	{
+		internal UpdateData(IFhirXmlNode xml, IDataGetterContext context, TDto dto)
+			: base(xml, context)
+		{
+			Dto = dto;
+		}
+
+		public TDto Dto { get; set; }
+	}
 }

@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Applicator
 			return BundleXmlParser.Load(TemplateNode.CreateData(context));
 		}
 
-		public virtual UpdateData Update(FhirResponse response, Func<TDto, TDto> modify)
+		public virtual UpdateData<TDto> Update(FhirResponse response, Func<TDto, TDto> modify)
 		{
 			if (modify == null)
 				throw Error.ArgumentNull(nameof(modify));
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Applicator
 						var getterContext = GetGetter(dto, context);
 
 						TemplateNode.UpdateData(xml, getterContext);
-						return new UpdateData(xml, getterContext);
+						return new UpdateData<TDto>(xml, getterContext, dto);
 					}
 				}
 			}

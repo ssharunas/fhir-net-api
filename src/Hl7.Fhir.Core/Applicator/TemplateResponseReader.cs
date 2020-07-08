@@ -47,12 +47,17 @@ namespace Hl7.Fhir.Applicator
 
 		public object GetValue(string path)
 		{
-			return XPath.XPath.Parse(path).Value(Response);
+			return XPath.XPath.Parse(path)?.Value(Response);
 		}
 
 		public IList<object> GetValues(string path)
 		{
-			return XPath.XPath.Parse(path).Values(Response);
+			return XPath.XPath.Parse(path)?.Values(Response);
+		}
+
+		public string ToXml()
+		{
+			return Response?.ToXml();
 		}
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Model;
 using Hl7.Fhir.Serialization;
+using Hl7.Fhir.Serialization.Xml;
 
 namespace Hl7.Fhir.Applicator.Navigation
 {
@@ -36,6 +37,11 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 			string name = SerializationConfig.Inspector.ImportType(resource.GetType()).Name;
 			return new ElementNavigator(null, name, resource);
+		}
+
+		public static IPathable ToPathable(string xml)
+		{
+			return FhirXmlNode.Create(FhirParser.XmlReaderFromString(xml));
 		}
 	}
 }

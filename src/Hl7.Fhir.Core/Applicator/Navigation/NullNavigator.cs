@@ -28,5 +28,10 @@ namespace Hl7.Fhir.Applicator.Navigation
 		{
 			return typeof(IPathable) + " <null>";
 		}
+
+		public string ToXml()
+		{
+			return null;
+		}
 	}
 }

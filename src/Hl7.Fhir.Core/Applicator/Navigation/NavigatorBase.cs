@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public IPathable GetNode(string path)
 		{
-			var result = XPath.XPath.Parse(path).Value(this);
+			var result = XPath.XPath.Parse(path)?.Value(this);
 
 			if (result != null)
 				return (result as IPathable) ?? throw Error.InvalidOperation($"Value at path '{path}' is not 'IPathable', but '{result.GetType()}'.");
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 		public IList<IPathable> GetNodes(string path)
 		{
 			IList<IPathable> result = null;
-			var items = XPath.XPath.Parse(path).Values(this);
+			var items = XPath.XPath.Parse(path)?.Values(this);
 
 			if (items?.Count > 0)
 			{
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public object GetValue(string path)
 		{
-			var result = XPath.XPath.Parse(path).RawValue(this);
+			var result = XPath.XPath.Parse(path)?.RawValue(this);
 
 			if (result is IWrapper wrapper)
 				return wrapper.Unwrap();
@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public IList<object> GetValues(string path)
 		{
-			var result = XPath.XPath.Parse(path).Values(this);
+			var result = XPath.XPath.Parse(path)?.Values(this);
 
 			if (result?.Count > 0)
 			{
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public string ToXml()
 		{
-			return FhirXmlNode.ToXml(this);
+			return FhirXmlNode.ToXml(this, string.Empty);
 		}
 
 		public override string ToString()

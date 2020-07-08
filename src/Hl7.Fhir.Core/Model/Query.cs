@@ -466,6 +466,9 @@ namespace Hl7.Fhir.Model
 			return this;
 		}
 
+		/// <summary>
+		/// Results per page
+		/// </summary>
 		public Query SetCount(int count)
 		{
 			Count = count;
@@ -478,6 +481,9 @@ namespace Hl7.Fhir.Model
 			return this;
 		}
 
+		/// <summary>
+		/// Page index
+		/// </summary>
 		public Query SetPage(int page, bool isZeroBased = false)
 		{
 			Page = page + (isZeroBased ? 0 : 1);

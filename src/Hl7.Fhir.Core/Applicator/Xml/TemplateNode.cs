@@ -203,14 +203,6 @@ namespace Hl7.Fhir.Applicator.Xml
 			if (Name == X_INCLUDE)
 				line.LineText = "<!-- " + line.LineText;
 
-			if (!string.IsNullOrEmpty(If))
-			{
-				line.LineText += $"{X_IF}=\"{_if}\" ";
-
-				if (Name != X_INCLUDE)
-					context.AddData(path, If, false, true, false);
-			}
-
 			if (Id != null)
 				line.LineText += $"{X_ID}=\"{Id}\" ";
 
@@ -231,6 +223,14 @@ namespace Hl7.Fhir.Applicator.Xml
 					path += ".";
 
 				path += Foreach;
+			}
+
+			if (!string.IsNullOrEmpty(If))
+			{
+				line.LineText += $"{X_IF}=\"{_if}\" ";
+
+				if (Name != X_INCLUDE)
+					context.AddData(path, If, false, true, false);
 			}
 
 			if (_attributes?.Count > 0)
@@ -461,7 +461,7 @@ namespace Hl7.Fhir.Applicator.Xml
 				string source = GetAttributeValue(X_INCLUDE_SOURCE) ?? throw Error.Format("There is no source for template include!", Position);
 				using (var reader = context.GetInclude(source))
 				{
-					_include = Create(reader);
+					_include = Create(reader, Position.LineNumber - 1);
 
 					string root = GetAttributeValue(X_INCLUDE_ROOT);
 					string scope = Scope + GetAttributeValue(X_INCLUDE_SCOPE);
@@ -533,38 +533,58 @@ namespace Hl7.Fhir.Applicator.Xml
 			return _children;
 		}
 
-		private void UpdateList(IFhirXmlNode root, IList<IFhirXmlNode> existingNodes, TemplateNode child, IList<IDataGetterContext> contexts)
+		private void UpdateList(IFhirXmlNode root, IList<IFhirXmlNode> existingNodes, TemplateNode child, IList<IDataGetterContext> allContexts)
 		{
-			contexts = contexts != null ? new List<IDataGetterContext>(contexts) : new List<IDataGetterContext>();
-
-			if (existingNodes?.Count > 0)
+			if (allContexts == null || allContexts.Count == 0)
 			{
-				foreach (var node in existingNodes)
+				if (existingNodes?.Count > 0)
 				{
-					IDataGetterContext matchingContext = null;
-
-					for (var k = 0; k < contexts.Count; k++)
-					{
-						if (contexts[k].IsForNode(node))
-						{
-							matchingContext = contexts[k];
-							contexts.RemoveAt(k);
-							break;
-						}
-					}
-
-					if (matchingContext != null)
-						child.UpdateData(node, matchingContext);
-					else
+					foreach (var node in existingNodes)
 						root.DeleteElement(node);
 				}
 			}
-
-			if (contexts.Count > 0)
+			else
 			{
-				foreach (var context in contexts)
+				var contexts = new List<IDataGetterContext>(allContexts.Count);
+
+				//filter non-ok contexts, so that we wouldn't need to iterate over them while
+				//matching nodes. (Performance optimization)
+				foreach (var context in allContexts)
 				{
-					child.CreateElement(root, context);
+					if (child.IsIfOk(context))
+						contexts.Add(context);
+				}
+
+				if (existingNodes?.Count > 0)
+				{
+					foreach (var node in existingNodes)
+					{
+						IDataGetterContext matchingContext = null;
+
+						for (var k = 0; k < contexts.Count; k++)
+						{
+							if (contexts[k].IsForNode(node))
+							{
+								matchingContext = contexts[k];
+								contexts.RemoveAt(k);
+								break;
+							}
+						}
+
+						if (matchingContext != null /*&& child.IsIfOk(matchingContext)*/) //we dont need to check "ok" for filtered contexts
+							child.UpdateData(node, matchingContext);
+						else
+							root.DeleteElement(node);
+					}
+				}
+
+				if (contexts.Count > 0)
+				{
+					foreach (var context in contexts)
+					{
+						//if (child.IsIfOk(context)) ///we dont need to check "ok" for filtered contexts
+						child.CreateElement(root, context);
+					}
 				}
 			}
 		}
@@ -594,7 +614,7 @@ namespace Hl7.Fhir.Applicator.Xml
 			{
 				foreach (var child in children)
 				{
-					if (!child.IsWrite || !child.IsIfOk(context))
+					if (!child.IsWrite)
 						continue;
 
 					if (child.IsArray)
@@ -603,10 +623,13 @@ namespace Hl7.Fhir.Applicator.Xml
 						if (childContexts?.Count > 0)
 						{
 							foreach (var item in childContexts)
-								child.CreateElement(root, item);
+							{
+								if (child.IsIfOk(item))
+									child.CreateElement(root, item);
+							}
 						}
 					}
-					else
+					else if (child.IsIfOk(context))
 					{
 						child.CreateElement(root, context);
 					}
@@ -619,8 +642,19 @@ namespace Hl7.Fhir.Applicator.Xml
 			return new TemplateNode(name, @namespace, text, pos, children, attributes);
 		}
 
-		public static TemplateNode Create(XmlReader reader)
+		public static TemplateNode Create(XmlReader reader, int lineOffset = 0)
 		{
+			if (lineOffset > 0)
+			{
+				return FhirXmlReader.Read<TemplateNode>(reader, (name, @namespace, text, pos, children, attributes) =>
+				{
+					if (pos != null)
+						pos = new PostitionInfo(pos.LineNumber + lineOffset, pos.LinePosition);
+
+					return Create(name, @namespace, text, pos, children, attributes);
+				}, false);
+			}
+
 			return FhirXmlReader.Read<TemplateNode>(reader, Create, false);
 		}
 
@@ -684,7 +718,7 @@ namespace Hl7.Fhir.Applicator.Xml
 					else if (filtered.Count == 1)
 						child.ReadData(filtered[0], context);
 					else
-						throw Error.InvalidOperation($"Could not read data: non-array element '{child.Name}' (id: '{child.Id}') at {child.Position} has multiple values.");
+						throw Error.InvalidOperation($"Could not read data: non-array element '{Name}.{child.Name}' (id: '{child.Id}') at template {child.Position}, xml {filtered[0].Position} has multiple values.");
 				}
 			}
 
@@ -734,7 +768,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 				foreach (var child in children)
 				{
-					if (!child.IsWrite || !child.HasAnyData)
+					if (!child.IsWrite || !child.HasAnyData && string.IsNullOrEmpty(child.If) && string.IsNullOrEmpty(Foreach))
 						continue;
 
 					var filtered = child.FilterElements(existingElements);
@@ -757,7 +791,7 @@ namespace Hl7.Fhir.Applicator.Xml
 					}
 					else
 					{
-						throw Error.InvalidOperation($"Could not set data: non-array element '{child.Name}' at {child.Position} has multiple values.");
+						throw Error.InvalidOperation($"Could not set data: non-array element '{Name}.{child.Name}' at {child.Position} has multiple values.");
 					}
 				}
 			}
