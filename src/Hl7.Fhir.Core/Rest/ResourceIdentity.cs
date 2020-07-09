@@ -70,8 +70,8 @@ namespace Hl7.Fhir.Rest
 		/// <returns></returns>
 		public static ResourceIdentity Build(Uri endpoint, string collection, string id, string vid = null)
 		{
-			if (collection == null) throw Error.ArgumentNull(nameof(collection));
-			if (id == null) throw Error.ArgumentNull(nameof(id));
+			if (collection is null) throw Error.ArgumentNull(nameof(collection));
+			if (id is null) throw Error.ArgumentNull(nameof(id));
 			if (!endpoint.IsAbsoluteUri) throw Error.Argument(nameof(endpoint), "endpoint must be an absolute path");
 
 			if (vid != null)
@@ -89,8 +89,8 @@ namespace Hl7.Fhir.Rest
 		/// <returns></returns>
 		public static ResourceIdentity Build(string collection, string id, string vid = null)
 		{
-			if (collection == null) throw Error.ArgumentNull(nameof(collection));
-			if (id == null) throw Error.ArgumentNull(nameof(id));
+			if (collection is null) throw Error.ArgumentNull(nameof(collection));
+			if (id is null) throw Error.ArgumentNull(nameof(id));
 
 			string url = vid != null ?
 				string.Format("{0}/{1}/{2}/{3}", collection, id, RestOperation.HISTORY, vid) :
@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Rest
 		{
 			get
 			{
-				if (_components == null)
+				if (_components is null)
 				{
 					string path = IsAbsoluteUri ? LocalPath : ToString();
 					_components = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).ToList();
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Rest
 		{
 			get
 			{
-				if (_endpoint == null)
+				if (_endpoint is null)
 				{
 					int count = Components.Count;
 
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Rest
 		{
 			get
 			{
-				if (_collection == null)
+				if (_collection is null)
 				{
 					int index = Components.IndexOf(RestOperation.HISTORY);
 					if (index > -1 && index == Components.Count - 1) return null; // illegal use, there's just a _history component, but no version id
@@ -181,7 +181,7 @@ namespace Hl7.Fhir.Rest
 		{
 			get
 			{
-				if (_id == null)
+				if (_id is null)
 				{
 					int index = Components.IndexOf(RestOperation.HISTORY);
 
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Rest
 		{
 			get
 			{
-				if (_versionId == null)
+				if (_versionId is null)
 				{
 					int index = Components.IndexOf(RestOperation.HISTORY);
 					if (index > -1 && index == Components.Count - 1)
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Rest
 		{
 			get
 			{
-				if (_operationPath == null)
+				if (_operationPath is null)
 					_operationPath = Build(Collection, Id, VersionId);//this always makes the uri relative
 
 				return _operationPath;
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns></returns>
 		public ResourceIdentity WithVersion(string version)
 		{
-			if (Endpoint == null)
+			if (Endpoint is null)
 				return Build(Collection, Id, version);
 			else
 				return Build(Endpoint, Collection, Id, version);
@@ -258,7 +258,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns></returns>
 		public ResourceIdentity WithoutVersion()
 		{
-			if (Endpoint == null)
+			if (Endpoint is null)
 				return Build(Collection, Id);
 			else
 				return Build(Endpoint, Collection, Id);

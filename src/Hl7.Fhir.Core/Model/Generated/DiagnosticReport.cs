@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
 				get { return CommentElement != null ? CommentElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CommentElement = null;
 					else
 						CommentElement = new Hl7.Fhir.Model.FhirString(value);
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as DiagnosticReportImageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(CommentElement, otherT.CommentElement)) return false;
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as DiagnosticReportImageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(CommentElement, otherT.CommentElement)) return false;
@@ -206,7 +206,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus>(value);
@@ -232,7 +232,7 @@ namespace Hl7.Fhir.Model
 			get { return IssuedElement != null ? IssuedElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					IssuedElement = null;
 				else
 					IssuedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -342,7 +342,7 @@ namespace Hl7.Fhir.Model
 			get { return ConclusionElement != null ? ConclusionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ConclusionElement = null;
 				else
 					ConclusionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as DiagnosticReport;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Name, otherT.Name)) return false;
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as DiagnosticReport;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Name, otherT.Name)) return false;

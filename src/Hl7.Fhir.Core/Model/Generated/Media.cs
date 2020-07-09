@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
 			get { return TypeElement != null ? TypeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					TypeElement = null;
 				else
 					TypeElement = new Code<Hl7.Fhir.Model.Media.MediaType>(value);
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
 			get { return DateTimeElement != null ? DateTimeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateTimeElement = null;
 				else
 					DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
 			get { return DeviceNameElement != null ? DeviceNameElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DeviceNameElement = null;
 				else
 					DeviceNameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
 			get { return HeightElement != null ? HeightElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					HeightElement = null;
 				else
 					HeightElement = new Hl7.Fhir.Model.Integer(value);
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
 			get { return WidthElement != null ? WidthElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					WidthElement = null;
 				else
 					WidthElement = new Hl7.Fhir.Model.Integer(value);
@@ -251,7 +251,7 @@ namespace Hl7.Fhir.Model
 			get { return FramesElement != null ? FramesElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					FramesElement = null;
 				else
 					FramesElement = new Hl7.Fhir.Model.Integer(value);
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
 			get { return LengthElement != null ? LengthElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					LengthElement = null;
 				else
 					LengthElement = new Hl7.Fhir.Model.Integer(value);
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Media;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Media;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;

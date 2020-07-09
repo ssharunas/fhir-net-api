@@ -60,7 +60,7 @@ namespace Hl7.Fhir.Serialization
 
 		public void WriteStartComplexContent()
 		{
-			if (_current == null)
+			if (_current is null)
 				_current = new JObject();
 			else
 			{
@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Serialization
 				else if (parent is JProperty)
 					((JProperty)parent).Value = null;
 			}
-			if (parent == null)
+			if (parent is null)
 			{
 				Result = (JObject)_current;
 				if (jw != null) _current.WriteTo(jw);
@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Serialization
 		{
 			JValue val;
 
-			if (value == null)
+			if (value is null)
 				val = null;
 			else if (value is bool)
 				val = new JValue(value);

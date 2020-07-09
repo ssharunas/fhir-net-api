@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
 			if (Id != null && !Id.IsAbsoluteUri)
 				result.Add(DotNetAttributeValidation.BuildResult(validationContext, "Feed id must be an absolute URI"));
 
-			//if (LastUpdated == null)
+			//if (LastUpdated is null)
 			//    result.Add(new ValidationResult("Feed must have a updated date"));
 
 			if (Links.SearchLink != null)

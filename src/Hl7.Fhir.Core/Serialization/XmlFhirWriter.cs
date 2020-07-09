@@ -53,7 +53,7 @@ namespace Hl7.Fhir.Serialization
 
 		public void WriteStartComplexContent()
 		{
-			if (_currentMemberName == null)
+			if (_currentMemberName is null)
 				throw Error.InvalidOperation("There is no current member name set while starting complex content");
 
 			_xw.WriteStartElement(_currentMemberName, XmlNs.FHIR);
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Serialization
 
 		public void WritePrimitiveContents(object value, XmlSerializationHint xmlFormatHint)
 		{
-			if (value == null) throw Error.ArgumentNull(nameof(value), "There's no support for null values in Xml Fhir serialization");
+			if (value is null) throw Error.ArgumentNull(nameof(value), "There's no support for null values in Xml Fhir serialization");
 
 			if (xmlFormatHint == XmlSerializationHint.None) xmlFormatHint = XmlSerializationHint.Attribute;
 

@@ -236,7 +236,7 @@ namespace Hl7.Fhir.Model
 				get { return SeverityElement != null ? SeverityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SeverityElement = null;
 					else
 						SeverityElement = new Code<Hl7.Fhir.Model.OperationOutcome.IssueSeverity>(value);
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
 				get { return DetailsElement != null ? DetailsElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DetailsElement = null;
 					else
 						DetailsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -294,7 +294,7 @@ namespace Hl7.Fhir.Model
 				get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						LocationElement = null;
 					else
 						LocationElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as OperationOutcomeIssueComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(SeverityElement, otherT.SeverityElement)) return false;
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as OperationOutcomeIssueComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(SeverityElement, otherT.SeverityElement)) return false;
@@ -384,7 +384,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as OperationOutcome;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Issue, otherT.Issue)) return false;
@@ -395,7 +395,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as OperationOutcome;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Issue, otherT.Issue)) return false;

@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Introspection
 
 		public PropertyMapping FindMappedElementByName(string name)
 		{
-			if (name == null) throw Error.ArgumentNull(nameof(name));
+			if (name is null) throw Error.ArgumentNull(nameof(name));
 
 			var normalizedName = name.ToUpperInvariant();
 

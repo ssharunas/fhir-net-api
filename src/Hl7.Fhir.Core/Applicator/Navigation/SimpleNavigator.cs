@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 		{
 			if (attributeValue != null && !string.IsNullOrEmpty(attributeName))
 			{
-				if (_attrubutes == null)
+				if (_attrubutes is null)
 					_attrubutes = new List<IFhirXmlAttribute>();
 
 				_attrubutes.Add(new NavigatorAttribute(attributeName, attributeValue));

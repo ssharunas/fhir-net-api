@@ -50,7 +50,7 @@ namespace Hl7.Fhir.Model
 				.Where(t => t.Term.StartsWith(TAG_TERM_TEXT))
 				.SingleOrDefault();
 
-			if (textTag == null)
+			if (textTag is null)
 				return null;
 
 			return Uri.UnescapeDataString(textTag.Term.Substring(TAG_TERM_TEXT.Length));
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
 
 		public static IEnumerable<Tag> FilterByScheme(this IEnumerable<Tag> tags, Uri scheme)
 		{
-			if (scheme == null) throw Error.ArgumentNull(nameof(scheme));
+			if (scheme is null) throw Error.ArgumentNull(nameof(scheme));
 
 			return tags.Where(e => Uri.Equals(e.Scheme, scheme));
 		}
@@ -139,14 +139,14 @@ namespace Hl7.Fhir.Model
 
 		public static IEnumerable<Tag> Exclude(this IEnumerable<Tag> tags, IEnumerable<Tag> that)
 		{
-			if (that == null) throw Error.ArgumentNull(nameof(that));
+			if (that is null) throw Error.ArgumentNull(nameof(that));
 
 			return tags.Where(t => !that.Contains(t));
 		}
 
 		public static IEnumerable<Tag> Exclude(this IEnumerable<Tag> tags, Tag tag)
 		{
-			if (tag == null) throw Error.ArgumentNull(nameof(tag));
+			if (tag is null) throw Error.ArgumentNull(nameof(tag));
 
 			return tags.Where(t => !Equals(t, tag));
 		}

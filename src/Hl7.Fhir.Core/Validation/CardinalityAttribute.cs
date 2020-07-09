@@ -27,7 +27,7 @@ namespace Hl7.Fhir.Validation
 
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{
-			if (value == null)
+			if (value is null)
 			{
 				return (Min == 0) ? ValidationResult.Success :
 					DotNetAttributeValidation.BuildResult(validationContext, $"Element with min. cardinality {Min} cannot be null");
@@ -39,7 +39,7 @@ namespace Hl7.Fhir.Validation
 			{
 				var list = value as IList;
 				foreach (var elem in list)
-					if (elem == null) return DotNetAttributeValidation.BuildResult(validationContext, "Repeating element cannot have empty/null values");
+					if (elem is null) return DotNetAttributeValidation.BuildResult(validationContext, "Repeating element cannot have empty/null values");
 				count = list.Count;
 			}
 

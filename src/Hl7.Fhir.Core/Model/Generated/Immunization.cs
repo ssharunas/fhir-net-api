@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
 				get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DoseSequenceElement = null;
 					else
 						DoseSequenceElement = new Hl7.Fhir.Model.Integer(value);
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
 				get { return SeriesElement != null ? SeriesElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SeriesElement = null;
 					else
 						SeriesElement = new Hl7.Fhir.Model.FhirString(value);
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
 				get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SeriesDosesElement = null;
 					else
 						SeriesDosesElement = new Hl7.Fhir.Model.Integer(value);
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ImmunizationVaccinationProtocolComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ImmunizationVaccinationProtocolComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(DoseSequenceElement, otherT.DoseSequenceElement)) return false;
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ImmunizationExplanationComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Reason, otherT.Reason)) return false;
@@ -302,7 +302,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ImmunizationExplanationComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Reason, otherT.Reason)) return false;
@@ -336,7 +336,7 @@ namespace Hl7.Fhir.Model
 				get { return DateElement != null ? DateElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DateElement = null;
 					else
 						DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -369,7 +369,7 @@ namespace Hl7.Fhir.Model
 				get { return ReportedElement != null ? ReportedElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ReportedElement = null;
 					else
 						ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ImmunizationReactionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ImmunizationReactionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
 			get { return DateElement != null ? DateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -496,7 +496,7 @@ namespace Hl7.Fhir.Model
 			get { return RefusedIndicatorElement != null ? RefusedIndicatorElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					RefusedIndicatorElement = null;
 				else
 					RefusedIndicatorElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
 			get { return ReportedElement != null ? ReportedElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ReportedElement = null;
 				else
 					ReportedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
 			get { return LotNumberElement != null ? LotNumberElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					LotNumberElement = null;
 				else
 					LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
@@ -604,7 +604,7 @@ namespace Hl7.Fhir.Model
 			get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ExpirationDateElement = null;
 				else
 					ExpirationDateElement = new Hl7.Fhir.Model.Date(value);
@@ -694,7 +694,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Immunization;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -722,7 +722,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Immunization;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

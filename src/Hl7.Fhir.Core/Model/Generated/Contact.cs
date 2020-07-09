@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
 			get { return SystemElement != null ? SystemElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					SystemElement = null;
 				else
 					SystemElement = new Code<Hl7.Fhir.Model.Contact.ContactSystem>(value);
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
 			get { return ValueElement != null ? ValueElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ValueElement = null;
 				else
 					ValueElement = new Hl7.Fhir.Model.FhirString(value);
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
 			get { return UseElement != null ? UseElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.Contact.ContactUse>(value);
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Contact;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(SystemElement, otherT.SystemElement)) return false;
@@ -226,7 +226,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Contact;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(SystemElement, otherT.SystemElement)) return false;

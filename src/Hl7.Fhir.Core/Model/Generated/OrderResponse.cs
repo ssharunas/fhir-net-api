@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
 			get { return DateElement != null ? DateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -176,7 +176,7 @@ namespace Hl7.Fhir.Model
 			get { return CodeElement != null ? CodeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					CodeElement = null;
 				else
 					CodeElement = new Code<Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus>(value);
@@ -201,7 +201,7 @@ namespace Hl7.Fhir.Model
 			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as OrderResponse;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as OrderResponse;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

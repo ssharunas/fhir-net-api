@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
 	{
 		public static object Create(Type type)
 		{
-			if (type == null)
+			if (type is null)
 				throw Error.ArgumentNull(nameof(type));
 
 			// For nullable types, create an instance of the type that

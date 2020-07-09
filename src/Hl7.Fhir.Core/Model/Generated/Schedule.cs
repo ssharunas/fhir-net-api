@@ -169,7 +169,7 @@ namespace Hl7.Fhir.Model
 				get { return FrequencyElement != null ? FrequencyElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						FrequencyElement = null;
 					else
 						FrequencyElement = new Hl7.Fhir.Model.Integer(value);
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
 				get { return WhenElement != null ? WhenElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						WhenElement = null;
 					else
 						WhenElement = new Code<Hl7.Fhir.Model.Schedule.EventTiming>(value);
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
 				get { return DurationElement != null ? DurationElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DurationElement = null;
 					else
 						DurationElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -246,7 +246,7 @@ namespace Hl7.Fhir.Model
 				get { return UnitsElement != null ? UnitsElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UnitsElement = null;
 					else
 						UnitsElement = new Code<Hl7.Fhir.Model.Schedule.UnitsOfTime>(value);
@@ -271,7 +271,7 @@ namespace Hl7.Fhir.Model
 				get { return CountElement != null ? CountElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CountElement = null;
 					else
 						CountElement = new Hl7.Fhir.Model.Integer(value);
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
 				get { return EndElement != null ? EndElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						EndElement = null;
 					else
 						EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ScheduleRepeatComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(FrequencyElement, otherT.FrequencyElement)) return false;
@@ -346,7 +346,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ScheduleRepeatComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(FrequencyElement, otherT.FrequencyElement)) return false;
@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Schedule;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Event, otherT.Event)) return false;
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Schedule;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Event, otherT.Event)) return false;

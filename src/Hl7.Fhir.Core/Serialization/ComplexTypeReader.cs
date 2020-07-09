@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Serialization
 	{
 		internal static object Deserialize(IFhirReader reader, ClassMapping mapping, object existing = null)
 		{
-			if (mapping == null)
+			if (mapping is null)
 				throw Error.ArgumentNull(nameof(mapping));
 
 			if (existing != null)

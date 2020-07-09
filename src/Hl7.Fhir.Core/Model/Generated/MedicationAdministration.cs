@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationAdministrationDosageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Timing, otherT.Timing)) return false;
@@ -188,7 +188,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationAdministrationDosageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Timing, otherT.Timing)) return false;
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.MedicationAdministration.MedicationAdministrationStatus>(value);
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
 			get { return WasNotGivenElement != null ? WasNotGivenElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					WasNotGivenElement = null;
 				else
 					WasNotGivenElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -374,7 +374,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as MedicationAdministration;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as MedicationAdministration;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

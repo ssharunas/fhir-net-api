@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Applicator
 		{
 			get
 			{
-				if (_searchTemplateNode == null)
+				if (_searchTemplateNode is null)
 					_searchTemplateNode = TemplateNode.CreateForAtomSearch(TemplateNode);
 
 				return _searchTemplateNode;
@@ -153,7 +153,7 @@ namespace Hl7.Fhir.Applicator
 				var xml = FhirXmlNode.Create(FhirParser.XmlReaderFromString(data));
 				var context = GetSetterForAtomSearch();
 
-				if (context == null)
+				if (context is null)
 					throw Error.InvalidOperation("GetSetterForAtomSearch() returned null!");
 
 				SearchTemplateNode.ReadData(xml, context);

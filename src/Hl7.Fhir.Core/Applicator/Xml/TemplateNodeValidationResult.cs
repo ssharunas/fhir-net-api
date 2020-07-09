@@ -138,7 +138,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 				var include = Context.GetInclude(source);
 
-				if (include == null)
+				if (include is null)
 					AddIncludeError($"Failed to find include for source '{source}'.");
 
 				return include;

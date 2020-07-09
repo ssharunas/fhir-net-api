@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
 			get { return LanguageElement != null ? LanguageElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					LanguageElement = null;
 				else
 					LanguageElement = new Hl7.Fhir.Model.Code(value);
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
 		public virtual bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Resource;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!DeepComparable.Matches(Extension, otherT.Extension)) return false;
 			if (!DeepComparable.Matches(ModifierExtension, otherT.ModifierExtension)) return false;
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
 		public virtual bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Resource;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!DeepComparable.IsExactly(Extension, otherT.Extension)) return false;
 			if (!DeepComparable.IsExactly(ModifierExtension, otherT.ModifierExtension)) return false;

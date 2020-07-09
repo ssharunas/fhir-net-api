@@ -17,10 +17,10 @@ namespace Hl7.Fhir.Serialization
 	{
 		public static object Convert(object value, Type to)
 		{
-			if (to == null)
+			if (to is null)
 				throw Error.ArgumentNull(nameof(to));
 
-			if (value == null)
+			if (value is null)
 				throw Error.ArgumentNull(nameof(value));
 
 			// No conversion necessary...

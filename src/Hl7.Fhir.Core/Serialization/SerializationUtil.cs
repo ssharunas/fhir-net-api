@@ -38,7 +38,7 @@ namespace Hl7.Fhir.Serialization
 
 		public static Uri UriValueOrNull(JToken attr)
 		{
-			if (attr == null)
+			if (attr is null)
 				return null;
 
 			var value = attr.Value<string>();

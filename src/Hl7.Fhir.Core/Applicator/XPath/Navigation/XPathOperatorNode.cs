@@ -26,10 +26,10 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 
 		private bool AreEqual(object a, object b)
 		{
-			if (a == null && b == null)
+			if (a is null && b is null)
 				return true;
 
-			if (a == null || b == null)
+			if (a is null || b is null)
 				return false;
 
 			if (a.GetType() != b.GetType())
@@ -43,13 +43,13 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 
 		private bool IsLess(object a, object b)
 		{
-			if (a == null && b == null)
+			if (a is null && b is null)
 				return false;
 
-			if (a == null)
+			if (a is null)
 				return true;
 
-			if (b == null)
+			if (b is null)
 				return false;
 
 			if (a.GetType() != b.GetType())

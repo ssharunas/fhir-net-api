@@ -178,7 +178,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationDispenseDispenseDosageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationDispenseDispenseDosageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(AdditionalInstructions, otherT.AdditionalInstructions)) return false;
@@ -269,7 +269,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationDispenseSubstitutionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Type, otherT.Type)) return false;
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationDispenseSubstitutionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Type, otherT.Type)) return false;
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
 				get { return StatusElement != null ? StatusElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						StatusElement = null;
 					else
 						StatusElement = new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>(value);
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
 				get { return WhenPreparedElement != null ? WhenPreparedElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						WhenPreparedElement = null;
 					else
 						WhenPreparedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -396,7 +396,7 @@ namespace Hl7.Fhir.Model
 				get { return WhenHandedOverElement != null ? WhenHandedOverElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						WhenHandedOverElement = null;
 					else
 						WhenHandedOverElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationDispenseDispenseComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationDispenseDispenseComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
@@ -524,7 +524,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus>(value);
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as MedicationDispense;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -616,7 +616,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as MedicationDispense;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

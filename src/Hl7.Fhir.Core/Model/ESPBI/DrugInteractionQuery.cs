@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Model.ESPBI
 		{
 			if (item != null)
 			{
-				if (Drugs == null)
+				if (Drugs is null)
 					Drugs = new List<DrugInteractionQueryItem>();
 
 				Drugs.Add(item);

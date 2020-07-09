@@ -68,7 +68,7 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 
 					if (values != null)
 					{
-						if (result == null)
+						if (result is null)
 							result = values;
 						else
 							result.AddRange(values);

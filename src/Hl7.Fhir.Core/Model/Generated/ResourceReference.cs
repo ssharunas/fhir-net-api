@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Model
 			get { return ReferenceElement != null ? ReferenceElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ReferenceElement = null;
 				else
 					ReferenceElement = new Hl7.Fhir.Model.FhirString(value);
@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
 			get { return DisplayElement != null ? DisplayElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DisplayElement = null;
 				else
 					DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as ResourceReference;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(ReferenceElement, otherT.ReferenceElement)) return false;
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as ResourceReference;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(ReferenceElement, otherT.ReferenceElement)) return false;

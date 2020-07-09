@@ -41,7 +41,7 @@ namespace Hl7.Fhir.Model
 	{
 		public static bool IsExactly(IDeepComparable a, IDeepComparable b)
 		{
-			if (a == null && b == null)
+			if (a is null && b is null)
 				return true;
 
 			if (a != null && b != null)
@@ -52,7 +52,7 @@ namespace Hl7.Fhir.Model
 
 		public static bool Matches(IDeepComparable a, IDeepComparable pattern)
 		{
-			if (pattern == null)
+			if (pattern is null)
 				return true;
 
 			if (a != null && pattern != null)
@@ -64,7 +64,7 @@ namespace Hl7.Fhir.Model
 		public static bool IsExactly<T>(this IEnumerable<T> source, IEnumerable<T> other)
 				where T : IDeepComparable
 		{
-			if (source == null && other == null)
+			if (source is null && other is null)
 				return true;
 
 			if (source != null && other != null)
@@ -81,7 +81,7 @@ namespace Hl7.Fhir.Model
 		public static bool Matches<T>(this IEnumerable<T> source, IEnumerable<T> pattern)
 					where T : IDeepComparable
 		{
-			if (pattern == null)
+			if (pattern is null)
 				return true;
 
 			if (source != null && pattern != null)

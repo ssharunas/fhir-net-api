@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Serialization.Xml
 										if (!string.IsNullOrEmpty(reader.Value))
 											value = reader.Value;
 
-										if (attributes == null)
+										if (attributes is null)
 											attributes = new List<Attr>();
 
 										attributes.Add(new Attr(reader.LocalName, value));

@@ -33,7 +33,7 @@ namespace Hl7.Fhir.Serialization
 
 		internal void Serialize(ClassMapping mapping, object instance, bool summary, SerializationMode mode = SerializationMode.AllMembers)
 		{
-			if (mapping == null)
+			if (mapping is null)
 				throw Error.ArgumentNull(nameof(mapping));
 
 			_current.WriteStartComplexContent();

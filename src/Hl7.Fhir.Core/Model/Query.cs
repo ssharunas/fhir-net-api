@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
 			get
 			{
 				var ext = Parameter.WithName(SEARCH_PARAM_SORT);
-				if (ext == null) return null;
+				if (ext is null) return null;
 
 				var result = new List<Tuple<string, SortOrder>>();
 
@@ -286,10 +286,10 @@ namespace Hl7.Fhir.Model
 
 		public Query AddParameter(string key, string value)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
-			if (value == null) throw Error.ArgumentNull(nameof(value));
+			if (key is null) throw Error.ArgumentNull(nameof(key));
+			if (value is null) throw Error.ArgumentNull(nameof(value));
 
-			if (Parameter == null) Parameter = new List<Extension>();
+			if (Parameter is null) Parameter = new List<Extension>();
 
 			Parameter.Add(BuildParamExtension(key, value));
 
@@ -305,9 +305,9 @@ namespace Hl7.Fhir.Model
 		/// of modifiers attached to it.</para><para>No exception is thrown when the parameters were not found and nothing was removed.</para></remarks>
 		internal void RemoveParameter(string key)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
+			if (key is null) throw Error.ArgumentNull(nameof(key));
 
-			if (Parameter == null) return;
+			if (Parameter is null) return;
 			Parameter.RemoveAll(ParamsExtensions.MatchParam(key));
 		}
 
@@ -328,8 +328,8 @@ namespace Hl7.Fhir.Model
 		/// given modifier, otherwise any parameter with the given name will be matched.</remarks>
 		public string GetSingleValue(string key)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
-			if (Parameter == null) return null;
+			if (key is null) throw Error.ArgumentNull(nameof(key));
+			if (Parameter is null) return null;
 
 			var extension = Parameter.SingleWithName(key);
 			return ExtractParamValue(extension);
@@ -345,8 +345,8 @@ namespace Hl7.Fhir.Model
 		/// given modifier, otherwise any parameter with the given name will be matched.</remarks>
 		public IEnumerable<string> GetValues(string key)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
-			if (Parameter == null) return null;
+			if (key is null) throw Error.ArgumentNull(nameof(key));
+			if (Parameter is null) return null;
 
 			var extension = Parameter.WithName(key);
 			return extension.Select(ext => ExtractParamValue(ext));
@@ -362,8 +362,8 @@ namespace Hl7.Fhir.Model
 		/// <returns></returns>
 		public static Extension BuildParamExtension(string key, string value)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
-			if (value == null) throw Error.ArgumentNull(nameof(value));
+			if (key is null) throw Error.ArgumentNull(nameof(key));
+			if (value is null) throw Error.ArgumentNull(nameof(value));
 
 			return new Extension(BuildParamUri(key), new FhirString(value));
 		}
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
 		/// <returns></returns>
 		public static string BuildParamUri(string paramKey)
 		{
-			if (paramKey == null) throw Error.ArgumentNull(nameof(paramKey));
+			if (paramKey is null) throw Error.ArgumentNull(nameof(paramKey));
 
 			return XmlNs.FHIR_URL_SEARCHPARAM + "#" + paramKey;
 		}
@@ -397,8 +397,8 @@ namespace Hl7.Fhir.Model
 		/// <returns>The name of the parameter, possibly including a modifier</returns>
 		public static string ExtractParamKey(Extension paramExt)
 		{
-			if (paramExt == null) throw Error.ArgumentNull(nameof(paramExt));
-			if (paramExt.Url == null) throw Error.Argument(nameof(paramExt), "Extension.url cannot be null");
+			if (paramExt is null) throw Error.ArgumentNull(nameof(paramExt));
+			if (paramExt.Url is null) throw Error.Argument(nameof(paramExt), "Extension.url cannot be null");
 
 			var uriString = paramExt.Url.ToString();
 
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
 
 		public Query WithName(string customQueryName)
 		{
-			if (customQueryName == null) throw Error.ArgumentNull(nameof(customQueryName));
+			if (customQueryName is null) throw Error.ArgumentNull(nameof(customQueryName));
 
 			QueryName = customQueryName;
 			return this;
@@ -457,7 +457,7 @@ namespace Hl7.Fhir.Model
 
 		public Query OrderBy(string paramName, SortOrder order = SortOrder.Ascending)
 		{
-			if (paramName == null) throw Error.ArgumentNull(nameof(paramName));
+			if (paramName is null) throw Error.ArgumentNull(nameof(paramName));
 
 			var sort = Sort ?? new List<Tuple<string, SortOrder>>();
 			sort.Add(Tuple.Create(paramName, order));
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Model
 			public bool Remove(string item)
 			{
 				var found = Wrapped.FirstOrDefault(ext => _matcher(ext) && ExtractParamValue(ext) == item);
-				if (found == null) return false;
+				if (found is null) return false;
 
 				return Wrapped.Remove(found);
 			}

@@ -65,10 +65,10 @@ namespace Hl7.Fhir.Introspection
 		// ValidationContext
 		protected override ValidationResult IsValid(object value, ValidationContext validationContext)
 		{
-			if (validationContext == null)
+			if (validationContext is null)
 				throw Error.ArgumentNull(nameof(validationContext));
 
-			if (value == null)
+			if (value is null)
 				return ValidationResult.Success;
 
 			// If we should not validate 'value's elements, return immediately

@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 			get { return UseElement != null ? UseElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.Address.AddressUse>(value);
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
 			get { return TextElement != null ? TextElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					TextElement = null;
 				else
 					TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
 			get { return LineElement != null ? LineElement.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					LineElement = null;
 				else
 					LineElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
 			get { return CityElement != null ? CityElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					CityElement = null;
 				else
 					CityElement = new Hl7.Fhir.Model.FhirString(value);
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
 			get { return StateElement != null ? StateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StateElement = null;
 				else
 					StateElement = new Hl7.Fhir.Model.FhirString(value);
@@ -220,7 +220,7 @@ namespace Hl7.Fhir.Model
 			get { return ZipElement != null ? ZipElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ZipElement = null;
 				else
 					ZipElement = new Hl7.Fhir.Model.FhirString(value);
@@ -245,7 +245,7 @@ namespace Hl7.Fhir.Model
 			get { return CountryElement != null ? CountryElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					CountryElement = null;
 				else
 					CountryElement = new Hl7.Fhir.Model.FhirString(value);
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Address;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Address;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;

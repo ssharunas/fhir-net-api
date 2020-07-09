@@ -17,11 +17,11 @@ namespace Hl7.Fhir.Applicator
 		{
 			get
 			{
-				if (_template == null)
+				if (_template is null)
 				{
 					using (var reader = GetTemplate())
 					{
-						if (reader == null)
+						if (reader is null)
 							throw Error.InvalidOperation("GetTemplate() returned null! Template was not found?");
 
 						_template = TemplateNode.Create(reader);
@@ -46,7 +46,7 @@ namespace Hl7.Fhir.Applicator
 
 		public virtual UpdateData<TDto> Update(FhirResponse response, Func<TDto, TDto> modify)
 		{
-			if (modify == null)
+			if (modify is null)
 				throw Error.ArgumentNull(nameof(modify));
 
 			var data = response?.GetBodyAsString();
@@ -56,7 +56,7 @@ namespace Hl7.Fhir.Applicator
 				var xml = FhirXmlNode.Create(FhirParser.XmlReaderFromString(data));
 				var context = GetSetter(true);
 
-				if (context == null)
+				if (context is null)
 					throw Error.InvalidOperation("GetSetter() returned null!");
 
 				TemplateNode.ReadData(xml, context);
@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Applicator
 				var xml = FhirXmlNode.Create(FhirParser.XmlReaderFromString(data));
 				var context = GetSetter(false);
 
-				if (context == null)
+				if (context is null)
 					throw Error.InvalidOperation("GetSetter() returned null!");
 
 				TemplateNode.ReadData(xml, context);

@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Model
 			get { return StartElement != null ? StartElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StartElement = null;
 				else
 					StartElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
 			get { return EndElement != null ? EndElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					EndElement = null;
 				else
 					EndElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Period;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(StartElement, otherT.StartElement)) return false;
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Period;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(StartElement, otherT.StartElement)) return false;

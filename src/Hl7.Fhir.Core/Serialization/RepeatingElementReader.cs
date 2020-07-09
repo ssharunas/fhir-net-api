@@ -18,7 +18,7 @@ namespace Hl7.Fhir.Serialization
 	{
 		public static object Deserialize(IFhirReader reader, PropertyMapping prop, string memberName, object existing = null)
 		{
-			if (prop == null)
+			if (prop is null)
 				throw Error.ArgumentNull(nameof(prop));
 
 			if (existing != null && !(existing is IList))
@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Serialization
 			else
 				throw Error.Format("Expecting to be either at a repeating complex element or an array when parsing a repeating member.", reader);
 
-			if (result == null)
+			if (result is null)
 				result = ReflectionHelper.CreateGenericList(prop.ElementType);
 
 			var position = 0;

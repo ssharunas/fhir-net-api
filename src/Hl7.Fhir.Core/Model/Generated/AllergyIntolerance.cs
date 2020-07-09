@@ -151,7 +151,7 @@ namespace Hl7.Fhir.Model
 			get { return Criticality_Element != null ? Criticality_Element.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					Criticality_Element = null;
 				else
 					Criticality_Element = new Code<Hl7.Fhir.Model.AllergyIntolerance.Criticality>(value);
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
 			get { return SensitivityType_Element != null ? SensitivityType_Element.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					SensitivityType_Element = null;
 				else
 					SensitivityType_Element = new Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityType>(value);
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
 			get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					RecordedDateElement = null;
 				else
 					RecordedDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus>(value);
@@ -310,7 +310,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as AllergyIntolerance;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -330,7 +330,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as AllergyIntolerance;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

@@ -80,7 +80,7 @@ namespace Hl7.Fhir.Model
 			get { return ManufacturerElement != null ? ManufacturerElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ManufacturerElement = null;
 				else
 					ManufacturerElement = new Hl7.Fhir.Model.FhirString(value);
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
 			get { return ModelElement != null ? ModelElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ModelElement = null;
 				else
 					ModelElement = new Hl7.Fhir.Model.FhirString(value);
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
 			get { return VersionElement != null ? VersionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					VersionElement = null;
 				else
 					VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
 			get { return ExpiryElement != null ? ExpiryElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ExpiryElement = null;
 				else
 					ExpiryElement = new Hl7.Fhir.Model.Date(value);
@@ -180,7 +180,7 @@ namespace Hl7.Fhir.Model
 			get { return UdiElement != null ? UdiElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UdiElement = null;
 				else
 					UdiElement = new Hl7.Fhir.Model.FhirString(value);
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
 			get { return LotNumberElement != null ? LotNumberElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					LotNumberElement = null;
 				else
 					LotNumberElement = new Hl7.Fhir.Model.FhirString(value);
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
 			get { return UrlElement != null ? UrlElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UrlElement = null;
 				else
 					UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -303,7 +303,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Device;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -326,7 +326,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Device;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

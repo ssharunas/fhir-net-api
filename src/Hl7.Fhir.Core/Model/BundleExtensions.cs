@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Model
 
 			if (!id.IsAbsoluteUri)
 			{
-				if (bundle.Links.Base == null)
+				if (bundle.Links.Base is null)
 					throw Error.Argument(nameof(reference), "Reference is a relative uri, so it needs a fhir-base link to be able to find entries by id or selflink");
 
 				id = new Uri(bundle.Links.Base, id);

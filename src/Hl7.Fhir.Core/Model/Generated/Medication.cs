@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationPackageContentComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Item, otherT.Item)) return false;
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationPackageContentComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Item, otherT.Item)) return false;
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationPackageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Container, otherT.Container)) return false;
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationPackageComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Container, otherT.Container)) return false;
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationProductIngredientComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Item, otherT.Item)) return false;
@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationProductIngredientComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Item, otherT.Item)) return false;
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as MedicationProductComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Form, otherT.Form)) return false;
@@ -318,7 +318,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as MedicationProductComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Form, otherT.Form)) return false;
@@ -348,7 +348,7 @@ namespace Hl7.Fhir.Model
 			get { return NameElement != null ? NameElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -380,7 +380,7 @@ namespace Hl7.Fhir.Model
 			get { return IsBrandElement != null ? IsBrandElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					IsBrandElement = null;
 				else
 					IsBrandElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
 			get { return KindElement != null ? KindElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					KindElement = null;
 				else
 					KindElement = new Code<Hl7.Fhir.Model.Medication.MedicationKind>(value);
@@ -462,7 +462,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Medication;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
@@ -479,7 +479,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Medication;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;

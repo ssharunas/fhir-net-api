@@ -16,14 +16,14 @@ namespace Hl7.Fhir.Validation
 	{
 		public static void Validate(object value, bool recurse = false)
 		{
-			if (value == null) throw Error.ArgumentNull(nameof(value));
+			if (value is null) throw Error.ArgumentNull(nameof(value));
 
 			Validator.ValidateObject(value, ValidationContextFactory.Create(value, null, recurse), true);
 		}
 
 		public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false)
 		{
-			if (value == null) throw Error.ArgumentNull(nameof(value));
+			if (value is null) throw Error.ArgumentNull(nameof(value));
 
 			var results = validationResults ?? new List<ValidationResult>();
 			return Validator.TryValidateObject(value, ValidationContextFactory.Create(value, null, recurse), results, true);

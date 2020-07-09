@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Rest
 
 		private static Tuple<string, string> SplitParam(string param)
 		{
-			if (param == null) throw Error.ArgumentNull(nameof(param));
+			if (param is null) throw Error.ArgumentNull(nameof(param));
 
 			string[] pair = param.Split('=');
 
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns></returns>
 		private static string MakeParam(string key, string value = null)
 		{
-			if (key == null) throw Error.ArgumentNull(nameof(key));
+			if (key is null) throw Error.ArgumentNull(nameof(key));
 
 			var result = Uri.EscapeDataString(key);
 
@@ -148,8 +148,8 @@ namespace Hl7.Fhir.Rest
 
 		private static string JoinParam(Tuple<string, string> kv)
 		{
-			if (kv == null) throw Error.ArgumentNull(nameof(kv));
-			if (kv.Item1 == null) throw Error.Argument(nameof(kv), "Key in tuple may not be null");
+			if (kv is null) throw Error.ArgumentNull(nameof(kv));
+			if (kv.Item1 is null) throw Error.Argument(nameof(kv), "Key in tuple may not be null");
 
 			return MakeParam(kv.Item1, kv.Item2);
 		}

@@ -108,7 +108,7 @@ namespace Hl7.Fhir.Model
 			get { return UseElement != null ? UseElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UseElement = null;
 				else
 					UseElement = new Code<Hl7.Fhir.Model.HumanName.NameUse>(value);
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
 			get { return TextElement != null ? TextElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					TextElement = null;
 				else
 					TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
 			get { return FamilyElement != null ? FamilyElement.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					FamilyElement = null;
 				else
 					FamilyElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
 			get { return GivenElement != null ? GivenElement.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					GivenElement = null;
 				else
 					GivenElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
 			get { return PrefixElement != null ? PrefixElement.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					PrefixElement = null;
 				else
 					PrefixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -237,7 +237,7 @@ namespace Hl7.Fhir.Model
 			get { return SuffixElement != null ? SuffixElement.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					SuffixElement = null;
 				else
 					SuffixElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -279,7 +279,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as HumanName;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(UseElement, otherT.UseElement)) return false;
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as HumanName;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(UseElement, otherT.UseElement)) return false;

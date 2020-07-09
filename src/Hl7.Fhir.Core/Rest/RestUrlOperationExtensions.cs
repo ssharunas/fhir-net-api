@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Rest
 
 		public static RestUrl Validate(this RestUrl url, string collection, string id = null)
 		{
-			if (id == null)
+			if (id is null)
 				return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE);
 			else
 				return new RestUrl(url).AddPath(collection, RestOperation.VALIDATE, id);
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Rest
 
 		public static RestUrl ResourceTags(this RestUrl url, string collection, string id, string vid = null)
 		{
-			if (vid == null)
+			if (vid is null)
 				return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS);
 			else
 				return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS);
@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Rest
 
 		public static RestUrl DeleteResourceTags(this RestUrl url, string collection, string id, string vid = null)
 		{
-			if (vid == null)
+			if (vid is null)
 				return new RestUrl(url).AddPath(collection, id, RestOperation.TAGS, RestOperation.DELETE);
 			else
 				return new RestUrl(url).AddPath(collection, id, RestOperation.HISTORY, vid, RestOperation.TAGS, RestOperation.DELETE);

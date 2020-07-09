@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.Procedure.ProcedureRelationshipType>(value);
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProcedureRelatedItemComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProcedureRelatedItemComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProcedurePerformerComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Person, otherT.Person)) return false;
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProcedurePerformerComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Person, otherT.Person)) return false;
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
 			get { return OutcomeElement != null ? OutcomeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					OutcomeElement = null;
 				else
 					OutcomeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -338,7 +338,7 @@ namespace Hl7.Fhir.Model
 			get { return FollowUpElement != null ? FollowUpElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					FollowUpElement = null;
 				else
 					FollowUpElement = new Hl7.Fhir.Model.FhirString(value);
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
 			get { return NotesElement != null ? NotesElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NotesElement = null;
 				else
 					NotesElement = new Hl7.Fhir.Model.FhirString(value);
@@ -413,7 +413,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Procedure;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -437,7 +437,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Procedure;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

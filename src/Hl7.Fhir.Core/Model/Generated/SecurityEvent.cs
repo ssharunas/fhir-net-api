@@ -403,7 +403,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -429,7 +429,7 @@ namespace Hl7.Fhir.Model
 				get { return ValueElement != null ? ValueElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ValueElement = null;
 					else
 						ValueElement = new Hl7.Fhir.Model.Base64Binary(value);
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventObjectDetailComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
@@ -471,7 +471,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventObjectDetailComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
@@ -520,7 +520,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType>(value);
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
 				get { return RoleElement != null ? RoleElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						RoleElement = null;
 					else
 						RoleElement = new Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole>(value);
@@ -570,7 +570,7 @@ namespace Hl7.Fhir.Model
 				get { return LifecycleElement != null ? LifecycleElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						LifecycleElement = null;
 					else
 						LifecycleElement = new Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle>(value);
@@ -602,7 +602,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -627,7 +627,7 @@ namespace Hl7.Fhir.Model
 				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -652,7 +652,7 @@ namespace Hl7.Fhir.Model
 				get { return QueryElement != null ? QueryElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						QueryElement = null;
 					else
 						QueryElement = new Hl7.Fhir.Model.Base64Binary(value);
@@ -698,7 +698,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventObjectComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -718,7 +718,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventObjectComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;
@@ -760,7 +760,7 @@ namespace Hl7.Fhir.Model
 				get { return SiteElement != null ? SiteElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SiteElement = null;
 					else
 						SiteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -786,7 +786,7 @@ namespace Hl7.Fhir.Model
 				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IdentifierElement = null;
 					else
 						IdentifierElement = new Hl7.Fhir.Model.FhirString(value);
@@ -825,7 +825,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventSourceComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(SiteElement, otherT.SiteElement)) return false;
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventSourceComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(SiteElement, otherT.SiteElement)) return false;
@@ -889,7 +889,7 @@ namespace Hl7.Fhir.Model
 				get { return ActionElement != null ? ActionElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ActionElement = null;
 					else
 						ActionElement = new Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventAction>(value);
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Model
 				get { return DateTimeElement != null ? DateTimeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DateTimeElement = null;
 					else
 						DateTimeElement = new Hl7.Fhir.Model.Instant(value);
@@ -940,7 +940,7 @@ namespace Hl7.Fhir.Model
 				get { return OutcomeElement != null ? OutcomeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						OutcomeElement = null;
 					else
 						OutcomeElement = new Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventOutcome>(value);
@@ -965,7 +965,7 @@ namespace Hl7.Fhir.Model
 				get { return OutcomeDescElement != null ? OutcomeDescElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						OutcomeDescElement = null;
 					else
 						OutcomeDescElement = new Hl7.Fhir.Model.FhirString(value);
@@ -999,7 +999,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventEventComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Type, otherT.Type)) return false;
@@ -1015,7 +1015,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventEventComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Type, otherT.Type)) return false;
@@ -1053,7 +1053,7 @@ namespace Hl7.Fhir.Model
 				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IdentifierElement = null;
 					else
 						IdentifierElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1078,7 +1078,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkType>(value);
@@ -1108,7 +1108,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventParticipantNetworkComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventParticipantNetworkComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
@@ -1170,7 +1170,7 @@ namespace Hl7.Fhir.Model
 				get { return UserIdElement != null ? UserIdElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UserIdElement = null;
 					else
 						UserIdElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1195,7 +1195,7 @@ namespace Hl7.Fhir.Model
 				get { return AltIdElement != null ? AltIdElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						AltIdElement = null;
 					else
 						AltIdElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1220,7 +1220,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1246,7 +1246,7 @@ namespace Hl7.Fhir.Model
 				get { return RequestorElement != null ? RequestorElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						RequestorElement = null;
 					else
 						RequestorElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1296,7 +1296,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventParticipantComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Role, otherT.Role)) return false;
@@ -1314,7 +1314,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SecurityEventParticipantComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Role, otherT.Role)) return false;
@@ -1389,7 +1389,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as SecurityEvent;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Event, otherT.Event)) return false;
@@ -1403,7 +1403,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as SecurityEvent;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Event, otherT.Event)) return false;

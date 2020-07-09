@@ -99,7 +99,7 @@ namespace Hl7.Fhir.Model
 				get { return DeletedElement != null ? DeletedElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DeletedElement = null;
 					else
 						DeletedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
 				get { return DateElement != null ? DateElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DateElement = null;
 					else
 						DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ListEntryComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Flag, otherT.Flag)) return false;
@@ -179,7 +179,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ListEntryComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Flag, otherT.Flag)) return false;
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
 			get { return DateElement != null ? DateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
 			get { return OrderedElement != null ? OrderedElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					OrderedElement = null;
 				else
 					OrderedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
 			get { return ModeElement != null ? ModeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ModeElement = null;
 				else
 					ModeElement = new Code<Hl7.Fhir.Model.List.ListMode>(value);
@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as List;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -364,7 +364,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as List;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

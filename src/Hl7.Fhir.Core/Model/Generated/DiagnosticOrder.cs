@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
 				get { return StatusElement != null ? StatusElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						StatusElement = null;
 					else
 						StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
@@ -214,7 +214,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as DiagnosticOrderItemComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as DiagnosticOrderItemComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -267,7 +267,7 @@ namespace Hl7.Fhir.Model
 				get { return StatusElement != null ? StatusElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						StatusElement = null;
 					else
 						StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
@@ -300,7 +300,7 @@ namespace Hl7.Fhir.Model
 				get { return DateTimeElement != null ? DateTimeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DateTimeElement = null;
 					else
 						DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as DiagnosticOrderEventComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(StatusElement, otherT.StatusElement)) return false;
@@ -354,7 +354,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as DiagnosticOrderEventComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(StatusElement, otherT.StatusElement)) return false;
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
 			get { return ClinicalNotesElement != null ? ClinicalNotesElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ClinicalNotesElement = null;
 				else
 					ClinicalNotesElement = new Hl7.Fhir.Model.FhirString(value);
@@ -453,7 +453,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus>(value);
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
 			get { return PriorityElement != null ? PriorityElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					PriorityElement = null;
 				else
 					PriorityElement = new Code<Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority>(value);
@@ -532,7 +532,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as DiagnosticOrder;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Subject, otherT.Subject)) return false;
@@ -552,7 +552,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as DiagnosticOrder;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Subject, otherT.Subject)) return false;

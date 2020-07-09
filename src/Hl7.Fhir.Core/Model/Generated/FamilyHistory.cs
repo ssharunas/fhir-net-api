@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
 				get { return NoteElement != null ? NoteElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NoteElement = null;
 					else
 						NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as FamilyHistoryRelationConditionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Type, otherT.Type)) return false;
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as FamilyHistoryRelationConditionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Type, otherT.Type)) return false;
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -222,7 +222,7 @@ namespace Hl7.Fhir.Model
 				get { return NoteElement != null ? NoteElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NoteElement = null;
 					else
 						NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as FamilyHistoryRelationComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
@@ -280,7 +280,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as FamilyHistoryRelationComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Model
 			get { return NoteElement != null ? NoteElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NoteElement = null;
 				else
 					NoteElement = new Hl7.Fhir.Model.FhirString(value);
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as FamilyHistory;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as FamilyHistory;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

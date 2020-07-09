@@ -63,7 +63,7 @@ namespace Hl7.Fhir.Applicator.Xml
 						case X_WRITE: IsWrite = attribute.Value?.ToLower() != "false"; break;
 						case X_ID: Id = XPath.XPath.Parse(attribute.Value, pos); break;
 						default:
-							if (_attributes == null)
+							if (_attributes is null)
 								_attributes = new List<Attribute>();
 							_attributes.Add(new Attribute(attribute));
 							break;
@@ -71,7 +71,7 @@ namespace Hl7.Fhir.Applicator.Xml
 				}
 			}
 
-			if (Id == null)
+			if (Id is null)
 				Id = TemplateNodeAutoIdGenerator.Generate(Name, attributes);
 		}
 
@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Applicator.Xml
 		{
 			get
 			{
-				if (_hasAnyData == null)
+				if (_hasAnyData is null)
 					_hasAnyData = HasDataInText || HasDataInAttributes || HasDataInChildren || Name == X_INCLUDE;
 
 				return _hasAnyData.Value;
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Applicator.Xml
 		{
 			get
 			{
-				if (_hasDataInAttributes == null)
+				if (_hasDataInAttributes is null)
 				{
 					_hasDataInAttributes = false;
 
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Applicator.Xml
 		{
 			get
 			{
-				if (_hasDataInChildren == null)
+				if (_hasDataInChildren is null)
 				{
 					_hasDataInChildren = false;
 
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 					if (child.Name == Name)
 					{
-						if (Id == null)
+						if (Id is null)
 							errors.Add($"Element is missing 'x-id'! Another element is found with same name '{Name}' at {child.Position}");
 						else if (child.Id?.ToString() == Id.ToString())
 							errors.Add($"Element's 'x-id' is not unique! Another element is found with same name '{Name}' and same x-id='{Id}' at {child.Position}");
@@ -298,7 +298,7 @@ namespace Hl7.Fhir.Applicator.Xml
 				}
 			}
 
-			if (parent == null && Name == X_INCLUDE && string.IsNullOrEmpty(Namespace))
+			if (parent is null && Name == X_INCLUDE && string.IsNullOrEmpty(Namespace))
 				errors.Add("Missing a namespace! Root element must contain a namespace (xmlns='xxx')");
 
 			return errors;
@@ -311,7 +311,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 			var warnings = new List<string>();
 
-			if ((_children == null || _children.Count == 0) && !HasAnyData && Name != "system")
+			if ((_children is null || _children.Count == 0) && !HasAnyData && Name != "system")
 				warnings.Add("Unmapped node.");
 
 			return warnings;
@@ -331,7 +331,7 @@ namespace Hl7.Fhir.Applicator.Xml
 						{
 							if (Id?.IsMatch(element) ?? true)
 							{
-								if (result == null)
+								if (result is null)
 									result = new List<IFhirXmlNode>();
 
 								result.Add(element);
@@ -450,13 +450,13 @@ namespace Hl7.Fhir.Applicator.Xml
 
 		private TemplateNode GetInclude(IDataContext context)
 		{
-			if (context == null)
+			if (context is null)
 				throw Error.ArgumentNull(nameof(context));
 
 			if (Name != X_INCLUDE)
 				throw Error.InvalidOperation($"Failed to include non-include node. Node has to be a '{X_INCLUDE}', but was '{Name}'.");
 
-			if (_include == null)
+			if (_include is null)
 			{
 				string source = GetAttributeValue(X_INCLUDE_SOURCE) ?? throw Error.Format("There is no source for template include!", Position);
 				using (var reader = context.GetInclude(source))
@@ -480,7 +480,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 					if (_children?.Count > 0)
 					{
-						if (_include._children == null || _include._children.Count == 0)
+						if (_include._children is null || _include._children.Count == 0)
 						{
 							_include._children = new List<TemplateNode>(_children);
 						}
@@ -535,7 +535,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 		private void UpdateList(IFhirXmlNode root, IList<IFhirXmlNode> existingNodes, TemplateNode child, IList<IDataGetterContext> allContexts)
 		{
-			if (allContexts == null || allContexts.Count == 0)
+			if (allContexts is null || allContexts.Count == 0)
 			{
 				if (existingNodes?.Count > 0)
 				{
@@ -675,7 +675,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 		public void Validate(TemplateNodeValidationResult context)
 		{
-			if (context == null)
+			if (context is null)
 				throw Error.ArgumentNull(nameof(context));
 
 			Validate(null, context, string.Empty, string.Empty, IsWrite, IsRead);
@@ -689,7 +689,7 @@ namespace Hl7.Fhir.Applicator.Xml
 				return;
 			}
 
-			if (node == null || !HasAnyData || !IsRead)
+			if (node is null || !HasAnyData || !IsRead)
 				return;
 
 			if (node.Name != Name)
@@ -707,7 +707,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 					var filtered = child.FilterElements(existingElements);
 
-					if (filtered == null || filtered.Count == 0)
+					if (filtered is null || filtered.Count == 0)
 						continue;
 
 					if (child.IsArray)
@@ -755,7 +755,7 @@ namespace Hl7.Fhir.Applicator.Xml
 				return;
 			}
 
-			if (node == null || !HasAnyData || !IsWrite)
+			if (node is null || !HasAnyData || !IsWrite)
 				return;
 
 			if (node.Name != Name)
@@ -777,7 +777,7 @@ namespace Hl7.Fhir.Applicator.Xml
 					{
 						UpdateList(node, filtered, child, context.GetArray(child.Foreach));
 					}
-					else if (filtered == null || filtered.Count == 0)
+					else if (filtered is null || filtered.Count == 0)
 					{
 						if (child.IsIfOk(context))
 							child.CreateElement(node, context);
@@ -804,7 +804,7 @@ namespace Hl7.Fhir.Applicator.Xml
 					{
 						var existing = node.Attribute(attibute.Key);
 
-						if (existing == null)
+						if (existing is null)
 						{
 							var value = ExtractData(attibute.Value, context);
 							if (!string.IsNullOrEmpty(value))

@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
 		/// one matching contained resource</returns>
 		public Resource FindContainedResource(string containedReference)
 		{
-			if (containedReference == null) throw Error.ArgumentNull(nameof(containedReference));
+			if (containedReference is null) throw Error.ArgumentNull(nameof(containedReference));
 			if (!containedReference.StartsWith("#")) throw Error.Argument(nameof(containedReference), "Reference is not a local anchored reference");
 
 			if (Contained != null)

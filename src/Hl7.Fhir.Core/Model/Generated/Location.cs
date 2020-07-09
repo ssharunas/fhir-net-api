@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
 				get { return LongitudeElement != null ? LongitudeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						LongitudeElement = null;
 					else
 						LongitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
 				get { return LatitudeElement != null ? LatitudeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						LatitudeElement = null;
 					else
 						LatitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
 				get { return AltitudeElement != null ? AltitudeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						AltitudeElement = null;
 					else
 						AltitudeElement = new Hl7.Fhir.Model.FhirDecimal(value);
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as LocationPositionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(LongitudeElement, otherT.LongitudeElement)) return false;
@@ -205,7 +205,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as LocationPositionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(LongitudeElement, otherT.LongitudeElement)) return false;
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
 			get { return NameElement != null ? NameElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
 			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Location.LocationStatus>(value);
@@ -370,7 +370,7 @@ namespace Hl7.Fhir.Model
 			get { return ModeElement != null ? ModeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ModeElement = null;
 				else
 					ModeElement = new Code<Hl7.Fhir.Model.Location.LocationMode>(value);
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Location;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -432,7 +432,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Location;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

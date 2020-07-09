@@ -97,7 +97,7 @@ namespace Hl7.Fhir.Model
 				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IdentifierElement = null;
 					else
 						IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
 				get { return OutcomeElement != null ? OutcomeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						OutcomeElement = null;
 					else
 						OutcomeElement = new Code<QueryOutcome>(value);
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
 				get { return TotalElement != null ? TotalElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TotalElement = null;
 					else
 						TotalElement = new Hl7.Fhir.Model.Integer(value);
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as QueryResponseComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as QueryResponseComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
 			get { return IdentifierElement != null ? IdentifierElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					IdentifierElement = null;
 				else
 					IdentifierElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Query;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Query;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;

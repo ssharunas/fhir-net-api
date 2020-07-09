@@ -12,7 +12,7 @@ namespace Hl7.Fhir.Model
 	{
 		public static bool Success(this OperationOutcome outcome)
 		{
-			if (outcome.Issue == null)
+			if (outcome.Issue is null)
 				return true;
 
 			foreach (var issue in outcome.Issue)

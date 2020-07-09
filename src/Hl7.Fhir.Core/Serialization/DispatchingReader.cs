@@ -25,7 +25,7 @@ namespace Hl7.Fhir.Serialization
 
 		private static object Deserialize(IFhirReader reader, PropertyMapping prop, string memberName, object existing, bool isArrayMode)
 		{
-			if (prop == null) throw Error.ArgumentNull(nameof(prop));
+			if (prop is null) throw Error.ArgumentNull(nameof(prop));
 
 			// ArrayMode avoid the dispatcher making nested calls into the RepeatingElementReader again
 			// when reading array elements. FHIR does not support nested arrays, and this avoids an endlessly
@@ -79,7 +79,7 @@ namespace Hl7.Fhir.Serialization
 			// assume the caller has Imported all types in the right (overriding) order.
 			ClassMapping result = SerializationConfig.Inspector.FindClassMappingForFhirDataType(typeName);
 
-			if (result == null)
+			if (result is null)
 				throw Error.Format($"Encountered polymorph member {memberName}, which uses unknown datatype {typeName}", reader);
 
 			return result;

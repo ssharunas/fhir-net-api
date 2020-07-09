@@ -22,7 +22,7 @@ namespace Hl7.Fhir.Introspection
 
 		public PropertyMapping(PropertyInfo prop)
 		{
-			if (prop == null)
+			if (prop is null)
 				throw Error.ArgumentNull(nameof(prop));
 
 			_prop = prop;
@@ -92,14 +92,14 @@ namespace Hl7.Fhir.Introspection
 
 		public bool MatchesSuffixedName(string suffixedName)
 		{
-			if (suffixedName == null) throw Error.ArgumentNull(nameof(suffixedName));
+			if (suffixedName is null) throw Error.ArgumentNull(nameof(suffixedName));
 
 			return Choice == ChoiceType.DatatypeChoice && suffixedName.ToUpperInvariant().StartsWith(Name.ToUpperInvariant());
 		}
 
 		public string GetChoiceSuffixFromName(string suffixedName)
 		{
-			if (suffixedName == null) throw Error.ArgumentNull((suffixedName));
+			if (suffixedName is null) throw Error.ArgumentNull((suffixedName));
 
 			if (MatchesSuffixedName(suffixedName))
 				return suffixedName.Remove(0, Name.Length);
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Introspection
 
 		public object GetValue(object instance)
 		{
-			if (_getter == null)
+			if (_getter is null)
 			{
 				var input = Expression.Parameter(typeof(object));
 				var casted = Expression.Convert(input, _prop.DeclaringType);
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Introspection
 
 		public void SetValue(object instance, object value)
 		{
-			if (_setter == null)
+			if (_setter is null)
 			{
 				var valueInput = Expression.Parameter(typeof(object));
 				var valueCasted = Expression.Convert(valueInput, _prop.PropertyType);

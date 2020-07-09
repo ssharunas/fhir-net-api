@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Introspection
 
 		public void Import(Assembly assembly)
 		{
-			if (assembly == null)
+			if (assembly is null)
 				throw Error.ArgumentNull(nameof(assembly));
 
 			if (Attribute.GetCustomAttribute(assembly, typeof(NotMappedAttribute)) != null)
@@ -76,7 +76,7 @@ namespace Hl7.Fhir.Introspection
 			{
 				mapping = FindEnumMappingByType(type);
 
-				if (mapping == null)
+				if (mapping is null)
 				{
 					mapping = EnumMapping.Create(type);
 					_enumMappingsByType[type] = mapping;
@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Introspection
 			lock (lockObject)
 			{
 				mapping = FindClassMappingByType(type);
-				if (mapping == null)
+				if (mapping is null)
 				{
 					mapping = ClassMapping.Create(type);
 					_classMappingsByType[type] = mapping;
@@ -129,7 +129,7 @@ namespace Hl7.Fhir.Introspection
 
 		public EnumMapping FindEnumMappingByType(Type type)
 		{
-			if (type == null)
+			if (type is null)
 				throw Error.ArgumentNull(nameof(type));
 
 			if (!type.IsEnum)

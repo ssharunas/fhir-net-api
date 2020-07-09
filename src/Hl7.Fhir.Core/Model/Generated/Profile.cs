@@ -221,7 +221,7 @@ namespace Hl7.Fhir.Model
 				get { return ShortElement != null ? ShortElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ShortElement = null;
 					else
 						ShortElement = new Hl7.Fhir.Model.FhirString(value);
@@ -247,7 +247,7 @@ namespace Hl7.Fhir.Model
 				get { return FormalElement != null ? FormalElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						FormalElement = null;
 					else
 						FormalElement = new Hl7.Fhir.Model.FhirString(value);
@@ -272,7 +272,7 @@ namespace Hl7.Fhir.Model
 				get { return CommentsElement != null ? CommentsElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CommentsElement = null;
 					else
 						CommentsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
 				get { return RequirementsElement != null ? RequirementsElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						RequirementsElement = null;
 					else
 						RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -323,7 +323,7 @@ namespace Hl7.Fhir.Model
 				get { return SynonymElement != null ? SynonymElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SynonymElement = null;
 					else
 						SynonymElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
 				get { return MinElement != null ? MinElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						MinElement = null;
 					else
 						MinElement = new Hl7.Fhir.Model.Integer(value);
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
 				get { return MaxElement != null ? MaxElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						MaxElement = null;
 					else
 						MaxElement = new Hl7.Fhir.Model.FhirString(value);
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
 				get { return NameReferenceElement != null ? NameReferenceElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameReferenceElement = null;
 					else
 						NameReferenceElement = new Hl7.Fhir.Model.FhirString(value);
@@ -449,7 +449,7 @@ namespace Hl7.Fhir.Model
 				get { return MaxLengthElement != null ? MaxLengthElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						MaxLengthElement = null;
 					else
 						MaxLengthElement = new Hl7.Fhir.Model.Integer(value);
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
 				get { return ConditionElement != null ? ConditionElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ConditionElement = null;
 					else
 						ConditionElement = new List<Hl7.Fhir.Model.Id>(value.Select(elem => new Hl7.Fhir.Model.Id(elem)));
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
 				get { return MustSupportElement != null ? MustSupportElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						MustSupportElement = null;
 					else
 						MustSupportElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -534,7 +534,7 @@ namespace Hl7.Fhir.Model
 				get { return IsModifierElement != null ? IsModifierElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IsModifierElement = null;
 					else
 						IsModifierElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -595,7 +595,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(ShortElement, otherT.ShortElement)) return false;
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(ShortElement, otherT.ShortElement)) return false;
@@ -674,7 +674,7 @@ namespace Hl7.Fhir.Model
 				get { return DiscriminatorElement != null ? DiscriminatorElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DiscriminatorElement = null;
 					else
 						DiscriminatorElement = new Hl7.Fhir.Model.Id(value);
@@ -700,7 +700,7 @@ namespace Hl7.Fhir.Model
 				get { return OrderedElement != null ? OrderedElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						OrderedElement = null;
 					else
 						OrderedElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -726,7 +726,7 @@ namespace Hl7.Fhir.Model
 				get { return RulesElement != null ? RulesElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						RulesElement = null;
 					else
 						RulesElement = new Code<Hl7.Fhir.Model.Profile.SlicingRules>(value);
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ElementSlicingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(DiscriminatorElement, otherT.DiscriminatorElement)) return false;
@@ -770,7 +770,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ElementSlicingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(DiscriminatorElement, otherT.DiscriminatorElement)) return false;
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Hl7.Fhir.Model.Code(value);
@@ -831,7 +831,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -856,7 +856,7 @@ namespace Hl7.Fhir.Model
 				get { return PublishElement != null ? PublishElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						PublishElement = null;
 					else
 						PublishElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -881,7 +881,7 @@ namespace Hl7.Fhir.Model
 				get { return PurposeElement != null ? PurposeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						PurposeElement = null;
 					else
 						PurposeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -931,7 +931,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProfileStructureComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
@@ -947,7 +947,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProfileStructureComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
@@ -986,7 +986,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1012,7 +1012,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Hl7.Fhir.Model.Code(value);
@@ -1038,7 +1038,7 @@ namespace Hl7.Fhir.Model
 				get { return DocumentationElement != null ? DocumentationElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DocumentationElement = null;
 					else
 						DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1063,7 +1063,7 @@ namespace Hl7.Fhir.Model
 				get { return XpathElement != null ? XpathElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						XpathElement = null;
 					else
 						XpathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1089,7 +1089,7 @@ namespace Hl7.Fhir.Model
 				get { return TargetElement != null ? TargetElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TargetElement = null;
 					else
 						TargetElement = new List<Hl7.Fhir.Model.Code>(value.Select(elem => new Hl7.Fhir.Model.Code(elem)));
@@ -1122,7 +1122,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProfileStructureSearchParamComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
@@ -1137,7 +1137,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProfileStructureSearchParamComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
@@ -1175,7 +1175,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1201,7 +1201,7 @@ namespace Hl7.Fhir.Model
 				get { return DocumentationElement != null ? DocumentationElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DocumentationElement = null;
 					else
 						DocumentationElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1240,7 +1240,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProfileQueryComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
@@ -1253,7 +1253,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProfileQueryComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
@@ -1289,7 +1289,7 @@ namespace Hl7.Fhir.Model
 				get { return CodeElement != null ? CodeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CodeElement = null;
 					else
 						CodeElement = new Hl7.Fhir.Model.Code(value);
@@ -1314,7 +1314,7 @@ namespace Hl7.Fhir.Model
 				get { return ProfileElement != null ? ProfileElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ProfileElement = null;
 					else
 						ProfileElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -1340,7 +1340,7 @@ namespace Hl7.Fhir.Model
 				get { return AggregationElement != null ? AggregationElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						AggregationElement = null;
 					else
 						AggregationElement = new List<Code<Hl7.Fhir.Model.Profile.AggregationMode>>(value.Select(elem => new Code<Hl7.Fhir.Model.Profile.AggregationMode>(elem)));
@@ -1371,7 +1371,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as TypeRefComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
@@ -1384,7 +1384,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as TypeRefComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
@@ -1420,7 +1420,7 @@ namespace Hl7.Fhir.Model
 				get { return IdentityElement != null ? IdentityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IdentityElement = null;
 					else
 						IdentityElement = new Hl7.Fhir.Model.Id(value);
@@ -1445,7 +1445,7 @@ namespace Hl7.Fhir.Model
 				get { return UriElement != null ? UriElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UriElement = null;
 					else
 						UriElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -1470,7 +1470,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1495,7 +1495,7 @@ namespace Hl7.Fhir.Model
 				get { return CommentsElement != null ? CommentsElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CommentsElement = null;
 					else
 						CommentsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1527,7 +1527,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProfileMappingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
@@ -1541,7 +1541,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProfileMappingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
@@ -1578,7 +1578,7 @@ namespace Hl7.Fhir.Model
 				get { return IdentityElement != null ? IdentityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IdentityElement = null;
 					else
 						IdentityElement = new Hl7.Fhir.Model.Id(value);
@@ -1604,7 +1604,7 @@ namespace Hl7.Fhir.Model
 				get { return MapElement != null ? MapElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						MapElement = null;
 					else
 						MapElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1634,7 +1634,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionMappingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(IdentityElement, otherT.IdentityElement)) return false;
@@ -1646,7 +1646,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionMappingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(IdentityElement, otherT.IdentityElement)) return false;
@@ -1681,7 +1681,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1707,7 +1707,7 @@ namespace Hl7.Fhir.Model
 				get { return IsExtensibleElement != null ? IsExtensibleElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						IsExtensibleElement = null;
 					else
 						IsExtensibleElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -1732,7 +1732,7 @@ namespace Hl7.Fhir.Model
 				get { return ConformanceElement != null ? ConformanceElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ConformanceElement = null;
 					else
 						ConformanceElement = new Code<Hl7.Fhir.Model.Profile.BindingConformance>(value);
@@ -1757,7 +1757,7 @@ namespace Hl7.Fhir.Model
 				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1798,7 +1798,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionBindingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(NameElement, otherT.NameElement)) return false;
@@ -1813,7 +1813,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionBindingComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(NameElement, otherT.NameElement)) return false;
@@ -1851,7 +1851,7 @@ namespace Hl7.Fhir.Model
 				get { return KeyElement != null ? KeyElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						KeyElement = null;
 					else
 						KeyElement = new Hl7.Fhir.Model.Id(value);
@@ -1876,7 +1876,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1902,7 +1902,7 @@ namespace Hl7.Fhir.Model
 				get { return SeverityElement != null ? SeverityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SeverityElement = null;
 					else
 						SeverityElement = new Code<Hl7.Fhir.Model.Profile.ConstraintSeverity>(value);
@@ -1928,7 +1928,7 @@ namespace Hl7.Fhir.Model
 				get { return HumanElement != null ? HumanElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						HumanElement = null;
 					else
 						HumanElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1954,7 +1954,7 @@ namespace Hl7.Fhir.Model
 				get { return XpathElement != null ? XpathElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						XpathElement = null;
 					else
 						XpathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1987,7 +1987,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionConstraintComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(KeyElement, otherT.KeyElement)) return false;
@@ -2002,7 +2002,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ElementDefinitionConstraintComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(KeyElement, otherT.KeyElement)) return false;
@@ -2040,7 +2040,7 @@ namespace Hl7.Fhir.Model
 				get { return PathElement != null ? PathElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						PathElement = null;
 					else
 						PathElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2066,7 +2066,7 @@ namespace Hl7.Fhir.Model
 				get { return RepresentationElement != null ? RepresentationElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						RepresentationElement = null;
 					else
 						RepresentationElement = new List<Code<Hl7.Fhir.Model.Profile.PropertyRepresentation>>(value.Select(elem => new Code<Hl7.Fhir.Model.Profile.PropertyRepresentation>(elem)));
@@ -2091,7 +2091,7 @@ namespace Hl7.Fhir.Model
 				get { return NameElement != null ? NameElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NameElement = null;
 					else
 						NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2138,7 +2138,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ElementComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(PathElement, otherT.PathElement)) return false;
@@ -2153,7 +2153,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ElementComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(PathElement, otherT.PathElement)) return false;
@@ -2191,7 +2191,7 @@ namespace Hl7.Fhir.Model
 				get { return CodeElement != null ? CodeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CodeElement = null;
 					else
 						CodeElement = new Hl7.Fhir.Model.Code(value);
@@ -2216,7 +2216,7 @@ namespace Hl7.Fhir.Model
 				get { return DisplayElement != null ? DisplayElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DisplayElement = null;
 					else
 						DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2242,7 +2242,7 @@ namespace Hl7.Fhir.Model
 				get { return ContextTypeElement != null ? ContextTypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ContextTypeElement = null;
 					else
 						ContextTypeElement = new Code<Hl7.Fhir.Model.Profile.ExtensionContext>(value);
@@ -2268,7 +2268,7 @@ namespace Hl7.Fhir.Model
 				get { return ContextElement != null ? ContextElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ContextElement = null;
 					else
 						ContextElement = new List<Hl7.Fhir.Model.FhirString>(value.Select(elem => new Hl7.Fhir.Model.FhirString(elem)));
@@ -2309,7 +2309,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProfileExtensionDefnComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(CodeElement, otherT.CodeElement)) return false;
@@ -2324,7 +2324,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProfileExtensionDefnComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(CodeElement, otherT.CodeElement)) return false;
@@ -2357,7 +2357,7 @@ namespace Hl7.Fhir.Model
 			get { return IdentifierElement != null ? IdentifierElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					IdentifierElement = null;
 				else
 					IdentifierElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2382,7 +2382,7 @@ namespace Hl7.Fhir.Model
 			get { return VersionElement != null ? VersionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					VersionElement = null;
 				else
 					VersionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2408,7 +2408,7 @@ namespace Hl7.Fhir.Model
 			get { return NameElement != null ? NameElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2433,7 +2433,7 @@ namespace Hl7.Fhir.Model
 			get { return PublisherElement != null ? PublisherElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					PublisherElement = null;
 				else
 					PublisherElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2466,7 +2466,7 @@ namespace Hl7.Fhir.Model
 			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2500,7 +2500,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Profile.ResourceProfileStatus>(value);
@@ -2525,7 +2525,7 @@ namespace Hl7.Fhir.Model
 			get { return ExperimentalElement != null ? ExperimentalElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ExperimentalElement = null;
 				else
 					ExperimentalElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -2550,7 +2550,7 @@ namespace Hl7.Fhir.Model
 			get { return DateElement != null ? DateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -2575,7 +2575,7 @@ namespace Hl7.Fhir.Model
 			get { return RequirementsElement != null ? RequirementsElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					RequirementsElement = null;
 				else
 					RequirementsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -2600,7 +2600,7 @@ namespace Hl7.Fhir.Model
 			get { return FhirVersionElement != null ? FhirVersionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					FhirVersionElement = null;
 				else
 					FhirVersionElement = new Hl7.Fhir.Model.Id(value);
@@ -2676,7 +2676,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Profile;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(IdentifierElement, otherT.IdentifierElement)) return false;
@@ -2702,7 +2702,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Profile;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(IdentifierElement, otherT.IdentifierElement)) return false;

@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
 				get { return SeverityElement != null ? SeverityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SeverityElement = null;
 					else
 						SeverityElement = new Code<Hl7.Fhir.Model.AdverseReaction.ReactionSeverity>(value);
@@ -185,7 +185,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as AdverseReactionSymptomComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -197,7 +197,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as AdverseReactionSymptomComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -231,7 +231,7 @@ namespace Hl7.Fhir.Model
 				get { return DateElement != null ? DateElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DateElement = null;
 					else
 						DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -256,7 +256,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.AdverseReaction.ExposureType>(value);
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
 				get { return CausalityExpectationElement != null ? CausalityExpectationElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						CausalityExpectationElement = null;
 					else
 						CausalityExpectationElement = new Code<Hl7.Fhir.Model.AdverseReaction.CausalityExpectation>(value);
@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as AdverseReactionExposureComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(DateElement, otherT.DateElement)) return false;
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as AdverseReactionExposureComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(DateElement, otherT.DateElement)) return false;
@@ -375,7 +375,7 @@ namespace Hl7.Fhir.Model
 			get { return DateElement != null ? DateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
 			get { return DidNotOccurFlagElement != null ? DidNotOccurFlagElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DidNotOccurFlagElement = null;
 				else
 					DidNotOccurFlagElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as AdverseReaction;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -486,7 +486,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as AdverseReaction;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

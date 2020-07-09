@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Serialization
 		{
 			var complex = Current as JObject;
 
-			if (complex == null)
+			if (complex is null)
 				throw Error.Format("Need to be at a complex object to list child members", this);
 
 			foreach (var member in complex)
@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Serialization
 		{
 			var array = Current as JArray;
 
-			if (array == null)
+			if (array is null)
 				throw Error.Format("Need to be at an array to list elements", GetLineInfo(Current));
 
 			foreach (var element in array)

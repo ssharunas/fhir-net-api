@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
 				get { return TitleElement != null ? TitleElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TitleElement = null;
 					else
 						TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -194,7 +194,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as SectionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(TitleElement, otherT.TitleElement)) return false;
@@ -209,7 +209,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as SectionComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(TitleElement, otherT.TitleElement)) return false;
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as CompositionEventComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -289,7 +289,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as CompositionEventComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -325,7 +325,7 @@ namespace Hl7.Fhir.Model
 				get { return ModeElement != null ? ModeElement.Select(elem => elem.Value) : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ModeElement = null;
 					else
 						ModeElement = new List<Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>>(value.Select(elem => new Code<Hl7.Fhir.Model.Composition.CompositionAttestationMode>(elem)));
@@ -350,7 +350,7 @@ namespace Hl7.Fhir.Model
 				get { return TimeElement != null ? TimeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TimeElement = null;
 					else
 						TimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as CompositionAttesterComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(ModeElement, otherT.ModeElement)) return false;
@@ -402,7 +402,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as CompositionAttesterComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(ModeElement, otherT.ModeElement)) return false;
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
 			get { return DateElement != null ? DateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateElement = null;
 				else
 					DateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -481,7 +481,7 @@ namespace Hl7.Fhir.Model
 			get { return TitleElement != null ? TitleElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					TitleElement = null;
 				else
 					TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -507,7 +507,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Composition.CompositionStatus>(value);
@@ -614,7 +614,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Composition;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -638,7 +638,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Composition;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

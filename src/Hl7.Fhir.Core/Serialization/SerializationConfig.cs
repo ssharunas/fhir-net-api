@@ -23,7 +23,7 @@ namespace Hl7.Fhir.Serialization
 		{
 			get
 			{
-				if (_inspector == null)
+				if (_inspector is null)
 				{
 					_inspector = new ModelInspector();
 					_inspector.Import(typeof(Resource).Assembly);

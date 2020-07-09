@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 
 		private static decimal ToNumber(object obj)
 		{
-			if (obj == null)
+			if (obj is null)
 				return 0;
 
 			if (obj is decimal dec)
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 
 		private static string ToString(object obj)
 		{
-			if (obj == null)
+			if (obj is null)
 				return string.Empty;
 
 			return obj.ToString();
@@ -147,7 +147,7 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 
 		private static string ToString(IEnumerable<object> obj)
 		{
-			if (obj == null)
+			if (obj is null)
 				return string.Empty;
 
 			string result = null;

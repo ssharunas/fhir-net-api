@@ -111,12 +111,12 @@ namespace Hl7.Fhir.Serialization.Xml
 
 		internal static string ToXml(IFhirXmlNode node, string prefix)
 		{
-			if (node == null)
+			if (node is null)
 				return null;
 
 			StringBuilder result = new StringBuilder(prefix).Append("<").Append(node.Name);
 
-			if (!string.IsNullOrEmpty(node.Namespace) && (node.Parent == null || node.Parent.Namespace != node.Namespace))
+			if (!string.IsNullOrEmpty(node.Namespace) && (node.Parent is null || node.Parent.Namespace != node.Namespace))
 			{
 				result.Append($" xmlns=\"{node.Namespace}\"");
 			}

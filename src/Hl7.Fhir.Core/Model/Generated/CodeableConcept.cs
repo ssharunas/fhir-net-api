@@ -72,7 +72,7 @@ namespace Hl7.Fhir.Model
 			get { return TextElement != null ? TextElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					TextElement = null;
 				else
 					TextElement = new Hl7.Fhir.Model.FhirString(value);
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as CodeableConcept;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Coding, otherT.Coding)) return false;
@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as CodeableConcept;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Coding, otherT.Coding)) return false;

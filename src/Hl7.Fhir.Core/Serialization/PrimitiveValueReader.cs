@@ -15,7 +15,7 @@ namespace Hl7.Fhir.Serialization
 	{
 		internal static object Deserialize(IFhirReader reader, Type nativeType)
 		{
-			if (nativeType == null)
+			if (nativeType is null)
 				throw Error.ArgumentNull(nameof(nativeType));
 
 			if (reader.IsPrimitive())

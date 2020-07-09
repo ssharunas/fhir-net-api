@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Rest
 		/// </summary>
 		public FhirClient(Uri endpoint)
 		{
-			if (endpoint == null)
+			if (endpoint is null)
 				throw Error.ArgumentNull(nameof(endpoint));
 
 			if (!endpoint.OriginalString.EndsWith("/"))
@@ -117,7 +117,7 @@ namespace Hl7.Fhir.Rest
 		private Uri makeAbsolute(Uri location = null)
 		{
 			// If called without a location, just return the base endpoint
-			if (location == null) return Endpoint;
+			if (location is null) return Endpoint;
 
 			// If the location is absolute, verify whether it is within the endpoint
 			if (location.IsAbsoluteUri)
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Rest
 			var collection = ModelInfo.GetCollectionName<TResource>();
 			FhirRequest req;
 
-			if (id == null)
+			if (id is null)
 			{
 				// A normal create
 				var rl = new RestUrl(Endpoint).ForCollection(collection);
@@ -190,7 +190,7 @@ namespace Hl7.Fhir.Rest
 		private static string getCollectionFromLocation(Uri location)
 		{
 			var collection = new ResourceIdentity(location).Collection;
-			if (collection == null) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the resource type in its path");
+			if (collection is null) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the resource type in its path");
 
 			return collection;
 		}
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Rest
 		private static string getIdFromLocation(Uri location)
 		{
 			var id = new ResourceIdentity(location).Id;
-			if (id == null) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the logical id in its path");
+			if (id is null) throw Error.Argument(nameof(location), "Must be a FHIR REST url containing the logical id in its path");
 
 			return id;
 		}
@@ -207,11 +207,11 @@ namespace Hl7.Fhir.Rest
 		{
 			RestUrl location;
 
-			if (collection == null)
+			if (collection is null)
 				location = new RestUrl(Endpoint).ServerHistory();
 			else
 			{
-				location = (id == null) ?
+				location = (id is null) ?
 					new RestUrl(Endpoint).CollectionHistory(collection) :
 					new RestUrl(Endpoint).ResourceHistory(collection, id);
 			}
@@ -261,11 +261,11 @@ namespace Hl7.Fhir.Rest
 		{
 			RestUrl location = new RestUrl(Endpoint);
 
-			if (collection == null)
+			if (collection is null)
 				location = location.ServerTags();
 			else
 			{
-				if (id == null)
+				if (id is null)
 					location = location.CollectionTags(collection);
 				else
 					location = location.ResourceTags(collection, id, version);
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Rest
 		/// </remarks>
 		public ResourceEntry<TResource> Create<TResource>(TResource resource, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
 
 			return internalCreate<TResource>(resource, tags, null, refresh);
 		}
@@ -336,8 +336,8 @@ namespace Hl7.Fhir.Rest
 		/// </remarks>
 		public ResourceEntry<TResource> Create<TResource>(TResource resource, string id, IEnumerable<Tag> tags = null, bool refresh = false) where TResource : Resource, new()
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
-			if (id == null) throw Error.ArgumentNull(nameof(id), "Must supply a client-assigned id");
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
+			if (id is null) throw Error.ArgumentNull(nameof(id), "Must supply a client-assigned id");
 
 			return internalCreate<TResource>(resource, tags, id, refresh);
 		}
@@ -352,7 +352,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>A resource entry containing up-to-date data and metadata.</returns>
 		internal ResourceEntry<TResource> Refresh<TResource>(ResourceEntry<TResource> entry, bool versionSpecific = false) where TResource : Resource, new()
 		{
-			if (entry == null) throw Error.ArgumentNull(nameof(entry));
+			if (entry is null) throw Error.ArgumentNull(nameof(entry));
 
 			if (!versionSpecific)
 				return Read<TResource>(entry.Id);
@@ -371,7 +371,7 @@ namespace Hl7.Fhir.Rest
 		/// url, it must reference an address within the endpoint.</returns>
 		public ResourceEntry<TResource> Read<TResource>(Uri location) where TResource : Resource, new()
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 
 			var request = createFhirRequest(makeAbsolute(location), "GET");
 
@@ -389,7 +389,7 @@ namespace Hl7.Fhir.Rest
 		/// url, it must reference an address within the endpoint.</returns>
 		public ResourceEntry<TResource> Read<TResource>(string location) where TResource : Resource, new()
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 			return Read<TResource>(new Uri(location, UriKind.RelativeOrAbsolute));
 		}
 
@@ -404,7 +404,7 @@ namespace Hl7.Fhir.Rest
 		/// url, it must reference an address within the endpoint.</returns>
 		public ResourceEntry Read(Uri location)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 
 			var collection = getCollectionFromLocation(location);
 
@@ -423,7 +423,7 @@ namespace Hl7.Fhir.Rest
 		/// url, it must reference an address within the endpoint.</returns>
 		public ResourceEntry Read(string location)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 			return Read(new Uri(location, UriKind.RelativeOrAbsolute));
 		}
 
@@ -443,9 +443,9 @@ namespace Hl7.Fhir.Rest
 		public ResourceEntry<TResource> Update<TResource>(ResourceEntry<TResource> entry, bool refresh = false)
 			where TResource : Resource, new()
 		{
-			if (entry == null) throw Error.ArgumentNull(nameof(entry));
-			if (entry.Resource == null) throw Error.Argument(nameof(entry), "Entry does not contain a Resource to update");
-			if (entry.Id == null) throw Error.Argument(nameof(entry), "Entry needs a non-null entry.id to send the update to");
+			if (entry is null) throw Error.ArgumentNull(nameof(entry));
+			if (entry.Resource is null) throw Error.Argument(nameof(entry), "Entry does not contain a Resource to update");
+			if (entry.Id is null) throw Error.Argument(nameof(entry), "Entry needs a non-null entry.id to send the update to");
 
 			var req = createFhirRequest(entry.Id, "PUT");
 			req.SetBody(entry.Resource, PreferredFormat);
@@ -506,8 +506,8 @@ namespace Hl7.Fhir.Rest
 		public ResourceEntry<TResource> Update<TResource>(Uri location, TResource data, bool refresh = false)
 			where TResource : Resource, new()
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
-			if (data == null) throw Error.ArgumentNull(nameof(data));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
+			if (data is null) throw Error.ArgumentNull(nameof(data));
 
 			ResourceEntry<TResource> entry = new ResourceEntry<TResource>(makeAbsolute(location), DateTimeOffset.Now, data);
 			return Update(entry, refresh);
@@ -530,8 +530,8 @@ namespace Hl7.Fhir.Rest
 		public ResourceEntry<TResource> Update<TResource>(string location, TResource data, bool refresh = false)
 			where TResource : Resource, new()
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
-			if (data == null) throw Error.ArgumentNull(nameof(data));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
+			if (data is null) throw Error.ArgumentNull(nameof(data));
 
 			return Update<TResource>(new Uri(location, UriKind.RelativeOrAbsolute), data, refresh);
 		}
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Rest
 		/// already deleted).</returns>
 		public void Delete(Uri location)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 
 			var req = createFhirRequest(makeAbsolute(location), "DELETE");
 			doRequest(req, HttpStatusCode.NoContent, resp => true);
@@ -566,8 +566,8 @@ namespace Hl7.Fhir.Rest
 		/// already deleted).</returns>
 		public void Delete(ResourceEntry entry)
 		{
-			if (entry == null) throw Error.ArgumentNull(nameof(entry));
-			if (entry.Id == null) throw Error.Argument(nameof(entry), "Entry must have an id");
+			if (entry is null) throw Error.ArgumentNull(nameof(entry));
+			if (entry.Id is null) throw Error.Argument(nameof(entry), "Entry must have an id");
 
 			Delete(entry.Id);
 		}
@@ -597,7 +597,7 @@ namespace Hl7.Fhir.Rest
 		/// ResourceEntries and DeletedEntries.</returns>
 		public Bundle History(Uri location, DateTimeOffset? since = null, int? pageSize = null)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Rest
 
 		public Bundle History(string location, DateTimeOffset? since = null, int? pageSize = null)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 			Uri uri = new Uri(location, UriKind.Relative);
 
 			return History(uri, since, pageSize);
@@ -623,7 +623,7 @@ namespace Hl7.Fhir.Rest
 		/// ResourceEntries and DeletedEntries.</returns>
 		public Bundle History(BundleEntry entry, DateTimeOffset? since = null, int? pageSize = null)
 		{
-			if (entry == null) throw Error.ArgumentNull(nameof(entry));
+			if (entry is null) throw Error.ArgumentNull(nameof(entry));
 
 			return History(entry.Id, since, pageSize);
 		}
@@ -649,15 +649,15 @@ namespace Hl7.Fhir.Rest
 		/// failures occur.</returns>
 		public bool TryValidateUpdate<TResource>(ResourceEntry<TResource> entry, out OperationOutcome result) where TResource : Resource, new()
 		{
-			if (entry == null) throw Error.ArgumentNull(nameof(entry));
-			if (entry.Resource == null) throw Error.Argument(nameof(entry), "Entry does not contain a Resource to validate");
-			if (entry.Id == null) throw Error.Argument(nameof(entry), "Entry needs a non-null entry.id to use for validation");
+			if (entry is null) throw Error.ArgumentNull(nameof(entry));
+			if (entry.Resource is null) throw Error.Argument(nameof(entry), "Entry does not contain a Resource to validate");
+			if (entry.Id is null) throw Error.Argument(nameof(entry), "Entry needs a non-null entry.id to use for validation");
 
 			var id = new ResourceIdentity(entry.Id);
 			var url = new RestUrl(Endpoint).Validate(id.Collection, id.Id);
 			result = doValidate(url.Uri, entry.Resource, entry.Tags);
 
-			return result == null || !result.Success();
+			return result is null || !result.Success();
 		}
 
 		/// <summary>
@@ -671,13 +671,13 @@ namespace Hl7.Fhir.Rest
 		/// failures occur.</returns>
 		public bool TryValidateCreate<TResource>(TResource resource, out OperationOutcome result, IEnumerable<Tag> tags = null) where TResource : Resource, new()
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
 
 			var collection = ModelInfo.GetCollectionName<TResource>();
 			var url = new RestUrl(Endpoint).Validate(collection);
 
 			result = doValidate(url.Uri, resource, tags);
-			return result == null || !result.Success();
+			return result is null || !result.Success();
 		}
 
 		/// <summary>
@@ -719,7 +719,7 @@ namespace Hl7.Fhir.Rest
 		/// of all resources of the given Resource type</remarks>
 		public Bundle Search(string resource, IList<string> criteria = null, IList<string> includes = null, int? pageSize = null)
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
 
 			return Search(new Query(resource, criteria, includes, pageSize));
 		}
@@ -753,7 +753,7 @@ namespace Hl7.Fhir.Rest
 		/// returned resource refers to.</remarks>
 		public Bundle SearchById<TResource>(string id, IList<string> includes = null, int? pageSize = null) where TResource : Resource, new()
 		{
-			if (id == null) throw Error.ArgumentNull(nameof(id));
+			if (id is null) throw Error.ArgumentNull(nameof(id));
 
 			return SearchById(ModelInfo.GetCollectionName<TResource>(), id, includes, pageSize);
 		}
@@ -772,8 +772,8 @@ namespace Hl7.Fhir.Rest
 		/// returned resource refers to.</remarks>
 		public Bundle SearchById(string resource, string id, IList<string> includes = null, int? pageSize = null)
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
-			if (id == null) throw Error.ArgumentNull(nameof(id));
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
+			if (id is null) throw Error.ArgumentNull(nameof(id));
 
 			return Search(new Query(resource, null, includes, pageSize).Where(Model.Query.SEARCH_PARAM_ID, id));
 		}
@@ -801,8 +801,8 @@ namespace Hl7.Fhir.Rest
 		/// the server did not have more results in that direction.</returns>
 		public Bundle Continue(Bundle current, PageDirection direction = PageDirection.Next)
 		{
-			if (current == null) throw Error.ArgumentNull(nameof(current));
-			if (current.Links == null) return null;
+			if (current is null) throw Error.ArgumentNull(nameof(current));
+			if (current.Links is null) return null;
 
 			Uri continueAt = null;
 
@@ -832,7 +832,7 @@ namespace Hl7.Fhir.Rest
 		/// if an error occurred.</returns>
 		public Bundle Transaction(Bundle bundle)
 		{
-			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+			if (bundle is null) throw Error.ArgumentNull(nameof(bundle));
 
 			var req = createFhirRequest(Endpoint, "POST");
 			req.SetBody(bundle, PreferredFormat);
@@ -846,7 +846,7 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>The bundle must declare it is a Document, use Bundle.SetBundleType() to do so.</remarks>
 		public void Document(Bundle bundle)
 		{
-			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+			if (bundle is null) throw Error.ArgumentNull(nameof(bundle));
 			if (bundle.GetBundleType() != BundleType.Document)
 				throw Error.Argument(nameof(bundle), "The bundle passed to the Document endpoint needs to be a document (use SetBundleType to do so)");
 
@@ -866,7 +866,7 @@ namespace Hl7.Fhir.Rest
 		/// <remarks>The bundle must declare it is a Document or Message, use Bundle.SetBundleType() to do so.</remarks>       
 		public Bundle DeliverToMailbox(Bundle bundle)
 		{
-			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+			if (bundle is null) throw Error.ArgumentNull(nameof(bundle));
 			if (bundle.GetBundleType() != BundleType.Document && bundle.GetBundleType() != BundleType.Message)
 				throw Error.Argument(nameof(bundle), "The bundle passed to the Mailbox endpoint needs to be a document or message (use SetBundleType to do so)");
 
@@ -902,7 +902,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>A list of Tags occuring for the given resource type</returns>
 		public IEnumerable<Tag> TypeTags(string type)
 		{
-			if (type == null) throw Error.ArgumentNull(nameof(type));
+			if (type is null) throw Error.ArgumentNull(nameof(type));
 
 			return internalGetTags(type, null, null);
 		}
@@ -915,7 +915,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>A list of Tags for the resource instance</returns>
 		public IEnumerable<Tag> Tags(Uri location)
 		{
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -957,8 +957,8 @@ namespace Hl7.Fhir.Rest
 		/// not create a new version.</remarks>
 		public void AffixTags(Uri location, IEnumerable<Tag> tags)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
-			if (tags == null) throw Error.ArgumentNull("tags");
+			if (location is null) throw Error.ArgumentNull("location");
+			if (tags is null) throw Error.ArgumentNull("tags");
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -981,8 +981,8 @@ namespace Hl7.Fhir.Rest
 		/// so does not create a new version.</remarks>
 		public void DeleteTags(Uri location, IEnumerable<Tag> tags)
 		{
-			if (location == null) throw Error.ArgumentNull("location");
-			if (tags == null) throw Error.ArgumentNull("tags");
+			if (location is null) throw Error.ArgumentNull("location");
+			if (tags is null) throw Error.ArgumentNull("tags");
 
 			var collection = getCollectionFromLocation(location);
 			var id = getIdFromLocation(location);
@@ -1303,7 +1303,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>Transforms response into DTO using template.</returns>
 		public TDto Read<TDto>(Template<TDto> template, ulong id)
 		{
-			if (template == null) throw Error.ArgumentNull(nameof(template));
+			if (template is null) throw Error.ArgumentNull(nameof(template));
 
 			var request = createFhirRequest(makeAbsolute(template.GetLocation(id)), "GET");
 			return doRequest(request, HttpStatusCode.OK, resp => template.Read(resp));
@@ -1318,8 +1318,8 @@ namespace Hl7.Fhir.Rest
 		/// <returns>Transforms response into DTO using template.</returns>
 		public TDto Read<TDto>(Template<TDto> template, Query query)
 		{
-			if (template == null) throw Error.ArgumentNull(nameof(template));
-			if (query == null) throw Error.ArgumentNull(nameof(query));
+			if (template is null) throw Error.ArgumentNull(nameof(template));
+			if (query is null) throw Error.ArgumentNull(nameof(query));
 
 			var request = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).Search(query).Uri), "GET");
 			request.IsForBundle = true;
@@ -1338,7 +1338,7 @@ namespace Hl7.Fhir.Rest
 		/// <returns>Transforms response into DTO using template.</returns>
 		public IList<TDto> Search<TDto, TCriteria>(SearchableTemplate<TDto, TCriteria> template, TCriteria query, out int pageCount)
 		{
-			if (template == null) throw Error.ArgumentNull(nameof(template));
+			if (template is null) throw Error.ArgumentNull(nameof(template));
 
 			pageCount = 0;
 			IList<TDto> result = null;
@@ -1373,7 +1373,7 @@ namespace Hl7.Fhir.Rest
 		public TemplateResponseReader Create<TDto>(Template<TDto> template, TDto data)
 		{
 			if (data == null) throw Error.ArgumentNull(nameof(data));
-			if (template == null) throw Error.ArgumentNull(nameof(template));
+			if (template is null) throw Error.ArgumentNull(nameof(template));
 
 			var context = template.GetGetter(data, null);
 			var req = createFhirRequest(Endpoint, "POST");
@@ -1384,13 +1384,13 @@ namespace Hl7.Fhir.Rest
 
 		public TemplateResponseReader Transaction(UpdateData data)
 		{
-			if (data == null) throw Error.ArgumentNull(nameof(data));
+			if (data is null) throw Error.ArgumentNull(nameof(data));
 			return Transaction(data.Bundle, data.Context);
 		}
 
 		public TemplateResponseReader Transaction(Bundle bundle, IDataGetterContext context)
 		{
-			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+			if (bundle is null) throw Error.ArgumentNull(nameof(bundle));
 
 			var req = createFhirRequest(Endpoint, "POST");
 			req.SetBody(bundle, PreferredFormat);
@@ -1400,7 +1400,7 @@ namespace Hl7.Fhir.Rest
 
 		public UpdateData<TDto> GetForUpdate<TDto>(Template<TDto> template, Query query, Func<TDto, TDto> update)
 		{
-			if (template == null) throw Error.ArgumentNull(nameof(template));
+			if (template is null) throw Error.ArgumentNull(nameof(template));
 
 			if (query != null)
 			{
@@ -1415,7 +1415,7 @@ namespace Hl7.Fhir.Rest
 
 		public UpdateData<TDto> GetForUpdate<TDto>(Template<TDto> template, long id, Func<TDto, TDto> update)
 		{
-			if (template == null) throw Error.ArgumentNull(nameof(template));
+			if (template is null) throw Error.ArgumentNull(nameof(template));
 
 			var request = createFhirRequest(makeAbsolute(new Uri("Documents/" + id, UriKind.Relative)), "GET");
 			request.IsForBundle = true;

@@ -21,7 +21,7 @@ namespace Hl7.Fhir.Serialization
 				var resourceType = reader.GetResourceTypeName(nested);
 				var mappedType = SerializationConfig.Inspector.FindClassMappingForResource(resourceType);
 
-				if (mappedType == null)
+				if (mappedType is null)
 				{
 					// Special courtesy case
 					if (resourceType == "feed" || resourceType == "Bundle")

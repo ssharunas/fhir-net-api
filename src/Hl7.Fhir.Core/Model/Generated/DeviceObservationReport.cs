@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as DeviceObservationReportVirtualDeviceComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -101,7 +101,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as DeviceObservationReportVirtualDeviceComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as DeviceObservationReportVirtualDeviceChannelMetricComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Observation, otherT.Observation)) return false;
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as DeviceObservationReportVirtualDeviceChannelMetricComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Observation, otherT.Observation)) return false;
@@ -212,7 +212,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as DeviceObservationReportVirtualDeviceChannelComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as DeviceObservationReportVirtualDeviceChannelComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
 			get { return InstantElement != null ? InstantElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					InstantElement = null;
 				else
 					InstantElement = new Hl7.Fhir.Model.Instant(value);
@@ -320,7 +320,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as DeviceObservationReport;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(InstantElement, otherT.InstantElement)) return false;
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as DeviceObservationReport;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(InstantElement, otherT.InstantElement)) return false;

@@ -21,7 +21,7 @@ namespace CodePlex.XPathParser
 
 		public TNode Parse(string xpathExpr, IXPathBuilder<TNode> builder)
 		{
-			Debug.Assert(_scanner == null && _builder == null);
+			Debug.Assert(_scanner is null && _builder is null);
 			Debug.Assert(builder != null);
 
 			TNode result = default;
@@ -37,7 +37,7 @@ namespace CodePlex.XPathParser
 			}
 			catch (XPathParserException e)
 			{
-				if (e._queryString == null)
+				if (e._queryString is null)
 				{
 					e._queryString = _scanner.Source;
 					PopPosInfo(out e._startChar, out e._endChar);

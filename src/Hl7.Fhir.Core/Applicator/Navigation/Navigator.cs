@@ -8,7 +8,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 	{
 		public static IPathable ToPathable(Bundle bundle)
 		{
-			if (bundle == null)
+			if (bundle is null)
 				return new NullNavigator();
 
 			return new BundleNavigator(bundle);
@@ -16,7 +16,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public static IPathable ToPathable(ResourceEntry entry)
 		{
-			if (entry == null)
+			if (entry is null)
 				return new NullNavigator();
 
 			return new ResourceEntryNavigator(null, entry);
@@ -24,7 +24,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public static IPathable ToPathable(Resource resource)
 		{
-			if (resource == null)
+			if (resource is null)
 				return new NullNavigator();
 
 			return new ResourceNavigator(null, resource);
@@ -32,7 +32,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 		public static IPathable ToPathable(Element resource)
 		{
-			if (resource == null)
+			if (resource is null)
 				return new NullNavigator();
 
 			string name = SerializationConfig.Inspector.ImportType(resource.GetType()).Name;

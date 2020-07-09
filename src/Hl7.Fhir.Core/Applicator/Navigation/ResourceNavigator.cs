@@ -17,7 +17,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 		{
 			var result = base.Attributes();
 
-			if (result == null)
+			if (result is null)
 				result = new List<IFhirXmlAttribute>();
 
 			result.Add(new FhirXmlAttribute("xmlns", XmlNs.FHIR));

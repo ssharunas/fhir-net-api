@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ContactComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Relationship, otherT.Relationship)) return false;
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ContactComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Relationship, otherT.Relationship)) return false;
@@ -227,7 +227,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as AnimalComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Species, otherT.Species)) return false;
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as AnimalComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Species, otherT.Species)) return false;
@@ -285,7 +285,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.Patient.LinkType>(value);
@@ -315,7 +315,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as PatientLinkComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Other, otherT.Other)) return false;
@@ -327,7 +327,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as PatientLinkComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Other, otherT.Other)) return false;
@@ -388,7 +388,7 @@ namespace Hl7.Fhir.Model
 			get { return BirthDateElement != null ? BirthDateElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					BirthDateElement = null;
 				else
 					BirthDateElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -500,7 +500,7 @@ namespace Hl7.Fhir.Model
 			get { return ActiveElement != null ? ActiveElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ActiveElement = null;
 				else
 					ActiveElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -545,7 +545,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Patient;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -572,7 +572,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Patient;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

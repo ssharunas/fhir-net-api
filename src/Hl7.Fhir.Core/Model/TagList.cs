@@ -44,7 +44,7 @@ namespace Hl7.Fhir.Model
 
 		public TagList(IEnumerable<Tag> tags)
 		{
-			Category = tags == null ? new List<Tag>() : new List<Tag>(tags);
+			Category = tags is null ? new List<Tag>() : new List<Tag>(tags);
 		}
 
 		[FhirElement("category")]
@@ -72,8 +72,8 @@ namespace Hl7.Fhir.Model
 
 		public Tag(string term, Uri scheme, string label = null)
 		{
-			if (term == null) throw Error.ArgumentNull(nameof(term));
-			if (scheme == null) throw Error.ArgumentNull(nameof(scheme));
+			if (term is null) throw Error.ArgumentNull(nameof(term));
+			if (scheme is null) throw Error.ArgumentNull(nameof(scheme));
 
 			this.Term = term;
 			this.Scheme = scheme;
@@ -81,14 +81,14 @@ namespace Hl7.Fhir.Model
 		}
 
 		public Tag(string term, string scheme, string label = null)
-			: this(term, scheme == null ? null : new Uri(scheme, UriKind.RelativeOrAbsolute), label)
+			: this(term, scheme is null ? null : new Uri(scheme, UriKind.RelativeOrAbsolute), label)
 		{
 		}
 
 		public override bool Equals(object obj)
 		{
 			// Check for null values and compare run-time types.
-			if (obj == null || GetType() != obj.GetType())
+			if (obj is null || GetType() != obj.GetType())
 				return false;
 
 			var t = (Tag)obj;

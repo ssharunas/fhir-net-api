@@ -62,7 +62,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 				if (mapping.IsCollection)
 				{
 					var list = value as IList;
-					if (list == null)
+					if (list is null)
 						throw Error.InvalidOperation("Found non-list, anotated as a list.");
 
 					foreach (var item in list)

@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ObservationReferenceRangeComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Low, otherT.Low)) return false;
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ObservationReferenceRangeComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Low, otherT.Low)) return false;
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Code<Hl7.Fhir.Model.Observation.ObservationRelationshipType>(value);
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ObservationRelatedComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(TypeElement, otherT.TypeElement)) return false;
@@ -329,7 +329,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ObservationRelatedComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(TypeElement, otherT.TypeElement)) return false;
@@ -382,7 +382,7 @@ namespace Hl7.Fhir.Model
 			get { return CommentsElement != null ? CommentsElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					CommentsElement = null;
 				else
 					CommentsElement = new Hl7.Fhir.Model.FhirString(value);
@@ -415,7 +415,7 @@ namespace Hl7.Fhir.Model
 			get { return IssuedElement != null ? IssuedElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					IssuedElement = null;
 				else
 					IssuedElement = new Hl7.Fhir.Model.Instant(value);
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Code<Hl7.Fhir.Model.Observation.ObservationStatus>(value);
@@ -467,7 +467,7 @@ namespace Hl7.Fhir.Model
 			get { return ReliabilityElement != null ? ReliabilityElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ReliabilityElement = null;
 				else
 					ReliabilityElement = new Code<Hl7.Fhir.Model.Observation.ObservationReliability>(value);
@@ -573,7 +573,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Observation;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Name, otherT.Name)) return false;
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Observation;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Name, otherT.Name)) return false;

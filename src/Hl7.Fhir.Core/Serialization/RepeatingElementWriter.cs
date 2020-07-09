@@ -25,10 +25,10 @@ namespace Hl7.Fhir.Serialization
 		public void Serialize(PropertyMapping prop, object instance, bool summary, ComplexTypeWriter.SerializationMode mode)
 		{
 
-			if (prop == null) throw Error.ArgumentNull(nameof(prop));
+			if (prop is null) throw Error.ArgumentNull(nameof(prop));
 
 			var elements = instance as IList;
-			if (elements == null)
+			if (elements is null)
 				throw Error.Argument(nameof(elements), "Can only write repeating elements from a type implementing IList");
 
 			_current.WriteStartArray();

@@ -23,14 +23,14 @@ namespace Hl7.Fhir.Serialization
 
 		private static int? intValueOrNull(JToken attr)
 		{
-			if (attr == null) return null;
+			if (attr is null) return null;
 
 			return attr.Value<int?>();
 		}
 
 		private static DateTimeOffset? instantOrNull(JToken attr)
 		{
-			if (attr == null) return null;
+			if (attr is null) return null;
 
 			return PrimitiveTypeConverter.ConvertTo<DateTimeOffset>(attr.Value<string>());
 		}
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Serialization
 					var content = entry[BundleXmlParser.XATOM_CONTENT];
 
 					var id = SerializationUtil.UriValueOrNull(entry[BundleXmlParser.XATOM_ID]);
-					if (id == null) throw Error.Format("BundleEntry found without an id");
+					if (id is null) throw Error.Format("BundleEntry found without an id");
 
 					if (content != null)
 					{

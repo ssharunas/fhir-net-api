@@ -115,7 +115,7 @@ namespace Hl7.Fhir.Model
 				get { return ReferenceElement != null ? ReferenceElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ReferenceElement = null;
 					else
 						ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -140,7 +140,7 @@ namespace Hl7.Fhir.Model
 				get { return DisplayElement != null ? DisplayElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DisplayElement = null;
 					else
 						DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -172,7 +172,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProvenanceAgentComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Role, otherT.Role)) return false;
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProvenanceAgentComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Role, otherT.Role)) return false;
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
 				get { return RoleElement != null ? RoleElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						RoleElement = null;
 					else
 						RoleElement = new Code<Hl7.Fhir.Model.Provenance.ProvenanceEntityRole>(value);
@@ -257,7 +257,7 @@ namespace Hl7.Fhir.Model
 				get { return ReferenceElement != null ? ReferenceElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ReferenceElement = null;
 					else
 						ReferenceElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
 				get { return DisplayElement != null ? DisplayElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DisplayElement = null;
 					else
 						DisplayElement = new Hl7.Fhir.Model.FhirString(value);
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ProvenanceEntityComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(RoleElement, otherT.RoleElement)) return false;
@@ -337,7 +337,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ProvenanceEntityComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(RoleElement, otherT.RoleElement)) return false;
@@ -387,7 +387,7 @@ namespace Hl7.Fhir.Model
 			get { return RecordedElement != null ? RecordedElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					RecordedElement = null;
 				else
 					RecordedElement = new Hl7.Fhir.Model.Instant(value);
@@ -428,7 +428,7 @@ namespace Hl7.Fhir.Model
 			get { return PolicyElement != null ? PolicyElement.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					PolicyElement = null;
 				else
 					PolicyElement = new List<Hl7.Fhir.Model.FhirUri>(value.Select(elem => new Hl7.Fhir.Model.FhirUri(elem)));
@@ -469,7 +469,7 @@ namespace Hl7.Fhir.Model
 			get { return IntegritySignatureElement != null ? IntegritySignatureElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					IntegritySignatureElement = null;
 				else
 					IntegritySignatureElement = new Hl7.Fhir.Model.FhirString(value);
@@ -506,7 +506,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Provenance;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Target, otherT.Target)) return false;
@@ -525,7 +525,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Provenance;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Target, otherT.Target)) return false;

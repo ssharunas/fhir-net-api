@@ -90,7 +90,7 @@ namespace Hl7.Fhir.Model
 		/// <returns></returns>
 		public static ResourceEntry Create(Resource resource)
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
 
 			var result = Create(resource.GetType());
 			result.Resource = resource;
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
 		/// <returns></returns>
 		public static ResourceEntry Create(Type type)
 		{
-			if (type == null) throw Error.ArgumentNull(nameof(type));
+			if (type is null) throw Error.ArgumentNull(nameof(type));
 			var isResource = typeof(Resource).GetTypeInfo().IsAssignableFrom(type.GetTypeInfo());
 
 			if (!isResource) throw Error.Argument(nameof(type), "Must be a subtype of Resource");
@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
 		{
 			var result = new List<ValidationResult>(base.Validate(validationContext));
 
-			//if (Resource == null)
+			//if (Resource is null)
 			//    result.Add(new ValidationResult("Entry must contain Resource data, Content may not be null"));
 			if (Resource != null && validationContext.ValidateRecursively())
 				DotNetAttributeValidation.TryValidate(Resource, result, validationContext.ValidateRecursively());

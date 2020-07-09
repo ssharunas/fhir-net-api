@@ -51,7 +51,7 @@ namespace Hl7.Fhir.Applicator.Xml
 
 		public static IXPathNavigator Generate(string name, IList<FhirXmlReader.Attr> attributes)
 		{
-			if (_generator == null)
+			if (_generator is null)
 				SetGenerator(new DefaultGenerator());
 
 			return _generator.Generate(name, attributes);

@@ -25,8 +25,8 @@ namespace Hl7.Fhir.Rest
 
 		public FhirRequest(Uri location, string method, Action<FhirRequest, HttpWebRequest> beforeRequest, Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> afterRequest)
 		{
-			if (method == null) throw Error.ArgumentNull(nameof(method));
-			if (location == null) throw Error.ArgumentNull(nameof(location));
+			if (method is null) throw Error.ArgumentNull(nameof(method));
+			if (location is null) throw Error.ArgumentNull(nameof(location));
 			if (!location.IsAbsoluteUri) throw Error.Argument(nameof(location), "Must be absolute uri");
 
 			Method = method;
@@ -54,7 +54,7 @@ namespace Hl7.Fhir.Rest
 
 		internal void SetBody(Resource resource, ResourceFormat format)
 		{
-			if (resource == null) throw Error.ArgumentNull(nameof(resource));
+			if (resource is null) throw Error.ArgumentNull(nameof(resource));
 
 			if (resource is Binary binary)
 			{
@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Rest
 
 		internal void SetBody(Bundle bundle, ResourceFormat format)
 		{
-			if (bundle == null) throw Error.ArgumentNull(nameof(bundle));
+			if (bundle is null) throw Error.ArgumentNull(nameof(bundle));
 
 			Body = format == ResourceFormat.Xml ?
 				FhirSerializer.SerializeBundleToXmlBytes(bundle, summary: false) :
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Rest
 
 		internal void SetBody(TagList tagList, ResourceFormat format)
 		{
-			if (tagList == null) throw Error.ArgumentNull(nameof(tagList));
+			if (tagList is null) throw Error.ArgumentNull(nameof(tagList));
 
 			Body = format == ResourceFormat.Xml ?
 				FhirSerializer.SerializeTagListToXmlBytes(tagList) :
@@ -95,7 +95,7 @@ namespace Hl7.Fhir.Rest
 
 		internal void SetTagsInHeader(IEnumerable<Tag> tags)
 		{
-			if (tags == null) throw Error.ArgumentNull(nameof(tags));
+			if (tags is null) throw Error.ArgumentNull(nameof(tags));
 
 			CategoryHeader = HttpUtil.BuildCategoryHeader(tags);
 		}
@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Rest
 		/// </summary>
 		public string GetBodyAsString()
 		{
-			return Body == null ? null : Encoding.UTF8.GetString(Body);
+			return Body is null ? null : Encoding.UTF8.GetString(Body);
 		}
 
 		/// <summary>

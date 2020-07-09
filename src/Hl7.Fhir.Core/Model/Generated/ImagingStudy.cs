@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
 				get { return NumberElement != null ? NumberElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NumberElement = null;
 					else
 						NumberElement = new Hl7.Fhir.Model.Integer(value);
@@ -317,7 +317,7 @@ namespace Hl7.Fhir.Model
 				get { return ModalityElement != null ? ModalityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ModalityElement = null;
 					else
 						ModalityElement = new Code<Hl7.Fhir.Model.ImagingStudy.Modality>(value);
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
 				get { return UidElement != null ? UidElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UidElement = null;
 					else
 						UidElement = new Hl7.Fhir.Model.Oid(value);
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
 				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DescriptionElement = null;
 					else
 						DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -394,7 +394,7 @@ namespace Hl7.Fhir.Model
 				get { return NumberOfInstancesElement != null ? NumberOfInstancesElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NumberOfInstancesElement = null;
 					else
 						NumberOfInstancesElement = new Hl7.Fhir.Model.Integer(value);
@@ -419,7 +419,7 @@ namespace Hl7.Fhir.Model
 				get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						AvailabilityElement = null;
 					else
 						AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
@@ -444,7 +444,7 @@ namespace Hl7.Fhir.Model
 				get { return UrlElement != null ? UrlElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UrlElement = null;
 					else
 						UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -476,7 +476,7 @@ namespace Hl7.Fhir.Model
 				get { return DateTimeElement != null ? DateTimeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						DateTimeElement = null;
 					else
 						DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -522,7 +522,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ImagingStudySeriesComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ImagingStudySeriesComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
@@ -584,7 +584,7 @@ namespace Hl7.Fhir.Model
 				get { return NumberElement != null ? NumberElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						NumberElement = null;
 					else
 						NumberElement = new Hl7.Fhir.Model.Integer(value);
@@ -610,7 +610,7 @@ namespace Hl7.Fhir.Model
 				get { return UidElement != null ? UidElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UidElement = null;
 					else
 						UidElement = new Hl7.Fhir.Model.Oid(value);
@@ -636,7 +636,7 @@ namespace Hl7.Fhir.Model
 				get { return SopclassElement != null ? SopclassElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						SopclassElement = null;
 					else
 						SopclassElement = new Hl7.Fhir.Model.Oid(value);
@@ -661,7 +661,7 @@ namespace Hl7.Fhir.Model
 				get { return TypeElement != null ? TypeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TypeElement = null;
 					else
 						TypeElement = new Hl7.Fhir.Model.FhirString(value);
@@ -686,7 +686,7 @@ namespace Hl7.Fhir.Model
 				get { return TitleElement != null ? TitleElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						TitleElement = null;
 					else
 						TitleElement = new Hl7.Fhir.Model.FhirString(value);
@@ -711,7 +711,7 @@ namespace Hl7.Fhir.Model
 				get { return UrlElement != null ? UrlElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						UrlElement = null;
 					else
 						UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -754,7 +754,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as ImagingStudySeriesInstanceComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(NumberElement, otherT.NumberElement)) return false;
@@ -771,7 +771,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as ImagingStudySeriesInstanceComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(NumberElement, otherT.NumberElement)) return false;
@@ -806,7 +806,7 @@ namespace Hl7.Fhir.Model
 			get { return DateTimeElement != null ? DateTimeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DateTimeElement = null;
 				else
 					DateTimeElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -841,7 +841,7 @@ namespace Hl7.Fhir.Model
 			get { return UidElement != null ? UidElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UidElement = null;
 				else
 					UidElement = new Hl7.Fhir.Model.Oid(value);
@@ -891,7 +891,7 @@ namespace Hl7.Fhir.Model
 			get { return Modality_Element != null ? Modality_Element.Select(elem => elem.Value) : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					Modality_Element = null;
 				else
 					Modality_Element = new List<Code<Hl7.Fhir.Model.ImagingStudy.ImagingModality>>(value.Select(elem => new Code<Hl7.Fhir.Model.ImagingStudy.ImagingModality>(elem)));
@@ -924,7 +924,7 @@ namespace Hl7.Fhir.Model
 			get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					AvailabilityElement = null;
 				else
 					AvailabilityElement = new Code<Hl7.Fhir.Model.ImagingStudy.InstanceAvailability>(value);
@@ -949,7 +949,7 @@ namespace Hl7.Fhir.Model
 			get { return UrlElement != null ? UrlElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					UrlElement = null;
 				else
 					UrlElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -975,7 +975,7 @@ namespace Hl7.Fhir.Model
 			get { return NumberOfSeriesElement != null ? NumberOfSeriesElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NumberOfSeriesElement = null;
 				else
 					NumberOfSeriesElement = new Hl7.Fhir.Model.Integer(value);
@@ -1001,7 +1001,7 @@ namespace Hl7.Fhir.Model
 			get { return NumberOfInstancesElement != null ? NumberOfInstancesElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NumberOfInstancesElement = null;
 				else
 					NumberOfInstancesElement = new Hl7.Fhir.Model.Integer(value);
@@ -1026,7 +1026,7 @@ namespace Hl7.Fhir.Model
 			get { return ClinicalInformationElement != null ? ClinicalInformationElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ClinicalInformationElement = null;
 				else
 					ClinicalInformationElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1067,7 +1067,7 @@ namespace Hl7.Fhir.Model
 			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -1120,7 +1120,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as ImagingStudy;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(DateTimeElement, otherT.DateTimeElement)) return false;
@@ -1147,7 +1147,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as ImagingStudy;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(DateTimeElement, otherT.DateTimeElement)) return false;

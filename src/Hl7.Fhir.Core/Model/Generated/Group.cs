@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
 				get { return ExcludeElement != null ? ExcludeElement.Value : null; }
 				set
 				{
-					if (value == null)
+					if (value is null)
 						ExcludeElement = null;
 					else
 						ExcludeElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -155,7 +155,7 @@ namespace Hl7.Fhir.Model
 			public override bool Matches(IDeepComparable other)
 			{
 				var otherT = other as GroupCharacteristicComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.Matches(otherT)) return false;
 				if (!DeepComparable.Matches(Code, otherT.Code)) return false;
@@ -168,7 +168,7 @@ namespace Hl7.Fhir.Model
 			public override bool IsExactly(IDeepComparable other)
 			{
 				var otherT = other as GroupCharacteristicComponent;
-				if (otherT == null) return false;
+				if (otherT is null) return false;
 
 				if (!base.IsExactly(otherT)) return false;
 				if (!DeepComparable.IsExactly(Code, otherT.Code)) return false;
@@ -207,7 +207,7 @@ namespace Hl7.Fhir.Model
 			get { return TypeElement != null ? TypeElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					TypeElement = null;
 				else
 					TypeElement = new Code<Hl7.Fhir.Model.Group.GroupType>(value);
@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
 			get { return ActualElement != null ? ActualElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					ActualElement = null;
 				else
 					ActualElement = new Hl7.Fhir.Model.FhirBoolean(value);
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
 			get { return NameElement != null ? NameElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					NameElement = null;
 				else
 					NameElement = new Hl7.Fhir.Model.FhirString(value);
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
 			get { return QuantityElement != null ? QuantityElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					QuantityElement = null;
 				else
 					QuantityElement = new Hl7.Fhir.Model.Integer(value);
@@ -343,7 +343,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as Group;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(Identifier, otherT.Identifier)) return false;
@@ -361,7 +361,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as Group;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(Identifier, otherT.Identifier)) return false;

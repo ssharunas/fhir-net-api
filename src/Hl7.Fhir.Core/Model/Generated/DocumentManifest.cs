@@ -114,7 +114,7 @@ namespace Hl7.Fhir.Model
 			get { return CreatedElement != null ? CreatedElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					CreatedElement = null;
 				else
 					CreatedElement = new Hl7.Fhir.Model.FhirDateTime(value);
@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
 			get { return SourceElement != null ? SourceElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					SourceElement = null;
 				else
 					SourceElement = new Hl7.Fhir.Model.FhirUri(value);
@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
 			get { return StatusElement != null ? StatusElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					StatusElement = null;
 				else
 					StatusElement = new Hl7.Fhir.Model.Code(value);
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
 			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
 			set
 			{
-				if (value == null)
+				if (value is null)
 					DescriptionElement = null;
 				else
 					DescriptionElement = new Hl7.Fhir.Model.FhirString(value);
@@ -255,7 +255,7 @@ namespace Hl7.Fhir.Model
 		public override bool Matches(IDeepComparable other)
 		{
 			var otherT = other as DocumentManifest;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.Matches(otherT)) return false;
 			if (!DeepComparable.Matches(MasterIdentifier, otherT.MasterIdentifier)) return false;
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
 		public override bool IsExactly(IDeepComparable other)
 		{
 			var otherT = other as DocumentManifest;
-			if (otherT == null) return false;
+			if (otherT is null) return false;
 
 			if (!base.IsExactly(otherT)) return false;
 			if (!DeepComparable.IsExactly(MasterIdentifier, otherT.MasterIdentifier)) return false;
