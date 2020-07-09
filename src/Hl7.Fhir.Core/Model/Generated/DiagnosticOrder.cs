@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
 			{
-				get { return StatusElement != null ? StatusElement.Value : null; }
+				get { return StatusElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
 			{
-				get { return StatusElement != null ? StatusElement.Value : null; }
+				get { return StatusElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -297,7 +297,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string DateTime
 			{
-				get { return DateTimeElement != null ? DateTimeElement.Value : null; }
+				get { return DateTimeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string ClinicalNotes
 		{
-			get { return ClinicalNotesElement != null ? ClinicalNotesElement.Value : null; }
+			get { return ClinicalNotesElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -475,7 +475,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.DiagnosticOrder.DiagnosticOrderPriority? Priority
 		{
-			get { return PriorityElement != null ? PriorityElement.Value : null; }
+			get { return PriorityElement?.Value; }
 			set
 			{
 				if (value is null)

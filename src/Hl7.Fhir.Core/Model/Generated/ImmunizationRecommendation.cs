@@ -74,7 +74,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Value
 			{
-				get { return ValueElement != null ? ValueElement.Value : null; }
+				get { return ValueElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -150,7 +150,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? DoseSequence
 			{
-				get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
+				get { return DoseSequenceElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Series
 			{
-				get { return SeriesElement != null ? SeriesElement.Value : null; }
+				get { return SeriesElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Date
 			{
-				get { return DateElement != null ? DateElement.Value : null; }
+				get { return DateElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -324,7 +324,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? DoseNumber
 			{
-				get { return DoseNumberElement != null ? DoseNumberElement.Value : null; }
+				get { return DoseNumberElement?.Value; }
 				set
 				{
 					if (value is null)

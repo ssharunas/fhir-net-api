@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.DocumentReference.DocumentRelationshipType? Code
 			{
-				get { return CodeElement != null ? CodeElement.Value : null; }
+				get { return CodeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -281,7 +281,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Name
 			{
-				get { return NameElement != null ? NameElement.Value : null; }
+				get { return NameElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -306,7 +306,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Value
 			{
-				get { return ValueElement != null ? ValueElement.Value : null; }
+				get { return ValueElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -390,7 +390,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Address
 			{
-				get { return AddressElement != null ? AddressElement.Value : null; }
+				get { return AddressElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -530,7 +530,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string PolicyManager
 		{
-			get { return PolicyManagerElement != null ? PolicyManagerElement.Value : null; }
+			get { return PolicyManagerElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -563,7 +563,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Created
 		{
-			get { return CreatedElement != null ? CreatedElement.Value : null; }
+			get { return CreatedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -589,7 +589,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public DateTimeOffset? Indexed
 		{
-			get { return IndexedElement != null ? IndexedElement.Value : null; }
+			get { return IndexedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -615,7 +615,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.DocumentReference.DocumentReferenceStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -655,7 +655,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Description
 		{
-			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+			get { return DescriptionElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -688,7 +688,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string PrimaryLanguage
 		{
-			get { return PrimaryLanguageElement != null ? PrimaryLanguageElement.Value : null; }
+			get { return PrimaryLanguageElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -714,7 +714,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string MimeType
 		{
-			get { return MimeTypeElement != null ? MimeTypeElement.Value : null; }
+			get { return MimeTypeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -740,7 +740,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<string> Format
 		{
-			get { return FormatElement != null ? FormatElement.Select(elem => elem.Value) : null; }
+			get { return FormatElement?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)
@@ -765,7 +765,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Size
 		{
-			get { return SizeElement != null ? SizeElement.Value : null; }
+			get { return SizeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -790,7 +790,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Hash
 		{
-			get { return HashElement != null ? HashElement.Value : null; }
+			get { return HashElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -815,7 +815,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Location
 		{
-			get { return LocationElement != null ? LocationElement.Value : null; }
+			get { return LocationElement?.Value; }
 			set
 			{
 				if (value is null)

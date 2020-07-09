@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Address.AddressUse? Use
 		{
-			get { return UseElement != null ? UseElement.Value : null; }
+			get { return UseElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -116,7 +116,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Text
 		{
-			get { return TextElement != null ? TextElement.Value : null; }
+			get { return TextElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -142,7 +142,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<string> Line
 		{
-			get { return LineElement != null ? LineElement.Select(elem => elem.Value) : null; }
+			get { return LineElement?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string City
 		{
-			get { return CityElement != null ? CityElement.Value : null; }
+			get { return CityElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -192,7 +192,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string State
 		{
-			get { return StateElement != null ? StateElement.Value : null; }
+			get { return StateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Zip
 		{
-			get { return ZipElement != null ? ZipElement.Value : null; }
+			get { return ZipElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -242,7 +242,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Country
 		{
-			get { return CountryElement != null ? CountryElement.Value : null; }
+			get { return CountryElement?.Value; }
 			set
 			{
 				if (value is null)

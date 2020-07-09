@@ -100,7 +100,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Alert.AlertStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -143,7 +143,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Note
 		{
-			get { return NoteElement != null ? NoteElement.Value : null; }
+			get { return NoteElement?.Value; }
 			set
 			{
 				if (value is null)

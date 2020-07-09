@@ -165,7 +165,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Name
 		{
-			get { return NameElement != null ? NameElement.Value : null; }
+			get { return NameElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -238,7 +238,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? Active
 		{
-			get { return ActiveElement != null ? ActiveElement.Value : null; }
+			get { return ActiveElement?.Value; }
 			set
 			{
 				if (value is null)

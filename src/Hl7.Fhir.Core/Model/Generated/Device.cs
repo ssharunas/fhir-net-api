@@ -77,7 +77,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Manufacturer
 		{
-			get { return ManufacturerElement != null ? ManufacturerElement.Value : null; }
+			get { return ManufacturerElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -102,7 +102,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Model
 		{
-			get { return ModelElement != null ? ModelElement.Value : null; }
+			get { return ModelElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Version
 		{
-			get { return VersionElement != null ? VersionElement.Value : null; }
+			get { return VersionElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Expiry
 		{
-			get { return ExpiryElement != null ? ExpiryElement.Value : null; }
+			get { return ExpiryElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -177,7 +177,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Udi
 		{
-			get { return UdiElement != null ? UdiElement.Value : null; }
+			get { return UdiElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string LotNumber
 		{
-			get { return LotNumberElement != null ? LotNumberElement.Value : null; }
+			get { return LotNumberElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -259,7 +259,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Url
 		{
-			get { return UrlElement != null ? UrlElement.Value : null; }
+			get { return UrlElement?.Value; }
 			set
 			{
 				if (value is null)

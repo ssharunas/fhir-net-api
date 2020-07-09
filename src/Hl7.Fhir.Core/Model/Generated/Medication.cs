@@ -345,7 +345,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Name
 		{
-			get { return NameElement != null ? NameElement.Value : null; }
+			get { return NameElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -377,7 +377,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? IsBrand
 		{
-			get { return IsBrandElement != null ? IsBrandElement.Value : null; }
+			get { return IsBrandElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Medication.MedicationKind? Kind
 		{
-			get { return KindElement != null ? KindElement.Value : null; }
+			get { return KindElement?.Value; }
 			set
 			{
 				if (value is null)

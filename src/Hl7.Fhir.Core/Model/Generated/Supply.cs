@@ -128,7 +128,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Supply.SupplyDispenseStatus? Status
 			{
-				get { return StatusElement != null ? StatusElement.Value : null; }
+				get { return StatusElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -299,7 +299,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Supply.SupplyStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)

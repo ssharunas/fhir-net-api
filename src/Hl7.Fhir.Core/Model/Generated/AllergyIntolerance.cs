@@ -148,7 +148,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.AllergyIntolerance.Criticality? Criticality_
 		{
-			get { return Criticality_Element != null ? Criticality_Element.Value : null; }
+			get { return Criticality_Element?.Value; }
 			set
 			{
 				if (value is null)
@@ -174,7 +174,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.AllergyIntolerance.SensitivityType? SensitivityType_
 		{
-			get { return SensitivityType_Element != null ? SensitivityType_Element.Value : null; }
+			get { return SensitivityType_Element?.Value; }
 			set
 			{
 				if (value is null)
@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string RecordedDate
 		{
-			get { return RecordedDateElement != null ? RecordedDateElement.Value : null; }
+			get { return RecordedDateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -225,7 +225,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.AllergyIntolerance.SensitivityStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)

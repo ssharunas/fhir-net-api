@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Language
 		{
-			get { return LanguageElement != null ? LanguageElement.Value : null; }
+			get { return LanguageElement?.Value; }
 			set
 			{
 				if (value is null)

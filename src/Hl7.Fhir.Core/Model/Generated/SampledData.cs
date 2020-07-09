@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public decimal? Period
 		{
-			get { return PeriodElement != null ? PeriodElement.Value : null; }
+			get { return PeriodElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public decimal? Factor
 		{
-			get { return FactorElement != null ? FactorElement.Value : null; }
+			get { return FactorElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -119,7 +119,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public decimal? LowerLimit
 		{
-			get { return LowerLimitElement != null ? LowerLimitElement.Value : null; }
+			get { return LowerLimitElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -144,7 +144,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public decimal? UpperLimit
 		{
-			get { return UpperLimitElement != null ? UpperLimitElement.Value : null; }
+			get { return UpperLimitElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Dimensions
 		{
-			get { return DimensionsElement != null ? DimensionsElement.Value : null; }
+			get { return DimensionsElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -196,7 +196,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Data
 		{
-			get { return DataElement != null ? DataElement.Value : null; }
+			get { return DataElement?.Value; }
 			set
 			{
 				if (value is null)

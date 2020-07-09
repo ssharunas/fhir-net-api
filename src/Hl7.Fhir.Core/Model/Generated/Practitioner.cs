@@ -175,7 +175,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string BirthDate
 		{
-			get { return BirthDateElement != null ? BirthDateElement.Value : null; }
+			get { return BirthDateElement?.Value; }
 			set
 			{
 				if (value is null)

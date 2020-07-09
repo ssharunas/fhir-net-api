@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Text
 			{
-				get { return TextElement != null ? TextElement.Value : null; }
+				get { return TextElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -349,7 +349,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? NumberOfRepeatsAllowed
 			{
-				get { return NumberOfRepeatsAllowedElement != null ? NumberOfRepeatsAllowedElement.Value : null; }
+				get { return NumberOfRepeatsAllowedElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string DateWritten
 		{
-			get { return DateWrittenElement != null ? DateWrittenElement.Value : null; }
+			get { return DateWrittenElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -477,7 +477,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.MedicationPrescription.MedicationPrescriptionStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)

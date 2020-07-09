@@ -400,7 +400,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -426,7 +426,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public byte[] Value
 			{
-				get { return ValueElement != null ? ValueElement.Value : null; }
+				get { return ValueElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -517,7 +517,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -542,7 +542,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectRole? Role
 			{
-				get { return RoleElement != null ? RoleElement.Value : null; }
+				get { return RoleElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.SecurityEvent.SecurityEventObjectLifecycle? Lifecycle
 			{
-				get { return LifecycleElement != null ? LifecycleElement.Value : null; }
+				get { return LifecycleElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -599,7 +599,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Name
 			{
-				get { return NameElement != null ? NameElement.Value : null; }
+				get { return NameElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -624,7 +624,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -649,7 +649,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public byte[] Query
 			{
-				get { return QueryElement != null ? QueryElement.Value : null; }
+				get { return QueryElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -757,7 +757,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Site
 			{
-				get { return SiteElement != null ? SiteElement.Value : null; }
+				get { return SiteElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -783,7 +783,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Identifier
 			{
-				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+				get { return IdentifierElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -886,7 +886,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.SecurityEvent.SecurityEventAction? Action
 			{
-				get { return ActionElement != null ? ActionElement.Value : null; }
+				get { return ActionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -912,7 +912,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public DateTimeOffset? DateTime
 			{
-				get { return DateTimeElement != null ? DateTimeElement.Value : null; }
+				get { return DateTimeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -937,7 +937,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.SecurityEvent.SecurityEventOutcome? Outcome
 			{
-				get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+				get { return OutcomeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -962,7 +962,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string OutcomeDesc
 			{
-				get { return OutcomeDescElement != null ? OutcomeDescElement.Value : null; }
+				get { return OutcomeDescElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -1050,7 +1050,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Identifier
 			{
-				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+				get { return IdentifierElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -1075,7 +1075,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.SecurityEvent.SecurityEventParticipantNetworkType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -1167,7 +1167,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string UserId
 			{
-				get { return UserIdElement != null ? UserIdElement.Value : null; }
+				get { return UserIdElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -1192,7 +1192,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string AltId
 			{
-				get { return AltIdElement != null ? AltIdElement.Value : null; }
+				get { return AltIdElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -1217,7 +1217,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Name
 			{
-				get { return NameElement != null ? NameElement.Value : null; }
+				get { return NameElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -1243,7 +1243,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public bool? Requestor
 			{
-				get { return RequestorElement != null ? RequestorElement.Value : null; }
+				get { return RequestorElement?.Value; }
 				set
 				{
 					if (value is null)

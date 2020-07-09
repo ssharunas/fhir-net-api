@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Reference
 		{
-			get { return ReferenceElement != null ? ReferenceElement.Value : null; }
+			get { return ReferenceElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Display
 		{
-			get { return DisplayElement != null ? DisplayElement.Value : null; }
+			get { return DisplayElement?.Value; }
 			set
 			{
 				if (value is null)

@@ -370,9 +370,7 @@ namespace Hl7.Fhir.Model
 
 		public static string ExtractParamValue(Extension extension)
 		{
-			var element = extension != null ? extension.Value as FhirString : null;
-			var value = element != null ? element.Value : null;
-			return value;
+			return (extension?.Value as FhirString)?.Value;
 		}
 
 		/// <summary>

@@ -85,7 +85,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Media.MediaType? Type
 		{
-			get { return TypeElement != null ? TypeElement.Value : null; }
+			get { return TypeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -125,7 +125,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string DateTime
 		{
-			get { return DateTimeElement != null ? DateTimeElement.Value : null; }
+			get { return DateTimeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string DeviceName
 		{
-			get { return DeviceNameElement != null ? DeviceNameElement.Value : null; }
+			get { return DeviceNameElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Height
 		{
-			get { return HeightElement != null ? HeightElement.Value : null; }
+			get { return HeightElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -223,7 +223,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Width
 		{
-			get { return WidthElement != null ? WidthElement.Value : null; }
+			get { return WidthElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -248,7 +248,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Frames
 		{
-			get { return FramesElement != null ? FramesElement.Value : null; }
+			get { return FramesElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -273,7 +273,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Length
 		{
-			get { return LengthElement != null ? LengthElement.Value : null; }
+			get { return LengthElement?.Value; }
 			set
 			{
 				if (value is null)

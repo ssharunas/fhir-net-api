@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public IEnumerable<string> Comment
 			{
-				get { return CommentElement != null ? CommentElement.Select(elem => elem.Value) : null; }
+				get { return CommentElement?.Select(elem => elem.Value); }
 				set
 				{
 					if (value is null)
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Specimen.HierarchicalRelationshipType? Relationship
 			{
-				get { return RelationshipElement != null ? RelationshipElement.Value : null; }
+				get { return RelationshipElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -296,7 +296,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -399,7 +399,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -551,7 +551,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string ReceivedTime
 		{
-			get { return ReceivedTimeElement != null ? ReceivedTimeElement.Value : null; }
+			get { return ReceivedTimeElement?.Value; }
 			set
 			{
 				if (value is null)

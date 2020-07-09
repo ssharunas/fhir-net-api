@@ -131,7 +131,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Date
 		{
-			get { return DateElement != null ? DateElement.Value : null; }
+			get { return DateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -173,7 +173,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.OrderResponse.OrderOutcomeStatus? Code
 		{
-			get { return CodeElement != null ? CodeElement.Value : null; }
+			get { return CodeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -198,7 +198,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Description
 		{
-			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+			get { return DescriptionElement?.Value; }
 			set
 			{
 				if (value is null)

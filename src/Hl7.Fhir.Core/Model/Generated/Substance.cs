@@ -139,7 +139,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Expiry
 			{
-				get { return ExpiryElement != null ? ExpiryElement.Value : null; }
+				get { return ExpiryElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Description
 		{
-			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+			get { return DescriptionElement?.Value; }
 			set
 			{
 				if (value is null)

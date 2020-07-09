@@ -152,7 +152,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.AdverseReaction.ReactionSeverity? Severity
 			{
-				get { return SeverityElement != null ? SeverityElement.Value : null; }
+				get { return SeverityElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Date
 			{
-				get { return DateElement != null ? DateElement.Value : null; }
+				get { return DateElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.AdverseReaction.ExposureType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -278,7 +278,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.AdverseReaction.CausalityExpectation? CausalityExpectation
 			{
-				get { return CausalityExpectationElement != null ? CausalityExpectationElement.Value : null; }
+				get { return CausalityExpectationElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Date
 		{
-			get { return DateElement != null ? DateElement.Value : null; }
+			get { return DateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -407,7 +407,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? DidNotOccurFlag
 		{
-			get { return DidNotOccurFlagElement != null ? DidNotOccurFlagElement.Value : null; }
+			get { return DidNotOccurFlagElement?.Value; }
 			set
 			{
 				if (value is null)

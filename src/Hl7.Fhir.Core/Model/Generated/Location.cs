@@ -107,7 +107,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public decimal? Longitude
 			{
-				get { return LongitudeElement != null ? LongitudeElement.Value : null; }
+				get { return LongitudeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -133,7 +133,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public decimal? Latitude
 			{
-				get { return LatitudeElement != null ? LatitudeElement.Value : null; }
+				get { return LatitudeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -158,7 +158,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public decimal? Altitude
 			{
-				get { return AltitudeElement != null ? AltitudeElement.Value : null; }
+				get { return AltitudeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -240,7 +240,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Name
 		{
-			get { return NameElement != null ? NameElement.Value : null; }
+			get { return NameElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Description
 		{
-			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+			get { return DescriptionElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -334,7 +334,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Location.LocationStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -367,7 +367,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Location.LocationMode? Mode
 		{
-			get { return ModeElement != null ? ModeElement.Value : null; }
+			get { return ModeElement?.Value; }
 			set
 			{
 				if (value is null)

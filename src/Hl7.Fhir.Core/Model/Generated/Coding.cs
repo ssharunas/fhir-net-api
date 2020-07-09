@@ -59,7 +59,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string System
 		{
-			get { return SystemElement != null ? SystemElement.Value : null; }
+			get { return SystemElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -84,7 +84,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Version
 		{
-			get { return VersionElement != null ? VersionElement.Value : null; }
+			get { return VersionElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -109,7 +109,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Code
 		{
-			get { return CodeElement != null ? CodeElement.Value : null; }
+			get { return CodeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -134,7 +134,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Display
 		{
-			get { return DisplayElement != null ? DisplayElement.Value : null; }
+			get { return DisplayElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -159,7 +159,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? Primary
 		{
-			get { return PrimaryElement != null ? PrimaryElement.Value : null; }
+			get { return PrimaryElement?.Value; }
 			set
 			{
 				if (value is null)

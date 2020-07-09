@@ -61,7 +61,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string ContentType
 		{
-			get { return ContentTypeElement != null ? ContentTypeElement.Value : null; }
+			get { return ContentTypeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -86,7 +86,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Language
 		{
-			get { return LanguageElement != null ? LanguageElement.Value : null; }
+			get { return LanguageElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public byte[] Data
 		{
-			get { return DataElement != null ? DataElement.Value : null; }
+			get { return DataElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Url
 		{
-			get { return UrlElement != null ? UrlElement.Value : null; }
+			get { return UrlElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -161,7 +161,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Size
 		{
-			get { return SizeElement != null ? SizeElement.Value : null; }
+			get { return SizeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -186,7 +186,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public byte[] Hash
 		{
-			get { return HashElement != null ? HashElement.Value : null; }
+			get { return HashElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -211,7 +211,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Title
 		{
-			get { return TitleElement != null ? TitleElement.Value : null; }
+			get { return TitleElement?.Value; }
 			set
 			{
 				if (value is null)

@@ -282,7 +282,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Patient.LinkType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -385,7 +385,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string BirthDate
 		{
-			get { return BirthDateElement != null ? BirthDateElement.Value : null; }
+			get { return BirthDateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -497,7 +497,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? Active
 		{
-			get { return ActiveElement != null ? ActiveElement.Value : null; }
+			get { return ActiveElement?.Value; }
 			set
 			{
 				if (value is null)

@@ -113,7 +113,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Comment
 			{
-				get { return CommentElement != null ? CommentElement.Value : null; }
+				get { return CommentElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -203,7 +203,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.DiagnosticReport.DiagnosticReportStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Issued
 		{
-			get { return IssuedElement != null ? IssuedElement.Value : null; }
+			get { return IssuedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -339,7 +339,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Conclusion
 		{
-			get { return ConclusionElement != null ? ConclusionElement.Value : null; }
+			get { return ConclusionElement?.Value; }
 			set
 			{
 				if (value is null)

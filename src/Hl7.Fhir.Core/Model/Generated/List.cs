@@ -96,7 +96,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public bool? Deleted
 			{
-				get { return DeletedElement != null ? DeletedElement.Value : null; }
+				get { return DeletedElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Date
 			{
-				get { return DateElement != null ? DateElement.Value : null; }
+				get { return DateElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -239,7 +239,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Date
 		{
-			get { return DateElement != null ? DateElement.Value : null; }
+			get { return DateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -264,7 +264,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? Ordered
 		{
-			get { return OrderedElement != null ? OrderedElement.Value : null; }
+			get { return OrderedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -290,7 +290,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.List.ListMode? Mode
 		{
-			get { return ModeElement != null ? ModeElement.Value : null; }
+			get { return ModeElement?.Value; }
 			set
 			{
 				if (value is null)

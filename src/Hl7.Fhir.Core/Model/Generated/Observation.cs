@@ -275,7 +275,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Observation.ObservationRelationshipType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -379,7 +379,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Comments
 		{
-			get { return CommentsElement != null ? CommentsElement.Value : null; }
+			get { return CommentsElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -412,7 +412,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public DateTimeOffset? Issued
 		{
-			get { return IssuedElement != null ? IssuedElement.Value : null; }
+			get { return IssuedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Observation.ObservationStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -464,7 +464,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Observation.ObservationReliability? Reliability
 		{
-			get { return ReliabilityElement != null ? ReliabilityElement.Value : null; }
+			get { return ReliabilityElement?.Value; }
 			set
 			{
 				if (value is null)

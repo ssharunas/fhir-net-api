@@ -73,7 +73,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Start
 		{
-			get { return StartElement != null ? StartElement.Value : null; }
+			get { return StartElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -98,7 +98,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string End
 		{
-			get { return EndElement != null ? EndElement.Value : null; }
+			get { return EndElement?.Value; }
 			set
 			{
 				if (value is null)

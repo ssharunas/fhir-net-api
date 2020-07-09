@@ -111,7 +111,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Created
 		{
-			get { return CreatedElement != null ? CreatedElement.Value : null; }
+			get { return CreatedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -136,7 +136,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Source
 		{
-			get { return SourceElement != null ? SourceElement.Value : null; }
+			get { return SourceElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Description
 		{
-			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+			get { return DescriptionElement?.Value; }
 			set
 			{
 				if (value is null)

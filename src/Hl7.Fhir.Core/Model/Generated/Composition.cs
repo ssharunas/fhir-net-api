@@ -127,7 +127,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Title
 			{
-				get { return TitleElement != null ? TitleElement.Value : null; }
+				get { return TitleElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -322,7 +322,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public IEnumerable<Hl7.Fhir.Model.Composition.CompositionAttestationMode?> Mode
 			{
-				get { return ModeElement != null ? ModeElement.Select(elem => elem.Value) : null; }
+				get { return ModeElement?.Select(elem => elem.Value); }
 				set
 				{
 					if (value is null)
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Time
 			{
-				get { return TimeElement != null ? TimeElement.Value : null; }
+				get { return TimeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -438,7 +438,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Date
 		{
-			get { return DateElement != null ? DateElement.Value : null; }
+			get { return DateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -478,7 +478,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Title
 		{
-			get { return TitleElement != null ? TitleElement.Value : null; }
+			get { return TitleElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -504,7 +504,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Composition.CompositionStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)

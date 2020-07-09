@@ -229,7 +229,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public bool? ReAdmission
 			{
-				get { return ReAdmissionElement != null ? ReAdmissionElement.Value : null; }
+				get { return ReAdmissionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -541,7 +541,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Encounter.EncounterState? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -567,7 +567,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Encounter.EncounterClass? Class
 		{
-			get { return ClassElement != null ? ClassElement.Value : null; }
+			get { return ClassElement?.Value; }
 			set
 			{
 				if (value is null)

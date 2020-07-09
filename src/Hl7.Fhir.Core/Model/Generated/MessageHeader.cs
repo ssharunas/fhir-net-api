@@ -89,7 +89,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Name
 			{
-				get { return NameElement != null ? NameElement.Value : null; }
+				get { return NameElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -123,7 +123,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Endpoint
 			{
-				get { return EndpointElement != null ? EndpointElement.Value : null; }
+				get { return EndpointElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -202,7 +202,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Name
 			{
-				get { return NameElement != null ? NameElement.Value : null; }
+				get { return NameElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -228,7 +228,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Software
 			{
-				get { return SoftwareElement != null ? SoftwareElement.Value : null; }
+				get { return SoftwareElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -253,7 +253,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Version
 			{
-				get { return VersionElement != null ? VersionElement.Value : null; }
+				get { return VersionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -286,7 +286,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Endpoint
 			{
-				get { return EndpointElement != null ? EndpointElement.Value : null; }
+				get { return EndpointElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -372,7 +372,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Identifier
 			{
-				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+				get { return IdentifierElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -398,7 +398,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.MessageHeader.ResponseType? Code
 			{
-				get { return CodeElement != null ? CodeElement.Value : null; }
+				get { return CodeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -482,7 +482,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Identifier
 		{
-			get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+			get { return IdentifierElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -508,7 +508,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public DateTimeOffset? Timestamp
 		{
-			get { return TimestampElement != null ? TimestampElement.Value : null; }
+			get { return TimestampElement?.Value; }
 			set
 			{
 				if (value is null)

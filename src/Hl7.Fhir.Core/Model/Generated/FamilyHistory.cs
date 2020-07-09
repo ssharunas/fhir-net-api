@@ -88,7 +88,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Note
 			{
-				get { return NoteElement != null ? NoteElement.Value : null; }
+				get { return NoteElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -170,7 +170,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Name
 			{
-				get { return NameElement != null ? NameElement.Value : null; }
+				get { return NameElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -219,7 +219,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Note
 			{
-				get { return NoteElement != null ? NoteElement.Value : null; }
+				get { return NoteElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -328,7 +328,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Note
 		{
-			get { return NoteElement != null ? NoteElement.Value : null; }
+			get { return NoteElement?.Value; }
 			set
 			{
 				if (value is null)

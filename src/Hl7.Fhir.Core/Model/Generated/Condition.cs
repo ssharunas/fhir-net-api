@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Condition.ConditionRelationshipType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -347,7 +347,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Detail
 			{
-				get { return DetailElement != null ? DetailElement.Value : null; }
+				get { return DetailElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -452,7 +452,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string DateAsserted
 		{
-			get { return DateAssertedElement != null ? DateAssertedElement.Value : null; }
+			get { return DateAssertedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Condition.ConditionStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -579,7 +579,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Notes
 		{
-			get { return NotesElement != null ? NotesElement.Value : null; }
+			get { return NotesElement?.Value; }
 			set
 			{
 				if (value is null)

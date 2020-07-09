@@ -110,7 +110,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Text
 			{
-				get { return TextElement != null ? TextElement.Value : null; }
+				get { return TextElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -167,7 +167,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Remarks
 			{
-				get { return RemarksElement != null ? RemarksElement.Value : null; }
+				get { return RemarksElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -276,7 +276,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Header
 			{
-				get { return HeaderElement != null ? HeaderElement.Value : null; }
+				get { return HeaderElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -301,7 +301,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Text
 			{
-				get { return TextElement != null ? TextElement.Value : null; }
+				get { return TextElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -410,7 +410,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Questionnaire.QuestionnaireStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -436,7 +436,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Authored
 		{
-			get { return AuthoredElement != null ? AuthoredElement.Value : null; }
+			get { return AuthoredElement?.Value; }
 			set
 			{
 				if (value is null)

@@ -121,7 +121,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public bool? Exclude
 			{
-				get { return ExcludeElement != null ? ExcludeElement.Value : null; }
+				get { return ExcludeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -204,7 +204,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Group.GroupType? Type
 		{
-			get { return TypeElement != null ? TypeElement.Value : null; }
+			get { return TypeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -230,7 +230,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? Actual
 		{
-			get { return ActualElement != null ? ActualElement.Value : null; }
+			get { return ActualElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -262,7 +262,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Name
 		{
-			get { return NameElement != null ? NameElement.Value : null; }
+			get { return NameElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -287,7 +287,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? Quantity
 		{
-			get { return QuantityElement != null ? QuantityElement.Value : null; }
+			get { return QuantityElement?.Value; }
 			set
 			{
 				if (value is null)

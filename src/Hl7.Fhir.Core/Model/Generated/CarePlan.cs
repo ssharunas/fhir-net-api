@@ -199,7 +199,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -224,7 +224,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.CarePlan.CarePlanGoalStatus? Status
 			{
-				get { return StatusElement != null ? StatusElement.Value : null; }
+				get { return StatusElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -249,7 +249,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Notes
 			{
-				get { return NotesElement != null ? NotesElement.Value : null; }
+				get { return NotesElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -408,7 +408,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public IEnumerable<string> Goal
 			{
-				get { return GoalElement != null ? GoalElement.Select(elem => elem.Value) : null; }
+				get { return GoalElement?.Select(elem => elem.Value); }
 				set
 				{
 					if (value is null)
@@ -433,7 +433,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.CarePlan.CarePlanActivityStatus? Status
 			{
-				get { return StatusElement != null ? StatusElement.Value : null; }
+				get { return StatusElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -459,7 +459,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public bool? Prohibited
 			{
-				get { return ProhibitedElement != null ? ProhibitedElement.Value : null; }
+				get { return ProhibitedElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Notes
 			{
-				get { return NotesElement != null ? NotesElement.Value : null; }
+				get { return NotesElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -600,7 +600,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.CarePlan.CarePlanActivityCategory? Category
 			{
-				get { return CategoryElement != null ? CategoryElement.Value : null; }
+				get { return CategoryElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -679,7 +679,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Details
 			{
-				get { return DetailsElement != null ? DetailsElement.Value : null; }
+				get { return DetailsElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -789,7 +789,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.CarePlan.CarePlanStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -821,7 +821,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Modified
 		{
-			get { return ModifiedElement != null ? ModifiedElement.Value : null; }
+			get { return ModifiedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -879,7 +879,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Notes
 		{
-			get { return NotesElement != null ? NotesElement.Value : null; }
+			get { return NotesElement?.Value; }
 			set
 			{
 				if (value is null)

@@ -321,7 +321,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus? Status
 			{
-				get { return StatusElement != null ? StatusElement.Value : null; }
+				get { return StatusElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string WhenPrepared
 			{
-				get { return WhenPreparedElement != null ? WhenPreparedElement.Value : null; }
+				get { return WhenPreparedElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -393,7 +393,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string WhenHandedOver
 			{
-				get { return WhenHandedOverElement != null ? WhenHandedOverElement.Value : null; }
+				get { return WhenHandedOverElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -521,7 +521,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.MedicationDispense.MedicationDispenseStatus? Status
 		{
-			get { return StatusElement != null ? StatusElement.Value : null; }
+			get { return StatusElement?.Value; }
 			set
 			{
 				if (value is null)

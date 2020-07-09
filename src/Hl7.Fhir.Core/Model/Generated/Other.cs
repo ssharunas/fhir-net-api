@@ -93,7 +93,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Created
 		{
-			get { return CreatedElement != null ? CreatedElement.Value : null; }
+			get { return CreatedElement?.Value; }
 			set
 			{
 				if (value is null)

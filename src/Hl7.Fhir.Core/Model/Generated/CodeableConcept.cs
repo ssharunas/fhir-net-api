@@ -69,7 +69,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Text
 		{
-			get { return TextElement != null ? TextElement.Value : null; }
+			get { return TextElement?.Value; }
 			set
 			{
 				if (value is null)

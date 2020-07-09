@@ -128,20 +128,12 @@ namespace Hl7.Fhir.Introspection
 
 		private static string getProfile(Type type)
 		{
-			var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-
-			return attr != null ? attr.Profile : null;
+			return ReflectionHelper.GetAttribute<FhirTypeAttribute>(type)?.Profile;
 		}
 
 		private static string collectTypeName(Type type)
 		{
-			var attr = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type);
-			string name;
-
-			if (attr != null && attr.Name != null)
-				name = attr.Name;
-			else
-				name = type.Name;
+			string name = ReflectionHelper.GetAttribute<FhirTypeAttribute>(type)?.Name ?? type.Name;
 
 			if (ReflectionHelper.IsClosedGenericType(type))
 			{

@@ -66,7 +66,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? DoseSequence
 			{
-				get { return DoseSequenceElement != null ? DoseSequenceElement.Value : null; }
+				get { return DoseSequenceElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -91,7 +91,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -124,7 +124,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Series
 			{
-				get { return SeriesElement != null ? SeriesElement.Value : null; }
+				get { return SeriesElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -149,7 +149,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? SeriesDoses
 			{
-				get { return SeriesDosesElement != null ? SeriesDosesElement.Value : null; }
+				get { return SeriesDosesElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -333,7 +333,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Date
 			{
-				get { return DateElement != null ? DateElement.Value : null; }
+				get { return DateElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -366,7 +366,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public bool? Reported
 			{
-				get { return ReportedElement != null ? ReportedElement.Value : null; }
+				get { return ReportedElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -450,7 +450,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Date
 		{
-			get { return DateElement != null ? DateElement.Value : null; }
+			get { return DateElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -493,7 +493,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? RefusedIndicator
 		{
-			get { return RefusedIndicatorElement != null ? RefusedIndicatorElement.Value : null; }
+			get { return RefusedIndicatorElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -519,7 +519,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public bool? Reported
 		{
-			get { return ReportedElement != null ? ReportedElement.Value : null; }
+			get { return ReportedElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -576,7 +576,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string LotNumber
 		{
-			get { return LotNumberElement != null ? LotNumberElement.Value : null; }
+			get { return LotNumberElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -601,7 +601,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string ExpirationDate
 		{
-			get { return ExpirationDateElement != null ? ExpirationDateElement.Value : null; }
+			get { return ExpirationDateElement?.Value; }
 			set
 			{
 				if (value is null)

@@ -233,7 +233,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.OperationOutcome.IssueSeverity? Severity
 			{
-				get { return SeverityElement != null ? SeverityElement.Value : null; }
+				get { return SeverityElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -265,7 +265,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Details
 			{
-				get { return DetailsElement != null ? DetailsElement.Value : null; }
+				get { return DetailsElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -291,7 +291,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public IEnumerable<string> Location
 			{
-				get { return LocationElement != null ? LocationElement.Select(elem => elem.Value) : null; }
+				get { return LocationElement?.Select(elem => elem.Value); }
 				set
 				{
 					if (value is null)

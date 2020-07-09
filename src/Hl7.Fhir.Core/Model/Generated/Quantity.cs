@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public decimal? Value
 		{
-			get { return ValueElement != null ? ValueElement.Value : null; }
+			get { return ValueElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Quantity.QuantityCompararator? Comparator
 		{
-			get { return ComparatorElement != null ? ComparatorElement.Value : null; }
+			get { return ComparatorElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Units
 		{
-			get { return UnitsElement != null ? UnitsElement.Value : null; }
+			get { return UnitsElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string System
 		{
-			get { return SystemElement != null ? SystemElement.Value : null; }
+			get { return SystemElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -187,7 +187,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Code
 		{
-			get { return CodeElement != null ? CodeElement.Value : null; }
+			get { return CodeElement?.Value; }
 			set
 			{
 				if (value is null)

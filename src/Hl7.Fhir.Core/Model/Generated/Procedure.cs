@@ -83,7 +83,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Procedure.ProcedureRelationshipType? Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Outcome
 		{
-			get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+			get { return OutcomeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -335,7 +335,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string FollowUp
 		{
-			get { return FollowUpElement != null ? FollowUpElement.Value : null; }
+			get { return FollowUpElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -368,7 +368,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Notes
 		{
-			get { return NotesElement != null ? NotesElement.Value : null; }
+			get { return NotesElement?.Value; }
 			set
 			{
 				if (value is null)

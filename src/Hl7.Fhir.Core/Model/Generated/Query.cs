@@ -94,7 +94,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Identifier
 			{
-				get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+				get { return IdentifierElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -120,7 +120,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public QueryOutcome? Outcome
 			{
-				get { return OutcomeElement != null ? OutcomeElement.Value : null; }
+				get { return OutcomeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -145,7 +145,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? Total
 			{
-				get { return TotalElement != null ? TotalElement.Value : null; }
+				get { return TotalElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Identifier
 		{
-			get { return IdentifierElement != null ? IdentifierElement.Value : null; }
+			get { return IdentifierElement?.Value; }
 			set
 			{
 				if (value is null)

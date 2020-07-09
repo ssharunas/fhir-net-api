@@ -288,7 +288,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? Number
 			{
-				get { return NumberElement != null ? NumberElement.Value : null; }
+				get { return NumberElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -314,7 +314,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.ImagingStudy.Modality? Modality
 			{
-				get { return ModalityElement != null ? ModalityElement.Value : null; }
+				get { return ModalityElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -340,7 +340,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Uid
 			{
-				get { return UidElement != null ? UidElement.Value : null; }
+				get { return UidElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -365,7 +365,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Description
 			{
-				get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+				get { return DescriptionElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -391,7 +391,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? NumberOfInstances
 			{
-				get { return NumberOfInstancesElement != null ? NumberOfInstancesElement.Value : null; }
+				get { return NumberOfInstancesElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -416,7 +416,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
 			{
-				get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
+				get { return AvailabilityElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -441,7 +441,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Url
 			{
-				get { return UrlElement != null ? UrlElement.Value : null; }
+				get { return UrlElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -473,7 +473,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string DateTime
 			{
-				get { return DateTimeElement != null ? DateTimeElement.Value : null; }
+				get { return DateTimeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -581,7 +581,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? Number
 			{
-				get { return NumberElement != null ? NumberElement.Value : null; }
+				get { return NumberElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -607,7 +607,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Uid
 			{
-				get { return UidElement != null ? UidElement.Value : null; }
+				get { return UidElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -633,7 +633,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Sopclass
 			{
-				get { return SopclassElement != null ? SopclassElement.Value : null; }
+				get { return SopclassElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -658,7 +658,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Type
 			{
-				get { return TypeElement != null ? TypeElement.Value : null; }
+				get { return TypeElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -683,7 +683,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Title
 			{
-				get { return TitleElement != null ? TitleElement.Value : null; }
+				get { return TitleElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -708,7 +708,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string Url
 			{
-				get { return UrlElement != null ? UrlElement.Value : null; }
+				get { return UrlElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -803,7 +803,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string DateTime
 		{
-			get { return DateTimeElement != null ? DateTimeElement.Value : null; }
+			get { return DateTimeElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -838,7 +838,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Uid
 		{
-			get { return UidElement != null ? UidElement.Value : null; }
+			get { return UidElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -888,7 +888,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<Hl7.Fhir.Model.ImagingStudy.ImagingModality?> Modality_
 		{
-			get { return Modality_Element != null ? Modality_Element.Select(elem => elem.Value) : null; }
+			get { return Modality_Element?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)
@@ -921,7 +921,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.ImagingStudy.InstanceAvailability? Availability
 		{
-			get { return AvailabilityElement != null ? AvailabilityElement.Value : null; }
+			get { return AvailabilityElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -946,7 +946,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Url
 		{
-			get { return UrlElement != null ? UrlElement.Value : null; }
+			get { return UrlElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -972,7 +972,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? NumberOfSeries
 		{
-			get { return NumberOfSeriesElement != null ? NumberOfSeriesElement.Value : null; }
+			get { return NumberOfSeriesElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -998,7 +998,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public int? NumberOfInstances
 		{
-			get { return NumberOfInstancesElement != null ? NumberOfInstancesElement.Value : null; }
+			get { return NumberOfInstancesElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -1023,7 +1023,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string ClinicalInformation
 		{
-			get { return ClinicalInformationElement != null ? ClinicalInformationElement.Value : null; }
+			get { return ClinicalInformationElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -1064,7 +1064,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Description
 		{
-			get { return DescriptionElement != null ? DescriptionElement.Value : null; }
+			get { return DescriptionElement?.Value; }
 			set
 			{
 				if (value is null)

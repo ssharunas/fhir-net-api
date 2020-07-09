@@ -252,7 +252,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public DateTimeOffset? Instant
 		{
-			get { return InstantElement != null ? InstantElement.Value : null; }
+			get { return InstantElement?.Value; }
 			set
 			{
 				if (value is null)

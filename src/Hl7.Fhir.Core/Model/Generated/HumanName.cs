@@ -105,7 +105,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.HumanName.NameUse? Use
 		{
-			get { return UseElement != null ? UseElement.Value : null; }
+			get { return UseElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -130,7 +130,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Text
 		{
-			get { return TextElement != null ? TextElement.Value : null; }
+			get { return TextElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -156,7 +156,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<string> Family
 		{
-			get { return FamilyElement != null ? FamilyElement.Select(elem => elem.Value) : null; }
+			get { return FamilyElement?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)
@@ -182,7 +182,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<string> Given
 		{
-			get { return GivenElement != null ? GivenElement.Select(elem => elem.Value) : null; }
+			get { return GivenElement?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)
@@ -208,7 +208,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<string> Prefix
 		{
-			get { return PrefixElement != null ? PrefixElement.Select(elem => elem.Value) : null; }
+			get { return PrefixElement?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)
@@ -234,7 +234,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public IEnumerable<string> Suffix
 		{
-			get { return SuffixElement != null ? SuffixElement.Select(elem => elem.Value) : null; }
+			get { return SuffixElement?.Select(elem => elem.Value); }
 			set
 			{
 				if (value is null)

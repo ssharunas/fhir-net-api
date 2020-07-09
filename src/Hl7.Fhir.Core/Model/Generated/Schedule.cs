@@ -166,7 +166,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? Frequency
 			{
-				get { return FrequencyElement != null ? FrequencyElement.Value : null; }
+				get { return FrequencyElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -191,7 +191,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Schedule.EventTiming? When
 			{
-				get { return WhenElement != null ? WhenElement.Value : null; }
+				get { return WhenElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -217,7 +217,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public decimal? Duration
 			{
-				get { return DurationElement != null ? DurationElement.Value : null; }
+				get { return DurationElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -243,7 +243,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public Hl7.Fhir.Model.Schedule.UnitsOfTime? Units
 			{
-				get { return UnitsElement != null ? UnitsElement.Value : null; }
+				get { return UnitsElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -268,7 +268,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public int? Count
 			{
-				get { return CountElement != null ? CountElement.Value : null; }
+				get { return CountElement?.Value; }
 				set
 				{
 					if (value is null)
@@ -293,7 +293,7 @@ namespace Hl7.Fhir.Model
 			[IgnoreDataMember]
 			public string End
 			{
-				get { return EndElement != null ? EndElement.Value : null; }
+				get { return EndElement?.Value; }
 				set
 				{
 					if (value is null)

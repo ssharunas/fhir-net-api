@@ -87,7 +87,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public Hl7.Fhir.Model.Identifier.IdentifierUse? Use
 		{
-			get { return UseElement != null ? UseElement.Value : null; }
+			get { return UseElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -112,7 +112,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Label
 		{
-			get { return LabelElement != null ? LabelElement.Value : null; }
+			get { return LabelElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -137,7 +137,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string System
 		{
-			get { return SystemElement != null ? SystemElement.Value : null; }
+			get { return SystemElement?.Value; }
 			set
 			{
 				if (value is null)
@@ -162,7 +162,7 @@ namespace Hl7.Fhir.Model
 		[IgnoreDataMember]
 		public string Value
 		{
-			get { return ValueElement != null ? ValueElement.Value : null; }
+			get { return ValueElement?.Value; }
 			set
 			{
 				if (value is null)
