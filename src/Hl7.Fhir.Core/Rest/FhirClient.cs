@@ -1315,16 +1315,33 @@ namespace Hl7.Fhir.Rest
 		/// <typeparam name="TDto">Type of DTO object</typeparam>
 		/// <param name="template">Template for deserializing received data</param>
 		/// <param name="query">Query to fetch the resource. Query must return only one result.</param>
+		/// <param name="isSearch">Add _search to the query path.</param>
 		/// <returns>Transforms response into DTO using template.</returns>
-		public TDto Read<TDto>(Template<TDto> template, Query query)
+		public TDto Read<TDto>(Template<TDto> template, Query query, bool isSearch = true)
 		{
 			if (template is null) throw Error.ArgumentNull(nameof(template));
 			if (query is null) throw Error.ArgumentNull(nameof(query));
 
-			var request = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).Search(query).Uri), "GET");
+			var path = new RestUrl(Endpoint);
+			path = isSearch ? path.Search(query) : path.Query(query);
+
+			var request = createFhirRequest(makeAbsolute(path.Uri), "GET");
 			request.IsForBundle = true;
 
-			return doRequest(request, HttpStatusCode.OK, resp => template.Read(resp));
+			return doRequest(request, HttpStatusCode.OK, resp =>
+			{
+				if (template is ISearchableTemplate<TDto> searchable)
+				{
+					var results = searchable.ReadAtomSearch(resp, out _, out _);
+
+					if (results?.Count > 0)
+						return results[0];
+
+					return default(TDto);
+				}
+
+				return template.Read(resp);
+			});
 		}
 
 		/// <summary>
@@ -1335,8 +1352,9 @@ namespace Hl7.Fhir.Rest
 		/// <param name="template">Template for deserializing received data</param>
 		/// <param name="query">ID of resource to fetch</param>
 		/// <param name="pageCount">Count of total pages</param>
+		/// <param name="isQuery">Instead of searching, use querying (does not add _search to the query path)</param>
 		/// <returns>Transforms response into DTO using template.</returns>
-		public IList<TDto> Search<TDto, TCriteria>(SearchableTemplate<TDto, TCriteria> template, TCriteria query, out int pageCount)
+		public IList<TDto> Search<TDto, TCriteria>(SearchableTemplate<TDto, TCriteria> template, TCriteria query, out int pageCount, bool isQuery = false)
 		{
 			if (template is null) throw Error.ArgumentNull(nameof(template));
 
@@ -1347,7 +1365,10 @@ namespace Hl7.Fhir.Rest
 
 			if (fhirQuery != null)
 			{
-				var request = createFhirRequest(makeAbsolute(new RestUrl(Endpoint).Search(fhirQuery).Uri), "GET");
+				var path = new RestUrl(Endpoint);
+				path = isQuery ? path.Query(fhirQuery) : path.Search(fhirQuery);
+
+				var request = createFhirRequest(makeAbsolute(path.Uri), "GET");
 				request.IsForBundle = true;
 
 				int totalPages = 0;
@@ -1424,9 +1445,6 @@ namespace Hl7.Fhir.Rest
 		}
 
 		#endregion
-
-
-
 
 		protected virtual void Dispose(bool disposing)
 		{

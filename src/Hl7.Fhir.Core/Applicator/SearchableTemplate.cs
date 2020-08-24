@@ -10,7 +10,12 @@ using System.Xml;
 
 namespace Hl7.Fhir.Applicator
 {
-	public abstract class SearchableTemplate<TDto, TCriteria> : Template<TDto>
+	internal interface ISearchableTemplate<TDto>
+	{
+		IList<TDto> ReadAtomSearch(FhirResponse response, out int totalPages, out int totalResults);
+	}
+
+	public abstract class SearchableTemplate<TDto, TCriteria> : Template<TDto>, ISearchableTemplate<TDto>
 	{
 		private class SearchAtomDataSetterElement : IDataSetterContext
 		{
@@ -157,7 +162,7 @@ namespace Hl7.Fhir.Applicator
 					throw Error.InvalidOperation("GetSetterForAtomSearch() returned null!");
 
 				SearchTemplateNode.ReadData(xml, context);
-				return ToDtoList(context, out totalPages, out totalResults);
+				return ToDtoList(context, xml, out totalPages, out totalResults);
 			}
 
 			totalResults = 0;
@@ -170,7 +175,7 @@ namespace Hl7.Fhir.Applicator
 			return new SearchAtomDataSetter(this);
 		}
 
-		protected virtual IList<TDto> ToDtoList(IDataSetterContext context, out int totalPages, out int totalResults)
+		protected virtual IList<TDto> ToDtoList(IDataSetterContext context, IPathable xml, out int totalPages, out int totalResults)
 		{
 			IList<TDto> result = null;
 
