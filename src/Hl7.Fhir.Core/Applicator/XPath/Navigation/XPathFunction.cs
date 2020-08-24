@@ -91,6 +91,7 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 			_functions.Add("number", new XFunction1((value, xpath) => ToNumber(xpath.RawValue(value))));
 			_functions.Add("round", new XFunction1((value, xpath) => Math.Round(ToNumber(xpath.RawValue(value)))));
 			_functions.Add("starts-with", new XFunction2((value, xpath1, xpath2) => ToString(xpath1.Value(value)).StartsWith(ToString(xpath2.Value(value)))));
+			_functions.Add("ends-with", new XFunction2((value, xpath1, xpath2) => ToString(xpath1.Value(value)).EndsWith(ToString(xpath2.Value(value)))));
 			_functions.Add("string", new XFunction1((value, xpath) => ToString(xpath.Value(value))));
 			_functions.Add("string-length", new XFunction1((value, xpath) => (decimal)ToString(xpath.Value(value)).Length));
 			_functions.Add("true", new XFunction0(() => true));
