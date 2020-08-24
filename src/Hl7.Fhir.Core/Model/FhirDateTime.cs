@@ -26,7 +26,9 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
+using Hl7.Fhir.Introspection;
 using System;
+using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 
 namespace Hl7.Fhir.Model
@@ -65,6 +67,23 @@ namespace Hl7.Fhir.Model
 		public const string FMT_YEAR = "{0:D4}";
 		public const string FMT_YEARMONTH = "{0:D4}-{1:D2}";
 		public const string FMT_YEARMONTHDAY = "{0:D4}-{1:D2}-{2:D2}";
+
+		[NotMapped]
+		[IgnoreDataMember]
+		public DateTimeOffset DateTimeOffset
+		{
+			get
+			{
+				if (DateTimeOffset.TryParse(Value, out DateTimeOffset offset))
+					return offset;
+
+				return DateTimeOffset.MinValue;
+			}
+		}
+
+		[NotMapped]
+		[IgnoreDataMember]
+		public DateTime LocalDateTime => DateTimeOffset.LocalDateTime;
 
 		public static FhirDateTime Now()
 		{
