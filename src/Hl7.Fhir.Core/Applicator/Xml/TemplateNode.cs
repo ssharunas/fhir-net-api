@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.Applicator.Xml
 {
-	internal partial class TemplateNode
+	internal partial class TemplateNode : IPositional
 	{
 		private const string X_IF = "x-if";
 		private const string X_ID = "x-id";
@@ -45,6 +45,7 @@ namespace Hl7.Fhir.Applicator.Xml
 		{
 			IsRead = true;
 			IsWrite = true;
+			IsWriteAlways = false;
 			Name = name;
 			Namespace = @namespace;
 			Text = text;
@@ -57,11 +58,14 @@ namespace Hl7.Fhir.Applicator.Xml
 				{
 					switch (attribute.Key)
 					{
+						case X_ID: Id = XPath.XPath.Parse(attribute.Value, pos); break;
 						case X_IF: _if = attribute.Value; break;
 						case X_FOREACH: _foreach = attribute.Value; break;
 						case X_READ: IsRead = attribute.Value?.ToLower() != "false"; break;
-						case X_WRITE: IsWrite = attribute.Value?.ToLower() != "false"; break;
-						case X_ID: Id = XPath.XPath.Parse(attribute.Value, pos); break;
+						case X_WRITE:
+							IsWrite = attribute.Value?.ToLower() != "false";
+							IsWriteAlways = attribute.Value?.ToLower() == "always";
+							break;
 						default:
 							if (_attributes is null)
 								_attributes = new List<Attribute>();
@@ -93,6 +97,12 @@ namespace Hl7.Fhir.Applicator.Xml
 		/// Otherwise node is skipped for writing.
 		/// </summary>
 		private bool IsWrite { get; }
+
+		/// <summary>
+		/// x-write property.
+		/// If true - node will be used in create and update operations.
+		/// </summary>
+		private bool IsWriteAlways { get; }
 
 		/// <summary>
 		/// x-if property value
@@ -211,6 +221,9 @@ namespace Hl7.Fhir.Applicator.Xml
 
 			if (!IsWrite)
 				line.LineText += $"{X_WRITE}=\"false\" ";
+
+			if (IsWriteAlways)
+				line.LineText += $"{X_WRITE}=\"always\" ";
 
 			if (!string.IsNullOrEmpty(Foreach))
 			{
@@ -810,7 +823,7 @@ namespace Hl7.Fhir.Applicator.Xml
 							if (!string.IsNullOrEmpty(value))
 								node.AddAttribute(attibute.Key, value);
 						}
-						else if (IsRead) //We can not update value, because it was not read. We can only create it
+						else if (IsWriteAlways || IsRead) //We can not update value if !IsRead, because it was not read. We can only create it. Unless IsWriteAlways
 						{
 							var value = ExtractData(attibute.Value, context);
 							existing.ValueAsString = value;

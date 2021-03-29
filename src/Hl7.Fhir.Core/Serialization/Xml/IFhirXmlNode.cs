@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Hl7.Fhir.Serialization.Xml
 {
-	internal interface IFhirXmlNode : IFhirXmlValue, IPathable
+	internal interface IFhirXmlNode : IFhirXmlValue, IPathable, IPositional
 	{
 		string Namespace { get; }
 		IFhirXmlNode Parent { get; }
@@ -26,9 +26,6 @@ namespace Hl7.Fhir.Serialization.Xml
 		//bool DeleteAttribute(IFhirXmlAttribute attribute);
 		IFhirXmlAttribute AddAttribute(string key, string value);
 
-		IPositionInfo Position { get; }
 		bool Is(string @namespace, string name);
-
-		string ToXml();
 	}
 }

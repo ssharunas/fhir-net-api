@@ -7,7 +7,7 @@ namespace Hl7.Fhir.Applicator.Xml
 {
 	public class TemplateNodeValidationResult : IDataContext
 	{
-		public class Line
+		public class Line : IPositional
 		{
 			internal Line(string text, string error, string warning, IPositionInfo position)
 			{

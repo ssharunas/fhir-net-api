@@ -8,7 +8,6 @@
 
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
-using System.Xml.Linq;
 
 namespace Hl7.Fhir.Serialization
 {
