@@ -23,12 +23,13 @@ namespace Hl7.Fhir.Rest
 		private Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> _afterRequest;
 		private HttpWebRequest _request;
 
-		public FhirRequest(Uri location, string method, Action<FhirRequest, HttpWebRequest> beforeRequest, Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> afterRequest)
+		public FhirRequest(Uri location, string method, Action<FhirRequest, HttpWebRequest> beforeRequest, Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> afterRequest, int? timeout)
 		{
 			if (method is null) throw Error.ArgumentNull(nameof(method));
 			if (location is null) throw Error.ArgumentNull(nameof(location));
 			if (!location.IsAbsoluteUri) throw Error.Argument(nameof(location), "Must be absolute uri");
 
+			Timeout = timeout;
 			Method = method;
 			Location = location;
 
@@ -36,11 +37,27 @@ namespace Hl7.Fhir.Rest
 			_afterRequest = afterRequest;
 		}
 
+		/// <summary>
+		/// Unique request ID.
+		/// </summary>
 		public Guid ID { get; } = Guid.NewGuid();
 		public Uri Location { get; }
 		public Uri ContentLocation { get; internal set; }
+
+		/// <summary>
+		/// Request method: POST/PUT/GET
+		/// </summary>
 		public string Method { get; }
-		public int Timeout { get; set; } = 100000; // Default timeout is 100 seconds
+
+		/// <summary>
+		/// Request timeout. Default timeout is 100 seconds.
+		/// It is applied before "BeforeRequest()"
+		/// </summary>
+		public int? Timeout { get; set; }
+
+		/// <summary>
+		/// Request body (in case of POST/PUT)
+		/// </summary>
 		public byte[] Body { get; private set; }
 		public string ContentType { get; /*private*/ set; }
 		public string CategoryHeader { get; private set; }
@@ -133,9 +150,11 @@ namespace Hl7.Fhir.Rest
 			var location = new RestUrl(Location);
 
 			_request = (HttpWebRequest)WebRequest.Create(location.Uri);
-			_request.Timeout = Timeout;
 			_request.Method = Method;
 			_request.UserAgent = ".NET FhirClient for FHIR " + ModelInfo.Version;
+
+			if (Timeout != null)
+				_request.Timeout = Timeout.Value;
 
 			if (acceptFormat != null)
 				_request.Accept = Rest.ContentType.BuildContentType(acceptFormat.Value, IsForBundle);
@@ -179,6 +198,8 @@ namespace Hl7.Fhir.Rest
 			{
 				if (ex.Response is HttpWebResponse resp)
 					return resp;
+
+				ex.Data[nameof(FhirResponse)] = ID;
 
 				throw;
 			}

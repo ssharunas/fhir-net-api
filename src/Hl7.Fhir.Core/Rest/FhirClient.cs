@@ -104,6 +104,9 @@ namespace Hl7.Fhir.Rest
 
 		public ResourceFormat PreferredFormat { get; set; }
 
+		/// <summary>
+		///  The number of milliseconds to wait before the request times out. The default value is 100000 milliseconds (100 seconds).
+		/// </summary>
 		public int? Timeout { get; set; }
 
 		/// <summary>
@@ -137,12 +140,7 @@ namespace Hl7.Fhir.Rest
 
 		private FhirRequest createFhirRequest(Uri location, string method)
 		{
-			var req = new FhirRequest(location, method, BeforeRequest, AfterResponse);
-
-			if (Timeout != null)
-				req.Timeout = Timeout.Value;
-
-			return req;
+			return new FhirRequest(location, method, BeforeRequest, AfterResponse, Timeout);
 		}
 
 		private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
