@@ -19,6 +19,11 @@ namespace Hl7.Fhir.Serialization
 
 		public static bool IsIndentOutput { get; set; }
 
+		/// <summary>
+		/// Do not allow non-array elements to be mapped to array nodes.
+		/// </summary>
+		public static bool IsParserStrict { get; set; } = true;
+
 		internal static ModelInspector Inspector
 		{
 			get

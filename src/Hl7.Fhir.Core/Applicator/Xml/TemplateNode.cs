@@ -61,7 +61,10 @@ namespace Hl7.Fhir.Applicator.Xml
 						case X_ID: Id = XPath.XPath.Parse(attribute.Value, pos); break;
 						case X_IF: _if = attribute.Value; break;
 						case X_FOREACH: _foreach = attribute.Value; break;
-						case X_READ: IsRead = attribute.Value?.ToLower() != "false"; break;
+						case X_READ:
+							IsRead = attribute.Value?.ToLower() != "false";
+							IsFirst = attribute.Value?.ToLower() == "first";
+							break;
 						case X_WRITE:
 							IsWrite = attribute.Value?.ToLower() != "false";
 							IsWriteAlways = attribute.Value?.ToLower() == "always";
@@ -103,6 +106,13 @@ namespace Hl7.Fhir.Applicator.Xml
 		/// If true - node will be used in create and update operations.
 		/// </summary>
 		private bool IsWriteAlways { get; }
+
+		/// <summary>
+		/// x-read property == first.
+		/// Do not throw exception if non-array property is mapped to array node. (x-id matches multiple nodes, but property is not x-foreach).
+		/// Takes first element from the nodes array.
+		/// </summary>
+		private bool IsFirst { get; }
 
 		/// <summary>
 		/// x-if property value
@@ -728,7 +738,7 @@ namespace Hl7.Fhir.Applicator.Xml
 						foreach (var item in filtered)
 							child.ReadData(item, context.GetArrayElementSetter(item, child.Foreach));
 					}
-					else if (filtered.Count == 1)
+					else if (filtered.Count == 1 || child.IsFirst || !SerializationConfig.IsParserStrict)
 						child.ReadData(filtered[0], context);
 					else
 						throw Error.InvalidOperation($"Could not read data: non-array element '{Name}.{child.Name}' (id: '{child.Id}') at template {child.Position}, xml {filtered[0].Position} has multiple values.");

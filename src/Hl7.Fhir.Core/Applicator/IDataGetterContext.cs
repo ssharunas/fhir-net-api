@@ -1,5 +1,4 @@
-﻿using Hl7.Fhir.Serialization.Xml;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Hl7.Fhir.Applicator
 {
