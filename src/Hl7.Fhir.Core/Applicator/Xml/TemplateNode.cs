@@ -489,6 +489,9 @@ namespace Hl7.Fhir.Applicator.Xml
 					string root = GetAttributeValue(X_INCLUDE_ROOT);
 					string scope = Scope + GetAttributeValue(X_INCLUDE_SCOPE);
 
+					if (_include.Name == X_INCLUDE)
+						_include = _include.GetInclude(context);
+
 					if (!string.IsNullOrEmpty(root))
 						_include.Name = root;
 
@@ -851,6 +854,9 @@ namespace Hl7.Fhir.Applicator.Xml
 		public override string ToString()
 		{
 			string id = null;
+
+			if(Name == X_INCLUDE)
+				return $"<{Name} source=\"{GetAttributeValue(X_INCLUDE_SOURCE)}\"></{Name}>";
 
 			if (Id != null)
 				id = $"x-id=\"{Id}\"";
