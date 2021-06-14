@@ -1,5 +1,6 @@
 ﻿using Hl7.Fhir.Serialization.Xml;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -75,7 +76,7 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 			}
 		}
 
-		private static Dictionary<string, XFunction> _functions = new Dictionary<string, XFunction>();
+		private static IDictionary<string, XFunction> _functions = new ConcurrentDictionary<string, XFunction>();
 
 		static XPathFunction()
 		{

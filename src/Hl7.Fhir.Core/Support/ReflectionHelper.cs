@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using System;
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -18,9 +19,9 @@ namespace Hl7.Fhir.Support
 {
 	internal static class ReflectionHelper
 	{
-		private static readonly Dictionary<Type, Type> _listTypes = new Dictionary<Type, Type>();
-		private static readonly Dictionary<Type, Type> _resourceTypes = new Dictionary<Type, Type>();
-		private static readonly Dictionary<Type, Func<object>> _cachedTypes = new Dictionary<Type, Func<object>>();
+		private static readonly IDictionary<Type, Type> _listTypes = new ConcurrentDictionary<Type, Type>();
+		private static readonly IDictionary<Type, Type> _resourceTypes = new ConcurrentDictionary<Type, Type>();
+		private static readonly IDictionary<Type, Func<object>> _cachedTypes = new ConcurrentDictionary<Type, Func<object>>();
 
 		/// <summary>
 		/// Gets an attribute on an enum field value

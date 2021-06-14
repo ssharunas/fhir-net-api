@@ -8,6 +8,7 @@
 
 using Hl7.Fhir.Support;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -17,16 +18,16 @@ namespace Hl7.Fhir.Introspection
 	internal class ModelInspector
 	{
 		// Index for easy lookup of resources, key is Tuple<upper resourcename, upper profile>
-		private Dictionary<string, ClassMapping> _resourceClasses = new Dictionary<string, ClassMapping>();
+		private ConcurrentDictionary<string, ClassMapping> _resourceClasses = new ConcurrentDictionary<string, ClassMapping>();
 
 		// Index for easy lookup of datatypes, key is upper typenanme
-		private Dictionary<string, ClassMapping> _dataTypeClasses = new Dictionary<string, ClassMapping>();
+		private IDictionary<string, ClassMapping> _dataTypeClasses = new ConcurrentDictionary<string, ClassMapping>();
 
 		// Index for easy lookup of classmappings, key is Type
-		private Dictionary<Type, ClassMapping> _classMappingsByType = new Dictionary<Type, ClassMapping>();
+		private IDictionary<Type, ClassMapping> _classMappingsByType = new ConcurrentDictionary<Type, ClassMapping>();
 
 		// Index for easy lookup of enummappings, key is Type
-		private Dictionary<Type, EnumMapping> _enumMappingsByType = new Dictionary<Type, EnumMapping>();
+		private IDictionary<Type, EnumMapping> _enumMappingsByType = new ConcurrentDictionary<Type, EnumMapping>();
 
 		private object lockObject = new object();
 

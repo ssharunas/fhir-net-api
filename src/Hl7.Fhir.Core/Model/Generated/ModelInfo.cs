@@ -103,7 +103,7 @@ namespace Hl7.Fhir.Model
 			get { return "0.0.82"; }
 		}
 
-		public static Dictionary<string, Type> FhirTypeToCsType =
+		public static IDictionary<string, Type> FhirTypeToCsType =
 			new Dictionary<string, Type>()
 			{
 				{ "Address", typeof(Hl7.Fhir.Model.Address) },
@@ -195,7 +195,7 @@ namespace Hl7.Fhir.Model
 				{ "Binary", typeof(Hl7.Fhir.Model.Binary) },
 			};
 
-		public static Dictionary<Type, string> FhirCsTypeToString =
+		public static IDictionary<Type, string> FhirCsTypeToString =
 			new Dictionary<Type, string>()
 			{
 				{ typeof(Hl7.Fhir.Model.Address), "Address" },

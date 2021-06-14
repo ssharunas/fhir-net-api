@@ -9,6 +9,7 @@
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Support;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,7 +17,7 @@ namespace Hl7.Fhir.Introspection
 {
 	internal class ClassMapping
 	{
-		private static Dictionary<Type, bool> _definedTypes = new Dictionary<Type, bool>();
+		private static IDictionary<Type, bool> _definedTypes = new ConcurrentDictionary<Type, bool>();
 
 		/// <summary>
 		/// Name of the FHIR datatype/resource this class represents

@@ -8,7 +8,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 {
 	internal class BundleNavigator : HardcodedNavigator<Bundle>
 	{
-		private static readonly Dictionary<string, Func<Creator, Bundle, IList<IFhirXmlNode>>> _availableElements;
+		private static readonly IDictionary<string, Func<Creator, Bundle, IList<IFhirXmlNode>>> _availableElements;
 
 		static BundleNavigator()
 		{

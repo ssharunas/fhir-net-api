@@ -13,7 +13,13 @@ namespace Hl7.Fhir.Serialization
 {
 	public static class SerializationConfig
 	{
-		private static ModelInspector _inspector;
+		private static volatile ModelInspector _inspector;
+
+		static SerializationConfig()
+		{
+			_inspector = new ModelInspector();
+			_inspector.Import(typeof(Resource).Assembly);
+		}
 
 		public static bool AcceptUnknownMembers { get; set; }
 
@@ -24,18 +30,6 @@ namespace Hl7.Fhir.Serialization
 		/// </summary>
 		public static bool IsParserStrict { get; set; } = true;
 
-		internal static ModelInspector Inspector
-		{
-			get
-			{
-				if (_inspector is null)
-				{
-					_inspector = new ModelInspector();
-					_inspector.Import(typeof(Resource).Assembly);
-				}
-
-				return _inspector;
-			}
-		}
+		internal static ModelInspector Inspector => _inspector;
 	}
 }

@@ -179,10 +179,11 @@ namespace Hl7.Fhir.Rest
 				stream.Flush();
 			}
 
+			var now = (uint)Environment.TickCount;
 			// Make sure the HttpResponse gets disposed!
 			using (HttpWebResponse webResponse = GetResponseNoEx(_request))
 			{
-				var fhirResponse = new FhirResponse(webResponse);
+				var fhirResponse = new FhirResponse(webResponse, TimeSpan.FromMilliseconds((uint)Environment.TickCount - now));
 				_afterRequest?.Invoke(fhirResponse, this, webResponse, _request);
 				return fhirResponse;
 			}

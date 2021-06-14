@@ -33,10 +33,15 @@ namespace Hl7.Fhir.Rest
 
 		public byte[] Body { get; }
 
+		/// <summary>
+		/// Amount of time it took to complete the request to the web-server (HttpWebResponse.GetResponse()). Serialization/deserialization is not included.
+		/// </summary>
+		public TimeSpan Elapsed { get; }
+
 		// Can't hold onto this as it gets disposed pretty quick.
 		//public HttpWebResponse Response { get; set; }
 
-		internal FhirResponse(HttpWebResponse response)
+		internal FhirResponse(HttpWebResponse response, TimeSpan elapsed)
 		{
 			System.Net.Mime.ContentType contentType = null;
 			if (!string.IsNullOrEmpty(response.ContentType))
@@ -49,6 +54,7 @@ namespace Hl7.Fhir.Rest
 			LastModified = response.Headers[HttpUtil.LASTMODIFIED];
 			Location = response.Headers[HttpUtil.LOCATION];
 			Category = response.Headers[HttpUtil.CATEGORY];
+			Elapsed = elapsed;
 
 			_headers = ExtractHeaders(response);
 			CharacterEncoding = GetContentEncoding(contentType?.CharSet);
