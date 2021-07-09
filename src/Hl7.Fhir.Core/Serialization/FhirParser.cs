@@ -17,7 +17,7 @@ using System.Xml;
 
 namespace Hl7.Fhir.Serialization
 {
-	internal class FhirParser
+	public class FhirParser
 	{
 		private static T Parse<T>(IFhirReader reader) where T : class
 		{

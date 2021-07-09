@@ -32,6 +32,8 @@ namespace Hl7.Fhir.Applicator.XPath
 					return new XPathParent();
 				case XPathAxis.Self:
 					return new XPathSelf();
+				case XPathAxis.DescendantOrSelf:
+					return new XPathSelfAndDescendants();
 			}
 
 			throw new NotSupportedException($"Axis {axis} is not supported in Fhir XPaths");

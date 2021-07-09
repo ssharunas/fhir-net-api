@@ -92,6 +92,7 @@
     <Compile Include="Applicator\XPath\Navigation\XPathParent.cs" />
     <Compile Include="Applicator\XPath\Navigation\XPathRoot.cs" />
     <Compile Include="Applicator\XPath\Navigation\XPathSelf.cs" />
+    <Compile Include="Applicator\XPath\Navigation\XPathSelfAndDescendants.cs" />
     <Compile Include="Applicator\XPath\Navigation\XPathValueNode.cs" />
     <Compile Include="Applicator\XPath\XPath.cs" />
     <Compile Include="Applicator\XPath\XPathAxis.cs" />

@@ -34,11 +34,6 @@ namespace Hl7.Fhir.Applicator
 
 		public abstract Uri GetLocation(ulong id);
 
-		public virtual TemplateResponseReader GetReaderForCreate(string response, IDataGetterContext context)
-		{
-			return new TemplateResponseReader(response, context);
-		}
-
 		public virtual Bundle Create(IDataGetterContext context)
 		{
 			return BundleXmlParser.Load(TemplateNode.CreateData(context));

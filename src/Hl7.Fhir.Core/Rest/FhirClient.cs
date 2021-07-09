@@ -1382,6 +1382,7 @@ namespace Hl7.Fhir.Rest
 			return result;
 		}
 
+		/*
 		/// <summary>
 		/// Creates a new resource based on data and the template. Create is executed in a transaction.
 		/// </summary>
@@ -1395,10 +1396,9 @@ namespace Hl7.Fhir.Rest
 			if (template is null) throw Error.ArgumentNull(nameof(template));
 
 			var context = template.GetGetter(data, null);
-			var req = createFhirRequest(Endpoint, "POST");
-			req.SetBody(template.Create(context), PreferredFormat);
+			var bundle = template.Create(context);
 
-			return doRequest(req, HttpStatusCode.OK, resp => template.GetReaderForCreate(resp.GetBodyAsString(), context));
+			return Transaction(bundle, context);
 		}
 
 		public TemplateResponseReader Transaction(UpdateData data)
@@ -1406,6 +1406,7 @@ namespace Hl7.Fhir.Rest
 			if (data is null) throw Error.ArgumentNull(nameof(data));
 			return Transaction(data.Bundle, data.Context);
 		}
+		*/
 
 		public TemplateResponseReader Transaction(Bundle bundle, IDataGetterContext context)
 		{

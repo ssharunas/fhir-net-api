@@ -90,6 +90,10 @@ namespace Hl7.Fhir.Applicator.Navigation
 
 				result.Add(new ElementNavigator(this, name, element));
 			}
+			else if (value is Resource resource)
+			{
+				result.Add(new ResourceNavigator(this, resource));
+			}
 			else
 			{
 				throw Error.InvalidOperation("Unknown element type");

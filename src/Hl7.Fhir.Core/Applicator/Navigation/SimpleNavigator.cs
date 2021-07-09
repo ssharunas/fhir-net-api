@@ -28,7 +28,7 @@ namespace Hl7.Fhir.Applicator.Navigation
 		}
 
 		public override IList<IFhirXmlAttribute> Attributes() => _attrubutes;
-		public override IList<IFhirXmlNode> Elements() => null;
+		public override IList<IFhirXmlNode> Elements() => new IFhirXmlNode[0];
 
 		public override object Unwrap()
 		{
