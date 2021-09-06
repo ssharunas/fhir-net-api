@@ -95,5 +95,18 @@ namespace Hl7.Fhir.Applicator
 
 			Assert.AreEqual(1, XPath.XPath.Parse("/careProvider[is-first(../careProvider)]").Values(xml).Count);
 		}
+
+		[TestMethod]
+		public void IdInTest()
+		{
+			var xml = GetXml();
+			var entry = xml.GetNode("/entry[@x-id=4]") as IFhirXmlNode;
+
+			Assert.IsNotNull(entry);
+
+			Assert.AreEqual(true, XPath.XPath.Parse("id-in(/entry[@x-id=1]/content/List/entry/item/reference/@value)").RawValue(entry));
+			Assert.AreEqual(true, XPath.XPath.Parse("id-in(/entry[@x-id=2]/content/List/entry/item/reference/@value)").RawValue(entry));
+			Assert.AreEqual(false, XPath.XPath.Parse("id-in(/entry[@x-id=3]/content/List/entry/item/reference/@value)").RawValue(entry));
+		}
 	}
 }

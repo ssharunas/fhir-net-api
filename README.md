@@ -108,3 +108,27 @@ for data `var obj = { Items = [1, 2, 3] }` result will be:
 
 #### Values:
 Text in curly brackets `{...}` will be replaced with a string, returned by *IDataGetterContext.GetString()*. For setting *IDataSetterContext.SetData()* is used.
+
+### X-Path ###
+X-Path support is not 100% complete, but it should be good enough for most cases. Currently x-path supports these functions:
+* boolean(expr) - evaluates an expression and returns true or false (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/boolean)
+* ceiling(number) - evaluates a decimal number and returns the smallest integer greater than or equal to the decimal number (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/ceiling)
+* choose(boolean, object1, object2) - returns one of the specified objects based on a boolean parameter (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/choose)
+* concat(string_1, string_2 [,string_N]*) - concatenates two or more strings and returns the resulting string (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/concat)
+* contains(haystack, needle) - determines whether the first argument string contains the second argument string and returns boolean true or false (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/contains)
+* count(node-set ) - counts the number of nodes in a node-set and returns an integer (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/count)
+* false() - returns boolean false (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/false)
+* floor(number) - evaluates a decimal number and returns the largest integer less than or equal to the decimal number (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/floor)
+* function-available(name) - determines if a given function is available and returns boolean true or false (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/function-available)
+* not(expression) - evaluates a boolean expression and returns the opposite value (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/not)
+* number([object]) - converts an object to a number and returns the number (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/number)
+* round(decimal) - returns a number that is the nearest integer to the given number (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/round)
+* starts-with(haystack, needle) - checks whether the first string starts with the second string and returns true or false (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/starts-with)
+* ends-with(haystack, needle) - checks whether the first string ends with the second string and returns true or false
+* string([object]) - converts the given argument to a string (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/string)
+* string-length([string]) - returns a number equal to the number of characters in a given string (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/string-length)
+* true() - returns a boolean value of true (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/true)
+* name([node-set]) - returns a string representing the QName of the first node in a given node-set (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/name)
+* is-first([node-set]) - checks if current node is the first node in the node-set and returns true or false.
+* index-of([node-set], node) - returns zero-based index of node in node-set. If node does not exist in node-set, null is returned.
+* id-in([node-set]) - shortcut to entry[index-of([node-set], id/text()) OR index-of([node-set], link[@rel = 'self']/@href)], aka checks if entry id is in node-set.

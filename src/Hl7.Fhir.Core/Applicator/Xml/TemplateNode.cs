@@ -808,12 +808,20 @@ namespace Hl7.Fhir.Applicator.Xml
 						if (child.IsIfOk(context))
 							child.CreateElement(node, context);
 					}
-					else if (filtered.Count == 1)
+					else if (filtered.Count == 1 || child.IsFirst)
 					{
 						if (child.IsIfOk(context))
 							child.UpdateData(filtered[0], context);
 						else
 							node.DeleteElement(filtered[0]);
+
+						if (filtered.Count > 1) //In case of (filtered.Count > 1 && IsFirst) we want to update only the first node and delete the rest
+						{
+							for (var i = 1; i < filtered.Count; i++)
+							{
+								node.DeleteElement(filtered[i]);
+							}
+						}
 					}
 					else
 					{
@@ -855,7 +863,7 @@ namespace Hl7.Fhir.Applicator.Xml
 		{
 			string id = null;
 
-			if(Name == X_INCLUDE)
+			if (Name == X_INCLUDE)
 				return $"<{Name} source=\"{GetAttributeValue(X_INCLUDE_SOURCE)}\"></{Name}>";
 
 			if (Id != null)

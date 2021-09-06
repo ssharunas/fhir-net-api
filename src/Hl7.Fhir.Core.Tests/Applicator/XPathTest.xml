@@ -22,5 +22,46 @@
 			</coding>
 		</type>
 	</participant>
-	
+
+	<entry x-id="1">
+		<content type="text/xml">
+			<List xmlns="http://hl7.org/fhir">
+				<entry>
+					<item>
+						<reference value="Composition/123"/>
+					</item>
+				</entry>
+			</List>
+		</content>
+	</entry>
+
+	<entry x-id="2">
+		<content type="text/xml">
+			<List xmlns="http://hl7.org/fhir">
+				<entry>
+					<item>
+						<reference value="Composition/123/_history/001"/>
+					</item>
+				</entry>
+			</List>
+		</content>
+	</entry>
+
+	<entry x-id="3">
+		<content type="text/xml">
+			<List xmlns="http://hl7.org/fhir">
+				<entry>
+					<item>
+						<reference value="Composition/123/_history/000"/>
+					</item>
+				</entry>
+			</List>
+		</content>
+	</entry>
+
+	<entry x-id="4">
+		<id>Composition/123</id>
+		<link rel="previous" href="Composition/123/_history/000"/>
+		<link rel="self" href="Composition/123/_history/001"/>
+	</entry>
 </feed>

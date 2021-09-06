@@ -100,6 +100,32 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 			_functions.Add("is-first", new XFunction1((value, xpath) => ReferenceEquals(xpath.Value(value), value)));
 			_functions.Add("name", new XFunction1((value, xpath) => (xpath.Value(value) as IFhirXmlNode)?.Name));
 			_functions.Add("index-of", new XFunction2((value, xpath1, xpath2) => IndexOf(xpath1.Values(value), xpath2.Value(value))));
+			_functions.Add("id-in", new XFunction1((value, xpath1) => IdIn(value as IFhirXmlNode, xpath1.Values(value))));
+		}
+
+		private static bool IdIn(IFhirXmlNode current, IList<object> values)
+		{
+			if (current is null || current.Name != "entry")
+				throw new InvalidOperationException("id-in() XPath function is only supported on <entry> elements!");
+
+			var id = current.Elements("id").FirstOrDefault()?.ValueAsString;
+			if (!string.IsNullOrEmpty(id))
+			{
+				var history = current.Elements("link")?.FirstOrDefault(x => x.Attribute("rel")?.ValueAsString == "self")?.Attribute("href")?.ValueAsString;
+
+				foreach (var value in values)
+				{
+					if (value is null)
+						continue;
+
+					var val = value.ToString();
+
+					if (val == id || val == history)
+						return true;
+				}
+			}
+
+			return false;
 		}
 
 		private static decimal? IndexOf(IList<object> list, object value)
