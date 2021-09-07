@@ -108,20 +108,23 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 			if (current is null || current.Name != "entry")
 				throw new InvalidOperationException("id-in() XPath function is only supported on <entry> elements!");
 
-			var id = current.Elements("id").FirstOrDefault()?.ValueAsString;
-			if (!string.IsNullOrEmpty(id))
+			if (values?.Count > 0)
 			{
-				var history = current.Elements("link")?.FirstOrDefault(x => x.Attribute("rel")?.ValueAsString == "self")?.Attribute("href")?.ValueAsString;
-
-				foreach (var value in values)
+				var id = current.Elements("id").FirstOrDefault()?.ValueAsString;
+				if (!string.IsNullOrEmpty(id))
 				{
-					if (value is null)
-						continue;
+					var history = current.Elements("link")?.FirstOrDefault(x => x.Attribute("rel")?.ValueAsString == "self")?.Attribute("href")?.ValueAsString;
 
-					var val = value.ToString();
+					foreach (var value in values)
+					{
+						if (value is null)
+							continue;
 
-					if (val == id || val == history)
-						return true;
+						var val = value.ToString();
+
+						if (val == id || val == history)
+							return true;
+					}
 				}
 			}
 
