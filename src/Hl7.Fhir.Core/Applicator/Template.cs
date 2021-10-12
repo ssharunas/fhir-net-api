@@ -76,11 +76,35 @@ namespace Hl7.Fhir.Applicator
 
 		public virtual TDto Read(FhirResponse response)
 		{
-			var data = response?.GetBodyAsString();
+			return Read(response?.GetBodyAsString());
+		}
 
+		public virtual TDto Read(string data)
+		{
 			if (!string.IsNullOrEmpty(data))
 			{
 				var xml = FhirXmlNode.Create(FhirParser.XmlReaderFromString(data));
+				var context = GetSetter(false);
+
+				if (context is null)
+					throw Error.InvalidOperation("GetSetter() returned null!");
+
+				TemplateNode.ReadData(xml, context);
+				return ToDto(context);
+			}
+
+			return default;
+		}
+
+		public virtual TDto Read(IPathable pathable)
+		{
+			if (pathable is null)
+				return default;
+
+			var xml = pathable as IFhirXmlNode ?? throw Error.InvalidOperation($"Failed to cast {nameof(IPathable)} to {nameof(IFhirXmlNode)}.");
+
+			if (xml != null)
+			{
 				var context = GetSetter(false);
 
 				if (context is null)

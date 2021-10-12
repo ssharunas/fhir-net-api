@@ -191,8 +191,12 @@ namespace Hl7.Fhir.Applicator
 					foreach (var item in setter.Result)
 					{
 						TDto dto = ToDto(item.Content);
-						SetDtoData(ref dto, item.Id, item.LastModified);
-						result.Add(dto);
+
+						if (dto != null)
+						{
+							SetDtoData(ref dto, item.Id, item.LastModified);
+							result.Add(dto);
+						}
 					}
 				}
 			}
