@@ -31,7 +31,6 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Hl7.Fhir.Model

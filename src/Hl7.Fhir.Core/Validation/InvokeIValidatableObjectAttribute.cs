@@ -7,7 +7,6 @@
  */
 
 using System;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Hl7.Fhir.Validation

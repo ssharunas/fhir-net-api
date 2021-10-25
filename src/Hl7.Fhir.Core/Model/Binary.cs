@@ -28,7 +28,6 @@
 
 using Hl7.Fhir.Validation;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Model
 {

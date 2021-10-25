@@ -8,18 +8,19 @@
 
 using Hl7.Fhir.Support;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Hl7.Fhir.Validation
 {
 	public class DotNetAttributeValidation
 	{
+		/*
 		public static void Validate(object value, bool recurse = false)
 		{
 			if (value is null) throw Error.ArgumentNull(nameof(value));
 
 			Validator.ValidateObject(value, ValidationContextFactory.Create(value, null, recurse), true);
 		}
+		*/
 
 		public static bool TryValidate(object value, ICollection<ValidationResult> validationResults = null, bool recurse = false)
 		{

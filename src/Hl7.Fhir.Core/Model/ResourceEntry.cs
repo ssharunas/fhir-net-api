@@ -30,7 +30,6 @@ using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 namespace Hl7.Fhir.Model

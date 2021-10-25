@@ -6,8 +6,6 @@
  * available at https://raw.githubusercontent.com/ewoutkramer/fhir-net-api/master/LICENSE
  */
 
-using System.ComponentModel.DataAnnotations;
-
 namespace Hl7.Fhir.Validation
 {
 	public static class ValidationContextExtensions
