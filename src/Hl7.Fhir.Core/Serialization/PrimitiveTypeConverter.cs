@@ -30,23 +30,46 @@ namespace Hl7.Fhir.Serialization
 			// Convert TO string (mostly Xml serialization, some additional schemes used)
 			if (to == typeof(string))
 			{
-				return convertToXmlString(value);
-				// Include enum serialization here
+				try
+				{
+					return convertToXmlString(value);
+					// Include enum serialization here
+				}
+				catch (Exception ex)
+				{
+					throw new FormatException($"Failed to convert value {value} to string: " + ex.Message, ex);
+				}
 			}
 
 			// Convert FROM string
 			else if (value is string)
 			{
-				return convertXmlStringToPrimitive(to, (string)value);
-				// Include enum parsing here
+				try
+				{
+					return convertXmlStringToPrimitive(to, (string)value);
+					// Include enum parsing here
+				}
+				catch (Exception ex)
+				{
+					throw new FormatException($"Failed to convert string value '{value}' to {to}: " + ex.Message, ex);
+				}
 			}
 			else
-				// For non-string primitives use the .NET conversions to convert
-				// to the desired type in the class model. Note that the xml/json readers
-				// will either produce strings or primitives as values, so no other
-				// conversion should be necessary, however this .NET conversion supports
-				// conversion from any type implementing IConvertable
-				return System.Convert.ChangeType(value, to, null);
+			{
+				try
+				{
+					// For non-string primitives use the .NET conversions to convert
+					// to the desired type in the class model. Note that the xml/json readers
+					// will either produce strings or primitives as values, so no other
+					// conversion should be necessary, however this .NET conversion supports
+					// conversion from any type implementing IConvertable
+					return System.Convert.ChangeType(value, to, null);
+				}
+				catch (Exception ex)
+				{
+					throw new FormatException($"Failed to convert object value '{value}' to {to}: " + ex.Message, ex);
+				}
+			}
 		}
 
 		public const string FMT_FULL = "yyyy-MM-dd'T'HH:mm:ssK";

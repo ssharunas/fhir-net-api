@@ -1,12 +1,8 @@
 ﻿// Copyright (c) Microsoft Open Technologies, Inc. All rights reserved. See License.txt in the project root for license information.
 
+using Hl7.Fhir.Applicator;
+using Hl7.Fhir.Core.Serialization;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
-using Hl7.Fhir.Serialization;
 
 
 namespace Hl7.Fhir.Support
@@ -109,6 +105,14 @@ namespace Hl7.Fhir.Support
 				message = $"At line {pos.LineNumber}, pos {pos.LinePosition}: {message}";
 
 			return new FormatException(message, innerException);
+		}
+
+		internal static FhirSerializationException Serialization(string message, IPositionInfo pos = null, Exception innerException = null, IPathable node = null)
+		{
+			if (pos != null)
+				message = $"At line {pos.LineNumber}, pos {pos.LinePosition}: {message}";
+
+			return new FhirSerializationException(message, innerException, node);
 		}
 
 		/// <summary>

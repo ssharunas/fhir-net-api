@@ -48,10 +48,10 @@ namespace Hl7.Fhir.Serialization
 			{
 				return PrimitiveTypeConverter.Convert(primitiveValue, nativeType);
 			}
-			catch (NotSupportedException exc)
+			catch (Exception exc)
 			{
 				// thrown when an unsupported conversion was required
-				throw Error.Format(exc.Message, reader);
+				throw Error.Format(exc.Message, reader, exc);
 			}
 		}
 	}

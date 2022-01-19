@@ -135,7 +135,7 @@ namespace Hl7.Fhir.Serialization
 		{
 			BundleEntry result;
 
-			//try
+			try
 			{
 				if (entry.Is(XmlNs.ATOMPUB_TOMBSTONES, XATOM_DELETED_ENTRY))
 				{
@@ -182,10 +182,10 @@ namespace Hl7.Fhir.Serialization
 					re.AuthorUri = entry.Element(XmlNs.ATOM, XATOM_AUTHOR)?.Element(XmlNs.ATOM, XATOM_AUTH_URI)?.ValueAsString;
 				}
 			}
-			//catch (Exception exc)
-			//{
-			//	throw Error.Format("Exception while reading entry: " + exc.Message, entry.Position);
-			//}
+			catch (Exception exc)
+			{
+				throw Error.Serialization("Exception while reading entry: " + exc.Message, entry.Position, exc, entry);
+			}
 
 			return result;
 		}

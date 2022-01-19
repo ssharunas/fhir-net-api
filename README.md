@@ -83,10 +83,21 @@ var obj = {
 `x-write="true|false|always"`
 	Can be used to disable data writing to XML node (including it's child elements). Default value is true (data writing is not disabled)
 	By default node is not updated, only created if it has 'x-read=false', but this behavour can be overwriten  with x-write=always.
+	Note, that if x-write=false, node is not removed from XML if it exists during update operation, it simply is not updated. If you want to 
+	always remove node - use x-if.
 
 `x-if="PropertyName"`
 	PropertyName is passed to *IDataGetterContext.GetBoolean()*. If data getter returns false - template node is removed. Otherwise template node is not changed.
 	
+`x-skip-unmapped`
+	Can be either *true* or *false*. If *true* - during update removes child nodes, that are not mapped in the template. Usefull to remove 
+	extra *entry* elements in Bundle:
+```
+	<feed x-skip-unmapped="true">
+		...
+	</feed>
+```
+
 `x-foreach="PropertyName"`
 	Repeats element for each value in "PropertyName" array. Array is retrieved by *IDataGetterContext.GetArray()* for data getting. For data 
 	setting *IDataSetterContext.GetArrayElementSetter()* is used

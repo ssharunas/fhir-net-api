@@ -16,6 +16,7 @@ namespace Hl7.Fhir.Applicator.Xml
 		private const string X_READ = "x-read";
 		private const string X_WRITE = "x-write";
 		private const string X_FOREACH = "x-foreach";
+		private const string X_SKIP_UNMAPPED = "x-skip-unmapped";
 
 		private const string X_INCLUDE = "x-include";
 		private const string X_INCLUDE_SOURCE = "source";
@@ -69,6 +70,9 @@ namespace Hl7.Fhir.Applicator.Xml
 							IsWrite = attribute.Value?.ToLower() != "false";
 							IsWriteAlways = attribute.Value?.ToLower() == "always";
 							break;
+						case X_SKIP_UNMAPPED:
+							IsSkipUnmapped = attribute.Value?.ToLower() != "false";
+							break;
 						default:
 							if (_attributes is null)
 								_attributes = new List<Attribute>();
@@ -113,6 +117,8 @@ namespace Hl7.Fhir.Applicator.Xml
 		/// Takes first element from the nodes array.
 		/// </summary>
 		private bool IsFirst { get; }
+
+		private bool IsSkipUnmapped { get; }
 
 		/// <summary>
 		/// x-if property value
@@ -786,6 +792,27 @@ namespace Hl7.Fhir.Applicator.Xml
 
 			if (node.Name != Name)
 				throw Error.InvalidOperation($"Could not map template to data: template root does not match data root. Template element: '{Name}', data element: '{node.Name}'.");
+
+			if (IsSkipUnmapped)
+			{
+				var existingElements = node.Elements();
+				if (existingElements?.Count > 0)
+				{
+					var unused = new HashSet<IFhirXmlNode>(existingElements);
+					var children = GetTemplateChildren(context);
+
+					foreach (var child in children)
+					{
+						var filtered = child.FilterElements(existingElements);
+
+						if (filtered?.Count > 0)
+							unused.ExceptWith(filtered);
+					}
+
+					foreach (var item in unused)
+						node.DeleteElement(item);
+				}
+			}
 
 			if (HasDataInChildren)
 			{
