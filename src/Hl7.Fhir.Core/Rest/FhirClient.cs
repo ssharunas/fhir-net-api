@@ -7,6 +7,7 @@
  */
 
 using Hl7.Fhir.Applicator;
+using Hl7.Fhir.Core.Model.ESPBI;
 using Hl7.Fhir.Model;
 using Hl7.Fhir.Model.ESPBI;
 using Hl7.Fhir.Serialization;
@@ -1280,6 +1281,14 @@ namespace Hl7.Fhir.Rest
 			FhirRequest req = createFhirRequest(makeAbsolute(url.Uri), "GET");
 
 			return doRequest(req, HttpStatusCode.OK, resp => EspbiSerializer.Deserialize<PrescriptionInfo>(resp.Body)?.IsFirstPrescribing ?? true, ResourceFormat.Unknown);
+		}
+			
+		public bool IsPatientWarRefugee(string esiNumber)
+		{
+			RestUrl url = new RestUrl(Endpoint).AddPath("Miscellaneous", "Patient", "isWarRefugee").AddParam("esiNr", esiNumber);
+			FhirRequest req = createFhirRequest(makeAbsolute(url.Uri), "GET");
+			return doRequest(req, HttpStatusCode.OK,  resp => Newtonsoft.Json.JsonConvert.DeserializeObject<WarRefugeeInfo>(resp.GetBodyAsString())?.Exists == 1? true: false, ResourceFormat.Unknown);
+			 
 		}
 
 		#region Template API
