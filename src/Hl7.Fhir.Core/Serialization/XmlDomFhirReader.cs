@@ -39,9 +39,9 @@ namespace Hl7.Fhir.Serialization
 			}
 		}
 
-		public int LineNumber => (_current as IFhirXmlNode)?.Position.LineNumber ?? -1;
+		public int LineNumber => (_current as IFhirXmlNode)?.Position?.LineNumber ?? -1;
 
-		public int LinePosition => (_current as IFhirXmlNode)?.Position.LinePosition ?? -1;
+		public int LinePosition => (_current as IFhirXmlNode)?.Position?.LinePosition ?? -1;
 
 		public IEnumerable<IFhirReader> GetArrayElements()
 		{

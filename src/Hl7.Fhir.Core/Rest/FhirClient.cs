@@ -141,7 +141,7 @@ namespace Hl7.Fhir.Rest
 
 		private FhirRequest createFhirRequest(Uri location, string method)
 		{
-			return new FhirRequest(location, method, BeforeRequest, AfterResponse, Timeout);
+			return new FhirRequest(location, method, BeforeRequest, AfterResponse, AfterResponseException, Timeout);
 		}
 
 		private ResourceEntry<TResource> internalCreate<TResource>(TResource resource, IEnumerable<Tag> tags, string id, bool refresh) where TResource : Resource, new()
@@ -1017,6 +1017,14 @@ namespace Hl7.Fhir.Rest
 		{
 			// Default implementation: call event
 			OnAfterResponse?.Invoke(this, new AfterResponseEventArgs(fhirResponse, request, webResponse, rawRequest));
+		}
+
+		/// <summary>
+		/// Inspect HTTP request exception before it is thown futher.
+		/// </summary>
+		protected virtual void AfterResponseException(FhirRequest request, Exception ex)
+		{
+
 		}
 
 		//-------------

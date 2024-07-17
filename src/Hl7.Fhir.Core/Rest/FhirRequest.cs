@@ -21,9 +21,10 @@ namespace Hl7.Fhir.Rest
 	{
 		private Action<FhirRequest, HttpWebRequest> _beforeRequest;
 		private Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> _afterRequest;
+		private Action<FhirRequest, Exception> _afterRequesException;
 		private HttpWebRequest _request;
 
-		public FhirRequest(Uri location, string method, Action<FhirRequest, HttpWebRequest> beforeRequest, Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> afterRequest, int? timeout)
+		public FhirRequest(Uri location, string method, Action<FhirRequest, HttpWebRequest> beforeRequest, Action<FhirResponse, FhirRequest, WebResponse, HttpWebRequest> afterRequest, Action<FhirRequest, Exception> afterRequesException, int? timeout)
 		{
 			if (method is null) throw Error.ArgumentNull(nameof(method));
 			if (location is null) throw Error.ArgumentNull(nameof(location));
@@ -193,14 +194,27 @@ namespace Hl7.Fhir.Rest
 		{
 			try
 			{
-				return (HttpWebResponse)req.GetResponse();
-			}
-			catch (WebException ex)
-			{
-				if (ex.Response is HttpWebResponse resp)
-					return resp;
+				try
+				{
+					return (HttpWebResponse)req.GetResponse();
+				}
+				catch (WebException ex)
+				{
+					if (ex.Response is HttpWebResponse resp)
+						return resp;
 
-				ex.Data[nameof(FhirResponse)] = ID;
+					ex.Data[nameof(FhirResponse)] = ID;
+
+					throw;
+				}
+			}
+			catch (Exception ex)
+			{
+				try
+				{
+					_afterRequesException?.Invoke(this, ex);
+				}
+				finally { }
 
 				throw;
 			}
