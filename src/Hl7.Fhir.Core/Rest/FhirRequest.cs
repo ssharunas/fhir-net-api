@@ -36,6 +36,7 @@ namespace Hl7.Fhir.Rest
 
 			_beforeRequest = beforeRequest;
 			_afterRequest = afterRequest;
+			_afterRequesException = afterRequesException;
 		}
 
 		/// <summary>
@@ -194,22 +195,15 @@ namespace Hl7.Fhir.Rest
 		{
 			try
 			{
-				try
-				{
-					return (HttpWebResponse)req.GetResponse();
-				}
-				catch (WebException ex)
-				{
-					if (ex.Response is HttpWebResponse resp)
-						return resp;
-
-					ex.Data[nameof(FhirResponse)] = ID;
-
-					throw;
-				}
+				return (HttpWebResponse)req.GetResponse();
 			}
 			catch (Exception ex)
 			{
+				if (ex is WebException webEx && webEx.Response is HttpWebResponse resp)
+					return resp;
+
+				ex.Data[nameof(FhirResponse)] = ID;
+
 				try
 				{
 					_afterRequesException?.Invoke(this, ex);
