@@ -85,6 +85,12 @@ namespace Hl7.Fhir.Rest
 			// include the special _type parameter on the REST url
 			var result = url.AddPath(q.ResourceType);
 
+			if (q.PathCompenents?.Length > 0)
+			{
+				foreach (var path in q.PathCompenents)
+					result.AddPath(path);
+			}
+
 			foreach (var par in q.Parameter)
 			{
 				var paramKey = Model.Query.ExtractParamKey(par);

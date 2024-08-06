@@ -313,6 +313,14 @@ namespace Hl7.Fhir.Model
 		[DataMember]
 		public Hl7.Fhir.Model.Query.QueryResponseComponent Response { get; set; }
 
+		/// <summary>
+		/// Additional path, used in search function for ESPBI resources.
+		/// </summary>
+		/// <example>In case of <code>/cxf/MedicationPrescription/{MedicationPrecriptionId}/status</code>,
+		/// PathCompenents should be [ "{MedicationPrecriptionId}", "status"]
+		/// </example>
+		public string[] PathCompenents { get; set; }
+
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{
 			var dest = other as Query;

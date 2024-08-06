@@ -272,6 +272,28 @@ namespace Hl7.Fhir.Model
 			get { return new List<Extension>(Parameter.Where(p => !p.IsReserved())); }
 		}
 
+		public Query SetPathComponents(params string[] components)
+		{
+			PathCompenents = components;
+			return this;
+		}
+
+		public Query SetPathComponents(IList<string> components)
+		{
+			if (components is string[] str)
+				return SetPathComponents(str);
+
+			return SetPathComponents(PathCompenents.ToArray());
+		}
+
+		public Query AddPathComponent(params string[] components)
+		{
+			if (PathCompenents is null || PathCompenents.Length == 0)
+				return SetPathComponents(components);
+
+			return SetPathComponents(PathCompenents.Concat(components).ToArray());
+		}
+
 		/// <summary>
 		/// Add a parameter with a given key and value.
 		/// </summary>
