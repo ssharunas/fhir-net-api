@@ -294,6 +294,12 @@ namespace Hl7.Fhir.Model
 			return SetPathComponents(PathCompenents.Concat(components).ToArray());
 		}
 
+		public Query SetResultFormat(Rest.ResourceFormat format)
+		{
+			ResultFormat = format;
+			return this;
+		}
+
 		/// <summary>
 		/// Add a parameter with a given key and value.
 		/// </summary>

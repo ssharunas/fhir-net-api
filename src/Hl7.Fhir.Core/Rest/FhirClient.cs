@@ -1116,6 +1116,21 @@ namespace Hl7.Fhir.Rest
 		}
 
 		/// <summary>
+		/// Returns signed or not PDF. With or without seal.
+		/// </summary>
+		/// <param name="id">id of the Composition</param>
+		/// <param name="isWithSeal">Get PDF with or without seal.</param>
+		public ResourceEntry<Binary> Pdf(ulong id, bool isWithSeal)
+		{
+			var uri = new RestUrl(Endpoint).AddPath($"Documents/{id}/pdf");
+
+			if (isWithSeal)
+				uri.AddParam("withSeal", "1");
+
+			return Pdf(uri.Uri);
+		}
+
+		/// <summary>
 		/// Confirms document signing. You must call this function or else signing will not be visible in ESPBI.
 		/// </summary>
 		/// <param name="id">ID of the Composition</param>
@@ -1356,7 +1371,7 @@ namespace Hl7.Fhir.Rest
 				}
 
 				return template.Read(resp);
-			});
+			}, query.ResultFormat);
 		}
 
 		/// <summary>
@@ -1388,7 +1403,7 @@ namespace Hl7.Fhir.Rest
 
 				int totalPages = 0;
 				int totalResults = 0;
-				result = doRequest(request, HttpStatusCode.OK, resp => template.ReadAtomSearch(resp, out totalPages, out totalResults));
+				result = doRequest(request, HttpStatusCode.OK, resp => template.ReadAtomSearch(resp, out totalPages, out totalResults), fhirQuery.ResultFormat);
 
 				if (fhirQuery.Count == 0)
 					pageCount = totalResults;

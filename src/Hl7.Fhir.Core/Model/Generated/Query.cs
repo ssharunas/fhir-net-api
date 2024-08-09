@@ -1,4 +1,5 @@
 ﻿using Hl7.Fhir.Introspection;
+using Hl7.Fhir.Rest;
 using Hl7.Fhir.Support;
 using Hl7.Fhir.Validation;
 using System.Collections.Generic;
@@ -320,6 +321,12 @@ namespace Hl7.Fhir.Model
 		/// PathCompenents should be [ "{MedicationPrecriptionId}", "status"]
 		/// </example>
 		public string[] PathCompenents { get; set; }
+
+		/// <summary>
+		/// Should be null in most cases.
+		/// Defines "Accept" header in HTTP requests.
+		/// </summary>
+		public ResourceFormat? ResultFormat { get; set; }
 
 		public override IDeepCopyable CopyTo(IDeepCopyable other)
 		{

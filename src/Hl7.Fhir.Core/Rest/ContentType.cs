@@ -22,7 +22,8 @@ namespace Hl7.Fhir.Rest
 		Json = 2,
 		Unknown = 3,
 		Pdf = 4,
-		Octet = 5
+		Octet = 5,
+		XmlNoAtom = 6,
 	}
 
 	internal static class ContentType
@@ -67,7 +68,8 @@ namespace Hl7.Fhir.Rest
 		/// <returns>The Resource format or the special value Unknow if the format was unrecognized</returns>
 		public static ResourceFormat GetResourceFormatFromFormatParam(string format)
 		{
-			if (string.IsNullOrEmpty(format)) return ResourceFormat.Unknown;
+			if (string.IsNullOrEmpty(format))
+				return ResourceFormat.Unknown;
 
 			var f = format.ToLowerInvariant();
 
@@ -115,6 +117,8 @@ namespace Hl7.Fhir.Rest
 				contentType = ATOM_CONTENT_HEADER;
 			else if (format == ResourceFormat.Xml && !forBundle)
 				contentType = XML_FHIR_CONTENT_HEADER;
+			else if (format == ResourceFormat.XmlNoAtom)
+				contentType = XML_CONTENT_HEADER;
 			else if (format == ResourceFormat.Pdf)
 				contentType = PDF_CONTENT_HEADER;
 			else if (format == ResourceFormat.Octet)
