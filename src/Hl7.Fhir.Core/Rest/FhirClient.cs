@@ -1305,13 +1305,13 @@ namespace Hl7.Fhir.Rest
 
 			return doRequest(req, HttpStatusCode.OK, resp => EspbiSerializer.Deserialize<PrescriptionInfo>(resp.Body)?.IsFirstPrescribing ?? true, ResourceFormat.Unknown);
 		}
-			
+
 		public bool IsPatientWarRefugee(string esiNumber)
 		{
 			RestUrl url = new RestUrl(Endpoint).AddPath("Miscellaneous", "Patient", "isWarRefugee").AddParam("esiNr", esiNumber);
 			FhirRequest req = createFhirRequest(makeAbsolute(url.Uri), "GET");
-			return doRequest(req, HttpStatusCode.OK,  resp => Newtonsoft.Json.JsonConvert.DeserializeObject<WarRefugeeInfo>(resp.GetBodyAsString())?.Exists == 1? true: false, ResourceFormat.Unknown);
-			 
+			return doRequest(req, HttpStatusCode.OK, resp => Newtonsoft.Json.JsonConvert.DeserializeObject<WarRefugeeInfo>(resp.GetBodyAsString())?.Exists == 1 ? true : false, ResourceFormat.Unknown);
+
 		}
 
 		#region Template API
@@ -1360,7 +1360,7 @@ namespace Hl7.Fhir.Rest
 
 			return doRequest(request, HttpStatusCode.OK, resp =>
 			{
-				if (template is ISearchableTemplate<TDto> searchable)
+				if (template is ISearchableTemplate<TDto> searchable && resp.ContentType != ContentType.XML_FHIR_CONTENT_HEADER)
 				{
 					var results = searchable.ReadAtomSearch(resp, out _, out _);
 
@@ -1403,7 +1403,20 @@ namespace Hl7.Fhir.Rest
 
 				int totalPages = 0;
 				int totalResults = 0;
-				result = doRequest(request, HttpStatusCode.OK, resp => template.ReadAtomSearch(resp, out totalPages, out totalResults), fhirQuery.ResultFormat);
+				result = doRequest(request, HttpStatusCode.OK, resp =>
+				{
+					if (resp.ContentType == ContentType.XML_FHIR_CONTENT_HEADER)
+					{
+						var dto = template.Read(resp);
+						if (dto != null)
+							return new[] { dto };
+						return null;
+					}
+					else
+					{
+						return template.ReadAtomSearch(resp, out totalPages, out totalResults);
+					}
+				}, fhirQuery.ResultFormat);
 
 				if (fhirQuery.Count == 0)
 					pageCount = totalResults;

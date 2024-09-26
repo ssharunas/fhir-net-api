@@ -24,6 +24,7 @@ namespace Hl7.Fhir.Rest
 		Pdf = 4,
 		Octet = 5,
 		XmlNoAtom = 6,
+		XmlFhir = 7,
 	}
 
 	internal static class ContentType
@@ -116,6 +117,8 @@ namespace Hl7.Fhir.Rest
 			else if (format == ResourceFormat.Xml && forBundle)
 				contentType = ATOM_CONTENT_HEADER;
 			else if (format == ResourceFormat.Xml && !forBundle)
+				contentType = XML_FHIR_CONTENT_HEADER;
+			else if (format == ResourceFormat.XmlFhir)
 				contentType = XML_FHIR_CONTENT_HEADER;
 			else if (format == ResourceFormat.XmlNoAtom)
 				contentType = XML_CONTENT_HEADER;
