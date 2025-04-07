@@ -107,6 +107,21 @@ namespace Hl7.Fhir.Applicator
 			Assert.AreEqual(true, XPath.XPath.Parse("id-in(/entry[@x-id=1]/content/List/entry/item/reference/@value)").RawValue(entry));
 			Assert.AreEqual(true, XPath.XPath.Parse("id-in(/entry[@x-id=2]/content/List/entry/item/reference/@value)").RawValue(entry));
 			Assert.AreEqual(false, XPath.XPath.Parse("id-in(/entry[@x-id=3]/content/List/entry/item/reference/@value)").RawValue(entry));
+			Assert.AreEqual(false, XPath.XPath.Parse("id-in(/entry[@x-id=5]/content/List/entry/item/reference/@value)").RawValue(entry));
+		}
+
+		[TestMethod]
+		public void IdInWithoutVersionTest()
+		{
+			var xml = GetXml();
+			var entry = xml.GetNode("/entry[@x-id=4]") as IFhirXmlNode;
+
+			Assert.IsNotNull(entry);
+
+			Assert.AreEqual(true, XPath.XPath.Parse("id-in-no-version(/entry[@x-id=1]/content/List/entry/item/reference/@value)").RawValue(entry));
+			Assert.AreEqual(true, XPath.XPath.Parse("id-in-no-version(/entry[@x-id=2]/content/List/entry/item/reference/@value)").RawValue(entry));
+			Assert.AreEqual(true, XPath.XPath.Parse("id-in-no-version(/entry[@x-id=3]/content/List/entry/item/reference/@value)").RawValue(entry));
+			Assert.AreEqual(false, XPath.XPath.Parse("id-in-no-version(/entry[@x-id=5]/content/List/entry/item/reference/@value)").RawValue(entry));
 		}
 	}
 }

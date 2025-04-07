@@ -142,4 +142,5 @@ X-Path support is not 100% complete, but it should be good enough for most cases
 * name([node-set]) - returns a string representing the QName of the first node in a given node-set (https://developer.mozilla.org/en-US/docs/Web/XPath/Functions/name)
 * is-first([node-set]) - checks if current node is the first node in the node-set and returns true or false.
 * index-of([node-set], node) - returns zero-based index of node in node-set. If node does not exist in node-set, null is returned.
-* id-in([node-set]) - shortcut to entry[index-of([node-set], id/text()) OR index-of([node-set], link[@rel = 'self']/@href)], aka checks if entry id is in node-set.
+* id-in([node-set]) - shortcut to `entry[index-of([node-set], id/text()) OR index-of([node-set], link[@rel = 'self']/@href)]`, aka checks if entry id is in node-set.
+* id-in-no-version([node-set]) - same as `id-in`, but compares ids without `_history` part.

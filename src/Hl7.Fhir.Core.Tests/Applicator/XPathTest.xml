@@ -64,4 +64,17 @@
 		<link rel="previous" href="Composition/123/_history/000"/>
 		<link rel="self" href="Composition/123/_history/001"/>
 	</entry>
+
+	<entry x-id="5">
+		<content type="text/xml">
+			<List xmlns="http://hl7.org/fhir">
+				<entry>
+					<item>
+						<reference value="Composition/666/_history/000"/>
+					</item>
+				</entry>
+			</List>
+		</content>
+	</entry>
+
 </feed>

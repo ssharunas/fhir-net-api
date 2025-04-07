@@ -100,10 +100,25 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 			_functions.Add("is-first", new XFunction1((value, xpath) => ReferenceEquals(xpath.Value(value), value)));
 			_functions.Add("name", new XFunction1((value, xpath) => (xpath.Value(value) as IFhirXmlNode)?.Name));
 			_functions.Add("index-of", new XFunction2((value, xpath1, xpath2) => IndexOf(xpath1.Values(value), xpath2.Value(value))));
-			_functions.Add("id-in", new XFunction1((value, xpath1) => IdIn(value as IFhirXmlNode, xpath1.Values(value))));
+			_functions.Add("id-in", new XFunction1((value, xpath1) => IdIn(value as IFhirXmlNode, xpath1.Values(value), true)));
+			_functions.Add("id-in-no-version", new XFunction1((value, xpath1) => IdIn(value as IFhirXmlNode, xpath1.Values(value), false)));
 		}
 
-		private static bool IdIn(IFhirXmlNode current, IList<object> values)
+		private static string TrimHistory(string str)
+		{
+			if (string.IsNullOrEmpty(str))
+				return str;
+
+			var index = str.IndexOf("_history", StringComparison.Ordinal);
+			if (index == -1)
+				return str;
+			if (index == 0)
+				return null;
+
+			return str.Substring(0, index);
+		}
+
+		private static bool IdIn(IFhirXmlNode current, IList<object> values, bool isWithVersion)
 		{
 			if (current is null || current.Name != "entry")
 				throw new InvalidOperationException("id-in() XPath function is only supported on <entry> elements!");
@@ -115,12 +130,18 @@ namespace Hl7.Fhir.Applicator.XPath.Navigation
 				{
 					var history = current.Elements("link")?.FirstOrDefault(x => x.Attribute("rel")?.ValueAsString == "self")?.Attribute("href")?.ValueAsString;
 
+					if (!isWithVersion)
+						history = TrimHistory(history);
+
 					foreach (var value in values)
 					{
 						if (value is null)
 							continue;
 
 						var val = value.ToString();
+
+						if (!isWithVersion)
+							val = TrimHistory(val);
 
 						if (val == id || val == history)
 							return true;
