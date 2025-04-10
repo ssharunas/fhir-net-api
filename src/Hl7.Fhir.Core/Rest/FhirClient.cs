@@ -1420,8 +1420,10 @@ namespace Hl7.Fhir.Rest
 
 				if (fhirQuery.Count == 0)
 					pageCount = totalResults;
-				else
+				else if (totalPages > 0)
 					pageCount = totalPages;
+				else if (totalResults > 0 && fhirQuery.Count > 0)
+					pageCount = (int)Math.Ceiling((decimal)totalResults / fhirQuery.Count.Value);
 			}
 
 			return result;
